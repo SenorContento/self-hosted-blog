@@ -3,4 +3,4 @@
   phpinfo();
 ?>
 
-<h1>Try Again!</h1>
+<h2>Try Again!</h2>
