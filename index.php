@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<?php
+print('<!DOCTYPE html>
 <html>
   <head>
     <title>CSCI 3000 - Web Development</title>
@@ -9,4 +10,5 @@
   <body>
     <a href="HTML-CSS/assignment1.html">Assignment 1 - HTML-CSS</a>
   </body>
-</html>
+</html>');
+?>
