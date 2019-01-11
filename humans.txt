@@ -1,7 +1,7 @@
 /* TEAM */
 	Web designer: Alex Contento
 	Twitter: @AlexContento42
-	From:Dahlonega, Georgia
+	From: Dahlonega, Georgia
 
 /* THANKS */
 
