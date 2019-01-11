@@ -1,5 +1,6 @@
 /* TEAM */
-	Web designer: Alex Contento
+
+	Web Designer: Alex Contento
 	Twitter: @AlexContento42
 	From: Dahlonega, Georgia
 
@@ -21,7 +22,8 @@
 	Site: http://csci3000.com/
 
 /* SITE */
-	Last update: 2019/01/11
+
+	Last Update: 2019/01/11
 	Language: English
 	Doctype: HTML5, PHP, CSS, JS
 	IDE: Atom, Git
