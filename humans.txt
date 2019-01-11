@@ -18,6 +18,9 @@
 	Help and Tutorials: Others on Google
 	Site: https://www.google.com/
 
+	Help and Tutorials: Also Others on DuckDuckGo
+	Site: https://start.duckduckgo.com/
+
 	Teacher For CSCI 3000 (Web Development): Justin "JET" Turner, M.S.
 	Site: http://csci3000.com/
 
