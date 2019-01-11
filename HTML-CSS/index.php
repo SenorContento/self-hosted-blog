@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Assignment 1 - HTML-CSS</title>
-    <link rel="stylesheet" href="assignment1.css">
-    <link rel="icon" href="/images/svg/SenorContento.svg">
-    <link rel="icon" href="/images/png/SenorContento-1024x1024.png">
-  </head>
-  <body>
+<?php $PageTitle="Assignment 1 - HTML-CSS";
+include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php"); ?>
     <div id="table">
       <fieldset>
         <legend>Example Table</legend>
@@ -73,5 +66,4 @@
         <a href="https://start.duckduckgo.com/?kae=t&kak=-1&kal=-1&kao=-1&kaq=-1&k1=-1&kax=-1&kam=google-maps&kap=-1&kau=-1&kaj=m&kp=-2">Try DuckDuckGo.com</a>
       </fieldset>
     </div>
-  </body>
-</html>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
