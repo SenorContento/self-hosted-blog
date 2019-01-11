@@ -7,9 +7,7 @@
     <link rel="icon" href="/images/png/SenorContento-1024x1024.png">
   </head>
   <body>
-    <pre>
       <!--If only inheritance was a part of the css standard-->
-      <code style="color: #90EE90"><?php system('/sbin/apcaccess');?></code>
-    </pre>
+      <pre><code style="color: #90EE90"><?php system('/sbin/apcaccess');?></code></pre>
   </body>
 </html>
