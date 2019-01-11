@@ -6,6 +6,9 @@
 
 /* THANKS */
 
+	Teacher For CSCI 3000 (Web Development): Justin "JET" Turner, M.S.
+	Site: http://csci3000.com/
+
 	Hardware: Raspberry Pi Foundation
 	Site: https://www.raspberrypi.org/about/meet-the-team/
 
@@ -20,9 +23,6 @@
 
 	Help and Tutorials: Also Others on DuckDuckGo
 	Site: https://start.duckduckgo.com/
-
-	Teacher For CSCI 3000 (Web Development): Justin "JET" Turner, M.S.
-	Site: http://csci3000.com/
 
 /* SITE */
 
