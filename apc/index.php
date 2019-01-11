@@ -8,6 +8,8 @@
   </head>
   <body>
       <!--If only inheritance was a part of the css standard-->
-      <pre><code style="color: #90EE90"><?php system('/sbin/apcaccess');?></code></pre>
+      <pre><code style="color: #90EE90"><?php system('/sbin/apcaccess');
+
+      system('/bin/date -u'); ?></code></pre>
   </body>
 </html>
