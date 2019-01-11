@@ -9,9 +9,7 @@
   <body>
     <pre>
       <!--If only inheritance was a part of the css standard-->
-      <code style="color: #90EE90">
-        <?php system('/sbin/apcaccess');;?>
-      </code>
+      <code style="color: #90EE90"><?php system('/sbin/apcaccess');?></code>
     </pre>
   </body>
 </html>
