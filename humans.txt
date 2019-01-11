@@ -1,0 +1,27 @@
+/* TEAM */
+	Web designer: Alex Contento
+	Twitter: @AlexContento42
+	From:Dahlonega, Georgia
+
+/* THANKS */
+
+	Hardware: Raspberry Pi Foundation
+	Site: https://www.raspberrypi.org/about/meet-the-team/
+
+	Help and Tutorials: StackExchange
+	Site: https://stackexchange.com/
+
+	Help and Tutorials: W3Schools
+	Site: https://www.w3schools.com/
+
+	Help and Tutorials: Others on Google
+	Site: https://www.google.com/
+
+	Teacher For CSCI 3000 (Web Development): Justin "JET" Turner, M.S.
+	Site: http://csci3000.com/
+
+/* SITE */
+	Last update: 2019/01/11
+	Language: English
+	Doctype: HTML5, PHP, CSS, JS
+	IDE: Atom, Git
