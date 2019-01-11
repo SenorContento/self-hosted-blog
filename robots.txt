@@ -1,0 +1,16 @@
+# Google's Search Engine
+# There is no such directory as /nogooglebot/.
+# I just left this here as an example.
+# It could also be used as a trap for bad bots too.
+# I can track all attempted access URLs in my server log.
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+# Add All
+User-agent: *
+Disallow: /apc/
+Allow: /
+Allow: /humans.txt
+
+#Sitemap Does Not Exist Yet
+#Sitemap: /sitemap.xml
