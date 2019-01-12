@@ -12,7 +12,7 @@
 <pre><code>
 User  Password
 --------------
-<?php system("zcat /var/log/nginx/access.log* | /bin/grep \"phpmyadmin/index.php?pma_username\" | /usr/bin/cut -d'?' -f2 | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d'=' -f2- | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'"); ?>
+<?php system("zcat -f /var/log/nginx/access.log* | /bin/grep \"phpmyadmin/index.php?pma_username\" | /usr/bin/cut -d'?' -f2 | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d'=' -f2- | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}' | sort | uniq"); ?>
 </code><pre>
 
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
