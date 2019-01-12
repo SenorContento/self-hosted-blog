@@ -28,8 +28,8 @@ done
 
 $failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
 
-$failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | wc -l");
-$uniq_failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | sort | uniq | wc -l");
+$failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/wc -l");
+$uniq_failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/sort | /usr/bin/uniq | /usr/bin/wc -l");
 
 print("Unique Fails: " . $uniq_failcount);
 print("Total Fails: " . $failcount);
@@ -38,7 +38,7 @@ print("
 User  Password
 --------------");
 
-system("/bin/echo " . escapeshellarg($failed_attempts) . " | sort | uniq");
+system("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/sort | /usr/bin/uniq");
 ?>
 </code><pre>
 
