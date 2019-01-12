@@ -12,8 +12,10 @@
 <pre><code>
 <?php
 $failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
-$failcount = shell_exec("/bin/echo \"" . $failed_attempts . "\" | wc -l");
-$uniq_failcount = shell_exec("/bin/echo \"" . $failed_attempts . "\" | sort | uniq | wc -l");
+$encoded_fails = base64_encode($failed_attempts);
+
+$failcount = shell_exec("/bin/echo \"" . $encoded_fails . "\" | base64 -d | wc -l");
+$uniq_failcount = shell_exec("/bin/echo \"" . $encoded_fails . "\" | base64 -d | sort | uniq | wc -l");
 
 print("Unique Fails: " . $uniq_failcount);
 print("Total Fails: " . $failcount);
