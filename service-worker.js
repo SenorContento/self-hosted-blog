@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const CACHE_NAME = 'cache-v1';
 
 const resourceList = [
@@ -12,6 +12,7 @@ const resourceList = [
 ];
 
 self.addEventListener('install', event => {
+  console.log('Service Worker installing.');
   event.waitUntil(caches.open(CACHE_NAME).then(cache => {
     return cache.addAll(resourceList);
   }));
@@ -25,12 +26,14 @@ self.addEventListener('fetch', event => {
   event.respondWith(caches.match(event.request).then(response => {
     return response || fetch(event.request);
   })
-.catch(function() {
-  return caches.match('/offline');
-});
+  .catch(function() {
+    return caches.match('/offline');
+  })
+);
 
 function addToCache(cacheName, resourceList) {
   caches.open(cacheName).then(cache => {
     return cache.addAll(resourceList);
   });
+}
 });
