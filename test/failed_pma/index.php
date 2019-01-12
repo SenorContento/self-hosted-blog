@@ -26,7 +26,11 @@ done
 
 */
 
-$failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
+#$failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
+$failed_attempts = shell_exec("find \"/var/log/nginx/\" -name \"access.log*\" -follow -type f -print0 | xargs -0 zcat -f | grep \"pma_username\" | awk -F\"pma_username=\" '{print $2}' | cut -d'&' -f1,2 | cut -d' ' -f1 | awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
+
+# The below command is for testing on localhost
+#$failed_attempts = shell_exec("find \"/Users/senor/Desktop/Nginx Server Logs/01:12:19/access_logs/\" -name \"access.log*\" -follow -type f -print0 | xargs -0 cat | grep \"pma_username\" | awk -F\"pma_username=\" '{print $2}' | cut -d'&' -f1,2 | cut -d' ' -f1 | awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
 
 $failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/wc -l");
 $uniq_failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/sort | /usr/bin/uniq | /usr/bin/wc -l");
