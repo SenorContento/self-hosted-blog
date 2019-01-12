@@ -15,6 +15,8 @@ $fails = new PHPMyAdmin_Fails();
 $fails->printTable();
 
 class PHPMyAdmin_Fails {
+  # The below variables are for the production server
+  public $log_path = "/var/log/nginx/";
   public $exec_find_path = "/usr/bin/find";
   public $exec_xargs_path = "/usr/bin/xargs";
   public $exec_gunzip_path = "/bin/gunzip";
@@ -26,7 +28,9 @@ class PHPMyAdmin_Fails {
   public $exec_uniq_path = "/usr/bin/uniq";
   public $exec_wc_path = "/usr/bin/wc";
 
-  /*public $exec_find_path = "find";
+  # The below variables are for testing on localhost
+  /*public $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs/";
+  public $exec_find_path = "find";
   public $exec_xargs_path = "xargs";
   public $exec_gunzip_path = "gunzip";
   public $exec_grep_path = "grep";
@@ -59,13 +63,7 @@ class PHPMyAdmin_Fails {
   }
 
   public function generateTable() {
-    # The below path is for the production server
-    #$log_path = "/var/log/nginx/";
-
-    # The below path is for testing on localhost - it may not work because of hardcoding binaries
-    $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs/";
-
-    $failed_attempts = shell_exec($this->exec_find_path . " \"" . $log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_grep_path . " \"pma_username\" | " . $this->exec_awk_path . " -F\"pma_username=\" '{print $2}' | " . $this->exec_cut_path . " -d'&' -f1,2 | " . $this->exec_cut_path . " -d' ' -f1");
+    $failed_attempts = shell_exec($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_grep_path . " \"pma_username\" | " . $this->exec_awk_path . " -F\"pma_username=\" '{print $2}' | " . $this->exec_cut_path . " -d'&' -f1,2 | " . $this->exec_cut_path . " -d' ' -f1");
 
     if(isset($_GET['download_csv'])) $this->downloadCSV();
 
