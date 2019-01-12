@@ -3,13 +3,13 @@ const CACHE_NAME = 'cache-v1';
 
 const resourceList = [
   '/',
-  '/offline',
+  '/offline/index.php',
   '/manifest.json',
   '/service-worker.js',
 
   '/HTML-CSS/assignment1.css',
   '/css/main.css',
-  
+
   '/images/png/SenorContento-1024x1024.png',
   '/images/svg/SenorContento.svg'
 ];
@@ -30,7 +30,7 @@ self.addEventListener('fetch', event => {
     return response || fetch(event.request);
   })
   .catch(function() {
-    return caches.match('/offline');
+    return caches.match('/offline/index.php');
   })
 );
 
