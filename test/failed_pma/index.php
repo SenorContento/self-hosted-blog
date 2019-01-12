@@ -1,18 +1,28 @@
-<?php $PageTitle="PHPMyAdmin Failed Password Attempts";
+<?php
+function customPageHeader() {
+  // The function has to be left outside the classes in order to get loaded by the header.php file.
+  print('<link rel="stylesheet" href="/css/main.css">');
+}
 
-  function customPageHeader() {
-    print('<link rel="stylesheet" href="/css/main.css">');
+$loadPage = new loadPage();
+$fails = new PHPMyAdmin_Fails();
+
+if(isset($_GET['download_csv'])) $fails->generateTable();
+
+$loadPage->loadHeader();
+$fails->printTable();
+$loadPage->loadFooter();
+
+class loadPage {
+  public function loadHeader() {
+    $PageTitle="PHPMyAdmin Failed Password Attempts";
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php");
   }
 
-  include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php"); ?>
-
-<p>No Real Logins Show Up Here because Real Logins use POST requests, these attacks use GET requests.</p>
-
-<p>Failed Attempts at Hacking PHPMyAdmin:</p>
-<pre><code>
-<?php
-$fails = new PHPMyAdmin_Fails();
-$fails->printTable();
+  public function loadFooter() {
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php");
+  }
+}
 
 class PHPMyAdmin_Fails {
   # The below variables are for the production server
@@ -41,8 +51,31 @@ class PHPMyAdmin_Fails {
   public $exec_uniq_path = "uniq";
   public $exec_wc_path = "wc";*/
 
-  public function downloadCSV() {
-    print("<h1>Test</h1>");
+  function downloadHeaders($filename) {
+    //Disable Caching
+    $now = gmdate("D, d M Y H:i:s");
+    header("Expires: Thur, 01 Jan 1970 00:00:00 GMT");
+    header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+    header("Last-Modified: {$now} GMT");
+
+    //Force Download
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+
+    //Encoding Response
+    header("Content-Disposition: attachment;filename={$filename}");
+    header("Content-Transfer-Encoding: binary");
+  }
+
+  public function downloadCSV($failed_attempts) {
+    $this->downloadHeaders("PHPMyAdmin_Fails_" . date("m-d-Y") . ".csv");
+    $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " . $this->exec_awk_path . " -F\"&pma_password=\" '{print \",\"$1\",\"$2\"\"}'");
+
+    print(",User,Password");
+    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \",,\"");
+
+    die();
   }
 
   public function printTable() {
@@ -52,8 +85,15 @@ class PHPMyAdmin_Fails {
     $failcount = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_wc_path . " -l");
     $uniq_failcount = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_wc_path . " -l");
 
+    print("<p>No Real Logins Show Up Here because Real Logins use POST requests, these attacks use GET requests.");
+    print("</br></br><a href=\"?download_csv\">Download Table as CSV</a></p>");
+
+    print("<p>Failed Attempts at Hacking PHPMyAdmin:</p>");
+
+    print("<pre><code>");
     print("Unique Fails: " . $uniq_failcount);
     print("Total Fails: " . $failcount);
+    print("</pre></code>");
 
     print("<br><br><table>");
     print("<tr><th>User</th><th>Password</tr>");
@@ -65,11 +105,8 @@ class PHPMyAdmin_Fails {
   public function generateTable() {
     $failed_attempts = shell_exec($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_grep_path . " \"pma_username\" | " . $this->exec_awk_path . " -F\"pma_username=\" '{print $2}' | " . $this->exec_cut_path . " -d'&' -f1,2 | " . $this->exec_cut_path . " -d' ' -f1");
 
-    if(isset($_GET['download_csv'])) $this->downloadCSV();
+    if(isset($_GET['download_csv'])) $this->downloadCSV($failed_attempts);
 
     return $failed_attempts;
   }
-} ?>
-</code><pre>
-
-<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
+}
