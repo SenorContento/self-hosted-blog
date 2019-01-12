@@ -2,7 +2,6 @@
 const CACHE_NAME = 'cache-v1';
 
 const resourceList = [
-  '/',
   '/offline/index.php',
   '/manifest.json',
   '/service-worker.js',

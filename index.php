@@ -5,7 +5,11 @@
   }
 
   include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php"); ?>
+
     <a href="/HTML-CSS/">Assignment 1 - HTML-CSS</a>
+    <br>
+    <a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>
+
 <?php
   function customPageFooter() {
     print('
