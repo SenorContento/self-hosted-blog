@@ -36,8 +36,9 @@ print("Total Fails: " . $failcount);
 
 print("
 User  Password
---------------
-" . $failed_attempts);
+--------------");
+
+system("/bin/echo \"" . escapeshellarg($failed_attempts) . "\" | sort | uniq");
 ?>
 </code><pre>
 
