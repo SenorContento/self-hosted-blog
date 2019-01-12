@@ -3,7 +3,9 @@
   <head>
     <title><?= isset($PageTitle) ? $PageTitle : "web.SenorContento.com"?></title>
     <link rel="author" href="/humans.txt" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="green">
 
     <link rel="stylesheet" href="/HTML-CSS/assignment1.css">
 
