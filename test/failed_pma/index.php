@@ -12,8 +12,21 @@
 <pre><code>
 <?php
 //$failed_attempts = shell_exec("cat /var/www/html/test/failed_pma/fails.log");
-//shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}' && echo -e \"\\nVFDVXVCD\"");
-$failed_attempts = shell_exec("/bin/bash /var/www/html/test/failed_pma/test.sh");
+//$failed_attempts = shell_exec("/bin/bash /var/www/html/test/failed_pma/test.sh");
+
+/* test.sh
+
+count=1
+while [ $count -lt 10000 ]
+do
+  filename="node${count}.shtml"
+  echo "$count"
+  count=`expr $count + 1`
+done
+
+*/
+
+$failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
 
 $failcount = shell_exec("/bin/echo \"" . escapeshellarg($failed_attempts) . "\" | wc -l");
 $uniq_failcount = shell_exec("/bin/echo \"" . escapeshellarg($failed_attempts) . "\" | sort | uniq | wc -l");
