@@ -8,8 +8,8 @@
 
   print("<p>Your User Agent: \"" . $_SERVER['HTTP_USER_AGENT'] . "\"</br></br>");
 
-  print("Other User Agents: </br>");
+  print("Other User Agents: </br><pre>");
   system("/usr/bin/awk -F'\"' '/GET/ {print $6}' /var/log/nginx/access.log | /usr/bin/cut -d' ' -f1 | /usr/bin/sort | /usr/bin/uniq -c | /usr/bin/sort -rn");
-  print("</p>");
+  print("</pre></p>");
 
   include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
