@@ -1,6 +1,6 @@
 <?php $PageTitle="CSCI 3000 - Web Development";
 
-  function customPageHeader(){
+  function customPageHeader() {
     print('<!--This Comment is Here Just to Mark Custom Header Inclusion in PHP!!!-->');
   }
 
