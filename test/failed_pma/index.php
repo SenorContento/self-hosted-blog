@@ -1,4 +1,4 @@
-<?php $PageTitle="CSCI 3000 - Web Development";
+<?php $PageTitle="PHPMyAdmin Failed Password Attempts";
 
   function customPageHeader() {
     print('<link rel="stylesheet" href="/css/main.css">');
