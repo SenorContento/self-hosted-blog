@@ -1,0 +1,20 @@
+{
+  "short_name": "Alex's Site",
+  "name": "Alex's Website",
+  "icons": [
+    {
+      "src":"/images/svg/SenorContento.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml"
+    },
+    {
+      "src":"/images/png/SenorContento-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#000000",
+  "theme_color": "#90EE90",
+  "display": "standalone"
+}

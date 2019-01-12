@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><?= isset($PageTitle) ? $PageTitle : "web.SenorContento.com"?></title>
     <link rel="author" href="/humans.txt" />
