@@ -11,39 +11,67 @@
 <p>Failed Attempts at Hacking PHPMyAdmin:</p>
 <pre><code>
 <?php
-//$failed_attempts = shell_exec("cat /var/www/html/test/failed_pma/fails.log");
-//$failed_attempts = shell_exec("/bin/bash /var/www/html/test/failed_pma/test.sh");
+$fails = new PHPMyAdmin_Fails();
+$fails->printTable();
 
-/* test.sh
+class PHPMyAdmin_Fails {
+  public $exec_find_path = "/usr/bin/find";
+  public $exec_xargs_path = "/usr/bin/xargs";
+  public $exec_gunzip_path = "/bin/gunzip";
+  public $exec_grep_path = "/bin/grep";
+  public $exec_awk_path = "/usr/bin/awk";
+  public $exec_cut_path = "/usr/bin/cut";
+  public $exec_echo_path = "/bin/echo";
+  public $exec_sort_path = "/usr/bin/sort";
+  public $exec_uniq_path = "/usr/bin/uniq";
+  public $exec_wc_path = "/usr/bin/wc";
 
-count=1
-while [ $count -lt 10000 ]
-do
-  filename="node${count}.shtml"
-  echo "$count"
-  count=`expr $count + 1`
-done
+  /*public $exec_find_path = "find";
+  public $exec_xargs_path = "xargs";
+  public $exec_gunzip_path = "gunzip";
+  public $exec_grep_path = "grep";
+  public $exec_awk_path = "awk";
+  public $exec_cut_path = "cut";
+  public $exec_echo_path = "echo";
+  public $exec_sort_path = "sort";
+  public $exec_uniq_path = "uniq";
+  public $exec_wc_path = "wc";*/
 
-*/
+  public function downloadCSV() {
+    print("<h1>Test</h1>");
+  }
 
-#$failed_attempts = shell_exec("/bin/zcat -f /var/log/nginx/access.log* | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print $1 \"\\t\" $2}'");
-$failed_attempts = shell_exec("/usr/bin/find \"/var/log/nginx/\" -name \"access.log*\" -follow -type f -print0 | /usr/bin/xargs -0 /bin/gunzip -cf | /bin/grep \"pma_username\" | /usr/bin/awk -F\"pma_username=\" '{print $2}' | /usr/bin/cut -d'&' -f1,2 | /usr/bin/cut -d' ' -f1 | /usr/bin/awk -F\"&pma_password=\" '{print \"<tr><td>\"$1\"</td><td>\"$2\"</td></tr>\"}'");
+  public function printTable() {
+    $failed_attempts = $this->generateTable();
+    $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " . $this->exec_awk_path . " -F\"&pma_password=\" '{print \"<tr><td>\"$1\"</td><td>\"$2\"</td></tr>\"}'");
 
-# The below command is for testing on localhost
-#$failed_attempts = shell_exec("find \"/Users/senor/Desktop/Nginx Server Logs/01:12:19/gzip_logs/\" -name \"access.log*\" -follow -type f -print0 | xargs -0 gunzip -cf | grep \"pma_username\" | awk -F\"pma_username=\" '{print $2}' | cut -d'&' -f1,2 | cut -d' ' -f1 | awk -F\"&pma_password=\" '{print \"<tr><td>\"$1\"</td><td>\"$2\"</td></tr>\"}'");
+    $failcount = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_wc_path . " -l");
+    $uniq_failcount = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_wc_path . " -l");
 
-$failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/wc -l");
-$uniq_failcount = shell_exec("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/sort | /usr/bin/uniq | /usr/bin/wc -l");
+    print("Unique Fails: " . $uniq_failcount);
+    print("Total Fails: " . $failcount);
 
-print("Unique Fails: " . $uniq_failcount);
-print("Total Fails: " . $failcount);
+    print("<br><br><table>");
+    print("<tr><th>User</th><th>Password</tr>");
 
-print("<br><br><table>");
-print("<tr><th>User</th><th>Password</tr>");
+    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \"<tr><td></td><td></td></tr>\"");
+    print("</table>");
+  }
 
-system("/bin/echo " . escapeshellarg($failed_attempts) . " | /usr/bin/sort | /usr/bin/uniq");
-print("</table>");
-?>
+  public function generateTable() {
+    # The below path is for the production server
+    #$log_path = "/var/log/nginx/";
+
+    # The below path is for testing on localhost - it may not work because of hardcoding binaries
+    $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs/";
+
+    $failed_attempts = shell_exec($this->exec_find_path . " \"" . $log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_grep_path . " \"pma_username\" | " . $this->exec_awk_path . " -F\"pma_username=\" '{print $2}' | " . $this->exec_cut_path . " -d'&' -f1,2 | " . $this->exec_cut_path . " -d' ' -f1");
+
+    if(isset($_GET['download_csv'])) $this->downloadCSV();
+
+    return $failed_attempts;
+  }
+} ?>
 </code><pre>
 
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
