@@ -25,10 +25,9 @@ self.addEventListener('fetch', event => {
   event.respondWith(caches.match(event.request).then(response => {
     return response || fetch(event.request);
   })
-  .catch(function() {
-    return caches.match('/offline');
-  })
-);
+.catch(function() {
+  return caches.match('/offline');
+});
 
 function addToCache(cacheName, resourceList) {
   caches.open(cacheName).then(cache => {
