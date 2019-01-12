@@ -22,7 +22,7 @@ print("Total Fails: " . $failcount);
 print("
 User  Password
 --------------
-" . base64_decode($encoded_fails));
+" . $failed_attempts);
 ?>
 </code><pre>
 
