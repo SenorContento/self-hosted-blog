@@ -38,7 +38,7 @@ print("
 User  Password
 --------------");
 
-system("/bin/echo \"" . escapeshellarg($failed_attempts) . "\" | sort | uniq");
+system("/bin/echo " . escapeshellarg($failed_attempts) . " | sort | uniq");
 ?>
 </code><pre>
 
