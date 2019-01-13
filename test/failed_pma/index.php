@@ -44,7 +44,7 @@ class PHPMyAdmin_Fails {
   public $exec_xargs_path = "xargs";
   public $exec_gunzip_path = "gunzip";
   public $exec_grep_path = "grep";
-  public $exec_awk_path = "awk";
+  public $exec_awk_path = "gawk";
   public $exec_cut_path = "cut";
   public $exec_echo_path = "echo";
   public $exec_sort_path = "sort";
@@ -70,10 +70,10 @@ class PHPMyAdmin_Fails {
 
   public function downloadCSV($failed_attempts) {
     $this->downloadHeaders("PHPMyAdmin_Fails_" . date("m-d-Y") . ".csv");
-    $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " . $this->exec_awk_path . " -F\"&pma_password=\" '{print \",\"$1\",\"$2\"\"}'");
+    $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " . $this->exec_awk_path . " -F\"&pma_password=\" -v x=\"\\\"\" '{print \",\\=\"x$1x\",\\=\"x$2x\"\"}'");
 
     print(",User,Password");
-    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \",,\"");
+    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \",=\\\"\\\",=\\\"\\\"\""); //,="",=""
 
     die();
   }
