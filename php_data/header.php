@@ -19,4 +19,5 @@
 
   </head>
   <body>
-    <header>Hello</header>
+    <!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore!!-->
+    <!--<header>Hello</header>-->
