@@ -6,7 +6,6 @@ function customPageHeader() {
 
 $loadPage = new loadPage();
 $getUserAgent = new userAgent();
-//if(isset($_GET['download_csv'])) $fails->generateTable();
 
 $loadPage->loadHeader();
 $getUserAgent->printCurrentUserAgent();
@@ -47,9 +46,9 @@ class userAgent {
     print("<p>All User Agents (Short): </br>");
     print("<pre><code>");
 
+    // Removing the awk command between gunzip and cut causes the command to organize access by IP Address instead of User Agent
     system($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_awk_path . " -F'\"' '/GET/ {print $6}' | " . $this->exec_cut_path . " -d' ' -f1 | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " -c | " . $this->exec_sort_path . " -rn");
-    //system($this->exec_awk_path . " -F'\"' '/GET/ {print $6}' /var/log/nginx/access.log | /usr/bin/cut -d' ' -f1 | /usr/bin/sort | /usr/bin/uniq -c | /usr/bin/sort -rn");
 
-    print("</code></pre>" . '\n' . "</p>");
+    print("</code></pre></p>");
   }
 } ?>
