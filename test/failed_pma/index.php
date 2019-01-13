@@ -1,7 +1,7 @@
 <?php
 function customPageHeader() {
   // The function has to be left outside the classes in order to get loaded by the header.php file.
-  print('<link rel="stylesheet" href="/css/main.css">');
+  print('<!--This is here to bookmark how to load a custom page header!!!-->');
 }
 
 $loadPage = new loadPage();
