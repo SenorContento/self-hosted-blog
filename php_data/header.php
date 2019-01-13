@@ -19,5 +19,6 @@
 
   </head>
   <body>
-    <!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore!!-->
-    <!--<header>Hello</header>-->
+    <!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore it!!!-->
+    <header><p>I am replacing my theme with <a href="https://material.io/">Material Design</a>. Instructions for <a href="https://material.io/collections/developer-tutorials/#web">Web Development</a>.</p></header>
+    <div id="container">
