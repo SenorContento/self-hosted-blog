@@ -37,6 +37,7 @@ class PHPMyAdmin_Fails {
   public $exec_sort_path = "/usr/bin/sort";
   public $exec_uniq_path = "/usr/bin/uniq";
   public $exec_wc_path = "/usr/bin/wc";
+  public $exec_sed_path = "/bin/sed";
 
   # The below variables are for testing on localhost
   /*public $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs/";
@@ -49,7 +50,8 @@ class PHPMyAdmin_Fails {
   public $exec_echo_path = "echo";
   public $exec_sort_path = "sort";
   public $exec_uniq_path = "uniq";
-  public $exec_wc_path = "wc";*/
+  public $exec_wc_path = "wc";
+  public $exec_sed_path = "sed";*/
 
   function downloadHeaders($filename) {
     //Disable Caching
@@ -73,7 +75,7 @@ class PHPMyAdmin_Fails {
     $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " . $this->exec_awk_path . " -F\"&pma_password=\" -v x=\"\\\"\" '{print \",\\=\"x$1x\",\\=\"x$2x\"\"}'");
 
     print(",User,Password");
-    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \",=\\\"\\\",=\\\"\\\"\""); //,="",=""
+    system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " | " . $this->exec_grep_path . " -v \",=\\\"\\\",=\\\"\\\"\"" . " | " . $this->exec_sed_path . " 's/=\"\"//g'"); //,="",=""
 
     die();
   }
