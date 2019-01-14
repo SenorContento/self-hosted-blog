@@ -48,7 +48,7 @@
 
     public function loadTextFields() {
       print('<br><br>');
-      print('<center><p>The below textbox is a test to ensure Material Design works as intended! Did you know Google made a theme designer script! It sure beats manually setting CSS values!</p>');
+      print('<center><p>The below textbox is a test to ensure Material Design works as intended!</p>');
 
       print('<div class="mdc-text-field">');
       print('<input type="text" id="my-text-field" class="mdc-text-field__input">');
