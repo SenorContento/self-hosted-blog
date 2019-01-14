@@ -10,7 +10,10 @@
 
   $loadHeader->printAuthorMetadata();
   $loadHeader->printMobileStyling();
+
   $loadHeader->printStylesheets();
+  $loadHeader->printScripts();
+
   $loadHeader->printIcons();
   $loadHeader->printCustomPageHeader();
   $loadHeader->printEndHeader();
@@ -42,6 +45,20 @@
     public function printStylesheets() {
       print("\n\n\t\t" . '<link rel="stylesheet" href="/css/assignment1.css">');
       print("\n\t\t" . '<link rel="stylesheet" href="/css/main.css">');
+
+      print("\n\n\t\t" . '<link rel="stylesheet" href="/css/material-components-web.min.css">');
+      //print("\n\n\t\t" . '<link rel="stylesheet" href="/css/material-components-web.css">');
+
+      //print("\n\n\t\t" . '<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">');
+      //print("\n\n\t\t" . '<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">');
+    }
+
+    public function printScripts() {
+      print("\n\n\t\t" . '<script src="/js/material-components-web.min.js" type="text/javascript"></script>');
+      //print("\n\n\t\t" . '<script src="/js/material-components-web.js" type="text/javascript"></script>');
+
+      //print("\n\n\t\t" . '<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js" type="text/javascript"></script>');
+      //print("\n\n\t\t" . '<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js" type="text/javascript"></script>');
     }
 
     public function printIcons() {

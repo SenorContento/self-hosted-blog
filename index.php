@@ -20,7 +20,11 @@
   $mainPage = new mainPage();
 
   $loadPage->loadHeader();
+
   $mainPage->mainBody();
+  $mainPage->loadTextFields();
+  $mainPage->loadScripts();
+
   $loadPage->loadFooter();
 
   class loadPage {
@@ -36,9 +40,25 @@
 
   class mainPage {
     public function mainBody() {
-      print("<a href=\"/HTML-CSS/\">Assignment 1 - HTML-CSS</a>");
-      print("<br>");
-      print("<a href=\"/test/failed_pma/\">Failed Login Attempts for PHPMyAdmin</a>");
+      print('<a href="/HTML-CSS/">Assignment 1 - HTML-CSS</a>');
+
+      print('<br><br>');
+      print('<a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>');
+    }
+
+    public function loadTextFields() {
+      print('<br><br>');
+      print('<center><p>The below textbox is a test to ensure Material Design works as intended! Did you know Google made a theme designer script! It sure beats manually setting CSS values!</p>');
+
+      print('<div class="mdc-text-field">');
+      print('<input type="text" id="my-text-field" class="mdc-text-field__input">');
+      print('<label class="mdc-floating-label" for="my-text-field">Material Design Textbox</label>');
+      print('<div class="mdc-line-ripple"></div>');
+      print('</div></center>');
+    }
+
+    public function loadScripts() {
+      print("<script>mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));</script>");
     }
   }
 ?>
