@@ -1,29 +1,44 @@
-<?php $PageTitle="CSCI 3000 - Web Development";
-
+<?php
   function customPageHeader() {
-    print('<link rel="manifest" href="/manifest.json">');
+    print("\t\t" . '<link rel="manifest" href="/manifest.json">');
+
+    print("\n" . '
+        <script>
+          if (\'serviceWorker\' in navigator) {
+            console.log("Will the service worker register?");
+            navigator.serviceWorker.register(\'service-worker.js\')
+              .then(function(reg) {
+                console.log("Yes, it did.");
+              }).catch(function(err) {
+                console.log("No it didn\'t. This happened: ", err)
+              });
+            }
+        </script>');
   }
 
-  include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php"); ?>
+  $loadPage = new loadPage();
+  $mainPage = new mainPage();
 
-    <a href="/HTML-CSS/">Assignment 1 - HTML-CSS</a>
-    <br>
-    <a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>
+  $loadPage->loadHeader();
+  $mainPage->mainBody();
+  $loadPage->loadFooter();
 
-<?php
-  function customPageFooter() {
-    print('
-  <script>
-    if (\'serviceWorker\' in navigator) {
-      console.log("Will the service worker register?");
-      navigator.serviceWorker.register(\'service-worker.js\')
-        .then(function(reg){
-          console.log("Yes, it did.");
-        }).catch(function(err) {
-          console.log("No it didn\'t. This happened: ", err)
-        });
-      }
-  </script>
-'); }
+  class loadPage {
+    public function loadHeader() {
+      $PageTitle="CSCI 3000 - Web Development";
+      include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php");
+    }
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php"); ?>
+    public function loadFooter() {
+      include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php");
+    }
+  }
+
+  class mainPage {
+    public function mainBody() {
+      print("<a href=\"/HTML-CSS/\">Assignment 1 - HTML-CSS</a>");
+      print("<br>");
+      print("<a href=\"/test/failed_pma/\">Failed Login Attempts for PHPMyAdmin</a>");
+    }
+  }
+?>

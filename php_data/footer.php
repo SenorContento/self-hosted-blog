@@ -1,6 +1,24 @@
-    </div>
-  </body>
-  <?php if (function_exists('customPageFooter')) {
-    customPageFooter();
-  }?>
-</html>
+<?php
+  $loadFooter = new loadFooter();
+  $loadFooter->printStartFooter();
+  $loadFooter->printCustomPageFooter();
+  $loadFooter->printEndFooter();
+
+  class loadFooter {
+    public function printStartFooter() {
+      print("\n\t\t" . '</div>');
+      print("\n\t" . '</body>');
+    }
+
+    public function printCustomPageFooter() {
+      if(function_exists('customPageFooter')) {
+        print("\n");
+        customPageFooter();
+      }
+    }
+
+    public function printEndFooter() {
+      print("\n" . '</html>');
+    }
+  }
+?>

@@ -1,24 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title><?= isset($PageTitle) ? $PageTitle : "web.SenorContento.com"?></title>
-    <link rel="author" href="/humans.txt" />
+<?php
+  $loadHeader = new loadHeader();
+  $loadHeader->printStartHeader();
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="green">
+  if(isset($PageTitle)) {
+    $loadHeader->printTitle($PageTitle);
+  } else {
+    $loadHeader->printTitle('web.SenorContento.com');
+  }
 
-    <link rel="stylesheet" href="/css/assignment1.css">
-    <link rel="stylesheet" href="/css/main.css">
+  $loadHeader->printAuthorMetadata();
+  $loadHeader->printMobileStyling();
+  $loadHeader->printStylesheets();
+  $loadHeader->printIcons();
+  $loadHeader->printCustomPageHeader();
+  $loadHeader->printEndHeader();
+  $loadHeader->printStartBody();
+  $loadHeader->printNotificationMessage();
 
-    <link rel="icon" href="/images/svg/SenorContento.svg">
-    <link rel="icon" href="/images/png/SenorContento-1024x1024.png">
+  class loadHeader {
+  //  public $pageTitle = $PageTitle;
 
-    <?php if (function_exists('customPageHeader')){
-      customPageHeader();
-    }?>
+    public function printStartHeader() {
+      print('<!DOCTYPE html>');
+      print("\n" . '<html lang="en">');
+      print("\n\t" . '<head>');
+    }
 
-  </head>
-  <body>
-    <!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore it!!!-->
-    <header><p>I am replacing my theme with <a href="https://material.io/">Material Design</a>. Instructions for <a href="https://material.io/collections/developer-tutorials/#web">Web Development</a>.</p></header>
-    <div id="container">
+    public function printTitle($pageTitle) {
+      print("\n\t\t" . '<title>' . $pageTitle . '</title>');
+    }
+
+    public function printAuthorMetadata() {
+      print("\n\t\t" . '<link rel="author" href="/humans.txt" />');
+    }
+
+    public function printMobileStyling() {
+      print("\n\n\t\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      print("\n\t\t" . '<meta name="theme-color" content="green">');
+    }
+
+    public function printStylesheets() {
+      print("\n\n\t\t" . '<link rel="stylesheet" href="/css/assignment1.css">');
+      print("\n\t\t" . '<link rel="stylesheet" href="/css/main.css">');
+    }
+
+    public function printIcons() {
+      print("\n\n\t\t" . '<link rel="icon" href="/images/svg/SenorContento.svg">');
+      print("\n\t\t" . '<link rel="icon" href="/images/png/SenorContento-1024x1024.png">');
+    }
+
+    public function printCustomPageHeader() {
+      print("\n");
+      if (function_exists('customPageHeader')){
+        customPageHeader();
+      }
+    }
+
+    public function printEndHeader() {
+      print("\n\t" . '</head>');
+    }
+
+    public function printStartBody() {
+      print("\n\t" . "<body>");
+    }
+
+    public function printNotificationMessage() {
+      print("\n\t\t" . '<!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore it!!!-->');
+      print("\n\t\t" . '<header>');
+
+      print("\n\t\t\t" . '<p>I am replacing my theme with <a href="https://material.io/">Material Design</a>.');
+      print(" " . 'Instructions for <a href="https://material.io/collections/developer-tutorials/#web">Web Development</a>.</p>');
+      print("\n\t\t" . '</header>');
+      print("\n\t\t" . '<div id="container">');
+    }
+  }
+?>
