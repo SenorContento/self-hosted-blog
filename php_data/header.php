@@ -55,8 +55,8 @@
     }
 
     public function printScripts() {
-      print("\n\n\t\t" . '<script src="/js/material-components-web.min.js" type="text/javascript"></script>');
-      //print("\n\n\t\t" . '<script src="/js/material-components-web.js" type="text/javascript"></script>');
+      //print("\n\n\t\t" . '<script src="/js/material-components-web.min.js" type="text/javascript"></script>');
+      print("\n\n\t\t" . '<script src="/js/material-components-web.js" type="text/javascript"></script>');
 
       //print("\n\n\t\t" . '<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js" type="text/javascript"></script>');
       //print("\n\n\t\t" . '<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js" type="text/javascript"></script>');

@@ -10,7 +10,10 @@ const resourceList = [
   '/css/main.css',
 
   '/images/png/SenorContento-1024x1024.png',
-  '/images/svg/SenorContento.svg'
+  '/images/svg/SenorContento.svg',
+
+  '/css/material-components-web-dark-custom.css',
+  '/js/material-components-web.js'
 ];
 
 self.addEventListener('install', event => {
