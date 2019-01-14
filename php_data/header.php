@@ -21,8 +21,6 @@
   $loadHeader->printNotificationMessage();
 
   class loadHeader {
-  //  public $pageTitle = $PageTitle;
-
     public function printStartHeader() {
       print('<!DOCTYPE html>');
       print("\n" . '<html lang="en">');

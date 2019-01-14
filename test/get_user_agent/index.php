@@ -24,8 +24,8 @@
   }
 
   class userAgent {
-    //public $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs/";
-    public $log_path = "/var/log/nginx/";
+    # The below variables are for the production server
+    public $log_path = "/var/log/nginx";
     public $exec_find_path = "/usr/bin/find";
     public $exec_xargs_path = "/usr/bin/xargs";
     public $exec_gunzip_path = "/bin/gunzip";
@@ -38,6 +38,20 @@
     public $exec_wc_path = "/usr/bin/wc";
     public $exec_sed_path = "/bin/sed";
 
+    # The below variables are for testing on localhost
+    /*public $log_path = "/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Nginx Server Logs/01:12:19/gzip_logs";
+    public $exec_find_path = "find";
+    public $exec_xargs_path = "xargs";
+    public $exec_gunzip_path = "gunzip";
+    public $exec_grep_path = "grep";
+    public $exec_awk_path = "awk";
+    public $exec_cut_path = "cut";
+    public $exec_echo_path = "echo";
+    public $exec_sort_path = "sort";
+    public $exec_uniq_path = "uniq";
+    public $exec_wc_path = "wc";
+    public $exec_sed_path = "sed";*/
+
     public function printCurrentUserAgent() {
       print("<p>Your User Agent: \"" . $_SERVER['HTTP_USER_AGENT'] . "\"</p></br>");
     }
@@ -47,7 +61,13 @@
       print("<pre><code>");
 
       // Removing the awk command between gunzip and cut causes the command to organize access by IP Address instead of User Agent
-      system($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " . $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " . $this->exec_awk_path . " -F'\"' '/GET/ {print $6}' | " . $this->exec_cut_path . " -d' ' -f1 | " . $this->exec_sort_path . " | " . $this->exec_uniq_path . " -c | " . $this->exec_sort_path . " -rn");
+      system($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " .
+      $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " .
+      $this->exec_awk_path . " -F'\"' '/GET/ {print $6}' | " .
+      $this->exec_cut_path . " -d' ' -f1 | " .
+      $this->exec_sort_path . " | " .
+      $this->exec_uniq_path . " -c | " .
+      $this->exec_sort_path . " -rn");
 
       print("</code></pre></p>");
     }

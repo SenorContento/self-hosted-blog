@@ -9,13 +9,14 @@
   $mainPage->printDemoHeaders();
   $mainPage->printBills();
   $mainPage->printOtherTags();
+  //$mainPage->printArchiveLink();
 
   $loadPage->loadFooter();
 
   class homeworkAssignmentOne {
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 1</a>');
-      print('<br>');
+      //print('<br>');
     }
 
     public function printTable() {
