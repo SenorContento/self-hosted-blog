@@ -91,7 +91,7 @@
       print("\n\t" . '}');
 
       //print("mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));");
-      print('const textFields = document.querySelectorAll(\'.mdc-text-field\');');
+      print("\n\n" . 'const textFields = document.querySelectorAll(\'.mdc-text-field\');');
       print("\n\t" . 'for (const textField of textFields) {');
       print("\n\t\t" . 'mdc.textField.MDCTextField.attachTo(textField);');
       print("\n\t" . '}');
