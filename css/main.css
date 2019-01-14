@@ -18,6 +18,10 @@ html, body { /* For JET - This code resets any potential borders a browser may h
 
 */
 
+.greet-message {
+  color: #90EE90;
+}
+
 #container {
   margin-left: 8px;
   margin-right: 8px;
