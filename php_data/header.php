@@ -41,8 +41,7 @@
     }
 
     public function printStylesheets() {
-      print("\n\n\t\t" . '<link rel="stylesheet" href="/css/assignment1.css">');
-      print("\n\t\t" . '<link rel="stylesheet" href="/css/main.css">');
+      print("\n\n\t\t" . '<link rel="stylesheet" href="/css/main.css">');
 
       //print("\n\n\t\t" . '<link rel="stylesheet" href="/css/material-components-web.min.css">');
       //print("\n\n\t\t" . '<link rel="stylesheet" href="/css/material-components-web.css">');

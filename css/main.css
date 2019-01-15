@@ -1,35 +1,24 @@
+/* Explanation for JET
+ *
+ * Different browsers have different predefined CSS styles to help make a page "legible"
+ * when the author ultimately doesn't provide them. Many developers don't realize this
+ * and they don't add every tag necessary to force their page to look the same cross-browser.
+ *
+ * So, I am having to manually reset some CSS values so I can have my page look right when I
+ * develop my site for Chrome. I will eventually add every CSS tag necessary to work cross-browser.
+ *
+ * For now, I am just developing for Chrome and fixing for Firefox.
+ */
+
 /* CSS Reset - https://stackoverflow.com/a/15249332/6828099
  * Also Useful - https://github.com/murtaugh/HTML5-Reset/ */
-html, body { /* For JET - This code resets any potential borders a browser may have. I set them back manually in #container */
+
+/* Header Tags Below */
+
+/* For JET - This code resets any potential borders a browser may have. I set them back manually in #container */
+html, body {
   margin: 0;
   padding: 0; /* This is the only one that matters on Chrome. Also, the html tag doesn't have any borders on Chrome */
-}
-
-/* Explanation for JET
-
-  Different browsers have different predefined CSS styles to help make a page "legible"
-  when the author ultimately doesn't provide them. Many developers don't realize this
-  and they don't add every tag necessary to force their page to look the same cross-browser.
-
-  So, I am having to manually reset some CSS values so I can have my page look right when I
-  develop my site for Chrome. I will eventually add every CSS tag necessary to work cross-browser.
-
-  For now, I am just developing for Chrome and fixing for Firefox.
-
-*/
-
-.greet-message {
-  color: #90EE90;
-}
-
-#container {
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px; /* Doesn't do anything on Chrome */
-}
-
-code {
-  color: #90EE90;
 }
 
 header {
@@ -41,4 +30,105 @@ header {
 
   position: relative;
   border-bottom: 1px dashed #b5e853;
+}
+
+/* Body Tags Below */
+
+body {
+  background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
+}
+
+#container {
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px; /* Doesn't do anything on Chrome */
+}
+
+code { /* This could be made more like Jekyll on Github pages. Just remember the <pre> tag */
+  color: #90EE90;
+}
+
+pre {
+  /* This tag was intentionally left blank */
+}
+
+/* <Fieldset> and <Legend> go hand in hand */
+
+fieldset { /* The fieldset tag has the margin set so it is not right on top of other tags */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+fieldset legend {
+  color: #90EE90;
+}
+
+/* Anchor Tag */
+
+a {
+  color: #63c0f5;
+}
+
+a:visited {
+  color: #A200D9;
+}
+
+/* Header Tags */
+
+h1, h2, h3, h4, h5, h6 {
+  color: #90EE90;
+}
+
+/* Table Modifiers */
+/* I intentionally left the <table> tag in front of the other table-related tags */
+/* Normal usage will always require that the related tags be a child of <table> */
+
+table {
+  font-family: sans-serif;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  color: #90EE90;
+}
+
+/* Table Header */
+
+table th {
+  background-color: green;
+  color: #ffffff;
+}
+
+/* Table Data */
+
+table td {
+  color: #90EE90;
+}
+
+/* Table Row */
+
+table tr:nth-child(odd) {
+  color: #90EE90;
+  background-color: black;
+}
+
+table tr:nth-child(even) {
+  color: #90EE90;
+  background-color: #202020;
+}
+
+/* List Item */
+/* The only reason I don't put <ul> before <li> is because of <ol> existing. */
+
+li {
+  color: #90EE90;
+}
+
+/* Paragraph */
+
+p {
+  color: #90EE90;
 }

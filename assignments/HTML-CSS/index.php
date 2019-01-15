@@ -1,4 +1,20 @@
 <?php
+  function customPageHeader() {
+    print("\n\t\t" . '<style>' .
+    "\n\t\t\t" . 'img.assignment1 {' .
+    "\n\t\t\t\t" . 'max-width: 100px;' .
+    "\n\t\t\t\t" . 'height: 100px;' .
+    "\n\t\t\t" . '}' .
+    "\n\t\t" . '</style>');
+
+    /*
+      img.assignment1 {
+        max-width: 100px;
+        height: 100px;
+      }
+    */
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentOne();
 
@@ -84,7 +100,7 @@
           <legend class="iamlegend">Other Tags</legend>
           <p>This is in a paragraph tag!!!</p>
           <br/>
-          <img src="/images/png/WhatIs42-Logo.png"
+          <img class="assignment1" src="/images/png/WhatIs42-Logo.png"
                 alt="Logo of Personal Enlightenment!!!"
                 title="Logo of Personal Enlightenment!!!"></img>
           <!--  If for some reason you wanted the Gimp Project File, it is located at /images/xcf/WhatIs42-Logo.xcf -->
