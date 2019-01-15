@@ -6,7 +6,6 @@ const resourceList = [
   '/manifest.json',
   '/service-worker.js',
 
-  '/css/assignment1.css',
   '/css/main.css',
 
   '/images/png/SenorContento-1024x1024.png',
