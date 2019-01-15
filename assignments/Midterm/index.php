@@ -17,8 +17,8 @@
     }
 
     public function printIndex() {
-      print('<a href="Part-1" style="text-align: center;display: block">Go to Homework Assignment 6 - Midterm (Part 1)</a>');
-      print('<a href="Part-2" style="text-align: center;display: block">Go to Homework Assignment 7 - Midterm (Part 2)</a>');
+      print('<a href="Part_1" style="text-align: center;display: block">Go to Homework Assignment 6 - Midterm (Part 1)</a>');
+      print('<a href="Part_2" style="text-align: center;display: block">Go to Homework Assignment 7 - Midterm (Part 2)</a>');
     }
   }
 

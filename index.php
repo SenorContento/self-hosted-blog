@@ -36,7 +36,7 @@
 
   class mainPage {
     public function mainBody() {
-      print('<a href="/assignments/HTML-CSS/">Assignment 1 - HTML-CSS</a>');
+      print('<a href="/assignments/">Class Assignments</a>');
 
       print('<br><br>');
       print('<a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>');
