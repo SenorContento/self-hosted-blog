@@ -1,0 +1,27 @@
+.more {
+  display: none;
+  position: absolute;
+  background: #151515 url("../images/bkg.png") 0 0;
+  border: 1px dashed #b5e853;
+}
+
+.more > ::content a {
+  display: block;
+  /* padding: 5px 7px; */ /* Padding Makes the Content Inside Smaller */
+}
+
+#arrowup {
+  display: none;
+}
+
+#dropdown {
+  cursor: pointer;
+}
+
+#hidden {
+  display: none;
+}
+
+.button {
+  
+}
