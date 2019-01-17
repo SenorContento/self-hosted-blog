@@ -41,8 +41,11 @@
       maybe on a smart watch. I would like to figure out the solution, (maybe use viewport or a css version
       of viewport to switch width sizes). This won't be played with for class as I am getting rid of these
       menus once I get Material Design working how I want it.
+
+    Also, Chrome Devtools isn't perfect in simulating a real device. I added my LG G5 and it matches perfectly
+      for Devtools, but is every so slightly off when it comes to my real phone. I used "width: 75%"" for my phone.
   */
-  width: 75%;
+  width: 74%;
 }
 
 .button {
