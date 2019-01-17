@@ -6,11 +6,11 @@
 
   $loadPage = new loadPage();
   $fails = new PHPMyAdmin_Fails();
+  $fails->setVars();
 
   if(isset($_GET['download_csv'])) $fails->generateTable();
 
   $loadPage->loadHeader();
-  $fails->setVars();
   $fails->printTable();
   $loadPage->loadFooter();
 
@@ -122,8 +122,8 @@
       print("<p>Failed Attempts at Hacking PHPMyAdmin:</p>");
 
       print("<pre><code>");
-      print("Unique Fails: " . $uniq_failcount);
-      print("Total Fails: " . $failcount);
+      print("Unique Fails: " . preg_replace('/\s+/', '', $uniq_failcount) . "\n");
+      print("Total Fails: " . preg_replace('/\s+/', '', $failcount));
       print("</pre></code>");
 
       print("<br><br><table>");

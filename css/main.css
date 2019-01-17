@@ -53,6 +53,8 @@ body {
 
 code { /* This could be made more like Jekyll on Github pages. Just remember the <pre> tag */
   color: #90EE90;
+  display: inline-block;
+  text-align: left;
 }
 
 pre {
