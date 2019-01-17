@@ -171,11 +171,25 @@
       print('<div class="carousel">');
 
       print('<!-- So, for some reason the title attribute does not work on mobile.' .
-            'It should work as it works on XKCD\'s website. I suspect is has something to' .
-            'do with the anchor tag that surrounds it. -->');
+            "\t" . 'It should work as it works on XKCD\'s website. I suspect is has something to' .
+            "\t" . 'do with the anchor tag that surrounds it.' .
+            "\n" .
+            'To solve this problem, I am manually putting the title below the images.' .
+            "\t" . 'Now, I need to just figure out if I only want it on mobile devices -->');
 
       foreach($slides as $url => $title) {
-        print('<a href="' . $url . '" title="' . $title . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></a>');
+        print('<div class="mySlides">' .
+              '<a href="' . $url . '" ' .
+                 'title="' . $title . '">' .
+
+              '<img class="mySlidesImage"' .
+              'alt="' . $title . '" ' .
+              'title="' . $title . '" ' .
+              'src="' . $url . '">' .
+              '</a>' .
+
+              '<p>' . $title . '</p>' .
+              '</div>');
       }
 
       /*foreach($slides as $element) {

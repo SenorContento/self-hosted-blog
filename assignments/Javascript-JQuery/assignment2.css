@@ -137,11 +137,17 @@
 
 /* The code below is specifically for modifying the slideshow */
 /* https://www.w3schools.com/howto/howto_js_slideshow.asp */
+div.mySlides {
+  /* This CSS class was intentionally left blank.
+     It exists to have javascript identify tags to scroll through */
+}
 
-img.mySlides {
+img.mySlidesImage {
   width: 100%;
 }
 
 div.carousel {
   max-width: 500px;
+  position: relative;
+  margin: auto;
 }
