@@ -175,7 +175,7 @@
             'do with the anchor tag that surrounds it. -->');
 
       foreach($slides as $url => $title) {
-        print('<a href="' . $url . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></a>');
+        print('<a href="' . $url . '" title="' . $title . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></a>');
       }
 
       /*foreach($slides as $element) {
