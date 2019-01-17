@@ -171,7 +171,7 @@
       print('<div class="carousel">');
 
       foreach($slides as $url => $title) {
-        print('<a href="' . $url . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></img></a>');
+        print('<a href="' . $url . '" title="' . $title . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></img></a>');
       }
 
       /*foreach($slides as $element) {
