@@ -37,25 +37,29 @@
   float: left;
   max-width: 75%;
 
-  /* The buttons do have a problem where on a ridiculously tiny screen (tested in Chrome Dev Tools),
-      the buttons expand outside the div, but those screen sizes shouldn't exist in real life, except
-      maybe on a smart watch. I would like to figure out the solution, (maybe use viewport or a css version
-      of viewport to switch width sizes). This won't be played with for class as I am getting rid of these
-      menus once I get Material Design working how I want it.
-
-    Also, Chrome Devtools isn't perfect in simulating a real device. I added my LG G5 and it matches perfectly
-      for Devtools, but is every so slightly off when it comes to my real phone. I used "width: 75%"" for my phone.
-      "width: 74%" matches perfectly with my real phone, but it is now 1 pixel too small.
-  */
-
   width: 75%;
 }
 
-@media (max-width: 600px) {
+/* This is an attempt to fix the fact the button is 1 pixel too large
+    on my cellphone.
+*/
+
+@media (min-width: 210px and max-width: 600px) {
   .menu_button {
     width: 74%;
   }
 }
+
+/* I am not going to try to support this small of a size.
+    It only exponentially gets more offset and I doubt anyone
+    would use a screen that large to visit this site.
+
+@media (max-width: 208px) {
+  .menu_button {
+    width: 10%;
+  }
+}
+*/
 
 .button {
   /* Allows button to be above hidden div tag */
