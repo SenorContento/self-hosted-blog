@@ -172,7 +172,7 @@
 
       print('<!-- So, for some reason the title attribute does not work on mobile.' .
             'It should work as it works on XKCD\'s website. I suspect is has something to' .
-            'do with the anchor tag that surrounds it.-->');
+            'do with the anchor tag that surrounds it. -->');
 
       foreach($slides as $url => $title) {
         print('<a href="' . $url . '" title="' . $title . '" alt="' . $title . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></img></a>');
