@@ -29,9 +29,11 @@
     public function printCSSAlignment() {
       print('<div style="text-align: center;">');
       print('<div style="display: inline-block; text-align: left;">');
+      print('<h1>');
     }
 
     public function printEndCSSAlignment() {
+      print('</h1>');
       print('</div></div>');
     }
 

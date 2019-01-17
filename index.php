@@ -36,10 +36,12 @@
 
   class mainPage {
     public function mainBody() {
+      print('<div style="display: inline-block; text-align: left;"><h1>');
       print('<a href="/assignments/">Class Assignments</a>');
+      print('</br>');
 
-      print('<br><br>');
       print('<a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>');
+      print('</h1></div>');
     }
   }
 ?>
