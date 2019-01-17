@@ -50,11 +50,11 @@
   }
 }
 
-/*@media (pointer:coarse) {
+@media (pointer:coarse) {
   .menu-button {
     width: 74%;
   }
-}*/
+}
 
 /* I am not going to try to support this small of a size.
     It only exponentially gets more offset and I doubt anyone
