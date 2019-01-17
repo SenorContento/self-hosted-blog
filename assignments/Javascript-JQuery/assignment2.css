@@ -40,15 +40,11 @@
   width: 75%;
 }
 
-.menu-button {
-  width: 74%;
-}
-
 /* This is an attempt to fix the fact the button is 1 pixel too large
     on my cellphone.
 */
 
-@media all (min-width: 210px) and (max-width: 700px) {
+@media all (min-width: 210px) and (max-width: 500px) {
   .menu-button {
     width: 74%;
   }
