@@ -40,15 +40,25 @@
   width: 75%;
 }
 
+.menu-button {
+  width: 74%;
+}
+
 /* This is an attempt to fix the fact the button is 1 pixel too large
     on my cellphone.
 */
 
 @media all (min-width: 210px) and (max-width: 700px) {
-  .menu_button {
+  .menu-button {
     width: 74%;
   }
 }
+
+/*@media (pointer:coarse) {
+  .menu-button {
+    width: 74%;
+  }
+}*/
 
 /* I am not going to try to support this small of a size.
     It only exponentially gets more offset and I doubt anyone
