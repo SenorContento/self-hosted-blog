@@ -9,6 +9,9 @@ Disallow: /nogooglebot/
 # Add All
 User-agent: *
 Disallow: /apc/
+Disallow: /test/
+Disallow: /errors/
+
 Allow: /
 Allow: /humans.txt
 

@@ -2,7 +2,7 @@
 const CACHE_NAME = 'cache-v1';
 
 const resourceList = [
-  '/offline/index.php',
+  '/errors/offline/index.php',
   '/manifest.json',
   '/service-worker.js',
 
@@ -31,7 +31,7 @@ self.addEventListener('fetch', event => {
     return response || fetch(event.request);
   })
   .catch(function() {
-    return caches.match('/offline/index.php');
+    return caches.match('/errors/offline/index.php');
   })
 );
 
