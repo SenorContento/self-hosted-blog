@@ -6,7 +6,7 @@
 
   class loadFooter {
     public function printStartFooter() {
-      print("\n\t\t" . '</div>');
+      print("\n\t\t" . '</div>' . '</center>');
       print("\n\t" . '</body>');
     }
 

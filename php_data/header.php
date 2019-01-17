@@ -76,7 +76,8 @@
     }
 
     public function printStartBody() {
-      print("\n\t" . "<body>");
+      print("\n\t" . "<body>" .
+      "<center>");
     }
 
     public function printNotificationMessage() {

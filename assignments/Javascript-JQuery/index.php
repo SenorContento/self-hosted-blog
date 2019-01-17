@@ -8,19 +8,59 @@
     print("\n\t\t" . '<!-- Since service workers cannot save content offline that isn\'t from the same host, if I use it for offline use, I will change to the internal JQuery script -->');
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
 
+    print("\n\n\t\t" . '<!-- The script below changes the way the dropdown menu functions -->');
     print("\n\n\t\t" . '<script>' .
-          'function dropDownTag() {' .
-             'var hidden = document.getElementById("hidden");' .
-	           'if(hidden.style.display == \'none\' || hidden.style.display == \'\') {' .
-	              'hidden.style.display = \'block\';' .
-	              'this.$.arrowup.style.display = \'inline\';' .
-	              'this.$.arrowdown.style.display = \'none\';' .
-	           '} else {' .
-	              'hidden.style.display = \'none\';' .
-	              'this.$.arrowup.style.display = \'none\';' .
-	              'this.$.arrowdown.style.display = \'inline\';' .
-	           '}' .
-           '}' . '</script>');
+          "\n\t\t\t" . '$(document).ready(function() {' .
+          "\n\t\t\t\t" .   '$("#dropdown").click(function() {' .
+          //"\n\t\t\t\t\t" .    'alert("Display: " + $("#hidden").css("display"));' .
+          "\n\t\t\t\t\t" .    'if($("#hidden").css("display") == \'none\' || $("#hidden").css("display") == \'\') {' .
+          "\n\t\t\t\t\t\t" .      '$("#hidden").css(\'display\', \'inline-block\');' .
+          "\n\t\t\t\t\t\t" .      '$("#arrowup").css(\'display\', \'inline\');' .
+          "\n\t\t\t\t\t\t" .      '$("#arrowdown").css(\'display\', \'none\');' .
+          "\n\t\t\t\t\t" .    '} else {' .
+          "\n\t\t\t\t\t\t" .      '$("#hidden").css(\'display\', \'none\');' .
+          "\n\t\t\t\t\t\t" .      '$("#arrowup").css(\'display\', \'none\');' .
+          "\n\t\t\t\t\t\t" .      '$("#arrowdown").css(\'display\', \'inline\');' .
+          "\n\t\t\t\t\t" .    '}' .
+          "\n\t\t\t\t" .   '})' .
+          "\n\t\t\t" . '});' . '</script>');
+
+    print("\n\n\t\t" . '<!-- The script below changes the way the more link functions -->');
+    print("\n\n\t\t" . '<script>' .
+          "\n\t\t\t" . '$(document).ready(function() {' .
+
+          "\n\t\t\t\t" .   '$("#show-li").click(function() {' .
+          "\n\t\t\t\t\t" .      '$("#show-li").css(\'display\', \'none\');' .
+          "\n\t\t\t\t\t" .      '$("#hidden-more-link").css(\'display\', \'block\');' .
+          "\n\t\t\t\t" .   '})' .
+
+          "\n\t\t\t\t" .   '$("#hideme-more-link").click(function() {' .
+          "\n\t\t\t\t\t" .      '$("#show-li").css(\'display\', \'inline\');' .
+          "\n\t\t\t\t\t" .      '$("#hidden-more-link").css(\'display\', \'none\');' .
+          "\n\t\t\t\t" .   '})' .
+
+          "\n\t\t\t" . '});' . '</script>');
+
+    print("\n\n\t\t" . '<!-- The script below changes the way the slideshow functions -->');
+    print("\n\t\t" . '<!-- The code was borrowed from https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_slideshow_rr -->');
+    print("\n\t\t" . '<script>' .
+          "\n\t\t" . '$(document).ready(function() {' .
+          "\n\t\t\t" . 'var myIndex = 0;' .
+          "\n\t\t\t" . 'carousel();' .
+
+          "\n\n\t\t\t" . 'function carousel() {' .
+              "\n\t\t\t" . 'var i;' .
+              "\n\t\t\t" . 'var x = document.getElementsByClassName("mySlides");' .
+              "\n\t\t\t" . 'for (i = 0; i < x.length; i++) {' .
+                "\n\t\t\t" . 'x[i].style.display = "none";' .
+              "\n\t\t\t" . '}' .
+              "\n\t\t\t" . 'myIndex++;' .
+              "\n\t\t\t" . 'if (myIndex > x.length) {myIndex = 1}' .
+              "\n\t\t\t" . 'x[myIndex-1].style.display = "block";' .
+              "\n\t\t\t" . 'setTimeout(carousel, 2000); // Change image every 2 seconds' .
+            "\n\t\t\t" . '}' .
+            "\n\t\t" . '});' .
+          "\n\t\t" . '</script>');
   }
 
   $loadPage = new loadPage();
@@ -29,13 +69,17 @@
   $loadPage->loadHeader();
 
   //$mainPage->printArchiveLink();
-  $mainPage->printWarning();
-  $mainPage->printDropDown("Test", "Example");
+  //$mainPage->printWarning();
+  $mainPage->printDropDown("Dropdown Menu Example", $mainPage->generateMenu());
+  $mainPage->printMoreLink("Show More Link Demo", $mainPage->generateParagraph());
+  $mainPage->printSlideshowSimple($mainPage->generateArrayofImages());
   //$mainPage->printArchiveLink();
 
   $loadPage->loadFooter();
 
   class homeworkAssignmentTwo {
+    public $exec_date_path = "/bin/date";
+
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 2</a>');
       //print('<br>');
@@ -45,18 +89,95 @@
       print('<center><h1>Assignment 2 has not been created yet! Please come back later!</h1></center>');
     }
 
+    public function generateMenu() {
+      $menu = '<a href="/" class="button menu-button">Main Page</a>' . '<br>' .
+              '<a href="/test/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' .
+              '<a href="https://www.google.com/" class="button menu-button">Google</a>';
+
+      return $menu;
+    }
+
+    public function generateParagraph() {
+      $menu = '<p>This is a demo paragraph that will be shown when the more link has been clicked!!!' .
+      '<br><br>' . 'Here\'s your Unix Timestamp in UTC: ' . shell_exec($this->exec_date_path . ' -u') . '</p>';
+
+      return $menu;
+    }
+
     public function printDropDown($title, $elements) {
-      print('<div class="inline-block">' .
+      print("<fieldset>" .
+            "<legend>" . "Dropdown Example" . "</legend>");
+
+      print('<div id="dropdown-div">' .
               '<a id="dropdown" class="button">' .
                 $title .
                 '<span id="arrowdown">&#x25BC;</span>' .
                 '<span id="arrowup">&#x25B2;</span>' .
               '</a>' .
 
-              '<div id="hidden" onclick="dropDownTag();" class="more">' .
+              '<br>' .
+
+              '<div id="hidden" class="more">' .
                 $elements .
               '</div>' .
             '</div>');
+
+      print("</fieldset>");
+    }
+
+    public function printMoreLink($title, $elements) {
+      print("<fieldset>" .
+            "<legend>" . "More Link Example" . "</legend>");
+
+      print('<ul class="show-li-ul">' .
+              '<li id="show-li">' .
+                '<a id="showme">' . $title . '</a>' .
+              '</li>' .
+            '</ul>');
+
+      print('<div id="hidden-more-link" class="show-more">' .
+              $elements .
+              '<br>' .
+              '<a id="hideme-more-link">Hide ' . $title . '</a>' .
+            '</div>');
+
+      print("</fieldset>");
+    }
+
+    public function generateArrayofImages() {
+      $slideString = "/images/jpg/that-red-tree/original.jpg" . ',' .
+                     "/images/jpg/that-red-tree/crayon.jpg" . ',' .
+                     "/images/jpg/that-red-tree/boxy.jpg" . ',' .
+                     "/images/jpg/that-red-tree/red-yellow-shift.jpg" . ',' .
+                     "/images/jpg/that-red-tree/red-shift-solo.jpg";
+
+      $slides = explode(',', $slideString);
+
+      return $slides;
+    }
+
+    public function printSlideshowSimple($slides) {
+      print("<fieldset>" .
+            "<legend>" . "Slideshow Example" . "</legend>");
+
+      print('<div class="carousel">');
+
+      /* Use the commented code if you wanted to, say, put alt-text in the images.
+
+      $array = array("key1" => "elem_1","key2" => "elem_2","key3" => "elem_3","key4" => "elem_4");
+      foreach($array as $key => $element) {
+        echo $key . " - " . $element."<br />";
+      }
+
+      */
+
+      foreach($slides as $element) {
+        print('<img class="mySlides" src="' . $element . '"></img>');
+      }
+
+      print('</div>');
+
+      print("</fieldset>");
     }
   }
 

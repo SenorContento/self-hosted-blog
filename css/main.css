@@ -120,8 +120,13 @@ table tr:nth-child(even) {
   background-color: #202020;
 }
 
-/* List Item */
+/* Lists and Items */
 /* The only reason I don't put <ul> before <li> is because of <ol> existing. */
+
+ul, ol {
+  display: inline-block;
+}
+
 
 li {
   color: #90EE90;
