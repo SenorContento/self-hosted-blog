@@ -25,6 +25,7 @@
       print('<!DOCTYPE html>');
       print("\n" . '<html lang="en">');
       print("\n\t" . '<head>');
+      print("\n\t\t" . '<!-- Server Name: "' . getenv('alex.server.name') . '" and Server Type: "' . getenv('alex.server.type') . '" -->');
     }
 
     public function printTitle($pageTitle) {
