@@ -57,7 +57,7 @@
               "\n\t\t\t" . 'myIndex++;' .
               "\n\t\t\t" . 'if (myIndex > x.length) {myIndex = 1}' .
               "\n\t\t\t" . 'x[myIndex-1].style.display = "block";' .
-              "\n\t\t\t" . 'setTimeout(carousel, 2000); // Change image every 2 seconds' .
+              "\n\t\t\t" . 'setTimeout(carousel, 4000); // Change image every 4 seconds' .
             "\n\t\t\t" . '}' .
             "\n\t\t" . '});' .
           "\n\t\t" . '</script>');
@@ -145,13 +145,19 @@
     }
 
     public function generateArrayofImages() {
-      $slideString = "/images/jpg/that-red-tree/original.jpg" . ',' .
+      /*$slideString = "/images/jpg/that-red-tree/original.jpg" . ',' .
                      "/images/jpg/that-red-tree/crayon.jpg" . ',' .
                      "/images/jpg/that-red-tree/boxy.jpg" . ',' .
                      "/images/jpg/that-red-tree/red-yellow-shift.jpg" . ',' .
                      "/images/jpg/that-red-tree/red-shift-solo.jpg";
 
-      $slides = explode(',', $slideString);
+      $slides = explode(',', $slideString);*/
+
+      $slides = array("/images/jpg/that-red-tree/original.jpg" => "The original photo before I modified it in Gimp and G'Mic.",
+                     "/images/jpg/that-red-tree/crayon.jpg" => "Heavy use of G'Mic to produce this gridlike 'drawing.'",
+                     "/images/jpg/that-red-tree/boxy.jpg" => "Used G'Mic to apply boxes to screen and adjust images to boxes.",
+                     "/images/jpg/that-red-tree/red-yellow-shift.jpg" => "Used plain Gimp to apply 2 different color shifts.",
+                     "/images/jpg/that-red-tree/red-shift-solo.jpg" => "Used plain Gimp to apply a single color shift.");
 
       return $slides;
     }
@@ -160,20 +166,17 @@
       print("<fieldset>" .
             "<legend>" . "Slideshow Example" . "</legend>");
 
+      print("<p>You can click the images to go to the originals. Also, the images have descriptions set using alt and title atttributes. The slideshow is set to 4 seconds as you can click the images to admire them for longer.");
+
       print('<div class="carousel">');
 
-      /* Use the commented code if you wanted to, say, put alt-text in the images.
-
-      $array = array("key1" => "elem_1","key2" => "elem_2","key3" => "elem_3","key4" => "elem_4");
-      foreach($array as $key => $element) {
-        echo $key . " - " . $element."<br />";
+      foreach($slides as $url => $title) {
+        print('<a href="' . $url . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></img></a>');
       }
 
-      */
-
-      foreach($slides as $element) {
+      /*foreach($slides as $element) {
         print('<img class="mySlides" src="' . $element . '"></img>');
-      }
+      }*/
 
       print('</div>');
 
