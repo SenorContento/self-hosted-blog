@@ -42,6 +42,7 @@ header {
 
 body {
   background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
+  text-align: center;
 }
 
 #container {

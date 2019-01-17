@@ -1,8 +1,8 @@
 <?php
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="assignment2.css">');
-    print("\n\t\t" . '<script src="https://code.jquery.com/jquery-3.3.1.js"' .
-          'integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="' .
+    print("\n\t\t" . '<script src="https://code.jquery.com/jquery-3.3.1.js" ' .
+          'integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" ' .
           'crossorigin="anonymous"></script>');
     print("\n\t\t" . '<!-- The integrity hash is explained at https://www.srihash.org/ -->');
     print("\n\t\t" . '<!-- Since service workers cannot save content offline that isn\'t from the same host, if I use it for offline use, I will change to the internal JQuery script -->');
@@ -175,7 +175,7 @@
             'do with the anchor tag that surrounds it. -->');
 
       foreach($slides as $url => $title) {
-        print('<a href="' . $url . '" title="' . $title . '" alt="' . $title . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></img></a>');
+        print('<a href="' . $url . '"><img class="mySlides" alt="' . $title . '" title="' . $title . '" src="' . $url . '"></a>');
       }
 
       /*foreach($slides as $element) {
