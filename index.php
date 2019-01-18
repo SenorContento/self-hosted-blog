@@ -41,6 +41,8 @@
       print('</br>');
 
       print('<a href="/test/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>');
+      print('</br>');
+      print('<a href="/apis/">3rd Party Databases and APIs to Checkout</a>');
       print('</h1></div>');
     }
   }

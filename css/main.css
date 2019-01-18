@@ -135,6 +135,12 @@ table tr:nth-child(even) {
 
 ul, ol {
   display: inline-block;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+li::before {
+  content: ">> ";
 }
 
 li {

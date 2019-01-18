@@ -3,17 +3,40 @@
 # I just left this here as an example.
 # It could also be used as a trap for bad bots too.
 # I can track all attempted access URLs in my server log.
-User-agent: Googlebot
-Disallow: /nogooglebot/
+
+# Using Google's robot.txt Tester (https://www.google.com/webmasters/tools/robots-testing-tool),
+# it appears that Google will ignore the asterisk agent if it has a listing specifically for the bot.
+# I am going to have to copy directives just to make sure Google doesn't index development pages.
+
+# Also, the order doesn't matter (at least not to Google), but you have to explicitly put slashes
+# at the end of URLs or it will generate false positives.
+# Example "Disallow: /temp" will block "/temporary" while
+# "Disallow: /temp/" will not block "/temporary", but instead will block "/temp/hello".
+# The slash does not get special treatment and Google stops parsing at the end of the directive string.
+# Do know that if you don't redirect your URLs to the slashed equivalent version, it may not follow the directive.
+# I have my server set to redirect to the slashed equivalent URLs and it uses a 301 redirect which will keep Google
+# from indexing the original URL.
 
 # Add All
 User-agent: *
+Allow: /
+Allow: /humans.txt
 Disallow: /apc/
 Disallow: /test/
 Disallow: /errors/
 
-Allow: /
-Allow: /humans.txt
+# A data collection bot for public analysis. URL: https://commoncrawl.org/
+# Since I strongly believe in open-source and open-data, I will allow it to analyse everything it can see.
+# I am going to tell it to slow down as my site isn't that big and I don't need it killing my server.
+User-agent: CCBot/2.0
+Crawl-Delay: 2
+Allow: *
+
+# I will enable this when I explicitly need to add a directive for Google or it's other bots.
+#User-agent: Googlebot
+#Disallow: /apc/
+#Disallow: /test/
+#Disallow: /errors/
 
 #Sitemap Does Not Exist Yet
 #Sitemap: /sitemap.xml
