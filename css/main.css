@@ -82,6 +82,19 @@ a:visited {
   color: #A200D9;
 }
 
+a.index-link {
+  text-align: left;
+  padding: 5px;
+  display: block;
+  text-decoration: none;
+}
+
+a.index-link::before {
+  color: #90EE90;
+  text-decoration: none;
+  content: ">> ";
+}
+
 /* Header Tags */
 
 h1, h2, h3, h4, h5, h6 {
