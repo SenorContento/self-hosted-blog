@@ -190,6 +190,7 @@ footer {
   margin-right: 8px;
 }
 
-#clear-cache {
+.reset-service-worker {
   text-decoration: underline;
+  cursor: pointer;
 }
