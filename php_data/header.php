@@ -72,13 +72,14 @@
 
       print("\n" . '
         <script>
-          if (\'serviceWorker\' in navigator) {
+          // Push Notifications - https://developers.google.com/web/fundamentals/codelabs/push-notifications/
+          if (\'serviceWorker\' in navigator && \'PushManager\' in window) {
             console.log("Will the service worker register?");
             navigator.serviceWorker.register(\'/service-worker.js\')
               .then(function(reg) {
-                console.log("Yes, it did.");
+                console.log("Yes, it registered.");
               }).catch(function(err) {
-                console.log("No, it didn\'t. This happened: ", err);
+                console.log("No, it didn\'t register. This happened: ", err);
               });
             }
         </script>');

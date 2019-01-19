@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    
+    // Intentionally left blank!!!
   }
 
   $loadPage = new loadPage();
