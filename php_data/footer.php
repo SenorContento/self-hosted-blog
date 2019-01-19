@@ -1,7 +1,7 @@
 <?php
   $loadFooter = new loadFooter();
   $loadFooter->printStartFooter();
-  $loadFooter->printVisibleFooter();
+  //$loadFooter->printVisibleFooter();
   $loadFooter->printCustomPageFooter();
   $loadFooter->printEndFooter();
 
