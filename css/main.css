@@ -166,3 +166,26 @@ li {
 p {
   color: #90EE90;
 }
+
+/* Footer Tag */
+
+footer {
+  text-align: center;
+  /*margin: 20px auto 0 auto;*/ /* Top Right Bottom Left */
+  padding: 0 0 0.5% 0; /* Top Right Bottom Left */
+  bottom: 0;
+
+  display: block;
+
+  /*background-color: #ffffff;*/
+
+  width: 100%;
+  position: absolute;
+  border-top: 1px dashed #b5e853;
+}
+
+/* This is to force some padding to the header message so it is not right on the edge of the screen in mobile devices */
+.footer-message {
+  margin-left: 8px;
+  margin-right: 8px;
+}
