@@ -15,6 +15,8 @@
   $loadHeader->printScripts();
 
   $loadHeader->printIcons();
+  $loadHeader->printServiceWorker();
+
   $loadHeader->printCustomPageHeader();
   $loadHeader->printEndHeader();
   $loadHeader->printStartBody();
@@ -63,6 +65,23 @@
     public function printIcons() {
       print("\n\n\t\t" . '<link rel="icon" href="/images/svg/SenorContento.svg">');
       print("\n\t\t" . '<link rel="icon" href="/images/png/SenorContento-1024x1024.png">');
+    }
+
+    public function printServiceWorker() {
+      print("\n\n\t\t" . '<link rel="manifest" href="/manifest.json">');
+
+      print("\n" . '
+        <script>
+          if (\'serviceWorker\' in navigator) {
+            console.log("Will the service worker register?");
+            navigator.serviceWorker.register(\'/service-worker.js\')
+              .then(function(reg) {
+                console.log("Yes, it did.");
+              }).catch(function(err) {
+                console.log("No, it didn\'t. This happened: ", err);
+              });
+            }
+        </script>');
     }
 
     public function printCustomPageHeader() {
