@@ -7,7 +7,7 @@
 
   class loadFooter {
     public function printVisibleFooter() {
-      print("\n\t\t" . '<br><br><br><br><br>');
+      //print("\n\t\t" . '<br><br><br><br><br>');
       print("\n\t\t" . '<!-- For JET - I have been trying to figure out how to force the footer at the bottom of the page. I have not succeded yet, so I may ask for help later.-->');
       print("\n\t\t" . '<footer>' .
             "\n\t\t\t" . '<p class="footer-message">' .
