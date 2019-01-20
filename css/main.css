@@ -56,7 +56,7 @@ body {
 #container {
   margin-left: 8px;
   margin-right: 8px;
-  margin-bottom: 8px; /* Doesn't do anything on Chrome */
+  margin-bottom: 100px;
 }
 
 code { /* This could be made more like Jekyll on Github pages. Just remember the <pre> tag */
