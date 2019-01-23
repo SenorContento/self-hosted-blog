@@ -12,6 +12,8 @@ class generateSitemap {
   #public $exec_cut_path;
   public $exec_find_path;
   public $exec_awk_path;
+  public $exec_sed_path;
+  public $exec_sort_path;
 
   function setVars() {
     if(getenv('alex.server.type') === "production") {
@@ -21,14 +23,18 @@ class generateSitemap {
       #$this->exec_cut_path = "";
       $this->exec_find_path = "/usr/bin/find";
       $this->exec_awk_path = "/usr/bin/awk";
+      $this->exec_sed_path = "/bin/sed";
+      $this->exec_sort_path = "/usr/bin/sort";
 
     } else if(getenv('alex.server.type') === "development") {
       # The below variables are for testing on localhost
       #$this->exec_cat_path = "/bin/cat";
       $this->exec_grep_path = "/usr/bin/grep";
-      $this->exec_cut_path = "/usr/bin/cut";
+      #$this->exec_cut_path = "/usr/bin/cut";
       $this->exec_find_path = "/usr/local/bin/gfind";
       $this->exec_awk_path = "/usr/local/bin/gawk";
+      $this->exec_sed_path = "sed";
+      $this->exec_sort_path = "sort";
     }
   }
 
@@ -37,18 +43,32 @@ class generateSitemap {
     header("Content-Type: application/xml");
   }
 
+  public function grabURLs() {
+    # { find . -type d -print | sed 's!$!/!'; find . \! -type d; } | sort
+    #return ($this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
+    #        $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
+    #        $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
+    #        $this->exec_grep_path . ' -v "/sql_admin" | ');
+
+    return ('{ ' . $this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ -type d -print | ' .
+                   $this->exec_sed_path . " 's!$!/!'; " .
+                   $this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ \! -type d; } | ' .
+                   $this->exec_sort_path . ' | ' .
+                   $this->exec_sed_path . " 's/\/\//\//' | " . # To remove double slashed root
+
+                   $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
+                   $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
+                   $this->exec_grep_path . ' -v "/sql_admin" | '); # and sql_admin for all servers
+  }
+
   public function generateSitemapXML() {
     print('<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
           ' <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n");
 
-    $URLS = shell_exec($this->exec_find_path . ' ' .
-                       $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
-                       $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
-                       $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
-                       $this->exec_grep_path . ' -v "/sql_admin" | ' .
-                       $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print \"<url><loc>\"$2\"</loc></url>\" }'"); # and sql_admin for all servers
+    $URLs = shell_exec($this->grabURLs() .
+            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print \"<url><loc>\"$2\"</loc></url>\" }'");
 
-    $URLSArray = array_unique(explode("\n", $URLS));
+    $URLSArray = array_unique(explode("\n", $URLs));
 
     #var_dump($URLSArray); # Dumps Raw Variable - Useful for Debugging
 
@@ -81,14 +101,17 @@ class generateSitemap {
     #                         $this->exec_cut_path . ' -d\' \' -f2-');
     #$disallowedURLSArray = array_unique(explode("\n", $disallowedURLS));
 
-    $URLS = shell_exec($this->exec_find_path . ' ' .
-            $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
-            $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
-            $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
-            $this->exec_grep_path . ' -v "/sql_admin" | ' .
-            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'"); # and sql_admin for all servers
+    #$URLS = shell_exec($this->exec_find_path . ' ' .
+    #        $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
+    #        $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
+    #        $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
+    #        $this->exec_grep_path . ' -v "/sql_admin" | ' .
+    #        $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'"); # and sql_admin for all servers
 
-    $URLSArray = array_unique(explode("\n", $URLS));
+    $URLs = shell_exec($this->grabURLs() .
+            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'");
+
+    $URLSArray = array_unique(explode("\n", $URLs));
 
     #var_dump($URLSArray); # Dumps Raw Variable - Useful for Debugging
 
