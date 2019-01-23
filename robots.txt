@@ -39,5 +39,8 @@ Allow: *
 #Disallow: /test/
 #Disallow: /errors/
 
-#Sitemap can be alternated between text/plain and text/xml. I may add more formats later.
-Sitemap: /sitemap/
+# Sitemap can be alternated between text/plain and text/xml. I may add more formats later.
+# Apparently Google is not happy with urls like `/sitemap/` and it has to explicitly specify the domain.
+# Sitemap-Alex: /sitemap/ # This exists for a custom parser to use
+
+Sitemap: https://web.senorcontento.com/sitemap/
