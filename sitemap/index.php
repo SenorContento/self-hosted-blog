@@ -53,12 +53,13 @@ class generateSitemap {
     #        $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
     #        $this->exec_grep_path . ' -v "/sql_admin" | ');
 
+    #print("Host: " . $this->server_host . "\n");
+
     return ('{ ' . $this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ -type d -print | ' .
                    $this->exec_sed_path . " 's!$!/!'; " .
                    $this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ \! -type d; } | ' .
                    $this->exec_sort_path . ' | ' .
                    $this->exec_sed_path . " 's/\/\//\//' | " . # To remove double slashed root
-                   $this->exec_sed_path . " 's/^/" . $this->server_host . "/' | " . # Prepends URL to links
 
                    $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
                    $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
@@ -70,7 +71,7 @@ class generateSitemap {
           ' <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n");
 
     $URLs = shell_exec($this->grabURLs() .
-            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print \"<url><loc>\"$2\"</loc></url>\" }'");
+            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print \"<url><loc>" . $this->server_host . "\"$2\"</loc></url>\" }'");
 
     $URLSArray = array_unique(explode("\n", $URLs));
 
@@ -113,7 +114,7 @@ class generateSitemap {
     #        $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'"); # and sql_admin for all servers
 
     $URLs = shell_exec($this->grabURLs() .
-            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'");
+            $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print \"" . $this->server_host . "\"$2 }'");
 
     $URLSArray = array_unique(explode("\n", $URLs));
 
