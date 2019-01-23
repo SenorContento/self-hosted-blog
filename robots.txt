@@ -39,5 +39,5 @@ Allow: *
 #Disallow: /test/
 #Disallow: /errors/
 
-#Sitemap is text/plain
+#Sitemap can be alternated between text/plain and text/xml. I may add more formats later.
 Sitemap: /sitemap/
