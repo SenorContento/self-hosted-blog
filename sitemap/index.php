@@ -7,6 +7,7 @@ $mainPage->generateSitemapXMLHeaders();
 $mainPage->generateSitemapXML();
 
 class generateSitemap {
+  public $server_host;
   #public $exec_cat_path;
   public $exec_grep_path;
   #public $exec_cut_path;
@@ -18,6 +19,7 @@ class generateSitemap {
   function setVars() {
     if(getenv('alex.server.type') === "production") {
       # The below variables are for the production server
+      $this->server_host = getenv('alex.server.host');
       #$this->exec_cat_path = "";
       $this->exec_grep_path = "/bin/grep";
       #$this->exec_cut_path = "";
@@ -28,6 +30,7 @@ class generateSitemap {
 
     } else if(getenv('alex.server.type') === "development") {
       # The below variables are for testing on localhost
+      $this->server_host = getenv('alex.server.host');
       #$this->exec_cat_path = "/bin/cat";
       $this->exec_grep_path = "/usr/bin/grep";
       #$this->exec_cut_path = "/usr/bin/cut";
@@ -55,6 +58,7 @@ class generateSitemap {
                    $this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ \! -type d; } | ' .
                    $this->exec_sort_path . ' | ' .
                    $this->exec_sed_path . " 's/\/\//\//' | " . # To remove double slashed root
+                   $this->exec_sed_path . " 's/^/" . $this->server_host . "/' | " . # Prepends URL to links
 
                    $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
                    $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers

@@ -31,5 +31,9 @@
     public function printServerType() {
       print("<h1>The server's type is \"" . getenv('alex.server.type') . "\".</h1>");
     }
+
+    public function printServerHost() {
+      print("<h1>The recorded server's host is \"" . getenv('alex.server.host') . "\".</h1>");
+    }
   }
 ?>
