@@ -24,6 +24,7 @@ Allow: /humans.txt
 Disallow: /apc/
 Disallow: /test/
 Disallow: /errors/
+Disallow: /explanations/
 
 # A data collection bot for public analysis. URL: https://commoncrawl.org/
 # Since I strongly believe in open-source and open-data, I will allow it to analyse everything it can see.
@@ -38,5 +39,5 @@ Allow: *
 #Disallow: /test/
 #Disallow: /errors/
 
-#Sitemap Does Not Exist Yet
-#Sitemap: /sitemap.xml
+#Sitemap is text/plain
+Sitemap: /sitemap/
