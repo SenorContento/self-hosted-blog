@@ -34,6 +34,9 @@ class generateSitemap {
 
   public function generateSitemapTXTHeaders() {
     header("Content-Type: text/plain");
+
+    header("Content-Disposition: attachment;filename=sitemap.txt"); # So, Google requires me to put a .txt extension on plain text sitemaps. I am going to try to trick Google into accepting my sitemap as is.
+    header("Content-Transfer-Encoding: binary");
   }
 
   public function generateSitemapTXT() {
