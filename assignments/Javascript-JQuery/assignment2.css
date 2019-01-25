@@ -51,11 +51,20 @@
 
 /* I cannot get this to work on my real cell phone,
     so I am detecting the pointer instead */
-@media all (min-width: 210px) and (max-width: 500px) {
+/*@media all (min-width: 210px) and (max-width: 500px) {
+  .menu-button {
+    width: 74%;
+  }
+}*/
+
+/* It turns out I just needed to add another "and" statement */
+/*
+@media all and (min-width: 210px) and (max-width: 500px) {
   .menu-button {
     width: 74%;
   }
 }
+*/
 
 /* This actually works for my phone. I know it is iffy if it works
     on all mobile devices, but I am having trouble getting the

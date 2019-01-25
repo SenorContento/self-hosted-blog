@@ -1,0 +1,33 @@
+h1 {
+  /*color: blue;*/
+}
+
+table {
+  /*min-width: 1000px;*/
+}
+
+@media all and (min-width: 1025px) {
+  h1, b {
+    color: purple;
+  }
+
+  table {
+    /*min-width: 1000px;*/
+  }
+}
+
+@media all and (min-width: 400px) and (max-width: 1024px) {
+  h1, b {
+    color: red;
+  }
+
+  table {
+    /*min-width: 500px;*/
+  }
+}
+
+@media all and (max-width: 399px) {
+  h1, b {
+    color: white;
+  }
+}

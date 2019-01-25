@@ -180,6 +180,12 @@ p {
   color: #90EE90;
 }
 
+/* Text Modifiers */
+
+b, i {
+  color: #90EE90;
+}
+
 /* Footer Tag */
 
 footer {

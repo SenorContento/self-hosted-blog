@@ -7,7 +7,7 @@
   $mainPage->printCSSAlignment();
   $mainPage->printAssignment1(); //HTML-CSS
   $mainPage->printAssignment2(); //JavaScript-JQuery
-  //$mainPage->printAssignment3(); //Responsive
+  $mainPage->printAssignment3(); //Responsive
   //$mainPage->printAssignment4(); //PHP
   //$mainPage->printAssignment5(); //MySQL
 
