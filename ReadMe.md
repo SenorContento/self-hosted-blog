@@ -2,7 +2,7 @@
 [service-worker]: service-worker.js
 [atom-editor]: https://atom.io/
 [apc-stats]: https://web.senorcontento.com/apc/
-[issues-tab]: issues
+[issues-tab]: https://github.com/bgbrandongomez/self-hosted-blog/issues
 [PHPMyAdmin-fails]: https://web.senorcontento.com/test/failed_pma/
 [material-design]: https://material.io/
 
