@@ -1,7 +1,6 @@
 <?php
   function customPageHeader() {
     // Intentionally left blank!!!
-    // Test Commit
   }
 
   $loadPage = new loadPage();
