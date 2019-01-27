@@ -41,9 +41,7 @@
     function setVars() {
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
-        #$this->log_path = "/var/log/nginx"; # Disabled because logs are big now and I moved PHPMyAdmin
-        $this->log_path = "/home/web/nginx/logs"; # To Display Archived Logs from Hacking Attempt
-
+        $this->log_path = "/var/log/nginx";
         $this->exec_find_path = "/usr/bin/find";
         $this->exec_xargs_path = "/usr/bin/xargs";
         $this->exec_gunzip_path = "/bin/gunzip";
