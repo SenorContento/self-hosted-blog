@@ -32,7 +32,7 @@ Obviously, when I start using MySQL, I am not storing the username or password i
 
 I have decided to put a section of my NGinx config so others can setup a copy of the site in a similar fashion to how mine is set up. The php config only has the user and group changed to the web user and group.
 
-## NGinx Config as of January 27th, 2019:
+## NGinx Config as of January 28th, 2019:
 
 ```nginx
 charset utf-8;
