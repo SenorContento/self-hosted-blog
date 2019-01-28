@@ -1,0 +1,18 @@
+div.blog-post p {
+  text-indent: 50px;
+  text-align: left;
+}
+
+@media all and (min-width: 700px) {
+  div.blog-post {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+@media all and (max-width: 699px) {
+  div.blog-post {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

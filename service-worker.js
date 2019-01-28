@@ -30,6 +30,7 @@ const resourceList = [
   '/service-worker.js',
 
   '/css/main.css',
+  '/css/blog.css',
 
   '/images/png/SenorContento-1024x1024.png',
   '/images/svg/SenorContento.svg',
