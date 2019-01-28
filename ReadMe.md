@@ -20,15 +20,15 @@ GIT_WORK_TREE=/var/www/class git checkout -f
 git push
 ```
 
-The server runs on a Raspberry Pi 3. It is connected to an APC UPS which can display it's [battery stats][apc-stats] so the server knows when it needs to shutdown.
+The server runs on a Raspberry Pi 3. It is connected to an APC UPS which can display [battery stats][apc-stats] so the server knows when it needs to shutdown.
 
 ### Security Flaws?
 
 Now, I know what some people are thinking... Wouldn't posting the server code make it easier to hack the server? Technically, yes, but at the same time, a good samaritan could find a security flaw that I didn't notice. That good samaritan could then post the flaw to the [issues tab][issues-tab] and I would know to fix the flaw right away.
 
-Even then, security by obscurity is just simply not security, so, I shouldn't avoid posting the code because I think hiding the code will somehow make me more secure. You can see an example of where a bot tried to hack my [PHPMyAdmin installation][PHPMyAdmin-fails].
+Even then, security by obscurity is just simply not security, so, I shouldn't avoid posting the code because I think hiding the code will somehow make me more secure. You can see an example of where a bot tried to hack my [PHPMyAdmin installation][PHPMyAdmin-fails]. It failed because I disabled the root account on MySQL.
 
-Obviously, when I start using MySQL, I am not storing the username or password in the source code itself or anywhere in webroot, but it will be loaded via config, probably through the fastcgi_param option (unless security or something else dictates otherwise).
+Obviously, when I start using MySQL, I am not storing the username or password in the source code itself or anywhere in webroot, but it will be loaded via config, probably through the fastcgi_param option (unless security or something else dictates otherwise). This is to prevent accidentally leaking data which could weaken the security of my website.
 
 I have decided to put a section of my NGinx config so others can setup a copy of the site in a similar fashion to how mine is set up. The php config only has the user and group changed to the web user and group.
 
@@ -46,8 +46,7 @@ error_page  500 /errors/500/index.php;
 error_page  503 /errors/503/index.php;
 
 location / {
-  # First attempt to serve request as file, then
-	# as directory, then fall back to displaying a 404.
+  # First, attempt to serve request as file, then as directory, then fall back to displaying a 404 error.
 	try_files $uri $uri/ =404;
 }
 
