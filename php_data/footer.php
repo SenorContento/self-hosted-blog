@@ -55,7 +55,7 @@
             }
 
             /*
-            * I keep call the reinstall function here so I am not running a race condition.
+            * I keep the reinstall function here so I am not running a race condition.
             *
             * If I don\'t, then the registration function wins and the uninstaller will keep
             *   the service worker from installing and activating.
