@@ -36,22 +36,41 @@
     }
 
     public function printTable() {
+      /*
+         HTML-CSS
+         9.75 / 10
+         48.75 / 50
+         97.5 %
+         Individual Feedback
+         Table missing <thead> and <tbody>
+      */
+
       print('<div id="table">
         <fieldset>
           <legend>Example Table</legend>
           <table>
-            <tr>
-              <th>Students</th>
-              <th>Grades</th>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>100%</td>
-            </tr>
-            <tr>
-              <td>Josh</td>
-              <td>90%</td>
-            </tr>
+            <thead>
+              <tr>
+                <th>Students</th>
+                <th>Grades</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alex</td>
+                <td>100%</td>
+              </tr>
+              <tr>
+                <td>Josh</td>
+                <td>90%</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Grade Average</td>
+                <td>95%</td>
+              </tr>
+            </tfoot>
             </table>
           </fieldset>
       </div>');

@@ -156,6 +156,13 @@ table tr:nth-child(even) {
   background-color: #202020;
 }
 
+/* Table Footer */
+
+tfoot td {
+  /*color: #fffffff;*/
+  font-weight: bold;
+}
+
 /* Lists and Items */
 /* The only reason I don't put <ul> before <li> is because of <ol> existing. */
 
