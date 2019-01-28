@@ -61,6 +61,11 @@ location ~ ^/ReadMe.md$ {
 	return 404;
 }
 
+location ~ ^/LICENSE.md$ {
+	deny all;
+	return 404;
+}
+
 # pass PHP scripts to FastCGI server
 location ~ \.php$ {
 	fastcgi_param alex.server.type "production";
