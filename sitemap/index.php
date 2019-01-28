@@ -63,7 +63,7 @@ class generateSitemap {
 
                    $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
                    $this->exec_grep_path . ' -v "/php_data" | ' . # and php_data for all servers
-                   $this->exec_grep_path . ' -v "/sql_admin" | '); # and sql_admin for all servers
+                   $this->exec_grep_path . ' -v "' . getenv('alex.server.phpmyadmin') . '" | '); # and sql_admin for all servers
   }
 
   public function generateSitemapXML() {
