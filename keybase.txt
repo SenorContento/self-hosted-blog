@@ -1,0 +1,72 @@
+==================================================================
+https://keybase.io/senorcontento
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://web.senorcontento.com
+  * I am senorcontento (https://keybase.io/senorcontento) on keybase.
+  * I have a public key with fingerprint 77FF 0808 4FE4 552B 92DE  63EA C22D A8D6 C824 B485
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101f770275fc4c2978c7d9c9e77dec92246cb454864de5e25a2d4662563cef88a7a0a",
+      "fingerprint": "77ff08084fe4552b92de63eac22da8d6c824b485",
+      "host": "keybase.io",
+      "key_id": "c22da8d6c824b485",
+      "kid": "0101f770275fc4c2978c7d9c9e77dec92246cb454864de5e25a2d4662563cef88a7a0a",
+      "uid": "0ba7ec6547bb9fb25196e8217215d719",
+      "username": "senorcontento"
+    },
+    "service": {
+      "hostname": "web.senorcontento.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1548642959,
+  "expire_in": 157680000,
+  "prev": "ecd856a21d2a2e8275287e591b25f2945b0f03d4a2d0e05952e1c627511d95df",
+  "seqno": 35,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owGtkn1MVWUcxy8vTRQzpsY1Sl4Oki/3xXMeznNebiynoDMxXsPhgui8POdyBM65
+nHt5FxE1Ak0lmSSxZosoWLSCqVOJcmYYULoBF9MZC9AKjJutYuNl0bmEf7T1Z88/
+z57fPr/vvt/vntrH/QwBPlctLUNfrzv3mk/fOG/ISNjXUIbxqliC2cqwHLRwoVwR
+OV1ZObKI2TCcwAmJpnFAQ0kgBcDSjECLrMAimhaRwAJAUgJPQpKhSBFBBCAHRJKi
+AKSiBSQxDEdzOIeZMUlW7EhzaLLi0mVpWpJwBmdICZEQAp4FIqKiEScAIHKMSAkM
+IHmSgfpitur0bujmeM6JrLKqz/RH1oK9/+D/Z98F/8jxHI0ECpI0z7MSDyDBUogB
+BA0IKNIE6wWdSFO4PKTTTqSomqAqLqS4VKzcrA+0QllA3na9cRaxIsRb/4VaBTVP
+V3JoqksV1FwdyXa5HE6bV8JV4ljcyVpUy+JlRdRb1TcKkeaUVQWzETopuGSvPLGQ
+DbCQNWOo2CFrKEv2EpCmGFw/Zszu0FChrokEkYEUBwgRcEBPRUPA0AiyhJ5TAiwJ
+eVzCo0VSbwhHOGQhQIRA6RhBiCwUJcwbMF9RMVs01I1ydm8Fsl3hXAUawsqX1fhG
++xt8AgxrgyP8i+YDAhLvpZlODQsTj77iY77ef2hYtjTo0eRGyBMzvnznpLC7LTJx
+y4m4t0v7Dwatm5o6sL9yMmnVWHytcrvqSPLk+rRVp+aL4/1aguwdzRu6f6/raVqe
+a43NyRuaCyVfMX/gceKpHs/ExPmarpGeI2rnxpmqjMC+O2v4pLfuzdzN6D+KgmrP
+fpMUmL3N/3pPScyl0XdnPMebBhLwlJElc7e2h9bFxVQVXORX0q252kRRc4RgSd6c
+lupovHUlasfVvn1h5v0/fRXwctyAkTUMNm6n0vp9DlU/uynvTGfFSFXm2q70TX6/
+9Cq9pi/GSlaXVdQnxh8fuFM++Hr2D63QgR1+qSn24eEuVZrc2L485eSDa91GsSGq
+fqA4Y37X07s7Px/6MEYs2tuundnLabY3TxubK389t81981r0O98VXp6SsZPp39/A
+h+/G73G/kGLptn5U99dnPAxfmoY9VTZ+/sKlwLjNH19ckrPV116RYAmr641abZnu
+yWy8boQtNdVivpv1mMrZ1lSABR2aa9fKVnZgyV9OP3j1YGTm8EQ422BpyjRteZgT
+/mnUfdOfF6qPVbp/o/0+WVM4/uLsjxXTwWh9iNHdNrqC2VnfV/p8iOWPhsj3ak6H
+t4WW5vfxOyo8K+SzjR3fPrMh9vZzOyeTx7qqLrckNbmvJBut2qzZNJw/kDv/pP1A
+8c2f+ZDRXffDjoL0emtEd/FWKvj9Y+VvDJ4wzNr3/A0=
+=xYaG
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/senorcontento
+
+==================================================================
