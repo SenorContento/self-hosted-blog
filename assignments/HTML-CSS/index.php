@@ -71,8 +71,8 @@
                 <td>95%</td>
               </tr>
             </tfoot>
-            </table>
-          </fieldset>
+          </table>
+        </fieldset>
       </div>');
     }
 
