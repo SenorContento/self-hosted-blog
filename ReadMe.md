@@ -46,7 +46,8 @@ error_page  500 /errors/500/index.php;
 error_page  503 /errors/503/index.php;
 
 location / {
-  # First, attempt to serve request as file, then as directory, then fall back to displaying a 404 error.
+	# First, attempt to serve request as file, then as a directory,
+	# then fall back to displaying a 404 error.
 	try_files $uri $uri/ =404;
 }
 
@@ -56,8 +57,8 @@ location ~ /(php_data) {
 }
 
 location ^~ /ReadMe.md$ {
-  deny all;
-  return 404;
+	deny all;
+	return 404;
 }
 
 # pass PHP scripts to FastCGI server
