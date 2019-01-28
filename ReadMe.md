@@ -56,7 +56,7 @@ location ~ /(php_data) {
 	return 404;
 }
 
-location ^~ /ReadMe.md$ {
+location ~ ^/ReadMe.md$ {
 	deny all;
 	return 404;
 }
