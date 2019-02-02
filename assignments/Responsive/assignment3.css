@@ -1,3 +1,5 @@
+/* General */
+
 h1 {
   /*color: blue;*/
 }
@@ -5,6 +7,60 @@ h1 {
 table {
   /*min-width: 1000px;*/
 }
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Main Content */
+
+div #main_content { /* Should be unnecessary to add div before */
+  background-color: purple;
+
+  margin: 0px;
+  padding: 8px;
+}
+
+div.column {
+  display: inline-block;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  align-items: stretch;
+  /* flex-grow: 1; */
+}
+
+div #column1 { /* Should be unnecessary to add div before */
+  background-color: red;
+}
+
+div #column2 { /* Should be unnecessary to add div before */
+  background-color: green;
+}
+
+div #column3 { /* Should be unnecessary to add div before */
+  background-color: blue;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Slideshow */
+
+/* The code below is specifically for modifying the slideshow */
+/* https://www.w3schools.com/howto/howto_js_slideshow.asp */
+div.mySlides {
+  /* This CSS class was intentionally left blank.
+     It exists to have javascript identify tags to scroll through */
+}
+
+img.mySlidesImage {
+  width: 100%;
+}
+
+div.carousel {
+  max-width: 800px;
+  position: relative;
+  margin: auto;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Table - Phone and Tablet Specifics */
 
 @media all and (min-width: 1025px) {
   h1, b {
@@ -23,6 +79,15 @@ table {
 
   table {
     /*min-width: 500px;*/
+    /*max-width: 500px;*/
+  }
+
+  table, thead, tbody, td, tr {
+		display: block;
+	}
+
+  table th {
+    display: none;
   }
 }
 
@@ -30,4 +95,50 @@ table {
   h1, b {
     color: white;
   }
+
+  table {
+    max-width: 300px;
+  }
+
+  table, thead, tbody, td, tr {
+		display: block;
+	}
+
+  table th {
+    display: none;
+  }
 }
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Table - Phone and Tablet */
+
+@media all and (max-width: 1024px) {
+  td:before {
+    border: 1px solid #dddddd;
+    /* text-align: left; */
+    padding: 8px;
+    /* padding-left: 0px; */
+    background-color: green;
+    color: #ffffff;
+    margin-right: 8px;
+    /* margin-left: 0px; */
+    /* white-space: nowrap; */
+	}
+
+  /*tr {
+    margin-left: 0px;
+    padding-left: 0px;
+  }*/
+
+  td:nth-of-type(1):before { content: "Header 1"; }
+  td:nth-of-type(2):before { content: "Header 2"; }
+  td:nth-of-type(3):before { content: "Header 3"; }
+  td:nth-of-type(4):before { content: "Header 4"; }
+  td:nth-of-type(5):before { content: "Header 5"; }
+  td:nth-of-type(6):before { content: "Header 6"; }
+  td:nth-of-type(7):before { content: "Header 7"; }
+  td:nth-of-type(8):before { content: "Header 8"; }
+  td:nth-of-type(9):before { content: "Header 9"; }
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */

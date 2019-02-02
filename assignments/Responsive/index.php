@@ -11,13 +11,35 @@
   $mainPage->printTabbedContent();
   $mainPage->printMainContent();
   $mainPage->printTable();
-  $mainPage->printLargeImage();
+  $mainPage->printLargeImage($mainPage->generateArrayofImages()); //$mainPage->printSlideshowSimple($mainPage->generateArrayofImages());
   //$mainPage->printArchiveLink();
 
   $loadPage->loadFooter();
 
   function customPageHeader() {
     print('<link rel="stylesheet" href="assignment3.css">');
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
+
+    print("\n\n\t\t" . '<!-- The script below changes the way the slideshow functions -->');
+    print("\n\t\t" . '<!-- The code was borrowed from https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_slideshow_rr -->');
+    print("\n\t\t" . '<script>' .
+          "\n\t\t" . '$(document).ready(function() {' .
+          "\n\t\t\t" . 'var myIndex = 0;' .
+          "\n\t\t\t" . 'carousel();' .
+
+          "\n\n\t\t\t" . 'function carousel() {' .
+              "\n\t\t\t" . 'var i;' .
+              "\n\t\t\t" . 'var x = document.getElementsByClassName("mySlides");' .
+              "\n\t\t\t" . 'for (i = 0; i < x.length; i++) {' .
+                "\n\t\t\t" . 'x[i].style.display = "none";' .
+              "\n\t\t\t" . '}' .
+              "\n\t\t\t" . 'myIndex++;' .
+              "\n\t\t\t" . 'if (myIndex > x.length) {myIndex = 1}' .
+              "\n\t\t\t" . 'x[myIndex-1].style.display = "block";' .
+              "\n\t\t\t" . 'setTimeout(carousel, 4000); // Change image every 4 seconds' .
+            "\n\t\t\t" . '}' .
+            "\n\t\t" . '});' .
+          "\n\t\t" . '</script>');
   }
 
   class homeworkAssignmentThree {
@@ -46,6 +68,7 @@
     }
 
     public function printTabbedContent() {
+      // https://www.w3schools.com/howto/howto_js_tabs.asp
       print('
       <fieldset>
         <legend>Tabbed/Vertical Expandable Content</legend>
@@ -54,22 +77,72 @@
     }
 
     public function printMainContent() {
+      // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+      // https://www.w3schools.com/css/css3_flexbox.asp
       print('
       <fieldset>
         <legend>Main Content</legend>
-        <p>Main Content goes here!!!</p>
+        <div id="main_content">
+          <div id="column1" class="column"><p>Content 1</p></div>
+          <div id="column2" class="column"><p>Content 2</p></div>
+          <div id="column3" class="column"><p>Content 3</p></div>
+        </div>
       </fieldset>');
     }
 
-    public function printLargeImage() {
+    public function printLargeImage($slides) {
       print('
       <fieldset>
-        <legend>Large Image</legend>
-        <p>Large image goes here!!! It will have to have JS manipulation, so it maybe a slideshow.</p>
-      </fieldset>');
+        <legend>Large Image</legend>');
+
+      print('<div class="carousel">');
+
+      foreach($slides as $url => $title) {
+        print('<div class="mySlides">' .
+                '<a href="' . $url . '" ' .
+                   'title="' . $title . '">' .
+
+              '<img class="mySlidesImage"' .
+                   'alt="' . $title . '" ' .
+                   'title="' . $title . '" ' .
+                   'src="' . $url . '">' .
+                '</a>' .
+
+                '<p>' . $title . '</p>' .
+                '</div>');
+        }
+
+        print('</div>');
+
+        print("</fieldset>");
+
+      print('</fieldset>');
+    }
+
+    public function generateArrayofImages() {
+      /*$slideString = "/images/jpg/that-red-tree/original.jpg" . ',' .
+                     "/images/jpg/that-red-tree/crayon.jpg" . ',' .
+                     "/images/jpg/that-red-tree/boxy.jpg" . ',' .
+                     "/images/jpg/that-red-tree/red-yellow-shift.jpg" . ',' .
+                     "/images/jpg/that-red-tree/red-shift-solo.jpg";
+
+      $slides = explode(',', $slideString);*/
+
+      $slides = array("/images/jpg/that-red-tree/original.jpg" => "The original photo before I modified it in Gimp and G'Mic.",
+                     "/images/jpg/that-red-tree/crayon.jpg" => "Heavy use of G'Mic to produce this gridlike 'drawing.'",
+                     "/images/jpg/that-red-tree/boxy.jpg" => "Used G'Mic to apply boxes to screen and adjust images to boxes.",
+                     "/images/jpg/that-red-tree/red-yellow-shift.jpg" => "Used plain Gimp to apply 2 different color shifts.",
+                     "/images/jpg/that-red-tree/red-shift-solo.jpg" => "Used plain Gimp to apply a single color shift.");
+
+      return $slides;
     }
 
     public function printTable() {
+      // https://css-tricks.com/responsive-data-tables/
+      /*
+        I am not a big fan of long tables like this, but, it is required for this assignment.
+        However, it provides a learning experience and code I can use in the future if needed.
+      */
       print('<div id="table">
         <fieldset>
           <legend>Example Table</legend>
