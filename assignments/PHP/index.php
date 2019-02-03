@@ -1,6 +1,7 @@
 <?php
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="assignment4.css">');
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
   }
 
   $loadPage = new loadPage();
@@ -9,7 +10,7 @@
   $loadPage->loadHeader();
 
   //$mainPage->printArchiveLink();
-  $mainPage->printWarning();
+  //$mainPage->printWarning();
   $mainPage->checkValues();
   $mainPage->printForm();
   //$mainPage->printArchiveLink();
@@ -33,11 +34,30 @@
     }
 
     public function getValue($value) {
+      $return_me = '';
+
+      print("<script>");
       if(isset($_POST[$value]) && $_POST[$value] !== '') {
-        return $_POST[$value];
+        /* Experimenting Around with Keeping Form Options Selected After Submit */
+        /*print('
+          $(document).ready(function() {
+            $(".' . $value . '").val("red");
+          });
+        ');*/
+
+        $return_me = $_POST[$value];
       } else {
-        return "Not Set";
+        print('
+                $(document).ready(function() {
+                  $("label.form-label-' . $value . '").css("color","red");
+                });
+              ');
+
+        $return_me = "Not Set";
       }
+
+      print('</script>');
+      return $return_me;
     }
 
     public function printData() {
@@ -81,12 +101,12 @@
         <legend>Example Form</legend>
         <div class="form">
           <form method="post">
-            <label>First Name: </label><input name="first_name" type="text"><br>
-            <label>Last Name: </label><input name="last_name" type="text">
+            <label class="form-label-first_name">First Name: </label><input name="first_name" type="text"><br>
+            <label class="form-label-last_name">Last Name: </label><input name="last_name" type="text">
 
             <br><br>
 
-            <label>Pick a Color: </label>
+            <label class="form-label-color">Pick a Color: </label>
             <select name="color">
               <option value="red">Red</option>
               <option value="green">Green</option>
@@ -96,8 +116,8 @@
             <br><br>
 
             <!--<label>Hot Food: </label><input name="food" value="hot_food" type="radio" checked><br>-->
-            <label>Hot Food: </label><input name="food" value="hot_food" type="radio" checked="checked"><br>
-            <label>Cold Food: </label><input name="food" value="cold_food" type="radio">
+            <label class="form-label-food">Hot Food: </label><input name="food" value="hot_food" type="radio" checked="checked"><br>
+            <label class="form-label-food">Cold Food: </label><input name="food" value="cold_food" type="radio">
 
             <br><br>
 
