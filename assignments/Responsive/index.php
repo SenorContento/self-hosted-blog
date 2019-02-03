@@ -5,7 +5,7 @@
   $loadPage->loadHeader();
 
   //$mainPage->printArchiveLink();
-  $mainPage->printWarning();
+  //$mainPage->printWarning();
   $mainPage->printNotice();
 
   $mainPage->printTabbedContent();
