@@ -178,11 +178,16 @@ div.carousel {
 /* Table - Phone and Tablet */
 
 @media all and (max-width: 1024px) {
+  table td {
+    padding-left: 0px;
+  }
+
   td:before {
     border: 1px solid #dddddd;
     /* text-align: left; */
+
     padding: 8px;
-    /* padding-left: 0px; */
+
     background-color: green;
     color: #ffffff;
     margin-right: 8px;
