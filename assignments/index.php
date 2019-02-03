@@ -8,7 +8,7 @@
   $mainPage->printAssignment1(); //HTML-CSS
   $mainPage->printAssignment2(); //JavaScript-JQuery
   $mainPage->printAssignment3(); //Responsive
-  //$mainPage->printAssignment4(); //PHP
+  $mainPage->printAssignment4(); //PHP
   //$mainPage->printAssignment5(); //MySQL
 
   //$mainPage->printAssignment6(); //Midterm (Part 1)
