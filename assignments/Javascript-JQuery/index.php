@@ -70,6 +70,7 @@
 
   //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
+  $mainPage->printSourceCodeLink();
   $mainPage->printDropDown("Dropdown Menu Example", $mainPage->generateMenu());
   $mainPage->printMoreLink("Show More Link Demo", $mainPage->generateParagraph());
   $mainPage->printSlideshowSimple($mainPage->generateArrayofImages());
@@ -83,6 +84,10 @@
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 2</a>');
       //print('<br>');
+    }
+
+    public function printSourceCodeLink() {
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printWarning() {

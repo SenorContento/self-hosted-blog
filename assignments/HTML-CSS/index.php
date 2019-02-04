@@ -20,6 +20,8 @@
 
   $loadPage->loadHeader();
 
+  $mainPage->printSourceCodeLink();
+
   $mainPage->printArchiveLink();
   $mainPage->printTable();
   $mainPage->printDemoHeaders();
@@ -33,6 +35,10 @@
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 1</a>');
       //print('<br>');
+    }
+
+    public function printSourceCodeLink() {
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printTable() {

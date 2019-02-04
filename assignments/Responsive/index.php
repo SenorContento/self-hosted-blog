@@ -6,6 +6,7 @@
 
   //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
+  $mainPage->printSourceCodeLink();
   $mainPage->printNotice();
 
   $mainPage->printTabbedContent();
@@ -50,6 +51,10 @@
 
     public function printWarning() {
       print('<center><h1>Assignment 3 has not been created yet! Please come back later!</h1></center>');
+    }
+
+    public function printSourceCodeLink() {
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printNotice() {
