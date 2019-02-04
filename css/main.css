@@ -64,6 +64,12 @@ body {
   margin-bottom: 120px; /* Helps put some spacing between footer and body. Also check out footer */
 }
 
+a.source-code-link {
+  font-size: 2em;
+  text-decoration-style: none; /* Not the underline, but setting anyway */
+  text-decoration-line: none;
+}
+
 code { /* This could be made more like Jekyll on Github pages. Just remember the <pre> tag */
   color: #90EE90;
   display: inline-block;
