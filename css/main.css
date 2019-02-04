@@ -68,6 +68,14 @@ a.source-code-link {
   font-size: 2em;
   text-decoration-style: none; /* Not the underline, but setting anyway */
   text-decoration-line: none;
+
+  display: block;
+
+  /* margin-top: auto; */
+  /* margin-bottom: auto; */
+
+  /* padding-top: 2px; */
+  padding-bottom: 8px;
 }
 
 code { /* This could be made more like Jekyll on Github pages. Just remember the <pre> tag */
