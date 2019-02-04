@@ -26,7 +26,7 @@
 
     public function printSourceCodeLink() {
       //print('<a href="https://github.com/bgbrandongomez/self-hosted-blog/tree/master/assignments/PHP" style="text-align: center;display: block">View Source Code</a>');
-      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['PHP_SELF'] . '">View Source Code</a>');
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printWarning() {
