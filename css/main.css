@@ -228,7 +228,20 @@ footer {
   bottom: 0;
   width: 100%;
   /*height: 60px;*/
-  margin-top: 20px; /* Adds some additional space to the top of the footer to help separate it from the body. Also check out #container */
+  margin-top: 120px; /* Adds some additional space to the top of the footer to help separate it from the body. Also check out #container */
+}
+
+@media (pointer:coarse) {
+  footer {
+    /* position: fixed; */ /* Always on Screen */
+    /* position: absolute; */ /* Fixes to Bottom of Page, but broken on Chrome Mobile */
+    position: relative; /* At Bottom of Page, but only if enough content is available */
+    margin-top: 8px;
+  }
+
+  #container {
+    margin-bottom: 8px;
+  }
 }
 
 /* This is to force some padding to the header message so it is not right on the edge of the screen in mobile devices */
