@@ -9,7 +9,7 @@
   $mainPage->printAssignment2(); //JavaScript-JQuery
   $mainPage->printAssignment3(); //Responsive
   $mainPage->printAssignment4(); //PHP
-  //$mainPage->printAssignment5(); //MySQL
+  $mainPage->printAssignment5(); //MySQL
 
   //$mainPage->printAssignment6(); //Midterm (Part 1)
   //$mainPage->printAssignment7(); //Midterm (Part 2)

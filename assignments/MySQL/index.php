@@ -109,7 +109,6 @@
             $tableExists = true;
         }
 
-        print("Table: " . $tableExists);
         if(!$tableExists) {
           // use exec() because no results are returned
           $conn->exec($sql);
