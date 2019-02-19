@@ -49,7 +49,8 @@
 
       $return_response = $this->connectMySQL();
       if(gettype($return_response) === "string") {
-        print("<p>Connection to MySQL Failed: " . $return_response . "!!!</p>");
+        print("<p>Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p>");
+        die();
       } else {
         print("<p>Connected to MySQL Successfully!!!</p>"); //object
       }
@@ -237,7 +238,7 @@
         global $sqlCommands;
         $conn = $sqlCommands->connectMySQL();
 
-        // This allows me to determine if table is empty
+        // This allows me to determine if table is empty (or even exists)
         $sql = "SELECT id FROM Assignment5 LIMIT 1";
         $tableExists = false;
         foreach ($conn->query($sql) as $row) {
