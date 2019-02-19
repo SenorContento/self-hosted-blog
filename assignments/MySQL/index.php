@@ -23,6 +23,7 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
+  $mainPage->printMySQLData();
   $mainPage->checkValues();
   $mainPage->printForm();
   //$mainPage->printArchiveLink();
@@ -71,7 +72,7 @@
       try {
         $conn = $this->connectMySQL();
 
-        //https://stackoverflow.com/a/8829122/6828099
+        // https://stackoverflow.com/a/8829122/6828099
         $checkTableSQL = "SELECT count(*)
           FROM information_schema.TABLES
           WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'Assignment5')
@@ -118,11 +119,49 @@
           echo "<p>Create Table Failed: " . $e->getMessage() . "</p>";
       }
     }
+
+    public function insertData($fname, $lname, $color, $food) {
+      try {
+        $conn = $this->connectMySQL();
+        $statement = $conn->prepare("INSERT INTO Assignment5 (firstname, lastname, color, food)
+                                     VALUES (:fname, :lname, :color, :food)");
+
+        $statement->execute([
+          'fname' => $fname,
+          'lname' => $lname,
+          'color' => $color,
+          'food' => $food,
+        ]);
+      } catch(PDOException $e) {
+          echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+
+    public function readData() {
+      try {
+        $conn = $this->connectMySQL();
+
+        //$sql = "SELECT * FROM Assignment5"; // Display Everything
+        $sql = "SELECT * FROM Assignment5 ORDER BY id DESC LIMIT 10"; // Limit to Last 10 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
+        foreach ($conn->query($sql) as $row) {
+          print("
+          <tr>
+            <td>" . $row['id'] . "</td>
+            <td>" . $row['firstname'] . "</td>
+            <td>" . $row['lastname'] . "</td>
+            <td>" . $row['color'] . "</td>
+            <td>" . $row['food'] . "</td>
+          </tr>");
+        }
+      } catch(PDOException $e) {
+          echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
   }
 
   class homeworkAssignmentFive {
     public function printArchiveLink() {
-      print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 4</a>');
+      print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 5</a>');
       //print('<br>');
     }
 
@@ -136,8 +175,21 @@
 
     public function checkValues() {
       if(!empty($_POST)) {
+        $this->verifySQLiteVars();
         $this->printData();
       }
+    }
+
+    public function verifySQLiteVars() {
+        // I could refuse to add this to SQLite if the value is not set. It is not set up this way though.
+        $fname = $this->getValue('first_name');
+        $lname = $this->getValue('last_name');
+        $color = $this->getValue('color');
+        $food = $this->getValue('food');
+
+        //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
+        global $sqlCommands;
+        $sqlCommands->insertData($fname, $lname, $color, $food);
     }
 
     public function getValue($value) {
@@ -168,6 +220,31 @@
 
       print('</script>');
       return $return_me;
+    }
+
+    public function printMySQLData() {
+      print('
+      <fieldset>
+        <legend>Last 10 MySQL Entries</legend>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Color</th>
+              <th>Food</th>
+            </tr>
+          </thead>
+          <tbody>');
+
+        global $sqlCommands;
+        $sqlCommands->readData();
+
+        print('
+          </tbody>
+        </table>
+      </fieldset>');
     }
 
     public function printData() {
