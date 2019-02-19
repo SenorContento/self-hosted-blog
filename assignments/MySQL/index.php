@@ -233,28 +233,44 @@
     }
 
     public function printMySQLData() {
-      print('
-      <fieldset>
-        <legend>Last 10 MySQL Entries</legend>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Color</th>
-              <th>Food</th>
-            </tr>
-          </thead>
-          <tbody>');
+      try {
+        global $sqlCommands;
+        $conn = $sqlCommands->connectMySQL();
+
+        // This allows me to determine if table is empty
+        $sql = "SELECT id FROM Assignment5 LIMIT 1";
+        $tableExists = false;
+        foreach ($conn->query($sql) as $row) {
+          $tableExists = true;
+        }
+      } catch(PDOException $e) {
+        print($e->getMessage());
+      }
+
+      if($tableExists) {
+        print('
+          <fieldset>
+            <legend>Last 10 MySQL Entries</legend>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Color</th>
+                  <th>Food</th>
+                  </tr>
+                  </thead>
+                  <tbody>');
 
         global $sqlCommands;
         $sqlCommands->readData();
 
         print('
-          </tbody>
-        </table>
-      </fieldset>');
+            </tbody>
+          </table>
+        </fieldset>');
+      }
     }
 
     public function printData() {
