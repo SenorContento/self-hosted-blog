@@ -23,6 +23,7 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
+  $mainPage->checkSQLiteValues();
   $mainPage->printMySQLData();
   $mainPage->checkValues();
   $mainPage->printForm();
@@ -175,8 +176,17 @@
 
     public function checkValues() {
       if(!empty($_POST)) {
-        $this->verifySQLiteVars();
+        //$this->verifySQLiteVars();
         $this->printData();
+      }
+    }
+
+    public function checkSQLiteValues() {
+      if(!empty($_POST)) {
+        /* I am intentionally separating this from checkValues(),
+         * so I can insert data into the database before I read the database
+         */
+        $this->verifySQLiteVars();
       }
     }
 
