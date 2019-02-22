@@ -1,23 +1,20 @@
 <?php
+  function customPageHeader() {
+    //print("\n\t\t" . '<link rel="stylesheet" href="assignment8.css">');
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentEight();
 
   $loadPage->loadHeader();
 
-  //$mainPage->printArchiveLink();
-  //$mainPage->printTable();
-  //$mainPage->printSourceCodeLink();
+  $mainPage->printSourceCodeLink();
   $mainPage->printWarning();
-  //$mainPage->printArchiveLink();
 
   $loadPage->loadFooter();
 
   class homeworkAssignmentEight {
-    public function printArchiveLink() {
-      print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 8</a>');
-      //print('<br>');
-    }
-
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
@@ -26,26 +23,45 @@
       print('<center><h1>Assignment 8 has not been created yet! Please come back later!</h1></center>');
     }
 
-    public function printTable() {
-      print('<div id="table">
-        <fieldset>
-          <legend>Example Table</legend>
-          <table>
-            <tr>
-              <th>Students</th>
-              <th>Grades</th>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>100%</td>
-            </tr>
-            <tr>
-              <td>Josh</td>
-              <td>90%</td>
-            </tr>
-            </table>
-          </fieldset>
-      </div>');
+    /*
+      http://api.jquery.com/category/ajax/
+
+      * .load()
+
+      * jQuery.get()
+      * jQuery.getJSON()
+
+      * jQuery.post()
+
+      * jQuery.ajax()
+    */
+
+    public function getHTML() {
+      // https://www.w3schools.com/jquery/jquery_ajax_load.asp
+      // http://api.jquery.com/load/
+      // .load()
+    }
+
+    public function getData() {
+      // https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
+      // http://api.jquery.com/jQuery.get/
+      // jQuery.get()
+    }
+
+    public function getJSON() {
+      // http://api.jquery.com/jQuery.getJSON/
+      // jQuery.getJSON()
+    }
+
+    public function postData() {
+      // https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
+      // http://api.jquery.com/jQuery.post/
+      // jQuery.post()
+    }
+
+    public function ajaxRequest() {
+      // http://api.jquery.com/jQuery.ajax/
+      // jQuery.ajax()
     }
   }
 

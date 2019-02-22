@@ -11,11 +11,11 @@
   $mainPage->printAssignment4(); //PHP
   $mainPage->printAssignment5(); //MySQL
 
-  //$mainPage->printAssignment6(); //Midterm (Part 1)
-  //$mainPage->printAssignment7(); //Midterm (Part 2)
+  $mainPage->printAssignment6(); //Midterm (Part 1)
+  $mainPage->printAssignment7(); //Midterm (Part 2)
   //$mainPage->printMidterm(); //Midterm (Index)
 
-  //$mainPage->printAssignment8(); //AJAX
+  $mainPage->printAssignment8(); //AJAX
   //$mainPage->printAssignment9(); //Python
   //$mainPage->printAssignment10(); //C#.NET-MSSQL
   //$mainPage->printAssignment11(); //Web APIs
