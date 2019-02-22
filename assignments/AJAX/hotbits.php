@@ -1,20 +1,34 @@
 <?php
   $mainPage = new HotbitsAPI();
-  $mainPage->setVars();
-  $mainPage->printAPI();
+  $sqlCommands = new sqlCommands();
+  $manager = new databaseManager();
 
-  /*$sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
+  $mainPage->setVars();
+
+  $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
                           getenv('alex.server.phpmyadmin.username'),
                           getenv('alex.server.phpmyadmin.password'),
                           getenv('alex.server.phpmyadmin.database'));
 
   $sqlCommands->testConnection();
   $sqlCommands->connectMySQL();
-  $sqlCommands->createTable();*/
+  $sqlCommands->createTable();
+
+  //$mainPage->printAPI();
+  //print($mainPage->grabDataOffline(2048));
+  print($manager->formatForSQL($mainPage->grabDataOffline(2048)));
+
+  /*
+  $mainPage->checkSQLiteValues();
+  $mainPage->printMySQLData();
+  $mainPage->checkValues();
+  $mainPage->printForm();
+  */
 
   class HotbitsAPI {
     public $exec_ent_path;
     public $exec_cat_path;
+    public $exec_mkdir_path;
 
     function setVars() {
       if(getenv('alex.server.type') === "production") {
@@ -31,8 +45,8 @@
     }
 
     public function printAPI() {
-      //print($this->grabData(2048));
-      print($this->getRandomness($this->grabData(2048)));
+      print($this->grabDataOffline(2048));
+      //print($this->getRandomness($this->grabDataOffline(2048)));
     }
 
     public function grabData($bytes) {
@@ -53,6 +67,32 @@
       } catch(Exception $e) {
         throw $e; // Pass the exception upwards!
       }
+    }
+
+    public function grabDataOffline($bytes) {
+      // This function exists purely for testing with the data on localhost while offline
+      if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
+        throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
+
+      header("Content-Type: application/json");
+
+      /*
+       * It appears I get 12,288 total bytes to download and 120 total requests.
+       * I do not know when the counter resets, but I am hoping it is daily.
+       * I calculated this out by adding the 2,048 bytes I requested plus the 10,240
+       * bytes from quotaBytesRemaining at debug-real.json. This was my first non-pseudo
+       * request in a while (around a month). Also, there are 119 requests left and I only
+       * used one request in over a month.
+       *
+       * The page: https://www.fourmilab.ch/fourmilog/archives/2017-06/001684.html
+       * says that there are 12,208 bytes total per 24 hours period. There's still the
+       * 120 total request limit (which is also part of the 24 hour period).
+       */
+
+      $file = file_get_contents("debug-real.json");
+      //$file = file_get_contents("debug.json");
+
+      return $file; //file_get_contents("debug.json");
     }
 
     public function getRandomness($result) {
@@ -199,6 +239,204 @@
       $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
       //print("Results: " . $results);
       return $results;
+    }
+  }
+
+  class sqlCommands {
+    private $server, $username, $password, $database;
+
+    public function setLogin($server, $username, $password, $database) {
+      $this->server = $server;
+      $this->username = $username;
+      $this->password = $password;
+      $this->database = $database;
+    }
+
+    public function testConnection() {
+      if($this->server === NULL || $this->username === NULL || $this->password === NULL || $this->database === NULL) {
+        print("<p>Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p>");
+        die();
+      }
+
+      $return_response = $this->connectMySQL();
+      if(gettype($return_response) === "string") {
+        print("<p>Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p>");
+        die();
+      } else {
+        //print("<p>Connected to MySQL Successfully!!!</p>"); //object
+      }
+    }
+
+    public function connectMySQL() {
+      try {
+        $conn = new PDO("mysql:host=$this->server;dbname=$this->database", $this->username, $this->password);
+
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return $conn;
+      }
+      catch(PDOException $e) {
+        return $e->getMessage();
+      }
+    }
+
+    public function createTable() {
+      try {
+        $conn = $this->connectMySQL();
+
+        // https://stackoverflow.com/a/8829122/6828099
+        $checkTableSQL = "SELECT count(*)
+          FROM information_schema.TABLES
+          WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'Hotbits')
+        ";
+
+        /*
+         * "version": string,
+         * "schema": string,
+         * "status": int,
+         * "requestInformation": {
+         *    "serverVersion": string,
+         *    "generationTime": string,
+         *    "bytesRequested": int,
+         *    "bytesReturned": int,
+         *    "quotaRequestsRemaining": int,
+         *    "quotaBytesRemaining": int,
+         *    "generatorType": string
+         * },
+         * "data": [ int ];
+    */
+        // https://stackoverflow.com/a/5562383/6828099 - INT(6) - Display Width
+        // https://dev.mysql.com/doc/refman/5.7/en/json.html - MySQL JSON Format (MySQL 5.7.8+)
+        // Aparently schema is a special keyword that cannot be used in normal tables
+        $sql = "CREATE TABLE Hotbits (
+          id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+          version TEXT NOT NULL,
+          jsonSchema TEXT NOT NULL,
+          status INT NOT NULL,
+          serverVersion TEXT NOT NULL,
+          generationTime TEXT NOT NULL,
+          bytesRequested INT NOT NULL,
+          bytesReturned INT NOT NULL,
+          quotaRequestsRemaining INT NOT NULL,
+          quotaBytesRemaining INT NOT NULL,
+          generatorType TEXT NOT NULL,
+          data JSON NOT NULL
+        )";
+
+        $tableExists = false;
+        // http://php.net/manual/en/pdo.query.php
+        foreach ($conn->query($checkTableSQL) as $row) {
+          if($row['count(*)'] > 0)
+            $tableExists = true;
+        }
+
+        if(!$tableExists) {
+          // use exec() because no results are returned
+          $conn->exec($sql);
+        }
+      } catch(PDOException $e) {
+          //echo $sql . "<br>" . $e->getMessage();
+          echo "<p>Create Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+
+    public function insertData($version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data) {
+      try {
+        $conn = $this->connectMySQL();
+        $statement = $conn->prepare("INSERT INTO Hotbits (version, jsonSchema, status, serverVersion, generationTime, bytesRequested, bytesReturned, quotaRequestsRemaining, quotaBytesRemaining, generatorType, data)
+                                     VALUES (:version, :jsonSchema, :status, :serverVersion, :generationTime, :bytesRequested, :bytesReturned, :quotaRequestsRemaining, :quotaBytesRemaining, :generatorType, :data)");
+
+        $statement->execute([
+          'version' => $version, // TEXT
+          'jsonSchema' => $schema, // TEXT
+          'status' => $status, // INT
+
+          'serverVersion' => $serverVersion, // TEXT
+          'generationTime' => $generationTime, // TEXT
+
+          'bytesRequested' => $bytesRequested, // INT
+          'bytesReturned' => $bytesReturned, // INT
+
+          'quotaRequestsRemaining' => $quotaRequestsRemaining, // INT
+          'quotaBytesRemaining' => $quotaBytesRemaining, // INT
+
+          'generatorType' => $generatorType, // TEXT
+
+          'data' => $data,  // JSON
+        ]);
+
+        // https://stackoverflow.com/a/9753751/6828099
+        return $conn->lastInsertId();
+      } catch(PDOException $e) {
+          echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+
+    public function readData() {
+      try {
+        $conn = $this->connectMySQL();
+
+        //$sql = "SELECT * FROM Assignment5"; // Display Everything
+        $sql = "SELECT * FROM Assignment5 ORDER BY id DESC LIMIT 10"; // Limit to Last 10 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
+        foreach ($conn->query($sql) as $row) {
+          print("
+          <tr>
+            <td>" . $row['id'] . "</td>
+            <td>" . $row['firstname'] . "</td>
+            <td>" . $row['lastname'] . "</td>
+            <td>" . $row['color'] . "</td>
+            <td>" . $row['food'] . "</td>
+          </tr>");
+        }
+      } catch(PDOException $e) {
+          echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+  }
+
+  class databaseManager {
+    public function formatForSQL($json) {
+      try {
+        $decoded = json_decode($json, true);
+
+        $version = $decoded["version"]; // TEXT
+        $schema = $decoded["schema"]; // TEXT
+        $status = $decoded["status"]; // INT
+
+        $serverVersion = $decoded["requestInformation"]["serverVersion"]; // TEXT
+        $generationTime = $decoded["requestInformation"]["generationTime"]; // TEXT
+
+        $bytesRequested = $decoded["requestInformation"]["bytesRequested"]; // INT
+        $bytesReturned = $decoded["requestInformation"]["bytesReturned"]; // INT
+
+        $quotaRequestsRemaining = $decoded["requestInformation"]["quotaRequestsRemaining"]; // INT
+        $quotaBytesRemaining = $decoded["requestInformation"]["quotaBytesRemaining"]; // INT
+
+        $generatorType = $decoded["requestInformation"]["generatorType"]; // TEXT
+
+        // http://php.net/manual/en/function.json-encode.php
+        //$data = "{}"; //$decoded["data"]; // JSON
+        //$data = $decoded["data"]; // JSON
+        $data = json_encode($decoded["data"]);
+
+        //print("Data: " . "\"" . $version . "\"" . $schema . "\"" . $status . "\"" . $serverVersion . "\"" . $generationTime . "\"" . $bytesRequested . "\"" . $bytesReturned . "\"" . $quotaRequestsRemaining . "\"" . $quotaBytesRemaining . "\"" . $generatorType . "\"" . $data);
+
+        //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
+        global $sqlCommands;
+        $id = $sqlCommands->insertData($version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data);
+
+        // http://php.net/manual/en/function.array-push.php
+        // https://stackoverflow.com/a/13638998/6828099 - Pretty Print JSON
+        //print("Last ID: " . $id);
+        $decoded[] = ["rowID" => $id];
+        $json = json_encode($decoded);
+        //$json = json_encode($decoded, JSON_PRETTY_PRINT);
+
+        return $json;
+      } catch(Exception $e) {
+        print("databaseManager->formatForSQL: " . $e);
+      }
     }
   }
 ?>
