@@ -380,8 +380,9 @@
           quotaRequestsRemaining INT NOT NULL,
           quotaBytesRemaining INT NOT NULL,
           generatorType TEXT NOT NULL,
-          data JSON NOT NULL
+          data TEXT NOT NULL
         )";
+        // data JSON NOT NULL - Turns out my RPI Server does not support this format for MySQL.
 
         $tableExists = false;
         // http://php.net/manual/en/pdo.query.php
