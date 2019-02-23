@@ -138,7 +138,9 @@
         //header("Content-Type: text/plain");
         return $this->checkRandomness($this->convertToArray($result));
       } catch(Exception $e) {
-        print("Exception: " . $e->getMessage());
+        $jsonArray = ["error" => "Exception: " . $e->getMessage()];
+        $json = json_encode($jsonArray);
+        print($json);
       }
     }
 
@@ -147,7 +149,9 @@
         //header("Content-Type: text/plain");
         return $this->checkRandomnessCount($this->convertToArray($result), $count);
       } catch(Exception $e) {
-        print("Exception: " . $e->getMessage());
+        $jsonArray = ["error" => "Exception: " . $e->getMessage()];
+        $json = json_encode($jsonArray);
+        print($json);
       }
     }
 
@@ -548,7 +552,9 @@
 
         return $json;
       } catch(Exception $e) {
-        print("databaseManager->formatForSQL: " . $e);
+        $jsonArray = ["error" => "databaseManager->formatForSQL: " . $e->getMessage()];
+        $json = json_encode($jsonArray);
+        print($json);
       }
     }
   }
