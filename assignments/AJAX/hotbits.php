@@ -103,11 +103,12 @@
         //header("Content-Type: application/json");
 
         if(getenv('alex.server.type') === "production") {
-          # The below variables are for the production server
+          # The below variables are for the production server - getenv('alex.server.api.hotbits')
           $this->checkRateLimit($bytes);
           return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
         } else if(getenv('alex.server.type') === "development") {
           # The below variables are for testing on localhost
+          $this->checkRateLimit($bytes);
           return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // 10 Bytes - Normal Testing
         }
       } catch(Exception $e) {
@@ -120,7 +121,7 @@
       if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
         throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-      //$this->checkRateLimit($bytes);
+      $this->checkRateLimit($bytes);
       //header("Content-Type: application/json");
 
       /*
@@ -140,15 +141,21 @@
        * track when the ratelimit is reached. Good thing is, the remaining ratelimit is specified with every
        * JSON (and XML) response. Those responses provide both the remaining request and byte limit. I want
        * to internally track the rate limits so I can choose when to cut people off as opposed to when I am cut off.
+       *
+       * Also, Hotbits gives you an HTML exceeded message if you request more bytes than your key allows.
+       * The HTML message won't tell you how many bytes are left.
        */
 
-      $file = file_get_contents("json/debug-random.json");
-      //$file = file_get_contents("json/debug-pseudo.json");
+      //$file = file_get_contents("responses/debug-random.json");
+      //$file = file_get_contents("responses/debug-pseudo.json");
+
+      //$file = file_get_contents("responses/debug-right-before-exceeding-rate-limit.json");
+      $file = file_get_contents("responses/debug-exceeded-rate-limit.html");
 
       return $file; //file_get_contents("debug.json");
     }
 
-    private function checkRateLimit($bytes) {
+    private function checkRateLimit($requestedBytes) {
       global $sqlCommands;
 
       list($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining) = $sqlCommands->readConfigData(1);
@@ -167,8 +174,8 @@
         print("Reset Counter: "); //filter_var((), FILTER_VALIDATE_BOOLEAN)
       }*/
 
-      if(((int) $quotaRequestsRemaining === 0 || (int) $quotaBytesRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
-        throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining)");
+      if(((int) $requestedBytes > (int) $quotaBytesRemaining) && ((int) $quotaRequestsRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
+        throw new Exception("$requestedBytes Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining)");
     }
 
     public function getRandomness($result) {
@@ -280,6 +287,21 @@
           throw new Exception("Result Returned FALSE!!!");
         }
 
+        global $sqlCommands;
+        if($this->isHtml($result)) {
+          list($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining) = $sqlCommands->readConfigData(1);
+
+          $now = date('Y-m-d H:i:s T', time());
+          $sqlCommands->updateRateLimit($now, 0, $quotaBytesRemaining); // The byte count didn't go down this request
+
+          if(isset($data['nbytes'])) {
+            $this->checkRateLimit((int) $data['nbytes']); // This should use generic quota reached message
+          } else {
+            throw new Exception("Password Rate Limiting Not Supported Yet!");
+          }
+          //throw new Exception("HTML Detected!");
+        }
+
         /*
          * Will be in HTML format unless fmt is bin, xml, or json.
          *
@@ -343,6 +365,15 @@
 
       //print("Results: " . $results);
       return $results;
+    }
+
+    // https://stackoverflow.com/a/18339022/6828099
+    private function isHtml($string) {
+        if ( $string != strip_tags($string) )
+        {
+            return true; // Contains HTML
+        }
+        return false; // Does not contain HTML
     }
   }
 
