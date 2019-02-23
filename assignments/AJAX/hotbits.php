@@ -81,7 +81,7 @@
           print($json);
         }
       } catch(Exception $e) {
-        $jsonArray = ["error" => "Request Error!"];
+        $jsonArray = ["error" => "Request Error! Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
       }
@@ -440,8 +440,13 @@
         $statement = $conn->prepare("SELECT * FROM Hotbits WHERE id=(:rowID)");
         $statement->execute(['rowID' => $id]);
 
+        $rows = $statement->fetchAll();
+
+        if(sizeof($rows) === 0)
+          throw new Exception("Invalid rowID!!!");
+
         // http://php.net/manual/en/pdostatement.fetchall.php
-        foreach ($statement->fetchAll() as $row) {
+        foreach ($rows as $row) {
           // This is intentionally supposed to run only one iteration.
           // https://stackoverflow.com/a/3579950/6828099
           return [$row['id'], $row['version'], $row['jsonSchema'], $row['status'], $row['serverVersion'], $row['generationTime'], $row['bytesRequested'], $row['bytesReturned'], $row['quotaRequestsRemaining'], $row['quotaBytesRemaining'], $row['generatorType'], $row['data']];
