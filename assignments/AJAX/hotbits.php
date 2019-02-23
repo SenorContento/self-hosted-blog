@@ -14,16 +14,7 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
-  //$mainPage->printAPI();
-  //print($mainPage->grabDataOffline(2048));
-  print($manager->formatForSQL($mainPage->grabDataOffline(2048)));
-
-  /*
-  $mainPage->checkSQLiteValues();
-  $mainPage->printMySQLData();
-  $mainPage->checkValues();
-  $mainPage->printForm();
-  */
+  $mainPage->printAPI();
 
   class HotbitsAPI {
     public $exec_ent_path;
@@ -45,8 +36,55 @@
     }
 
     public function printAPI() {
-      print($this->grabDataOffline(2048));
-      //print($this->getRandomness($this->grabDataOffline(2048)));
+      global $manager;
+
+      try {
+        if(!empty($_GET)) {
+          if(isset($_GET["bytes"])) {
+            header("Content-Type: application/json");
+            print($manager->formatForSQL($this->grabData((int) $_GET["bytes"])));
+          } else if(isset($_GET["retrieve"]) && isset($_GET["id"])) {
+            // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
+            if(filter_var($_GET["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
+              header("Content-Type: text/plain");
+              print($manager->readSQLToJSON((int) $_GET["id"]));
+            } else {
+              $jsonArray = ["error" => "Sorry, but 'retrieve' is false!"];
+              $json = json_encode($jsonArray);
+              print($json);
+              //die();
+            }
+          } else if(isset($_GET["analyze"]) && isset($_GET["id"])) {
+            if(isset($_GET["count"]) && filter_var($_GET["count"], FILTER_VALIDATE_BOOLEAN) && filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+              header("Content-Type: text/plain");
+              print($this->getRandomnessCount($manager->readSQLToJSON((int) $_GET["id"]), TRUE));
+            } else if(!filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+              $jsonArray = ["error" => "Sorry, but 'analyze' is false!"];
+              $json = json_encode($jsonArray);
+              print($json);
+            } else {
+              header("Content-Type: text/plain");
+              print($this->getRandomness($manager->readSQLToJSON((int) $_GET["id"])));
+            }
+          } else {
+            header("Content-Type: application/json");
+
+            $jsonArray = ["error" => "Sorry, but no valid request sent!"];
+            $json = json_encode($jsonArray);
+            print($json);
+          }
+        } else {
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Please send a POST request!"];
+          $json = json_encode($jsonArray);
+          print($json);
+        }
+      } catch(Exception $e) {
+        $jsonArray = ["error" => "Request Error!"];
+        $json = json_encode($jsonArray);
+        print($json);
+      }
     }
 
     public function grabData($bytes) {
@@ -55,7 +93,7 @@
         if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
           throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-        header("Content-Type: application/json");
+        //header("Content-Type: application/json");
 
         if(getenv('alex.server.type') === "production") {
           # The below variables are for the production server - getenv('alex.server.api.hotbits')
@@ -74,7 +112,7 @@
       if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
         throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-      header("Content-Type: application/json");
+      //header("Content-Type: application/json");
 
       /*
        * It appears I get 12,288 total bytes to download and 120 total requests.
@@ -97,8 +135,17 @@
 
     public function getRandomness($result) {
       try {
-        header("Content-Type: text/plain");
+        //header("Content-Type: text/plain");
         return $this->checkRandomness($this->convertToArray($result));
+      } catch(Exception $e) {
+        print("Exception: " . $e->getMessage());
+      }
+    }
+
+    public function getRandomnessCount($result, $count) {
+      try {
+        //header("Content-Type: text/plain");
+        return $this->checkRandomnessCount($this->convertToArray($result), $count);
       } catch(Exception $e) {
         print("Exception: " . $e->getMessage());
       }
@@ -226,6 +273,11 @@
     }
 
     public function checkRandomness($array) {
+      // No Function Overloading :( - https://stackoverflow.com/a/4697712/6828099
+      return $this->checkRandomnessCount($array, false);
+    }
+
+    function checkRandomnessCount($array, $count) {
       // pipe-data-to | /home/web/programs/ent
       // http://www.fourmilab.ch/random/random.zip
       $binary = pack("C*", ...$array);
@@ -235,8 +287,14 @@
 
       exec($this->exec_mkdir_path . ' -p /tmp/hotbits/');
       file_put_contents($File = "/tmp/hotbits/" . uniqid(), $binary);
-      //print($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
-      $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
+
+      if($count === true) {
+        //print($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
+        $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
+      } else {
+        $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path);
+      }
+
       //print("Results: " . $results);
       return $results;
     }
@@ -305,7 +363,8 @@
          *    "generatorType": string
          * },
          * "data": [ int ];
-    */
+         */
+
         // https://stackoverflow.com/a/5562383/6828099 - INT(6) - Display Width
         // https://dev.mysql.com/doc/refman/5.7/en/json.html - MySQL JSON Format (MySQL 5.7.8+)
         // Aparently schema is a special keyword that cannot be used in normal tables
@@ -373,21 +432,18 @@
       }
     }
 
-    public function readData() {
+    public function readData($id) {
       try {
         $conn = $this->connectMySQL();
 
-        //$sql = "SELECT * FROM Assignment5"; // Display Everything
-        $sql = "SELECT * FROM Assignment5 ORDER BY id DESC LIMIT 10"; // Limit to Last 10 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
-        foreach ($conn->query($sql) as $row) {
-          print("
-          <tr>
-            <td>" . $row['id'] . "</td>
-            <td>" . $row['firstname'] . "</td>
-            <td>" . $row['lastname'] . "</td>
-            <td>" . $row['color'] . "</td>
-            <td>" . $row['food'] . "</td>
-          </tr>");
+        $statement = $conn->prepare("SELECT * FROM Hotbits WHERE id=(:rowID)");
+        $statement->execute(['rowID' => $id]);
+
+        // http://php.net/manual/en/pdostatement.fetchall.php
+        foreach ($statement->fetchAll() as $row) {
+          // This is intentionally supposed to run only one iteration.
+          // https://stackoverflow.com/a/3579950/6828099
+          return [$row['id'], $row['version'], $row['jsonSchema'], $row['status'], $row['serverVersion'], $row['generationTime'], $row['bytesRequested'], $row['bytesReturned'], $row['quotaRequestsRemaining'], $row['quotaBytesRemaining'], $row['generatorType'], $row['data']];
         }
       } catch(PDOException $e) {
           echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
@@ -396,6 +452,40 @@
   }
 
   class databaseManager {
+    public function readSQLToJSON($id) {
+      global $sqlCommands;
+      list($id, $version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data) = $sqlCommands->readData($id);
+      //print("Data: " . $id);
+
+      // https://stackoverflow.com/a/8529687/6828099
+      $jsonArray = ["rowID" => (int) $id,
+                    "version" => $version,
+                    "schema" => $schema,
+                    "status" => (int) $status,
+
+                    "requestInformation" => ["serverVersion" => $serverVersion,
+                                             "generationTime" => $generationTime,
+
+                                             "bytesRequested" => (int) $bytesRequested,
+                                             "bytesReturned" => (int) $bytesReturned,
+
+                                             "quotaRequestsRemaining" => (int) $quotaRequestsRemaining,
+                                             "quotaBytesRemaining" => (int) $quotaBytesRemaining,
+
+                                             "generatorType" => $generatorType
+                                            ],
+
+                    "data" => json_decode($data, true)
+                   ];
+
+      // https://stackoverflow.com/a/30315200/6828099
+      $json = json_encode($jsonArray, JSON_UNESCAPED_SLASHES);
+      //$json = json_encode($jsonArray, JSON_PRETTY_PRINT);
+
+      //header("Content-Type: application/json");
+      return $json;
+    }
+
     public function formatForSQL($json) {
       try {
         $decoded = json_decode($json, true);
@@ -429,8 +519,10 @@
         // http://php.net/manual/en/function.array-push.php
         // https://stackoverflow.com/a/13638998/6828099 - Pretty Print JSON
         //print("Last ID: " . $id);
-        $decoded[] = ["rowID" => $id];
-        $json = json_encode($decoded);
+        //array_push($decoded, ["rowID" => $id]);
+        //$decoded[] = ["rowID" => $id];
+        $decoded["rowID"] = (int) $id;
+        $json = json_encode($decoded, JSON_UNESCAPED_SLASHES);
         //$json = json_encode($decoded, JSON_PRETTY_PRINT);
 
         return $json;
