@@ -312,16 +312,25 @@
 
     public function testConnection() {
       if($this->server === NULL || $this->username === NULL || $this->password === NULL || $this->database === NULL) {
-        print("<p>Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p>");
+        $jsonArray = ["error" => "Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!"];
+        $json = json_encode($jsonArray);
+        print($json);
         die();
       }
 
       $return_response = $this->connectMySQL();
       if(gettype($return_response) === "string") {
-        print("<p>Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p>");
+        $jsonArray = ["error" => "Connection to MySQL Failed: " . $return_response . "!"];
+        $json = json_encode($jsonArray);
+        print($json);
         die();
       } else {
-        //print("<p>Connected to MySQL Successfully!!!</p>"); //object
+        /* //object
+         *
+         * $jsonArray = ["error" => "Connected to MySQL Successfully!!!"];
+         * $json = json_encode($jsonArray);
+         * print($json);
+        */
       }
     }
 
@@ -396,8 +405,10 @@
           $conn->exec($sql);
         }
       } catch(PDOException $e) {
-          //echo $sql . "<br>" . $e->getMessage();
-          echo "<p>Create Table Failed: " . $e->getMessage() . "</p>";
+          //echo $sql;
+          $jsonArray = ["error" => "Create Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json);
       }
     }
 
@@ -429,7 +440,9 @@
         // https://stackoverflow.com/a/9753751/6828099
         return $conn->lastInsertId();
       } catch(PDOException $e) {
-          echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+          $jsonArray = ["error" => "Insert Data into Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json);
       }
     }
 
@@ -452,7 +465,9 @@
           return [$row['id'], $row['version'], $row['jsonSchema'], $row['status'], $row['serverVersion'], $row['generationTime'], $row['bytesRequested'], $row['bytesReturned'], $row['quotaRequestsRemaining'], $row['quotaBytesRemaining'], $row['generatorType'], $row['data']];
         }
       } catch(PDOException $e) {
-          echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+          $jsonArray = ["error" => "Read Data from Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json);
       }
     }
   }
