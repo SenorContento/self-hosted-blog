@@ -13,6 +13,7 @@
   $sqlCommands->testConnection();
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
+  $sqlCommands->createSettingsTable(); // For Tracking Rate Limit
 
   $mainPage->printAPI();
 
@@ -102,8 +103,9 @@
         //header("Content-Type: application/json");
 
         if(getenv('alex.server.type') === "production") {
-          # The below variables are for the production server - getenv('alex.server.api.hotbits')
-          return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // Rate Limit Not Available Yet
+          # The below variables are for the production server
+          $this->checkRateLimit($bytes);
+          return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
         } else if(getenv('alex.server.type') === "development") {
           # The below variables are for testing on localhost
           return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // 10 Bytes - Normal Testing
@@ -118,6 +120,7 @@
       if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
         throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
+      //$this->checkRateLimit($bytes);
       //header("Content-Type: application/json");
 
       /*
@@ -131,12 +134,41 @@
        * The page: https://www.fourmilab.ch/fourmilog/archives/2017-06/001684.html
        * says that there are 12,208 bytes total per 24 hours period. There's still the
        * 120 total request limit (which is also part of the 24 hour period).
+       *
+       * Looking at the randomX Hotbit's source code, it appears that the ratelimit is detected
+       * by a downloadable buffer length that is bigger than an internal buffer. Not even an error code to
+       * track when the ratelimit is reached. Good thing is, the remaining ratelimit is specified with every
+       * JSON (and XML) response. Those responses provide both the remaining request and byte limit. I want
+       * to internally track the rate limits so I can choose when to cut people off as opposed to when I am cut off.
        */
 
-      $file = file_get_contents("debug-real.json");
-      //$file = file_get_contents("debug.json");
+      $file = file_get_contents("json/debug-random.json");
+      //$file = file_get_contents("json/debug-pseudo.json");
 
       return $file; //file_get_contents("debug.json");
+    }
+
+    private function checkRateLimit($bytes) {
+      global $sqlCommands;
+
+      list($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining) = $sqlCommands->readConfigData(1);
+
+      // The rate limit ends after 24-hours-ish. So, I am only allowing it to check again after 24 hours (once the limit is reached).
+      // You can check it here: https://www.fourmilab.ch/fourmilog/archives/2017-06/001684.html
+
+      // https://daveismyname.blog/quick-way-to-add-hours-and-minutes-with-php
+      // http://php.net/manual/en/function.date.php
+      //$timezone = date_default_timezone_set('GMT');
+      $collectGO = date('Y-m-d H:i:s T',strtotime('+24 hours',strtotime($generationTime))); // Format 2019-02-23T06:09:06Z
+      $now = date('Y-m-d H:i:s T', time());
+
+      // https://stackoverflow.com/a/32642436/6828099
+      /*if($now > $collectGO) {
+        print("Reset Counter: "); //filter_var((), FILTER_VALIDATE_BOOLEAN)
+      }*/
+
+      if(((int) $quotaRequestsRemaining === 0 || (int) $quotaBytesRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
+        throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining)");
     }
 
     public function getRandomness($result) {
@@ -262,7 +294,7 @@
          * Password is in an HTML textarea
          */
 
-        return $result; // It is on the caller to anticipate the correct format.
+        return $result; // It is on the caller to anticipate the correct format. If needed, I could use an array to specify type and data ["type"->"json", "data"->"{}"];
       } catch(Exception $e) {
         throw $e; // $result === false calls here
       }
@@ -432,6 +464,78 @@
       }
     }
 
+    public function createSettingsTable() {
+      try {
+        $conn = $this->connectMySQL();
+
+        // https://stackoverflow.com/a/8829122/6828099
+        $checkTableSQL = "SELECT count(*)
+          FROM information_schema.TABLES
+          WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'Hotbits_Config')
+        ";
+
+        $sql = "CREATE TABLE Hotbits_Config (
+          id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+          generationTime TEXT NOT NULL,
+          quotaRequestsRemaining INT NOT NULL,
+          quotaBytesRemaining INT NOT NULL
+        )";
+
+        $conn = $this->connectMySQL();
+        $statement = $conn->prepare("INSERT INTO Hotbits_Config (generationTime, quotaRequestsRemaining, quotaBytesRemaining)
+                                     VALUES (:generationTime, :quotaRequestsRemaining, :quotaBytesRemaining)");
+
+        $tableExists = false;
+        // http://php.net/manual/en/pdo.query.php
+        foreach ($conn->query($checkTableSQL) as $row) {
+          if($row['count(*)'] > 0)
+            $tableExists = true;
+        }
+
+        if(!$tableExists) {
+          // use exec() because no results are returned
+          $conn->exec($sql);
+
+          $statement->execute([
+            'generationTime' => '1970-01-00T01:00:00Z', // TEXT
+            'quotaRequestsRemaining' => -1, // INT
+            'quotaBytesRemaining' => -1, // INT
+          ]);
+        }
+      } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Create Settings Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json);
+      }
+    }
+
+    public function updateRateLimit($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining) {
+      try {
+        // https://stackoverflow.com/a/8334972/6828099
+        $conn = $this->connectMySQL();
+        $statement = $conn->prepare("UPDATE Hotbits_Config
+                                     SET generationTime=:generationTime, quotaRequestsRemaining=:quotaRequestsRemaining, quotaBytesRemaining=:quotaBytesRemaining
+                                     WHERE id=1");
+
+        $statement->execute([
+          'generationTime' => $generationTime, // TEXT
+          'quotaRequestsRemaining' => $quotaRequestsRemaining, // INT
+          'quotaBytesRemaining' => $quotaBytesRemaining // INT
+        ]);
+
+        // https://stackoverflow.com/a/9753751/6828099
+        return $conn->lastInsertId(); // Should remain at row 1
+      } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Insert Data into Config Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json);
+      }
+    }
+
     public function insertData($version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data) {
       try {
         $conn = $this->connectMySQL();
@@ -465,6 +569,33 @@
           $jsonArray = ["error" => "Insert Data into Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+      }
+    }
+
+    public function readConfigData($id) {
+      try {
+        $conn = $this->connectMySQL();
+
+        $statement = $conn->prepare("SELECT * FROM Hotbits_Config WHERE id=(:rowID)");
+        $statement->execute(['rowID' => $id]);
+
+        $rows = $statement->fetchAll();
+
+        if(sizeof($rows) === 0)
+          throw new Exception("Invalid rowID!!!");
+
+        // http://php.net/manual/en/pdostatement.fetchall.php
+        foreach ($rows as $row) {
+          // This is intentionally supposed to run only one iteration.
+          // https://stackoverflow.com/a/3579950/6828099
+          return [$row['generationTime'], $row['quotaRequestsRemaining'], $row['quotaBytesRemaining']];
+        }
+      } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Read Data from Config Table Failed: " . $e->getMessage()];
+          $json = json_encode($jsonArray);
+          print($json); // IDEA: Do I pass the exception upwards or do I handle it here?
       }
     }
 
@@ -555,11 +686,15 @@
         //$data = $decoded["data"]; // JSON
         $data = json_encode($decoded["data"]);
 
-        //print("Data: " . "\"" . $version . "\"" . $schema . "\"" . $status . "\"" . $serverVersion . "\"" . $generationTime . "\"" . $bytesRequested . "\"" . $bytesReturned . "\"" . $quotaRequestsRemaining . "\"" . $quotaBytesRemaining . "\"" . $generatorType . "\"" . $data);
+        //print("Data: $version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data");
 
         //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
         global $sqlCommands;
         $id = $sqlCommands->insertData($version, $schema, $status, $serverVersion, $generationTime, $bytesRequested, $bytesReturned, $quotaRequestsRemaining, $quotaBytesRemaining, $generatorType, $data);
+
+        if($generatorType !== "pseudorandom") {
+          $sqlCommands->updateRateLimit($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining);
+        }
 
         // http://php.net/manual/en/function.array-push.php
         // https://stackoverflow.com/a/13638998/6828099 - Pretty Print JSON
