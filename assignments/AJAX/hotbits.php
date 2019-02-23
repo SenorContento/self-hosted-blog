@@ -49,6 +49,8 @@
               header("Content-Type: text/plain");
               print($manager->readSQLToJSON((int) $_POST["id"]));
             } else {
+              header("Content-Type: application/json");
+
               $jsonArray = ["error" => "Sorry, but 'retrieve' is false!"];
               $json = json_encode($jsonArray);
               print($json);
@@ -59,6 +61,8 @@
               header("Content-Type: text/plain");
               print($this->getRandomnessCount($manager->readSQLToJSON((int) $_POST["id"]), TRUE));
             } else if(!filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+              header("Content-Type: application/json");
+
               $jsonArray = ["error" => "Sorry, but 'analyze' is false!"];
               $json = json_encode($jsonArray);
               print($json);
@@ -81,6 +85,8 @@
           print($json);
         }
       } catch(Exception $e) {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "Request Error! Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
@@ -138,6 +144,8 @@
         //header("Content-Type: text/plain");
         return $this->checkRandomness($this->convertToArray($result));
       } catch(Exception $e) {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
@@ -149,6 +157,8 @@
         //header("Content-Type: text/plain");
         return $this->checkRandomnessCount($this->convertToArray($result), $count);
       } catch(Exception $e) {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
@@ -316,6 +326,8 @@
 
     public function testConnection() {
       if($this->server === NULL || $this->username === NULL || $this->password === NULL || $this->database === NULL) {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!"];
         $json = json_encode($jsonArray);
         print($json);
@@ -324,6 +336,8 @@
 
       $return_response = $this->connectMySQL();
       if(gettype($return_response) === "string") {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "Connection to MySQL Failed: " . $return_response . "!"];
         $json = json_encode($jsonArray);
         print($json);
@@ -409,6 +423,8 @@
           $conn->exec($sql);
         }
       } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
           //echo $sql;
           $jsonArray = ["error" => "Create Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
@@ -444,6 +460,8 @@
         // https://stackoverflow.com/a/9753751/6828099
         return $conn->lastInsertId();
       } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
           $jsonArray = ["error" => "Insert Data into Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
@@ -469,6 +487,8 @@
           return [$row['id'], $row['version'], $row['jsonSchema'], $row['status'], $row['serverVersion'], $row['generationTime'], $row['bytesRequested'], $row['bytesReturned'], $row['quotaRequestsRemaining'], $row['quotaBytesRemaining'], $row['generatorType'], $row['data']];
         }
       } catch(PDOException $e) {
+          header("Content-Type: application/json");
+
           $jsonArray = ["error" => "Read Data from Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
@@ -552,6 +572,8 @@
 
         return $json;
       } catch(Exception $e) {
+        header("Content-Type: application/json");
+
         $jsonArray = ["error" => "databaseManager->formatForSQL: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
