@@ -39,32 +39,32 @@
       global $manager;
 
       try {
-        if(!empty($_GET)) {
-          if(isset($_GET["bytes"])) {
+        if(!empty($_POST)) {
+          if(isset($_POST["bytes"])) {
             header("Content-Type: application/json");
-            print($manager->formatForSQL($this->grabData((int) $_GET["bytes"])));
-          } else if(isset($_GET["retrieve"]) && isset($_GET["id"])) {
+            print($manager->formatForSQL($this->grabData((int) $_POST["bytes"])));
+          } else if(isset($_POST["retrieve"]) && isset($_POST["id"])) {
             // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
-            if(filter_var($_GET["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
+            if(filter_var($_POST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
               header("Content-Type: text/plain");
-              print($manager->readSQLToJSON((int) $_GET["id"]));
+              print($manager->readSQLToJSON((int) $_POST["id"]));
             } else {
               $jsonArray = ["error" => "Sorry, but 'retrieve' is false!"];
               $json = json_encode($jsonArray);
               print($json);
               //die();
             }
-          } else if(isset($_GET["analyze"]) && isset($_GET["id"])) {
-            if(isset($_GET["count"]) && filter_var($_GET["count"], FILTER_VALIDATE_BOOLEAN) && filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+          } else if(isset($_POST["analyze"]) && isset($_POST["id"])) {
+            if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               header("Content-Type: text/plain");
-              print($this->getRandomnessCount($manager->readSQLToJSON((int) $_GET["id"]), TRUE));
-            } else if(!filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+              print($this->getRandomnessCount($manager->readSQLToJSON((int) $_POST["id"]), TRUE));
+            } else if(!filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               $jsonArray = ["error" => "Sorry, but 'analyze' is false!"];
               $json = json_encode($jsonArray);
               print($json);
             } else {
               header("Content-Type: text/plain");
-              print($this->getRandomness($manager->readSQLToJSON((int) $_GET["id"])));
+              print($this->getRandomness($manager->readSQLToJSON((int) $_POST["id"])));
             }
           } else {
             header("Content-Type: application/json");
