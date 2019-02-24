@@ -27,10 +27,11 @@
    * https://stackoverflow.com/a/7423796/6828099 - Default Cipher - DES-EDE3-CBC
    *
    * openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -pass file:key.bin
+   * Potential: openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -K key.bin
    *
    * http://php.net/manual/en/function.openssl-encrypt.php
    *
-   * Because this is a symmetric key and not asymmetric, use the same command to decrypt the data as used to encrypt it. Just swap the filenames.
+   * Because this is a symmetric key and not asymmetric, use the same key to decrypt the data as used to encrypt it.
    * I was hoping to have a working implementation of GPG Asymmetric keypair generation while using reproducible, non-random, deterministic entropy.
    * I either found no implementation, the implementation was in C# (and not worth trying to cross-compile to my RPi for a class assignment),
    * or the implementation was broken. I also do not know enough about cryptography to build my own PGP solution.
@@ -91,17 +92,25 @@
 
   class cryptography {
     public function readParameters() {
-      $encrypted = $this->encrypt("ENCRYPTION KEY", "des-ede3-cfb", "Encrypt Me");
-      $decrypted = $this->decrypt("ENCRYPTION KEY", "des-ede3-cfb", $encrypted);
-
       // These all Return JSON Responses
-      print("GrabKey: " . $this->grabKey(93));
+      //print("GrabKey: " . $this->grabKey(93));
       //print("GrabNewKey (Pseudo): " . $this->grabNewKey(10, "pseudo"));
       //print("GrabNewKey (Real): " . $this->grabNewKey(10, "random_local"));
       //print("Analyze: " . $this->analyzeData(93, false));
       //print("Analyze (Count): " . $this->analyzeData(93, true));
 
+      $key = $this->grabBinary($this->grabKey(93));
+
+      $encrypted = $this->encrypt($key, "des-ede3-cfb", "Encrypt Me");
+      $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
       print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
+    }
+
+    private function grabBinary($json) {
+      $decoded = json_decode($json, true);
+      $data = $decoded["data"];
+
+      return pack("C*", ...$data);
     }
 
     public function generateKey() {
