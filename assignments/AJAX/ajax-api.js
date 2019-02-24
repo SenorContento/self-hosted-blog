@@ -20,14 +20,14 @@ function table(json) {
 $(document).ready(function() {
   $('#submit').click(function() {
     var rawJSON = lookup();
-    raw(rawJSON);
+    raw(syntaxHighlight(rawJSON));
     table($.parseJSON(rawJSON));
   });
 });
 
 function raw(json) {
   $(document).ready(function() {
-    $("#ajax-output-debug").text(json);
+    $("#ajax-output-debug").html(json); //.text(json);
   });
 }
 
@@ -70,11 +70,11 @@ function lookup() {
       /* data is the exact same thing as data in complete, but with bad error codes
        * status throws out error, just like how status in complete throws out success
        * thrown tells what type of error it is */
-      returnvalue = JSON.stringify(data, null, '\\');
+      returnvalue = JSON.stringify(data, null, 2);
     }, success: function(data) {
       //alert("Success!"); //print("Success!");
       //alert(type(data));
-      returnvalue = JSON.stringify(data);
+      returnvalue = JSON.stringify(data, null, 2);
     }, complete: function(data, status) {
       /* data is same as data in success, but with error codes and status messages thrown in with it
        * status is the status message without any other data. status is by default a string, not json */
@@ -82,4 +82,27 @@ function lookup() {
     }
   });
   return returnvalue;
+}
+
+// https://stackoverflow.com/a/7220510/6828099
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+         json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
 }

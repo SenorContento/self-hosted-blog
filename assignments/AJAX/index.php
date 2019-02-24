@@ -88,7 +88,7 @@
             <label>URL: </label><input type="text" id="url" value="/assignments/AJAX/hotbits.php">
             <label>Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
 
-            <a id="submit" href="#">Submit</a>
+            <a id="submit">Submit</a>
           </form>
 
           <br>

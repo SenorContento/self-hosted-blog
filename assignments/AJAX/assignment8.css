@@ -1,5 +1,8 @@
 #submit {
    float: right;
+   color: #63c0f5;
+   text-decoration: underline;
+   cursor: pointer;
 }
 
 label {
@@ -49,3 +52,14 @@ pre {
   word-wrap: break-word;
   white-space: pre-wrap;
 }
+
+#ajax-output-debug {
+  display: inline-block;
+  text-align: left;
+}
+
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
