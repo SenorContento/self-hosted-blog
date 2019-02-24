@@ -11,9 +11,9 @@
    * openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -pass file:key.bin
    *
    * http://php.net/manual/en/function.openssl-encrypt.php
-   * 
+   *
    * Because this is a symmetric key and not asymmetric, use the same command to decrypt the data as used to encrypt it. Just swap the filenames.
-   * I was hoping to have a working implementation of GPG Asymmetric keypair generation while using reproducible, non-random entropy.
+   * I was hoping to have a working implementation of GPG Asymmetric keypair generation while using reproducible, non-random, deterministic entropy.
    * I either found no implementation, the implementation was in C# (and not worth trying to cross-compile to my RPi for a class assignment),
    * or the implementation was broken. I also do not know enough about cryptography to build my own PGP solution.
    *
@@ -63,9 +63,144 @@
    * from a typical bash shell (as it is not bash and is a modified zsh shell)
    */
 
+  /* API Methods (POST)
+   *
+   * bytes(int)
+   * retrieve(bool) and id(int)
+   * analyze(bool) and id(int)
+   * analyze(bool) and id(int) and count(bool)
+   */
+
   class cryptography {
     public function readParameters() {
-      //
+      $encrypted = $this->encrypt("ENCRYPTION KEY", "des-ede3-cfb", "Encrypt Me");
+      $decrypted = $this->decrypt("ENCRYPTION KEY", "des-ede3-cfb", $encrypted);
+
+      print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
+    }
+
+    public function generateKey() {
+      // Not Applicable
+    }
+
+    public function grabKey() {
+      // setRequestNewData($bytes, $generator)
+      // setRetrieveData($id)
+      // setAnalyzeData($id, $count)
+      $this->requestData();
+    }
+
+    public function encrypt($key, $cipher, $message) {
+      // openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -pass file:key.bin
+
+      // http://php.net/manual/en/function.openssl-get-cipher-methods.php
+      $isValidCipher = false;
+      foreach(openssl_get_cipher_methods(TRUE) as $checkCipher) {
+        if($checkCipher === $cipher)
+          $isValidCipher = true;
+      }
+
+      if(!$isValidCipher)
+        throw new Exception("Please Specify a Valid Cipher! \"" . $cipher . "\" is not Valid!");
+
+      // http://php.net/manual/en/function.openssl-encrypt.php - openssl_encrypt(...);
+      // https://stackoverflow.com/a/43886617/6828099 - OPENSSL_RAW_DATA
+      // https://stackoverflow.com/a/12486940/6828099 - What is an IV?
+      // https://stackoverflow.com/a/21324063/6828099 - Should I use IV?
+      // https://stackoverflow.com/a/1987588/6828099 - Skip Warning Messages
+
+      /* Disable Warning Messages
+       *
+       * I know I can just an an IV using 'openssl_encrypt($message, $cipher, $key, "bytes-int-string-go-here");',
+       * but I want to make sure there is no external influence on encryption and that de/encryption is 100% reproducible.
+       *
+       * I would already have to release the the salt (IV) to make sure the tests are reproducible, but I wanted to just remove them.
+       */
+
+      /* One Way to Temporarily Disable Warnings
+       *
+       * var_dump(error_reporting());
+       * $savedReporting = error_reporting();
+       * error_reporting(E_ALL ^ E_WARNING);
+       * $result = openssl_encrypt($message, $cipher, $key, OPENSSL_RAW_DATA);
+       * error_reporting($savedReporting); // https://stackoverflow.com/questions/10169761/save-and-restore-error-reporting-level-in-php
+       */
+
+      // It turns out you can just put the @ (at) symbol in front of the function being called. - https://stackoverflow.com/a/10169839/6828099
+      return @openssl_encrypt($message, $cipher, $key, OPENSSL_RAW_DATA);
+    }
+
+    public function decrypt($key, $cipher, $message) {
+      // http://php.net/manual/en/function.openssl-get-cipher-methods.php
+      $isValidCipher = false;
+      foreach(openssl_get_cipher_methods(TRUE) as $checkCipher) {
+        if($checkCipher === $cipher)
+          $isValidCipher = true;
+      }
+
+      if(!$isValidCipher)
+        throw new Exception("Please Specify a Valid Cipher! \"" . $cipher . "\" is not Valid!");
+
+      // http://php.net/manual/en/function.openssl-encrypt.php
+      // https://stackoverflow.com/a/43886617/6828099
+      return openssl_decrypt($message, $cipher, $key, OPENSSL_RAW_DATA);
+    }
+
+    private function setRequestNewData($bytes, $generator) {
+      // bytes(int)
+      $data = array('retrieve' => TRUE, // Retrieve is always true
+                    'id' => $id, // rowID
+                    'generator' => $generator
+                   );
+
+      return $data;
+    }
+
+    private function setRetrieveData($id) {
+      // retrieve(bool) and id(int)
+      $data = array('retrieve' => TRUE, // Retrieve is always true
+                    'id' => $id, // rowID
+                   );
+
+      return $data;
+    }
+
+    private function setAnalyzeData($id, $count) {
+      // analyze(bool) and id(int)
+      // analyze(bool) and id(int) and count(bool)
+      $data = array('analyze' => TRUE, // Analyze is always true
+                    'id' => $id, // rowID
+                    'count' => filter_var($count, FILTER_VALIDATE_BOOLEAN) // Whether or not to display byte counts
+                   );
+
+      return $data;
+    }
+
+    private function requestData($data) {
+      try {
+        // https://stackoverflow.com/a/6609181/6828099
+        $url = getenv("alex.server.host") . '/assignments/AJAX/hotbits.php';
+
+        $options = array(
+          'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+          )
+        );
+
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context); // http://php.net/manual/en/function.file-get-contents.php - string $filename, bool $use_include_path = FALSE, resource $context, ...
+        //$result = false;
+
+        if ($result === FALSE) {
+          throw new Exception("Result Returned FALSE!!!");
+        }
+
+        return $result; // It is on the caller to anticipate the correct format. If needed, I could use an array to specify type and data ["type"->"json", "data"->"{}"];
+      } catch(Exception $e) {
+        throw $e; // $result === false calls here
+      }
     }
   }
 ?>

@@ -1,4 +1,12 @@
 <?php
+  // https://stackoverflow.com/a/3406181/6828099
+  // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
+  set_error_handler(
+    function ($severity, $message, $file, $line) {
+      throw new ErrorException($message, $severity, $severity, $file, $line);
+    }
+  );
+
   $mainPage = new HotbitsAPI();
   $sqlCommands = new sqlCommands();
   $manager = new databaseManager();
@@ -46,7 +54,11 @@
         if(!empty($_POST)) {
           if(isset($_POST["bytes"])) {
             header("Content-Type: application/json");
-            print($manager->formatForSQL($this->grabData((int) $_POST["bytes"])));
+            if(isset($_POST["generator"])) {
+              print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], $_POST["generator"]))); // To specify a custom generator
+            } else {
+              print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "random"))); // To specify the default generator
+            }
           } else if(isset($_POST["retrieve"]) && isset($_POST["id"])) {
             // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
             if(filter_var($_POST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
@@ -99,7 +111,7 @@
       }
     }
 
-    public function grabData($bytes) {
+    public function grabData($bytes, $generator) {
       //getenv('alex.server.api.hotbits');
       try {
         if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
@@ -110,10 +122,18 @@
         if(getenv('alex.server.type') === "production") {
           # The below variables are for the production server - getenv('alex.server.api.hotbits')
           $this->checkRateLimit($bytes);
+
+          if($generator === "pseudo")
+            return $this->requestData($this->setParameters("pseudo", "json", $bytes));
+
           return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
         } else if(getenv('alex.server.type') === "development") {
           # The below variables are for testing on localhost
           $this->checkRateLimit($bytes);
+
+          if($generator === "random_local") // I set it to "random_local" so it doesn't default to the real generator when testing the code. Setting to "random" will make the real generator default.
+            return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
+
           return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // 10 Bytes - Normal Testing
         }
       } catch(Exception $e) {
@@ -121,7 +141,7 @@
       }
     }
 
-    public function grabDataOffline($bytes) {
+    public function grabDataOffline($bytes, $generator) {
       // This function exists purely for testing with the data on localhost while offline
       if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
         throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
@@ -296,9 +316,10 @@
           )
         );
 
-        $context  = stream_context_create($options);
+        $context = stream_context_create($options);
         $result = file_get_contents($url, false, $context); // http://php.net/manual/en/function.file-get-contents.php - string $filename, bool $use_include_path = FALSE, resource $context, ...
         //$result = false;
+        //var_dump($result);
 
         if ($result === FALSE) {
           throw new Exception("Result Returned FALSE!!!");
