@@ -47,7 +47,7 @@
           } else if(isset($_POST["retrieve"]) && isset($_POST["id"])) {
             // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
             if(filter_var($_POST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
-              header("Content-Type: text/plain");
+              header("Content-Type: application/json");
               print($manager->readSQLToJSON((int) $_POST["id"]));
             } else {
               header("Content-Type: application/json");
@@ -59,8 +59,9 @@
             }
           } else if(isset($_POST["analyze"]) && isset($_POST["id"])) {
             if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
-              header("Content-Type: text/plain");
-              print($this->getRandomnessCount($manager->readSQLToJSON((int) $_POST["id"]), TRUE));
+              //header("Content-Type: text/plain");
+              header("Content-Type: application/json");
+              print($this->getRandomnessCount($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), TRUE));
             } else if(!filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               header("Content-Type: application/json");
 
@@ -68,8 +69,9 @@
               $json = json_encode($jsonArray);
               print($json);
             } else {
-              header("Content-Type: text/plain");
-              print($this->getRandomness($manager->readSQLToJSON((int) $_POST["id"])));
+              //header("Content-Type: text/plain");
+              header("Content-Type: application/json");
+              print($this->getRandomness($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"])));
             }
           } else {
             header("Content-Type: application/json");
@@ -178,10 +180,12 @@
         throw new Exception("$requestedBytes Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining)");
     }
 
-    public function getRandomness($result) {
+    public function getRandomness($id, $result) {
       try {
         //header("Content-Type: text/plain");
-        return $this->checkRandomness($this->convertToArray($result));
+        $jsonArray = ["rowID" => (int) $id,
+                      "response" => $this->checkRandomness($this->convertToArray($result))];
+        return json_encode($jsonArray);
       } catch(Exception $e) {
         header("Content-Type: application/json");
 
@@ -191,10 +195,20 @@
       }
     }
 
-    public function getRandomnessCount($result, $count) {
+    public function getRandomnessCount($id, $result, $count) {
       try {
         //header("Content-Type: text/plain");
-        return $this->checkRandomnessCount($this->convertToArray($result), $count);
+        $jsonArray = ["rowID" => (int) $id,
+                      "response" => $this->checkRandomnessCount($this->convertToArray($result), $count)];
+
+        // https://stackoverflow.com/a/28131159/6828099 - json_encode() just returns false "bool(false)" if it fails to convert the array to json
+        $result = preg_replace_callback('/[\x80-\xff]/',
+                  function($match) {
+                      return '\x'.dechex(ord($match[0]));
+                  }, $jsonArray);
+
+        //var_dump(json_encode($result));
+        return json_encode($result);
       } catch(Exception $e) {
         header("Content-Type: application/json");
 
