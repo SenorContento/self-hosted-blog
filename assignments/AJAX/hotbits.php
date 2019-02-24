@@ -21,6 +21,7 @@
     public $exec_ent_path;
     public $exec_cat_path;
     public $exec_mkdir_path;
+    public $hotbits_tmp_path;
 
     function setVars() {
       if(getenv('alex.server.type') === "production") {
@@ -28,11 +29,13 @@
         $this->exec_ent_path = "/home/web/programs/ent";
         $this->exec_cat_path = "/bin/cat";
         $this->exec_mkdir_path = "/bin/mkdir";
+        $this->hotbits_tmp_path = "/tmp/hotbits/";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
         $this->exec_cat_path = "/bin/cat";
         $this->exec_mkdir_path = "/bin/mkdir";
+        $this->hotbits_tmp_path = "/tmp/hotbits/";
       }
     }
 
@@ -305,6 +308,12 @@
         if($this->isHtml($result)) {
           list($generationTime, $quotaRequestsRemaining, $quotaBytesRemaining) = $sqlCommands->readConfigData(1);
 
+          /*
+           * IDEA: What happens if I legitimately run down the quotaRequestsRemaining and not quotaBytesRemaining?
+           * Can I replace faking 0 quotaRequestsRemaining with a rateLimitUp boolean?
+           *
+           * TODO: Run down quotaRequestsRemaining to 0 and save the JSON response to the responses folder.
+           */
           $now = date('Y-m-d H:i:s T', time());
           $sqlCommands->updateRateLimit($now, 0, $quotaBytesRemaining); // The byte count didn't go down this request
 
@@ -367,8 +376,8 @@
       // print(bin2hex($binary));
       // https://stackoverflow.com/a/49409847/6828099
 
-      exec($this->exec_mkdir_path . ' -p /tmp/hotbits/');
-      file_put_contents($File = "/tmp/hotbits/" . uniqid(), $binary);
+      exec($this->exec_mkdir_path . ' -p ' . $this->hotbits_tmp_path);
+      file_put_contents($File = $this->hotbits_tmp_path . uniqid(), $binary);
 
       if($count === true) {
         //print($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
