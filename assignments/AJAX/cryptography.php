@@ -99,7 +99,7 @@
       //print("Analyze: " . $this->analyzeData(93, false));
       //print("Analyze (Count): " . $this->analyzeData(93, true));
 
-      $key = $this->grabBinary($this->grabKey(93));
+      $key = $this->grabBinary($this->grabKey(1));
 
       $encrypted = $this->encrypt($key, "des-ede3-cfb", "Encrypt Me");
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
