@@ -1,4 +1,22 @@
 <?php
+  // https://stackoverflow.com/a/3406181/6828099
+  // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
+  set_error_handler(
+    function ($severity, $message, $file, $line) {
+      // This if statement executes if the statement has an @ symbol in front of it.
+      // http://php.net/manual/en/function.set-error-handler.php
+      if (0 === error_reporting()) {
+        //print("Help! Help! I'm Being Suppressed!!! Monty Python - https://www.youtube.com/watch?v=ZtYU87QNjPw");
+        return false;
+      }
+
+      //print("$message, $severity, $file, $line");
+      //if($message !== "openssl_encrypt(): Using an empty Initialization Vector (iv) is potentially insecure and not recommended")
+
+      throw new ErrorException($message, $severity, $severity, $file, $line);
+    }
+  );
+
   $mainPage = new cryptography();
 
   $mainPage->readParameters();
@@ -65,7 +83,7 @@
 
   /* API Methods (POST)
    *
-   * bytes(int)
+   * bytes(int) and generator(string)
    * retrieve(bool) and id(int)
    * analyze(bool) and id(int)
    * analyze(bool) and id(int) and count(bool)
@@ -76,6 +94,13 @@
       $encrypted = $this->encrypt("ENCRYPTION KEY", "des-ede3-cfb", "Encrypt Me");
       $decrypted = $this->decrypt("ENCRYPTION KEY", "des-ede3-cfb", $encrypted);
 
+      // These all Return JSON Responses
+      print("GrabKey: " . $this->grabKey(93));
+      //print("GrabNewKey (Pseudo): " . $this->grabNewKey(10, "pseudo"));
+      //print("GrabNewKey (Real): " . $this->grabNewKey(10, "random_local"));
+      //print("Analyze: " . $this->analyzeData(93, false));
+      //print("Analyze (Count): " . $this->analyzeData(93, true));
+
       print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
     }
 
@@ -83,11 +108,25 @@
       // Not Applicable
     }
 
-    public function grabKey() {
+    public function grabKey($id) {
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      $this->requestData();
+      return $this->requestData($this->setRetrieveData($id));
+    }
+
+    public function grabNewKey($bytes, $generator) {
+      // setRequestNewData($bytes, $generator)
+      // setRetrieveData($id)
+      // setAnalyzeData($id, $count)
+      return $this->requestData($this->setRequestNewData($bytes, $generator));
+    }
+
+    public function analyzeData($id, $count) {
+      // setRequestNewData($bytes, $generator)
+      // setRetrieveData($id)
+      // setAnalyzeData($id, $count)
+      return $this->requestData($this->setAnalyzeData($id, $count));
     }
 
     public function encrypt($key, $cipher, $message) {
@@ -148,9 +187,8 @@
 
     private function setRequestNewData($bytes, $generator) {
       // bytes(int)
-      $data = array('retrieve' => TRUE, // Retrieve is always true
-                    'id' => $id, // rowID
-                    'generator' => $generator
+      $data = array('bytes' => $bytes, // Number of Bytes to Request
+                    'generator' => $generator // Generator to Use
                    );
 
       return $data;
@@ -182,6 +220,12 @@
         $url = getenv("alex.server.host") . '/assignments/AJAX/hotbits.php';
 
         $options = array(
+          // https://stackoverflow.com/q/32211301/6828099
+          'ssl' => array(
+            // I cannot specify a self-signed cert to PHP, so I have to disable verification - https://serverfault.com/a/815795/379269
+            'verify_peer' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN), // Set to false to disable checking certificate
+            //'cafile' => '/usr/local/etc/nginx/certs/localhost'
+          ),
           'http' => array(
             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
             'method'  => 'POST',
