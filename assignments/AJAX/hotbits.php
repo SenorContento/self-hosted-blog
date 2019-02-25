@@ -122,25 +122,12 @@
         if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
           throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-        //header("Content-Type: application/json");
+        if($generator === "pseudo")
+          return $this->requestData($this->setParameters("pseudo", "json", $bytes));
 
-        if(getenv('alex.server.type') === "production") {
-          # The below variables are for the production server - getenv('alex.server.api.hotbits')
-          $this->checkRateLimit($bytes);
+        $this->checkRateLimit($bytes);
 
-          if($generator === "pseudo")
-            return $this->requestData($this->setParameters("pseudo", "json", $bytes));
-
-          return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
-        } else if(getenv('alex.server.type') === "development") {
-          # The below variables are for testing on localhost
-          $this->checkRateLimit($bytes);
-
-          if($generator === "random") // I set it to "random_local" so it doesn't default to the real generator when testing the code. Setting to "random" will make the real generator default.
-            return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
-
-          return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // 10 Bytes - Normal Testing
-        }
+        return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
       } catch(Exception $e) {
         throw $e; // Pass the exception upwards!
       }
