@@ -19,9 +19,15 @@ function table(json) {
 
 $(document).ready(function() {
   $('#submit').click(function() {
-    var rawJSON = lookup();
-    raw(syntaxHighlight(rawJSON));
-    table($.parseJSON(rawJSON));
+    var rawData = lookup();
+    if(rawData[1] === "json") {
+      $("#response-table").show();
+      raw(syntaxHighlight(rawData[0]));
+      table($.parseJSON(rawData[0]));
+    } else {
+      $("#response-table").hide();
+      raw(rawData[0]);
+    }
   });
 });
 
@@ -70,11 +76,18 @@ function lookup() {
       /* data is the exact same thing as data in complete, but with bad error codes
        * status throws out error, just like how status in complete throws out success
        * thrown tells what type of error it is */
-      returnvalue = JSON.stringify(data, null, 2);
-    }, success: function(data) {
+      returnvalue = [JSON.stringify(data, null, 2), "json"];
+    }, success: function(data, status, xhr) {
       //alert("Success!"); //print("Success!");
       //alert(type(data));
-      returnvalue = JSON.stringify(data, null, 2);
+      // https://stackoverflow.com/a/3741604/6828099
+      var ct = xhr.getResponseHeader("content-type") || "";
+      if (ct.indexOf('html') > -1) {
+        returnvalue = [data, "html"];
+      }
+      if (ct.indexOf('json') > -1) {
+        returnvalue = [JSON.stringify(data, null, 2), "json"];
+      }
     }, complete: function(data, status) {
       /* data is same as data in success, but with error codes and status messages thrown in with it
        * status is the status message without any other data. status is by default a string, not json */

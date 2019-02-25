@@ -133,12 +133,12 @@
               if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN)) {
                 //header("Content-Type: application/json");
                 header("Content-Type: text/html");
-                print($this->analyzeData($_POST["id"], true)); // Analyze (Count)
+                $this->convertToHTML($this->analyzeData($_POST["id"], true)); // Analyze (Count)
                 die();
               } else {
                 //header("Content-Type: application/json");
                 header("Content-Type: text/html");
-                print($this->analyzeData($_POST["id"], false)); // Analyze
+                $this->convertToHTML($this->analyzeData($_POST["id"], false)); // Analyze
                 die();
               }
             } else {
@@ -174,6 +174,20 @@
       }
 
       $this->performOperations($id, $key);
+    }
+
+    private function convertToHTML($string) {
+      /*
+       * I am only adding these tags here to complete the HTML portion of this assignment.
+       * I am not a big fan of using HTML to relay API data and I especially do not like
+       * mixing formats (especially unnecessarily). I would just use JSON only if I could.
+       */
+      print('<img width="50px" src="/images/png/SenorContento-1024x1024.png"></img>');
+      print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
+
+      print("<h3>");
+      print($string);
+      print("</h3>");
     }
 
     private function performOperations($id, $key) {

@@ -78,7 +78,7 @@
 
     public function printResponsesTable() {
       print('
-      <fieldset>
+      <fieldset id="response-table">
         <legend>AJAX Response</legend>
         <table>
           <thead>
