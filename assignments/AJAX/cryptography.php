@@ -134,10 +134,12 @@
                 die();
               }
             } else {
-              $key = $this->grabBinary($this->grabKey($_GET["id"])); // GrabKey
+              list($id, $json) = $this->grabKey($_GET["id"]);
+              $key = $this->grabBinary($json); // GrabKey
             }
           } else if(isset($_GET["bytes"]) && isset($_GET["generator"])) {
-              $key = $this->grabBinary($this->grabNewKey($_GET["bytes"], $_GET["generator"])); // GrabNewKey
+              list($id, $json) = $this->grabNewKey($_GET["bytes"], $_GET["generator"]);
+              $key = $this->grabBinary($json); // GrabNewKey
           } else {
             header("Content-Type: application/json");
 
@@ -163,14 +165,15 @@
         die();
       }
 
-      $this->performOperations($key);
+      $this->performOperations($id, $key);
     }
 
-    private function performOperations($key) {
+    private function performOperations($id, $key) {
       $encrypted = $this->encrypt($key, "des-ede3-cfb", file_get_contents($this->controlled_file));
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
 
-      $jsonArray = ["encrypted" => $encrypted,
+      $jsonArray = ["rowID" => (int) $id,
+                    "encrypted" => $encrypted,
                     "decrypted" => $decrypted
                    ];
 
@@ -200,14 +203,24 @@
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      return $this->requestData($this->setRetrieveData($id));
+      var_dump($this->requestData($this->setRetrieveData($id)));
+      $json = $this->requestData($this->setRetrieveData($id));
+
+      $decoded = json_decode($json, true);
+      $id = $decoded["rowID"];
+
+      return [$id, $json];
     }
 
     public function grabNewKey($bytes, $generator) {
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      return $this->requestData($this->setRequestNewData($bytes, $generator));
+      $json = $this->requestData($this->setRequestNewData($bytes, $generator));
+      $decoded = json_decode($json, true);
+      $id = $decoded["rowID"];
+
+      return [$id, $json];
     }
 
     public function analyzeData($id, $count) {
