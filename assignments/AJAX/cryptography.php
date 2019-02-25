@@ -203,7 +203,6 @@
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      var_dump($this->requestData($this->setRetrieveData($id)));
       $json = $this->requestData($this->setRetrieveData($id));
 
       $decoded = json_decode($json, true);
