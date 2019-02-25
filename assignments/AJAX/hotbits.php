@@ -300,8 +300,7 @@
     private function requestData($data) {
       try {
         // https://stackoverflow.com/a/6609181/6828099
-        //$url = 'https://www.fourmilab.ch/cgi-bin/Hotbits.api';
-        $url = 'https://web.senorcontento.com/cgi-bin/Hotbits.api';
+        $url = 'https://www.fourmilab.ch/cgi-bin/Hotbits.api';
 
         $options = array(
           'http' => array(
