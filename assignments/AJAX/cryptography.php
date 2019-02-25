@@ -99,7 +99,57 @@
       //print("Analyze: " . $this->analyzeData(93, false));
       //print("Analyze (Count): " . $this->analyzeData(93, true));
 
-      $key = $this->grabBinary($this->grabKey(1));
+      // GrabNewKey (Real): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=random_local
+      // GrabNewKey (Pseudo): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=pseudo
+      // GrabKey: https://localhost/assignments/AJAX/cryptography.php?id=1
+      // Analyze:
+      // Analyze (Count):
+
+      //header("Content-Type: application/json");
+      try {
+        if(!empty($_GET)) {
+          if(isset($_GET["id"])) {
+            if(isset($_GET["analyze"]) && filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+              // I don't know why I added the analyze methods to the cryptography class.
+              // Anyhoo, it exists now, so I am leaving it in.
+              if(isset($_GET["count"]) && filter_var($_GET["count"], FILTER_VALIDATE_BOOLEAN)) {
+                header("Content-Type: application/json");
+                print($this->analyzeData($_GET["id"], true)); // Analyze (Count)
+                die();
+              } else {
+                header("Content-Type: application/json");
+                print($this->analyzeData($_GET["id"], false)); // Analyze
+                die();
+              }
+            } else {
+              $key = $this->grabBinary($this->grabKey($_GET["id"])); // GrabKey
+            }
+          } else if(isset($_GET["bytes"]) && isset($_GET["generator"])) {
+              $key = $this->grabBinary($this->grabNewKey($_GET["bytes"], $_GET["generator"])); // GrabNewKey
+          } else {
+            header("Content-Type: application/json");
+
+            $jsonArray = ["error" => "Sorry, but no valid request sent!"];
+            $json = json_encode($jsonArray);
+            print($json);
+            die();
+          }
+        } else {
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Please send a POST request!"];
+          $json = json_encode($jsonArray);
+          print($json);
+          die();
+        }
+      } catch(Exception $e) {
+        header("Content-Type: application/json");
+
+        $jsonArray = ["error" => "Exception in POST: " . $e->getMessage()];
+        $json = json_encode($jsonArray);
+        print($json);
+        die();
+      }
 
       $encrypted = $this->encrypt($key, "des-ede3-cfb", "Encrypt Me");
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
