@@ -108,6 +108,7 @@
         $jsonArray = ["error" => "Request Error! Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
+        die();
       }
     }
 
@@ -215,6 +216,7 @@
         $jsonArray = ["error" => "Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
+        die();
       }
     }
 
@@ -238,6 +240,7 @@
         $jsonArray = ["error" => "Exception: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
+        die();
       }
     }
 
@@ -536,6 +539,7 @@
           $jsonArray = ["error" => "Create Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+          die();
       }
     }
 
@@ -583,6 +587,7 @@
           $jsonArray = ["error" => "Create Settings Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+          die();
       }
     }
 
@@ -608,6 +613,7 @@
           $jsonArray = ["error" => "Insert Data into Config Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+          die();
       }
     }
 
@@ -644,6 +650,7 @@
           $jsonArray = ["error" => "Insert Data into Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+          die();
       }
     }
 
@@ -671,6 +678,7 @@
           $jsonArray = ["error" => "Read Data from Config Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json); // IDEA: Do I pass the exception upwards or do I handle it here?
+          die();
       }
     }
 
@@ -698,6 +706,7 @@
           $jsonArray = ["error" => "Read Data from Table Failed: " . $e->getMessage()];
           $json = json_encode($jsonArray);
           print($json);
+          die();
       }
     }
   }
@@ -787,6 +796,7 @@
         $jsonArray = ["error" => "databaseManager->formatForSQL: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
+        die();
       }
     }
   }

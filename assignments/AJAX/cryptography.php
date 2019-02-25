@@ -206,6 +206,10 @@
       $json = $this->requestData($this->setRetrieveData($id));
 
       $decoded = json_decode($json, true);
+
+      if(!isset($decoded["rowID"]))
+        throw new Exception("Unable to Grab Key!!! Key Probably Doesn't Exist!!!");
+
       $id = $decoded["rowID"];
 
       return [$id, $json];
@@ -217,7 +221,13 @@
       // setAnalyzeData($id, $count)
       $json = $this->requestData($this->setRequestNewData($bytes, $generator));
       $decoded = json_decode($json, true);
+      //var_dump($json);
+
+      if(!isset($decoded["rowID"]))
+        throw new Exception("Unable to Generate New Key!!! Rate Limit is Probably Up!!!");
+
       $id = $decoded["rowID"];
+      //print("TEST: " . $decoded["error"]);
 
       return [$id, $json];
     }
