@@ -57,7 +57,11 @@
             if(isset($_POST["generator"])) {
               print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], $_POST["generator"]))); // To specify a custom generator
             } else {
-              print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "random"))); // To specify the default generator
+              if(getenv('alex.server.type') === "production") {
+                print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "random"))); // To specify the default generator
+              } else {
+                print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "pseudo"))); // Setup to prevent accidentally using up rate limit while debugging
+              }
             }
           } else if(isset($_POST["retrieve"]) && isset($_POST["id"])) {
             // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
@@ -132,7 +136,7 @@
           # The below variables are for testing on localhost
           $this->checkRateLimit($bytes);
 
-          if($generator === "random_local") // I set it to "random_local" so it doesn't default to the real generator when testing the code. Setting to "random" will make the real generator default.
+          if($generator === "random") // I set it to "random_local" so it doesn't default to the real generator when testing the code. Setting to "random" will make the real generator default.
             return $this->requestData($this->setParameters(getenv('alex.server.api.hotbits'), "json", $bytes));
 
           return $this->requestData($this->setParameters("pseudo", "json", $bytes)); // 10 Bytes - Normal Testing
