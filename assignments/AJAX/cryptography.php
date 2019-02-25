@@ -19,6 +19,7 @@
 
   $mainPage = new cryptography();
 
+  $mainPage->setVars();
   $mainPage->readParameters();
 
   /* Encryption Method
@@ -91,6 +92,18 @@
    */
 
   class cryptography {
+    public $controlled_file;
+
+    function setVars() {
+      if(getenv('alex.server.type') === "production") {
+        # The below variables are for the production server
+        $this->controlled_file = $_SERVER['DOCUMENT_ROOT'] . "/assignments/AJAX/controlled.txt";
+      } else if(getenv('alex.server.type') === "development") {
+        # The below variables are for testing on localhost
+        $this->controlled_file = $_SERVER['DOCUMENT_ROOT'] . "/assignments/AJAX/controlled.txt";
+      }
+    }
+
     public function readParameters() {
       // These all Return JSON Responses
       //print("GrabKey: " . $this->grabKey(93));
@@ -105,7 +118,6 @@
       // Analyze:
       // Analyze (Count):
 
-      //header("Content-Type: application/json");
       try {
         if(!empty($_GET)) {
           if(isset($_GET["id"])) {
@@ -151,9 +163,26 @@
         die();
       }
 
-      $encrypted = $this->encrypt($key, "des-ede3-cfb", "Encrypt Me");
+      $this->performOperations($key);
+    }
+
+    private function performOperations($key) {
+      $encrypted = $this->encrypt($key, "des-ede3-cfb", file_get_contents($this->controlled_file));
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
-      print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
+
+      $jsonArray = ["encrypted" => $encrypted,
+                    "decrypted" => $decrypted
+                   ];
+
+      // https://stackoverflow.com/a/28131159/6828099 - json_encode() just returns false "bool(false)" if it fails to convert the array to json
+      $result = preg_replace_callback('/[\x80-\xff]/',
+                function($match) {
+                    return '\x'.dechex(ord($match[0]));
+                }, $jsonArray);
+
+      header("Content-Type: application/json");
+      print(json_encode($result));
+      //print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
     }
 
     private function grabBinary($json) {
