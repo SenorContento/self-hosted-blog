@@ -205,7 +205,7 @@
       }*/
 
       if(((int) $requestedBytes > (int) $quotaBytesRemaining) && ((int) $quotaRequestsRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
-        throw new Exception("$requestedBytes Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining)");
+        throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining) (Requested Bytes: $requestedBytes)");
     }
 
     public function getRandomness($id, $result) {
