@@ -108,15 +108,16 @@
       // These all Return JSON Responses
       //print("GrabKey: " . $this->grabKey(93));
       //print("GrabNewKey (Pseudo): " . $this->grabNewKey(10, "pseudo"));
-      //print("GrabNewKey (Real): " . $this->grabNewKey(10, "random_local"));
+      //print("GrabNewKey (Real): " . $this->grabNewKey(10, "random"));
       //print("Analyze: " . $this->analyzeData(93, false));
       //print("Analyze (Count): " . $this->analyzeData(93, true));
 
-      // GrabNewKey (Real): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=random_local
+      // These won't actually work as the requests are POST requests and not GET requests
+      // GrabNewKey (Real): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=random
       // GrabNewKey (Pseudo): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=pseudo
       // GrabKey: https://localhost/assignments/AJAX/cryptography.php?id=1
-      // Analyze:
-      // Analyze (Count):
+      // Analyze: https://localhost/assignments/AJAX/cryptography.php?analyze=true&id=1
+      // Analyze (Count): https://localhost/assignments/AJAX/cryptography.php?analyze=true&id=1&count=true
 
       try {
         if(!empty($_POST)) {
