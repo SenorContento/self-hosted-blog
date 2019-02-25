@@ -12,6 +12,7 @@
   $mainPage->printSourceCodeLink();
   //$mainPage->printWarning();
   $mainPage->printForm();
+  $mainPage->printUserControls();
   $mainPage->printDebugOutput();
   $mainPage->printResponsesTable();
 
@@ -63,6 +64,49 @@
             <label>Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
 
             <a id="submit">Submit</a>
+          </form>
+        </div>
+      </fieldset>');
+    }
+
+    public function printUserControls() {
+      /* API Methods (POST) - Hotbits and Cryptography
+       *
+       * 1 - bytes(int) and generator(string)
+       * 2 - retrieve(bool) and id(int)
+       * 3 - analyze(bool) and id(int)
+       * 4 - analyze(bool) and id(int) and count(bool)
+       */
+
+       /* Responses - Hotbits
+        *
+        * 1 - (JSON) New Data Straight from Hotbits (Do Both Random and Pseudorandom)
+        * 2 - (JSON) Old Data Already In MySQL Database (Do Both Random and Pseudorandom)
+        * 3 - (JSON) Analyze Data From MySQL Database
+        * 4 - (JSON) Analyze Data From MySQL Database (and Provide Byte Counts)
+        */
+
+        /* Responses - Cryptography
+         *
+         * 1 - (JSON) New Data - Encrypt and Decrypt Test File
+         * 2 - (JSON) Old Data - Encrypt and Decrypt Test File
+         * 3 - (HTML) Analyze Data From MySQL Database
+         * 4 - (HTML) Analyze Data From MySQL Database (and Provide Byte Counts)
+         */
+
+      print('
+      <fieldset>
+        <legend>AJAX User Controls</legend>
+        <div class="form">
+          <form id="user-controls">
+            <label class="form-label-color">Select a JSON Request: </label>
+            <select id="option-color" name="color">
+              <option value="red">Work In Progress...</option>
+              <option value="red">Currently Does Nothing!!!</option>
+              <option value="red">Red</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+            </select>
           </form>
         </div>
       </fieldset>');
