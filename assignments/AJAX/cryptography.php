@@ -125,12 +125,19 @@
             if(isset($_POST["analyze"]) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               // I don't know why I added the analyze methods to the cryptography class.
               // Anyhoo, it exists now, so I am leaving it in.
+
+              // I decided to convert this to HTML instead of JSON to satisfy the homework
+              // requirement of needing a HTML response (ReadMe.txt - Line 6).
+              // If you want a JSON formatted version of this response,
+              // point your requests to hotbits.php.
               if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN)) {
-                header("Content-Type: application/json");
+                //header("Content-Type: application/json");
+                header("Content-Type: text/html");
                 print($this->analyzeData($_POST["id"], true)); // Analyze (Count)
                 die();
               } else {
-                header("Content-Type: application/json");
+                //header("Content-Type: application/json");
+                header("Content-Type: text/html");
                 print($this->analyzeData($_POST["id"], false)); // Analyze
                 die();
               }
@@ -237,7 +244,15 @@
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      return $this->requestData($this->setAnalyzeData($id, $count));
+      $json = $this->requestData($this->setAnalyzeData($id, $count));
+      $decoded = json_decode($json, true);
+      //var_dump($json);
+
+      if(!isset($decoded["response"]))
+        throw new Exception("Sorry, but it appears that something is wrong with the request!!! Did you choose a valid rowID?");
+
+      $response = $decoded["response"];
+      return $response;
     }
 
     public function encrypt($key, $cipher, $message) {

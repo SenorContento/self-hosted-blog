@@ -24,55 +24,27 @@
       print('<center><h1>Assignment 8 has not been created yet! Please come back later!</h1></center>');
     }
 
-    /* Potential Alternate Generators
+    /* AJAX Requests
      *
-     * https://serverfault.com/questions/707859/generate-entropy-for-pgp-key
-     * https://crypto.stackexchange.com/a/26477/39179
-     * https://davesteele.github.io/gpg/2014/09/20/anatomy-of-a-gpg-key/
+     * http://api.jquery.com/category/ajax/
      *
-     * haveged
-     * rng-tools
+     * https://www.w3schools.com/jquery/jquery_ajax_load.asp
+     * http://api.jquery.com/load/
+     * .load()
      *
-     * /dev/random
-     * /dev/urandom
-     */
-
-    /* Potential Entropy Fakers
+     * https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
+     * http://api.jquery.com/jQuery.get/
+     * jQuery.get()
      *
-     * phidelius - https://dankaminsky.com/2012/01/03/phidelius/ - http://s3.amazonaws.com/dmk/phidelius-1.01.tgz - PRNG is not seeded
-     * keygen - https://ritter.vg/blog-non_persistent_pgp.html - https://ritter.vg/resources/non-persistent-gpg-keys.tgz - MPI subsystem not initialized
+     * http://api.jquery.com/jQuery.getJSON/
+     * jQuery.getJSON()
      *
-     * Both of these could allow replacing the pseudorandom generator with data from Hotbits (for some cryptographic strength testing without introducing uncontrolled variables).
-     * Problem is they both are broken for the reasons tacked on to the end of each list item. For example PRNG is not seeded was outputted by ssh-keygen probably because data is
-     * not being piped into /dev/urandom. SSH-Keygen grabs data from that device (as monitored by strace on my RPi). MPI subsystem... is outputted by keygen itself.
+     * https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
+     * http://api.jquery.com/jQuery.post/
+     * jQuery.post()
      *
-     * https://www.ibm.com/developerworks/community/blogs/cgaix/entry/fatal_prng_is_not_seeded?lang=en - Potential Solution for PRNG is not seeded
-     * phidelius has the most chance of working. It is possible that phidelius is not generating the devices when it executes the keygen programs.
-     */
-
-    /* Debug Trace - phidelius
-     *
-     * ➜  phidelius-1.01 ./phidelius -p "ax-op-nm-qw-yi" -d -e "ssh-keygen -f id_testme"
-     * open64 /dev/null
-     * poll
-     * PRNG is not seeded
-     *
-     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-     * I now use https://github.com/robbyrussell/oh-my-zsh for my shell, so it is going to look different
-     * from a typical bash shell (as it is not bash and is a modified zsh shell)
-     */
-
-    /*
-      http://api.jquery.com/category/ajax/
-
-      * .load()
-
-      * jQuery.get()
-      * jQuery.getJSON()
-
-      * jQuery.post()
-
-      * jQuery.ajax()
+     * http://api.jquery.com/jQuery.ajax/
+     * jQuery.ajax()
     */
 
     public function printForm() {
@@ -114,34 +86,6 @@
           </table>
         </div>
       </fieldset>');
-    }
-
-    public function getHTML() {
-      // https://www.w3schools.com/jquery/jquery_ajax_load.asp
-      // http://api.jquery.com/load/
-      // .load()
-    }
-
-    public function getData() {
-      // https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
-      // http://api.jquery.com/jQuery.get/
-      // jQuery.get()
-    }
-
-    public function getJSON() {
-      // http://api.jquery.com/jQuery.getJSON/
-      // jQuery.getJSON()
-    }
-
-    public function postData() {
-      // https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
-      // http://api.jquery.com/jQuery.post/
-      // jQuery.post()
-    }
-
-    public function ajaxRequest() {
-      // http://api.jquery.com/jQuery.ajax/
-      // jQuery.ajax()
     }
   }
 
