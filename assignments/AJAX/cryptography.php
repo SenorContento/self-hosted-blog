@@ -253,10 +253,18 @@
 
       $response = $decoded["response"];
       return $response;
+      /*
+       * To turn back to JSON, set to `return $json;`
+       * and change mimetype headers to application/json.
+       *
+       * //header("Content-Type: text/html");
+       * header("Content-Type: application/json");
+       */
     }
 
     public function encrypt($key, $cipher, $message) {
       // openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -pass file:key.bin
+      // This is more like `openssl enc -des-ede3-cfb -nosalt -in hello -out hello.enc -K key.bin`
 
       // http://php.net/manual/en/function.openssl-get-cipher-methods.php
       $isValidCipher = false;

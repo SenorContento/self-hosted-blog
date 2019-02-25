@@ -10,8 +10,10 @@
   $loadPage->loadHeader();
 
   $mainPage->printSourceCodeLink();
-  $mainPage->printWarning();
+  //$mainPage->printWarning();
   $mainPage->printForm();
+  $mainPage->printDebugOutput();
+  $mainPage->printResponsesTable();
 
   $loadPage->loadFooter();
 
@@ -54,7 +56,7 @@
 
       print('
       <fieldset>
-        <legend>Example Form</legend>
+        <legend>AJAX Control Form</legend>
         <div class="form">
           <form id="hotbits">
             <label>URL: </label><input type="text" id="url" value="/assignments/AJAX/hotbits.php">
@@ -62,29 +64,36 @@
 
             <a id="submit">Submit</a>
           </form>
-
-          <br>
-
-          <h3>Ajax Output</h3>
-          <pre id="ajax-output-debug"><div class="highlight">Output Not Generated...</div></pre>
-
-          <br>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Item</th>
-                </tr>
-            </thead>
-            <tbody id="ajax-table-body">
-              <tr>
-                <td class="index-table">Output Not Generated...</td>
-                <td class="item-table">Output Not Generated...</td>
-                </tr>
-            </tbody>
-          </table>
         </div>
+      </fieldset>');
+    }
+
+    public function printDebugOutput() {
+      print('
+      <fieldset>
+        <legend>AJAX Debug Output</legend>
+        <pre id="ajax-output-debug"><div class="highlight">Output Not Generated...</div></pre>
+      </fieldset>');
+    }
+
+    public function printResponsesTable() {
+      print('
+      <fieldset>
+        <legend>AJAX Response</legend>
+        <table>
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Item</th>
+              </tr>
+          </thead>
+          <tbody id="ajax-table-body">
+            <tr>
+              <td class="index-table">Output Not Generated...</td>
+              <td class="item-table">Output Not Generated...</td>
+              </tr>
+          </tbody>
+        </table>
       </fieldset>');
     }
   }
