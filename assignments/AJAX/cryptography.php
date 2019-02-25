@@ -119,26 +119,26 @@
       // Analyze (Count):
 
       try {
-        if(!empty($_GET)) {
-          if(isset($_GET["id"])) {
-            if(isset($_GET["analyze"]) && filter_var($_GET["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+        if(!empty($_POST)) {
+          if(isset($_POST["id"])) {
+            if(isset($_POST["analyze"]) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               // I don't know why I added the analyze methods to the cryptography class.
               // Anyhoo, it exists now, so I am leaving it in.
-              if(isset($_GET["count"]) && filter_var($_GET["count"], FILTER_VALIDATE_BOOLEAN)) {
+              if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN)) {
                 header("Content-Type: application/json");
-                print($this->analyzeData($_GET["id"], true)); // Analyze (Count)
+                print($this->analyzeData($_POST["id"], true)); // Analyze (Count)
                 die();
               } else {
                 header("Content-Type: application/json");
-                print($this->analyzeData($_GET["id"], false)); // Analyze
+                print($this->analyzeData($_POST["id"], false)); // Analyze
                 die();
               }
             } else {
-              list($id, $json) = $this->grabKey($_GET["id"]);
+              list($id, $json) = $this->grabKey($_POST["id"]);
               $key = $this->grabBinary($json); // GrabKey
             }
-          } else if(isset($_GET["bytes"]) && isset($_GET["generator"])) {
-              list($id, $json) = $this->grabNewKey($_GET["bytes"], $_GET["generator"]);
+          } else if(isset($_POST["bytes"]) && isset($_POST["generator"])) {
+              list($id, $json) = $this->grabNewKey($_POST["bytes"], $_POST["generator"]);
               $key = $this->grabBinary($json); // GrabNewKey
           } else {
             header("Content-Type: application/json");
