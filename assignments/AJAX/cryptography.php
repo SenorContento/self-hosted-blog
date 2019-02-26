@@ -182,8 +182,12 @@
        * I am not a big fan of using HTML to relay API data and I especially do not like
        * mixing formats (especially unnecessarily). I would just use JSON only if I could.
        */
-      print('<img width="50px" src="/images/png/SenorContento-1024x1024.png"></img>');
+      print('<img width="50px" src="/images/png/SenorContento-1024x1024.png" align="left"></img>');
       print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
+      print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
+      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"http://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
+
+      print("<br clear=\"left\">");
 
       print("<h3>");
       print($string);
