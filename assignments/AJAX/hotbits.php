@@ -195,6 +195,7 @@
       try {
         //header("Content-Type: text/plain");
         $jsonArray = ["rowID" => (int) $id,
+                      "download" => "Specify POST request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
                       "response" => $this->checkRandomness($this->convertToArray($result), $terse)];
         return json_encode($jsonArray);
       } catch(Exception $e) {
@@ -219,6 +220,7 @@
                   }, $randomness);
 
         $jsonArray = ["rowID" => (int) $id,
+                      "download" => "Specify POST request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
                       "response" => $result];
 
         //var_dump(json_encode($result));
