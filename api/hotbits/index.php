@@ -52,49 +52,40 @@
 
       try {
         if(!empty($_REQUEST)) {
-          if(isset($_REQUEST["bytes"])) {
-            header("Content-Type: application/json");
-            if(isset($_REQUEST["generator"])) {
-              print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], $_REQUEST["generator"]))); // To specify a custom generator
-            } else {
-              if(getenv('alex.server.type') === "production") {
-                print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], "random"))); // To specify the default generator
-              } else {
-                print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], "pseudo"))); // Setup to prevent accidentally using up rate limit while debugging
-              }
-            }
-          } else if(isset($_REQUEST["retrieve"]) && isset($_REQUEST["id"])) {
-            // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
-            if(filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
-              header("Content-Type: application/json");
-              print($manager->readSQLToJSON((int) $_REQUEST["id"]));
-            } else {
-              header("Content-Type: application/json");
-
-              $jsonArray = ["error" => "Sorry, but 'retrieve' is false!"];
-              $json = json_encode($jsonArray);
-              print($json);
-              //die();
-            }
-          } else if(isset($_REQUEST["analyze"]) && isset($_REQUEST["id"])) {
-              // Now that I know about shorthand, I can greatly improve the readability of the code - https://stackoverflow.com/a/5972529/6828099
-              $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
-              $count = isset($_REQUEST["count"]) ? filter_var($_REQUEST["count"], FILTER_VALIDATE_BOOLEAN) : false;
-              $terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
-
-              header("Content-Type: application/json");
-              if($count) {
-                print($this->getRandomnessCount($_REQUEST["id"], $manager->readSQLToJSON((int) $_REQUEST["id"]), $terse, $count));
-              } else {
-                print($this->getRandomness($_REQUEST["id"], $manager->readSQLToJSON((int) $_REQUEST["id"]), $terse));
-              }
-          } else {
+          $bytes = isset($_REQUEST["bytes"]) ? $_REQUEST["bytes"] : NULL;
+          if(isset($bytes)) {
             header("Content-Type: application/json");
 
-            $jsonArray = ["error" => "Sorry, but no valid request sent!"];
-            $json = json_encode($jsonArray);
-            print($json);
+            $generator = isset($_REQUEST["generator"]) ? $_REQUEST["generator"] : "pseudo";
+            print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], $generator))); // To specify a custom generator
+            die();
           }
+
+          $id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL;
+
+          $retrieve = isset($_REQUEST["retrieve"]) ? filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN) : false;
+          if($retrieve && $id) {
+            header("Content-Type: application/json");
+            print($manager->readSQLToJSON($id));
+            die();
+          }
+
+          // Now that I know about shorthand, I can greatly improve the readability of the code - https://stackoverflow.com/a/5972529/6828099
+          $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
+          if($analyze && $id) {
+            $count = isset($_REQUEST["count"]) ? filter_var($_REQUEST["count"], FILTER_VALIDATE_BOOLEAN) : false;
+            $terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
+
+            header("Content-Type: application/json");
+            print($this->getRandomness($id, $manager->readSQLToJSON($id), $terse, $count));
+            die();
+          }
+
+          header("Content-Type: application/json");
+
+          $jsonArray = ["error" => "Sorry, but no valid request sent!"];
+          $json = json_encode($jsonArray);
+          print($json);
         } else {
           header("Content-Type: application/json");
 
@@ -134,7 +125,7 @@
       if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
         throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-      $this->checkRateLimit($bytes);
+      //$this->checkRateLimit($bytes);
       //header("Content-Type: application/json");
 
       /*
@@ -193,27 +184,10 @@
         throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining) (Requested Bytes: $requestedBytes)");
     }
 
-    public function getRandomness($id, $result, $terse) {
+    public function getRandomness($id, $result, $terse, $count) {
       try {
         //header("Content-Type: text/plain");
-        $jsonArray = ["rowID" => (int) $id,
-                      "download" => "Specify POST or GET request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
-                      "response" => $this->checkRandomness($this->convertToArray($result), $terse)];
-        return json_encode($jsonArray);
-      } catch(Exception $e) {
-        header("Content-Type: application/json");
-
-        $jsonArray = ["error" => "Exception: " . $e->getMessage()];
-        $json = json_encode($jsonArray);
-        print($json);
-        die();
-      }
-    }
-
-    public function getRandomnessCount($id, $result, $terse, $count) {
-      try {
-        //header("Content-Type: text/plain");
-        $randomness = $this->checkRandomnessCount($this->convertToArray($result), $terse, $count);
+        $randomness = $this->checkRandomness($this->convertToArray($result), $terse, $count);
 
         // https://stackoverflow.com/a/28131159/6828099 - json_encode() just returns false "bool(false)" if it fails to convert the array to json
         $result = preg_replace_callback('/[\x80-\xff]/',
@@ -381,12 +355,7 @@
       return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public function checkRandomness($array, $terse) {
-      // No Function Overloading :( - https://stackoverflow.com/a/4697712/6828099
-      return $this->checkRandomnessCount($array, $terse, false);
-    }
-
-    function checkRandomnessCount($array, $terse, $count) {
+    function checkRandomness($array, $terse, $count) {
       // pipe-data-to | /home/web/programs/ent
       // http://www.fourmilab.ch/random/random.zip
       $binary = pack("C*", ...$array);
