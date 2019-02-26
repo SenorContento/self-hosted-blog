@@ -275,7 +275,7 @@
                   }, $randomness);
 
         $jsonArray = ["rowID" => (int) $id,
-                      "download" => "Specify POST or GET request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
+                      "download" => "Specify POST or GET request argument, format=\"csv\", to download analysis as CSV file!!!",
                       "response" => $result];
 
         //var_dump(json_encode($result));

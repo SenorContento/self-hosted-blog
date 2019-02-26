@@ -93,8 +93,11 @@
 
   class cryptography {
     public $controlled_file;
+    public $api_hotbits_path;
 
     function setVars() {
+      $this->api_hotbits_path = "/api/hotbits";
+
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         $this->controlled_file = "controlled.txt";
@@ -258,14 +261,11 @@
     public function grabNewKey($bytes, $generator) {
       $json = $this->requestData($this->setRequestNewData($bytes, $generator));
       $decoded = json_decode($json, true);
-      //var_dump($json);
 
       if(!isset($decoded["rowID"]))
         throw new Exception("Unable to Generate New Key!!! Rate Limit is Probably Up!!!");
 
       $id = $decoded["rowID"];
-      //print("TEST: " . $decoded["error"]);
-
       return [$id, $json];
     }
 
@@ -347,7 +347,7 @@
     private function requestData($data) {
       try {
         // https://stackoverflow.com/a/6609181/6828099
-        $url = getenv("alex.server.host") . '/api/hotbits';
+        $url = getenv("alex.server.host") . $this->api_hotbits_path;
 
         $options = array(
           // https://stackoverflow.com/q/32211301/6828099
