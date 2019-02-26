@@ -185,7 +185,7 @@
       print('<img width="50px" src="/images/png/SenorContento-1024x1024.png" align="left"></img>');
       print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
       print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
-      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"http://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
+      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"https://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
 
       print("<br clear=\"left\">");
 
