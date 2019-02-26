@@ -28,22 +28,22 @@
   class HotbitsAPI {
     public $exec_ent_path;
     public $exec_cat_path;
-    public $exec_mkdir_path;
-    public $hotbits_tmp_path;
+    //public $exec_mkdir_path;
+    //public $hotbits_tmp_path;
 
     function setVars() {
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         $this->exec_ent_path = "/home/web/programs/ent";
         $this->exec_cat_path = "/bin/cat";
-        $this->exec_mkdir_path = "/bin/mkdir";
-        $this->hotbits_tmp_path = "/tmp/hotbits/";
+        //$this->exec_mkdir_path = "/bin/mkdir";
+        //$this->hotbits_tmp_path = "/tmp/hotbits/";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
         $this->exec_cat_path = "/bin/cat";
-        $this->exec_mkdir_path = "/bin/mkdir";
-        $this->hotbits_tmp_path = "/tmp/hotbits/";
+        //$this->exec_mkdir_path = "/bin/mkdir";
+        //$this->hotbits_tmp_path = "/tmp/hotbits/";
       }
     }
 
@@ -390,8 +390,17 @@
       // print(bin2hex($binary));
       // https://stackoverflow.com/a/49409847/6828099
 
-      exec($this->exec_mkdir_path . ' -p ' . $this->hotbits_tmp_path);
-      file_put_contents($File = $this->hotbits_tmp_path . uniqid(), $binary);
+      // Done: Replace TMPfile with a stream
+      // Or https://secure.php.net/tmpfile
+
+      //exec($this->exec_mkdir_path . ' -p ' . $this->hotbits_tmp_path);
+      //file_put_contents($File = $this->hotbits_tmp_path . uniqid(), $binary);
+
+      $fp = tmpfile();
+      $stream = stream_get_meta_data($fp);
+      $filename = $stream['uri'];
+
+      file_put_contents($File = $filename, $binary);
 
       if($count) {
         //print($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
@@ -407,6 +416,11 @@
           $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path);
         }
       }
+
+      //fwrite($fp, "string");
+      //fseek($fp, 0);
+      //echo fread($fp, 1024);
+      fclose($fp);
 
       //print("Results: " . $results);
       return $results;

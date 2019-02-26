@@ -24,10 +24,24 @@ $(document).ready(function() {
       $("#response-table").show();
       raw(syntaxHighlight(rawData[0]));
       table($.parseJSON(rawData[0]));
+    } else if(rawData[1] === "html") {
+      $("#response-table").hide();
+      raw(rawData[0]);
     } else if(rawData[1] === "csv") {
       //alert("CSV");
       $("#response-table").hide();
       raw(rawData[0]);
+    } else if(rawData[1] === "zip") {
+      alert("ZIP");
+      $("#response-table").hide();
+      raw(rawData[0]);
+
+      var blob = new Blob([rawData[0]], {type: 'application/zip'});
+      url = window.URL.createObjectURL(blob);
+
+      this.href = url;
+      this.target = '_blank';
+      this.download = 'cryptography.zip';
     } else {
       $("#response-table").hide();
       raw(rawData[0]);
@@ -88,12 +102,14 @@ function lookup() {
       var ct = xhr.getResponseHeader("content-type") || "";
       if (ct.indexOf('html') > -1) {
         returnvalue = [data, "html"];
-      }
-      if (ct.indexOf('json') > -1) {
+      } else if (ct.indexOf('json') > -1) {
         returnvalue = [JSON.stringify(data, null, 2), "json"];
-      }
-      if (ct.indexOf('csv') > -1) {
+      } else if (ct.indexOf('csv') > -1) {
         returnvalue = [data, "csv"];
+      } else if(ct.indexOf('zip') > -1) {
+        returnvalue = [data, "zip"];
+      } else {
+        returnvalue = [data, "unknown"];
       }
     }, complete: function(data, status) {
       /* data is same as data in success, but with error codes and status messages thrown in with it

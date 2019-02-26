@@ -168,7 +168,8 @@
         die();
       }
 
-      $this->performOperations($id, $key);
+      $download = isset($_POST["download"]) ? filter_var($_POST["download"], FILTER_VALIDATE_BOOLEAN) : false;
+      $this->performOperations($id, $key, $download);
     }
 
     private function boolToString($bool) {
@@ -240,11 +241,52 @@
       print("</h3>");
     }
 
-    private function performOperations($id, $key) {
+    private function performOperations($id, $key, $download) {
       $encrypted = $this->encrypt($key, "des-ede3-cfb", file_get_contents($this->controlled_file));
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
 
+      // TODO: Replace ZipArchive with a utility that can write zips completely in memory - https://stackoverflow.com/questions/4165289/create-a-zip-file-using-php-class-ziparchive-without-writing-the-file-to-disk
+      if($download) {
+        // https://stackoverflow.com/a/11556573/6828099
+        // https://stackoverflow.com/a/45629090/6828099
+        // https://secure.php.net/tmpfile
+
+        $fp = tmpfile();
+        $stream = stream_get_meta_data($fp);
+        $filename = $stream['uri'];
+
+        $zip = new ZipArchive();
+        $zip->open($filename, ZipArchive::CREATE);
+
+        $zip->addFromString("encrypted.bin", $encrypted);
+        $zip->addFromString("decrypted.txt", $decrypted);
+        $zip->addFromString("original.txt", file_get_contents($this->controlled_file));
+        $zip->addFromString("key.bin", $key);
+        $zip->addFromString("ReadMe.txt", "Insert ReadMe here...");
+
+        header("Content-Type: application/zip");
+
+        //var_dump($stream);
+        print("ZIP file path is: " . $filename);
+
+        //file_put_contents($File = $filename, $binary);
+        //file_get_contents($filename);
+
+        /*fwrite($fp, "string");
+        fseek($fp, 0);
+        echo fread($fp, 1024);*/
+
+        // I am having trouble getting the PHP file to read the zip to screen
+        // I have verified it creates the zip by manually opening it (from the $filename)
+        // On My Development Environment.
+        print(file_get_contents($filename));
+        fclose($fp);
+        $zip->close();
+        die();
+      }
+
       $jsonArray = ["rowID" => (int) $id,
+                    "download" => "Specify POST request argument, download, as a boolean to download encrypted output as binary file!!!",
                     "encrypted" => $encrypted,
                     "decrypted" => $decrypted
                    ];
