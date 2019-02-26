@@ -134,7 +134,7 @@
               //$id = $_POST["id"] ?? 1; // This works great with strings, just not booleans
               $terse = isset($_POST["terse"]) ? filter_var($_POST["terse"], FILTER_VALIDATE_BOOLEAN) : false; // https://stackoverflow.com/a/5972529/6828099
               $count = isset($_POST["count"]) ? filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) : false; // Makes for cleaner code.
-              $this->convertToHTML($this->analyzeData($_POST["id"], $count, $terse), $terse); // Analyze (Normal and Count)
+              $this->convertToHTML($this->analyzeData($_POST["id"], $count, $terse), $_POST["id"], $count, $terse); // Analyze (Normal and Count)
               die();
             } else {
               list($id, $json) = $this->grabKey($_POST["id"]);
@@ -171,7 +171,11 @@
       $this->performOperations($id, $key);
     }
 
-    private function convertToHTML($string, $terse) {
+    private function boolToString($bool) {
+      return $bool ? 'true' : 'false';
+    }
+
+    private function convertToHTML($string, $id, $count, $terse) {
       /*
        * I am only adding these tags here to complete the HTML portion of this assignment.
        * I am not a big fan of using HTML to relay API data and I especially do not like
@@ -192,8 +196,42 @@
       print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
       print(' ' . "<a style=\"text-decoration: underline red;\" href=\"https://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
 
-      print("<form method=\"POST\" action=\"cryptography.php\">");
-      print(""); // {"analyze": true, "id": 1, "count": true, "terse": true}
+      // https://codepen.io/vidhill/pen/bNPEmX
+      // https://developers.google.com/web/updates/2012/06/Don-t-Build-Blobs-Construct-Them
+      print(' ' . "<a id=\"download-as-csv\" style=\"text-decoration: underline red; cursor: pointer;\"><b style='color: red;'>Download As CSV</b></a>");
+      print("<script>
+            var request = {\"analyze\": true, \"id\": $id, \"count\": " . $this->boolToString($count) . ", \"terse\": true};
+            var url = \"cryptography.php\";
+
+            document.getElementById('download-as-csv').onclick = function(event){
+              var csv = 'nope';
+              $.ajax({
+                url: url,
+                type: 'POST',
+                async: false,
+                data: request,
+                success: function(data, status, xhr) {
+                  csv = data;
+                }
+              });
+
+              /* A blob cannot be made inside an Ajax Request */
+              var blob = new Blob([csv], {type: 'text/csv'});
+              url = window.URL.createObjectURL(blob);
+
+              this.href = url;
+              this.target = '_blank';
+              ");
+
+              if(!$count) {
+                print("this.download = 'Hotbits-Analysis-$id.csv';");
+              } else {
+                print("this.download = 'Hotbits-Analysis-$id-Count.csv';");
+              }
+
+              print("
+            }
+            </script>");
 
       print("<br clear=\"left\">");
 
