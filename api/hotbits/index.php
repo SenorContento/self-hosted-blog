@@ -28,10 +28,13 @@
   class HotbitsAPI {
     public $exec_ent_path;
     public $exec_cat_path;
+    public $api_hotbits_path;
     //public $exec_mkdir_path;
     //public $hotbits_tmp_path;
 
     function setVars() {
+      $this->api_hotbits_path = "/api/hotbits";
+
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         $this->exec_ent_path = "/home/web/programs/ent";
@@ -52,7 +55,12 @@
 
       try {
         if(!empty($_REQUEST)) {
+          $id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL;
           $bytes = isset($_REQUEST["bytes"]) ? $_REQUEST["bytes"] : NULL;
+          $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
+          $retrieve = isset($_REQUEST["retrieve"]) ? filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN) : false;
+          $format = isset($_REQUEST["format"]) ? $_REQUEST["format"] : "json";
+
           if(isset($bytes)) {
             header("Content-Type: application/json");
 
@@ -61,9 +69,6 @@
             die();
           }
 
-          $id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL;
-
-          $retrieve = isset($_REQUEST["retrieve"]) ? filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN) : false;
           if($retrieve && $id) {
             header("Content-Type: application/json");
             print($manager->readSQLToJSON($id));
@@ -71,13 +76,29 @@
           }
 
           // Now that I know about shorthand, I can greatly improve the readability of the code - https://stackoverflow.com/a/5972529/6828099
-          $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
           if($analyze && $id) {
             $count = isset($_REQUEST["count"]) ? filter_var($_REQUEST["count"], FILTER_VALIDATE_BOOLEAN) : false;
-            $terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
+            //$terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
 
-            header("Content-Type: application/json");
-            print($this->getRandomness($id, $manager->readSQLToJSON($id), $terse, $count));
+            if($format === "json") {
+              header("Content-Type: application/json");
+              print($this->getRandomness($id, $manager->readSQLToJSON($id), false, $count));
+            } else if($format === "html") {
+              $json = $this->getRandomness($id, $manager->readSQLToJSON($id), false, $count);
+              $decoded = json_decode($json, true);
+              $response = $decoded["response"];
+
+              $this->convertToHTML($response, $id, $count); // Analyze (Normal and Count)
+            } else if($format === "csv") {
+                $json = $this->getRandomness($id, $manager->readSQLToJSON($id), true, $count);
+                $decoded = json_decode($json, true);
+                $response = $decoded["response"];
+
+                header("Content-Type: text/csv");
+                print($response);
+                die();
+            }
+
             die();
           }
 
@@ -101,6 +122,64 @@
         print($json);
         die();
       }
+    }
+
+    // I really just need a PHP file I can include all my standard functions from
+    // Perhaps I can create a "Standard Functions" class and just include the file to use it.
+    private function boolToString($bool) {
+      return $bool ? 'true' : 'false';
+    }
+
+    private function convertToHTML($string, $id, $count) {
+      header("Content-Type: text/html");
+
+      print('<img width="50px" src="/images/png/SenorContento-1024x1024.png" align="left"></img>');
+      print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
+      print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
+      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"https://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
+
+      // https://codepen.io/vidhill/pen/bNPEmX
+      // https://developers.google.com/web/updates/2012/06/Don-t-Build-Blobs-Construct-Them
+      print(' ' . "<a id=\"download-as-csv\" style=\"text-decoration: underline red; cursor: pointer;\"><b style='color: red;'>Download As CSV</b></a>");
+      print("<script>
+            var request = {\"analyze\": true, \"id\": $id, \"count\": " . $this->boolToString($count) . ", \"format\": \"csv\"};
+            var url = \"" . $this->api_hotbits_path . "\";
+
+            document.getElementById('download-as-csv').onclick = function(event){
+              var csv;
+              $.ajax({
+                url: url,
+                type: 'POST',
+                async: false,
+                data: request,
+                success: function(data, status, xhr) {
+                  csv = data;
+                }
+              });
+
+              /* A blob cannot be made inside an Ajax Request */
+              var blob = new Blob([csv], {type: 'text/csv'});
+              url = window.URL.createObjectURL(blob);
+
+              this.href = url;
+              this.target = '_blank';
+              ");
+
+              if(!$count) {
+                print("this.download = 'Hotbits-Analysis-$id.csv';");
+              } else {
+                print("this.download = 'Hotbits-Analysis-$id-Count.csv';");
+              }
+
+              print("
+            }
+            </script>");
+
+      print("<br clear=\"left\">");
+
+      print("<h3>");
+      print($string);
+      print("</h3>");
     }
 
     public function grabData($bytes, $generator) {
