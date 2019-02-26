@@ -1,7 +1,7 @@
 Assignment 6 - Midterm (Part 1)
 ------------------------------------------------------------------------------------
 
-Unavailable
+Documentation is in Midterm_part1.docx. The files are encrypted because the midterm has not been graded yet. They will be decrypted at a later date.
 
 ------------------------------------------------------------------------------------
 
