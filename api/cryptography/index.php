@@ -97,10 +97,10 @@
     function setVars() {
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
-        $this->controlled_file = $_SERVER['DOCUMENT_ROOT'] . "/assignments/AJAX/controlled.txt";
+        $this->controlled_file = "controlled.txt";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
-        $this->controlled_file = $_SERVER['DOCUMENT_ROOT'] . "/assignments/AJAX/controlled.txt";
+        $this->controlled_file = "controlled.txt";
       }
     }
 
@@ -112,7 +112,6 @@
       //print("Analyze: " . $this->analyzeData(93, false));
       //print("Analyze (Count): " . $this->analyzeData(93, true));
 
-      // These won't actually work as the requests are POST requests and not GET requests
       // GrabNewKey (Real): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=random
       // GrabNewKey (Pseudo): https://localhost/assignments/AJAX/cryptography.php?bytes=2048&generator=pseudo
       // GrabKey: https://localhost/assignments/AJAX/cryptography.php?id=1
@@ -120,9 +119,9 @@
       // Analyze (Count): https://localhost/assignments/AJAX/cryptography.php?analyze=true&id=1&count=true
 
       try {
-        if(!empty($_POST)) {
-          if(isset($_POST["id"])) {
-            if(isset($_POST["analyze"]) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
+        if(!empty($_REQUEST)) {
+          if(isset($_REQUEST["id"])) {
+            if(isset($_REQUEST["analyze"]) && filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
               // I don't know why I added the analyze methods to the cryptography class.
               // Anyhoo, it exists now, so I am leaving it in.
 
@@ -131,17 +130,17 @@
               // If you want a JSON formatted version of this response,
               // point your requests to hotbits.php.
 
-              //$id = $_POST["id"] ?? 1; // This works great with strings, just not booleans
-              $terse = isset($_POST["terse"]) ? filter_var($_POST["terse"], FILTER_VALIDATE_BOOLEAN) : false; // https://stackoverflow.com/a/5972529/6828099
-              $count = isset($_POST["count"]) ? filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) : false; // Makes for cleaner code.
-              $this->convertToHTML($this->analyzeData($_POST["id"], $count, $terse), $_POST["id"], $count, $terse); // Analyze (Normal and Count)
+              //$id = $_REQUEST["id"] ?? 1; // This works great with strings, just not booleans
+              $terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false; // https://stackoverflow.com/a/5972529/6828099
+              $count = isset($_REQUEST["count"]) ? filter_var($_REQUEST["count"], FILTER_VALIDATE_BOOLEAN) : false; // Makes for cleaner code.
+              $this->convertToHTML($this->analyzeData($_REQUEST["id"], $count, $terse), $_REQUEST["id"], $count, $terse); // Analyze (Normal and Count)
               die();
             } else {
-              list($id, $json) = $this->grabKey($_POST["id"]);
+              list($id, $json) = $this->grabKey($_REQUEST["id"]);
               $key = $this->grabBinary($json); // GrabKey
             }
-          } else if(isset($_POST["bytes"]) && isset($_POST["generator"])) {
-              list($id, $json) = $this->grabNewKey($_POST["bytes"], $_POST["generator"]);
+          } else if(isset($_REQUEST["bytes"]) && isset($_REQUEST["generator"])) {
+              list($id, $json) = $this->grabNewKey($_REQUEST["bytes"], $_REQUEST["generator"]);
               $key = $this->grabBinary($json); // GrabNewKey
           } else {
             header("Content-Type: application/json");
@@ -154,7 +153,7 @@
         } else {
           header("Content-Type: application/json");
 
-          $jsonArray = ["error" => "Please send a POST request!"];
+          $jsonArray = ["error" => "Please send a POST or GET request!"];
           $json = json_encode($jsonArray);
           print($json);
           die();
@@ -162,13 +161,13 @@
       } catch(Exception $e) {
         header("Content-Type: application/json");
 
-        $jsonArray = ["error" => "Exception in POST: " . $e->getMessage()];
+        $jsonArray = ["error" => "Exception in Request: " . $e->getMessage()];
         $json = json_encode($jsonArray);
         print($json);
         die();
       }
 
-      $download = isset($_POST["download"]) ? filter_var($_POST["download"], FILTER_VALIDATE_BOOLEAN) : false;
+      $download = isset($_REQUEST["download"]) ? filter_var($_REQUEST["download"], FILTER_VALIDATE_BOOLEAN) : false;
       $this->performOperations($id, $key, $download);
     }
 
@@ -297,7 +296,7 @@
                 }, $decrypted);
 
       $jsonArray = ["rowID" => (int) $id,
-                    "download" => "Specify POST request argument, download, as a boolean to download encrypted output as binary file!!!",
+                    "download" => "Specify POST or GET request argument, download, as a boolean to download encrypted output as binary file!!!",
                     "encrypted" => $encrypted_clean,
                     "decrypted" => $decrypted_clean
                    ];
@@ -463,7 +462,7 @@
     private function requestData($data) {
       try {
         // https://stackoverflow.com/a/6609181/6828099
-        $url = getenv("alex.server.host") . '/assignments/AJAX/hotbits.php';
+        $url = getenv("alex.server.host") . '/api/hotbits';
 
         $options = array(
           // https://stackoverflow.com/q/32211301/6828099

@@ -51,23 +51,23 @@
       global $manager;
 
       try {
-        if(!empty($_POST)) {
-          if(isset($_POST["bytes"])) {
+        if(!empty($_REQUEST)) {
+          if(isset($_REQUEST["bytes"])) {
             header("Content-Type: application/json");
-            if(isset($_POST["generator"])) {
-              print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], $_POST["generator"]))); // To specify a custom generator
+            if(isset($_REQUEST["generator"])) {
+              print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], $_REQUEST["generator"]))); // To specify a custom generator
             } else {
               if(getenv('alex.server.type') === "production") {
-                print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "random"))); // To specify the default generator
+                print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], "random"))); // To specify the default generator
               } else {
-                print($manager->formatForSQL($this->grabData((int) $_POST["bytes"], "pseudo"))); // Setup to prevent accidentally using up rate limit while debugging
+                print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], "pseudo"))); // Setup to prevent accidentally using up rate limit while debugging
               }
             }
-          } else if(isset($_POST["retrieve"]) && isset($_POST["id"])) {
+          } else if(isset($_REQUEST["retrieve"]) && isset($_REQUEST["id"])) {
             // https://stackoverflow.com/questions/7336861/how-to-convert-string-to-boolean-php#comment8848275_7336873
-            if(filter_var($_POST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
+            if(filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN)) {
               header("Content-Type: application/json");
-              print($manager->readSQLToJSON((int) $_POST["id"]));
+              print($manager->readSQLToJSON((int) $_REQUEST["id"]));
             } else {
               header("Content-Type: application/json");
 
@@ -76,17 +76,17 @@
               print($json);
               //die();
             }
-          } else if(isset($_POST["analyze"]) && isset($_POST["id"])) {
+          } else if(isset($_REQUEST["analyze"]) && isset($_REQUEST["id"])) {
               // Now that I know about shorthand, I can greatly improve the readability of the code - https://stackoverflow.com/a/5972529/6828099
-              $analyze = isset($_POST["analyze"]) ? filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
-              $count = isset($_POST["count"]) ? filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) : false;
-              $terse = isset($_POST["terse"]) ? filter_var($_POST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
+              $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
+              $count = isset($_REQUEST["count"]) ? filter_var($_REQUEST["count"], FILTER_VALIDATE_BOOLEAN) : false;
+              $terse = isset($_REQUEST["terse"]) ? filter_var($_REQUEST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
 
               header("Content-Type: application/json");
               if($count) {
-                print($this->getRandomnessCount($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), $terse, $count));
+                print($this->getRandomnessCount($_REQUEST["id"], $manager->readSQLToJSON((int) $_REQUEST["id"]), $terse, $count));
               } else {
-                print($this->getRandomness($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), $terse));
+                print($this->getRandomness($_REQUEST["id"], $manager->readSQLToJSON((int) $_REQUEST["id"]), $terse));
               }
           } else {
             header("Content-Type: application/json");
@@ -98,7 +98,7 @@
         } else {
           header("Content-Type: application/json");
 
-          $jsonArray = ["error" => "Please send a POST request!"];
+          $jsonArray = ["error" => "Please send a POST or GET request!"];
           $json = json_encode($jsonArray);
           print($json);
         }
@@ -162,6 +162,8 @@
       //$file = file_get_contents("responses/debug-random.json");
       //$file = file_get_contents("responses/debug-pseudo.json");
 
+      //$file = file_get_contents("responses/debug-hotbits-exceeded-max-bytes-request.json");
+
       //$file = file_get_contents("responses/debug-right-before-exceeding-rate-limit.json");
       $file = file_get_contents("responses/debug-exceeded-rate-limit.html");
 
@@ -195,7 +197,7 @@
       try {
         //header("Content-Type: text/plain");
         $jsonArray = ["rowID" => (int) $id,
-                      "download" => "Specify POST request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
+                      "download" => "Specify POST or GET request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
                       "response" => $this->checkRandomness($this->convertToArray($result), $terse)];
         return json_encode($jsonArray);
       } catch(Exception $e) {
@@ -220,7 +222,7 @@
                   }, $randomness);
 
         $jsonArray = ["rowID" => (int) $id,
-                      "download" => "Specify POST request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
+                      "download" => "Specify POST or GET request argument, terse, as a boolean to download output as JSON wrapped csv file!!!",
                       "response" => $result];
 
         //var_dump(json_encode($result));

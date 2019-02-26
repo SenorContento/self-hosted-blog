@@ -101,13 +101,17 @@
     }
 
     public function printNotificationMessage() {
-      print("\n\t\t" . '<!--This header below is an experiment with CSS and PHP. It is not complete, so just ignore it!!!-->');
-      print("\n\t\t" . '<header>');
+      print('<header>');
+      print('<p>I am going to replace the header with a navigation header later!!!</p>');
 
-      print("\n\t\t\t" . '<p class="header-message">I am replacing my theme with <a href="https://material.io/">Material Design</a>.');
-      print(" " . 'Instructions for <a href="https://material.io/collections/developer-tutorials/#web">Web Development</a>.</p>');
-      print("\n\t\t" . '</header>');
-      print("\n\t\t" . '<div id="container">');
+      /*
+       * So, for this site, I am not bothering with converting it to Material Design.
+       * Material Design is something I need to use from the beginning, not retroactively add in later.
+       */
+      /*print("\n\t\t\t" . '<p class="header-message">I am replacing my theme with <a href="https://material.io/">Material Design</a>.');
+      print(" " . 'Instructions for <a href="https://material.io/collections/developer-tutorials/#web">Web Development</a>.</p>');*/
+      print('</header>');
+      print('<div id="container">');
     }
   }
 ?>
