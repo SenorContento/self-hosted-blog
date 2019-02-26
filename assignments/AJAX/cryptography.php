@@ -285,20 +285,25 @@
         die();
       }
 
-      $jsonArray = ["rowID" => (int) $id,
-                    "download" => "Specify POST request argument, download, as a boolean to download encrypted output as binary file!!!",
-                    "encrypted" => $encrypted,
-                    "decrypted" => $decrypted
-                   ];
-
       // https://stackoverflow.com/a/28131159/6828099 - json_encode() just returns false "bool(false)" if it fails to convert the array to json
-      $result = preg_replace_callback('/[\x80-\xff]/',
+      $encrypted_clean = preg_replace_callback('/[\x80-\xff]/',
                 function($match) {
                     return '\x'.dechex(ord($match[0]));
-                }, $jsonArray);
+                }, $encrypted);
+
+      $decrypted_clean = preg_replace_callback('/[\x80-\xff]/',
+                function($match) {
+                    return '\x'.dechex(ord($match[0]));
+                }, $decrypted);
+
+      $jsonArray = ["rowID" => (int) $id,
+                    "download" => "Specify POST request argument, download, as a boolean to download encrypted output as binary file!!!",
+                    "encrypted" => $encrypted_clean,
+                    "decrypted" => $decrypted_clean
+                   ];
 
       header("Content-Type: application/json");
-      print(json_encode($result));
+      print(json_encode($jsonArray));
       //print("Encrypted: \"$encrypted\" Decrypted: \"$decrypted\"");
     }
 
