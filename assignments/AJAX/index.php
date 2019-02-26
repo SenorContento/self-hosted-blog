@@ -60,7 +60,7 @@
         <legend>AJAX Control Form</legend>
         <div class="form">
           <form id="hotbits">
-            <label>URL: </label><input type="text" id="url" value="/assignments/AJAX/hotbits.php">
+            <label>URL: </label><input type="text" id="url" value="/api/hotbits">
             <label>Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
 
             <a id="submit">Submit</a>
