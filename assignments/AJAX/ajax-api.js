@@ -24,6 +24,10 @@ $(document).ready(function() {
       $("#response-table").show();
       raw(syntaxHighlight(rawData[0]));
       table($.parseJSON(rawData[0]));
+    } else if(rawData[1] === "csv") {
+      //alert("CSV");
+      $("#response-table").hide();
+      raw(rawData[0]);
     } else {
       $("#response-table").hide();
       raw(rawData[0]);
@@ -87,6 +91,9 @@ function lookup() {
       }
       if (ct.indexOf('json') > -1) {
         returnvalue = [JSON.stringify(data, null, 2), "json"];
+      }
+      if (ct.indexOf('csv') > -1) {
+        returnvalue = [data, "csv"];
       }
     }, complete: function(data, status) {
       /* data is same as data in success, but with error codes and status messages thrown in with it

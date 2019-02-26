@@ -130,17 +130,12 @@
               // requirement of needing a HTML response (ReadMe.txt - Line 6).
               // If you want a JSON formatted version of this response,
               // point your requests to hotbits.php.
-              if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN)) {
-                //header("Content-Type: application/json");
-                header("Content-Type: text/html");
-                $this->convertToHTML($this->analyzeData($_POST["id"], true)); // Analyze (Count)
-                die();
-              } else {
-                //header("Content-Type: application/json");
-                header("Content-Type: text/html");
-                $this->convertToHTML($this->analyzeData($_POST["id"], false)); // Analyze
-                die();
-              }
+
+              //$id = $_POST["id"] ?? 1; // This works great with strings, just not booleans
+              $terse = isset($_POST["terse"]) ? filter_var($_POST["terse"], FILTER_VALIDATE_BOOLEAN) : false; // https://stackoverflow.com/a/5972529/6828099
+              $count = isset($_POST["count"]) ? filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) : false; // Makes for cleaner code.
+              $this->convertToHTML($this->analyzeData($_POST["id"], $count, $terse), $terse); // Analyze (Normal and Count)
+              die();
             } else {
               list($id, $json) = $this->grabKey($_POST["id"]);
               $key = $this->grabBinary($json); // GrabKey
@@ -176,16 +171,29 @@
       $this->performOperations($id, $key);
     }
 
-    private function convertToHTML($string) {
+    private function convertToHTML($string, $terse) {
       /*
        * I am only adding these tags here to complete the HTML portion of this assignment.
        * I am not a big fan of using HTML to relay API data and I especially do not like
        * mixing formats (especially unnecessarily). I would just use JSON only if I could.
        */
+
+      if($terse) {
+        header("Content-Type: text/csv");
+
+        print($string);
+        die();
+      }
+
+      header("Content-Type: text/html");
+
       print('<img width="50px" src="/images/png/SenorContento-1024x1024.png" align="left"></img>');
       print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
       print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
       print(' ' . "<a style=\"text-decoration: underline red;\" href=\"https://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
+
+      print("<form method=\"POST\" action=\"cryptography.php\">");
+      print(""); // {"analyze": true, "id": 1, "count": true, "terse": true}
 
       print("<br clear=\"left\">");
 
@@ -258,11 +266,11 @@
       return [$id, $json];
     }
 
-    public function analyzeData($id, $count) {
+    public function analyzeData($id, $count, $terse) {
       // setRequestNewData($bytes, $generator)
       // setRetrieveData($id)
       // setAnalyzeData($id, $count)
-      $json = $this->requestData($this->setAnalyzeData($id, $count));
+      $json = $this->requestData($this->setAnalyzeData($id, $count, $terse));
       $decoded = json_decode($json, true);
       //var_dump($json);
 
@@ -355,12 +363,13 @@
       return $data;
     }
 
-    private function setAnalyzeData($id, $count) {
+    private function setAnalyzeData($id, $count, $terse) {
       // analyze(bool) and id(int)
       // analyze(bool) and id(int) and count(bool)
       $data = array('analyze' => TRUE, // Analyze is always true
                     'id' => $id, // rowID
-                    'count' => filter_var($count, FILTER_VALIDATE_BOOLEAN) // Whether or not to display byte counts
+                    'count' => $count, // Whether or not to display byte counts
+                    'terse' => $terse // Whether or not to ask for data in CSV format
                    );
 
       return $data;

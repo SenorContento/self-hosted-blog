@@ -77,21 +77,17 @@
               //die();
             }
           } else if(isset($_POST["analyze"]) && isset($_POST["id"])) {
-            if(isset($_POST["count"]) && filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) && filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
-              //header("Content-Type: text/plain");
-              header("Content-Type: application/json");
-              print($this->getRandomnessCount($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), TRUE));
-            } else if(!filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN)) {
-              header("Content-Type: application/json");
+              // Now that I know about shorthand, I can greatly improve the readability of the code - https://stackoverflow.com/a/5972529/6828099
+              $analyze = isset($_POST["analyze"]) ? filter_var($_POST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
+              $count = isset($_POST["count"]) ? filter_var($_POST["count"], FILTER_VALIDATE_BOOLEAN) : false;
+              $terse = isset($_POST["terse"]) ? filter_var($_POST["terse"], FILTER_VALIDATE_BOOLEAN) : false;
 
-              $jsonArray = ["error" => "Sorry, but 'analyze' is false!"];
-              $json = json_encode($jsonArray);
-              print($json);
-            } else {
-              //header("Content-Type: text/plain");
               header("Content-Type: application/json");
-              print($this->getRandomness($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"])));
-            }
+              if($count) {
+                print($this->getRandomnessCount($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), $terse, $count));
+              } else {
+                print($this->getRandomness($_POST["id"], $manager->readSQLToJSON((int) $_POST["id"]), $terse));
+              }
           } else {
             header("Content-Type: application/json");
 
@@ -195,11 +191,11 @@
         throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining) (Requested Bytes: $requestedBytes)");
     }
 
-    public function getRandomness($id, $result) {
+    public function getRandomness($id, $result, $terse) {
       try {
         //header("Content-Type: text/plain");
         $jsonArray = ["rowID" => (int) $id,
-                      "response" => $this->checkRandomness($this->convertToArray($result))];
+                      "response" => $this->checkRandomness($this->convertToArray($result), $terse)];
         return json_encode($jsonArray);
       } catch(Exception $e) {
         header("Content-Type: application/json");
@@ -211,20 +207,22 @@
       }
     }
 
-    public function getRandomnessCount($id, $result, $count) {
+    public function getRandomnessCount($id, $result, $terse, $count) {
       try {
         //header("Content-Type: text/plain");
-        $jsonArray = ["rowID" => (int) $id,
-                      "response" => $this->checkRandomnessCount($this->convertToArray($result), $count)];
+        $randomness = $this->checkRandomnessCount($this->convertToArray($result), $terse, $count);
 
         // https://stackoverflow.com/a/28131159/6828099 - json_encode() just returns false "bool(false)" if it fails to convert the array to json
         $result = preg_replace_callback('/[\x80-\xff]/',
                   function($match) {
                       return '\x'.dechex(ord($match[0]));
-                  }, $jsonArray);
+                  }, $randomness);
+
+        $jsonArray = ["rowID" => (int) $id,
+                      "response" => $result];
 
         //var_dump(json_encode($result));
-        return json_encode($result);
+        return json_encode($jsonArray);
       } catch(Exception $e) {
         header("Content-Type: application/json");
 
@@ -379,12 +377,12 @@
       return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public function checkRandomness($array) {
+    public function checkRandomness($array, $terse) {
       // No Function Overloading :( - https://stackoverflow.com/a/4697712/6828099
-      return $this->checkRandomnessCount($array, false);
+      return $this->checkRandomnessCount($array, $terse, false);
     }
 
-    function checkRandomnessCount($array, $count) {
+    function checkRandomnessCount($array, $terse, $count) {
       // pipe-data-to | /home/web/programs/ent
       // http://www.fourmilab.ch/random/random.zip
       $binary = pack("C*", ...$array);
@@ -395,11 +393,19 @@
       exec($this->exec_mkdir_path . ' -p ' . $this->hotbits_tmp_path);
       file_put_contents($File = $this->hotbits_tmp_path . uniqid(), $binary);
 
-      if($count === true) {
+      if($count) {
         //print($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
-        $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
+        if($terse) {
+          $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -tc');
+        } else {
+          $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -c');
+        }
       } else {
-        $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path);
+        if($terse) {
+          $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path . ' -t');
+        } else {
+          $results = shell_exec($this->exec_cat_path . ' ' . escapeshellarg($File) . ' | ' . $this->exec_ent_path);
+        }
       }
 
       //print("Results: " . $results);
