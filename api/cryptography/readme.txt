@@ -47,4 +47,4 @@ Any data released by my server, for the purposes of this experiment, is Public D
 [7]: https://www.fourmilab.ch/random/random.zip
 [8]: https://web.senorcontento.com/api/hotbits
 [9]: https://creativecommons.org/share-your-work/public-domain/cc0/
-[10: https://github.com/bgbrandongomez/self-hosted-blog/blob/master/LICENSE.md
+[10]: https://github.com/bgbrandongomez/self-hosted-blog/blob/master/LICENSE.md
