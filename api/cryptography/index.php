@@ -122,7 +122,7 @@
           $id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL;
           $bytes = isset($_REQUEST["bytes"]) ? $_REQUEST["bytes"] : NULL;
           $retrieve = isset($_REQUEST["retrieve"]) ? filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN) : false;
-          $download = isset($_REQUEST["download"]) ? filter_var($_REQUEST["download"], FILTER_VALIDATE_BOOLEAN) : false;
+          $download = isset($_REQUEST["download"]) ? $_REQUEST["download"] : NULL;
 
           if(isset($bytes)) {
             header("Content-Type: application/json");
@@ -173,7 +173,7 @@
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
 
       // TODO: Replace ZipArchive with a utility that can write zips completely in memory - https://stackoverflow.com/questions/4165289/create-a-zip-file-using-php-class-ziparchive-without-writing-the-file-to-disk
-      if($download) {
+      if(isset($download)) {
         // https://stackoverflow.com/a/11556573/6828099
         // https://stackoverflow.com/a/45629090/6828099
         // https://secure.php.net/tmpfile
@@ -190,25 +190,50 @@
         $zip->addFromString("original.txt", file_get_contents($this->controlled_file));
         $zip->addFromString("key.bin", $key);
         $zip->addFromString("ReadMe.txt", "Insert ReadMe here...");
+        $zip->close();
 
-        header("Content-Type: application/zip");
+        /* File 99 (Localhost Only)
+         *
+         * https://localhost/api/cryptography?id=99&download=true&retrieve=true
+         *
+         * This key looks like Morse Code
+         * FCDD028E 2D15E48C CE81
+         *
+         * File is stored under responses as 99-morse-code.json.
+         */
 
-        //var_dump($stream);
-        print("ZIP file path is: " . $filename);
-
-        //file_put_contents($File = $filename, $binary);
-        //file_get_contents($filename);
+        //print("ZIP file path is: " . $filename);
 
         /*fwrite($fp, "string");
         fseek($fp, 0);
         echo fread($fp, 1024);*/
 
-        // I am having trouble getting the PHP file to read the zip to screen
-        // I have verified it creates the zip by manually opening it (from the $filename)
-        // On My Development Environment.
-        print(file_get_contents($filename));
+        if($download === "base64") {
+          // AJAX has a problem where it cannot download binary data (without corrupting it),
+          // even when explicitly told to use binary mode. This solves the problem.
+          // I can get javascript to decode it after it is downloaded.
+          $file = base64_encode(file_get_contents($filename));
+          //header("Content-Type: application/base64");
+          header("Content-Type: application/zip");
+          header('Content-Transfer-Encoding: base64'); // https://www.w3.org/Protocols/rfc1341/5_Content-Transfer-Encoding.html
+          header("Content-length: " . strlen($file));
+          header('Content-Disposition: attachment; filename="downloaded.zip.base64"');
+          //print("data:application/zip;base64,"); //This is invalid according to base64 command line
+          print($file);
+        } else {
+          // zip
+          $file = file_get_contents($filename);
+          header("Content-Type: application/zip");
+          header('Content-Transfer-Encoding: binary');
+          header("Content-length: " . strlen($file));
+          header('Content-Disposition: attachment; filename="downloaded.zip"');
+          //print("0123456789");
+          print($file);
+          //print("9876543210");
+        }
+        //fseek($fp, 0);
+        //echo fread($fp, 1024);
         fclose($fp);
-        $zip->close();
         die();
       }
 
@@ -291,7 +316,7 @@
 
       /* Disable Warning Messages
        *
-       * I know I can just an an IV using 'openssl_encrypt($message, $cipher, $key, "bytes-int-string-go-here");',
+       * I know I can just set an IV using 'openssl_encrypt($message, $cipher, $key, "bytes-int-string-go-here");',
        * but I want to make sure there is no external influence on encryption and that de/encryption is 100% reproducible.
        *
        * I would already have to release the the salt (IV) to make sure the tests are reproducible, but I wanted to just remove them.
