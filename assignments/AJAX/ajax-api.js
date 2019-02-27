@@ -15,45 +15,8 @@ function table(json) {
   });
 }
 
-//Document Necessary Functions
-
 $(document).ready(function() {
   $('#submit').click(function() {
-    //var url = "/api/cryptography";
-    //var json = {"download": true, "retrieve": true, "id": 99};
-
-    /*
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", "/api/cryptography?id=99&download=true&retrieve=true", true);
-    oReq.responseType = "arraybuffer";
-
-    oReq.onload = function(oEvent) {
-      var arrayBuffer = oReq.response;
-
-      // if you want to access the bytes:
-      //var byteArray = new Uint8Array(arrayBuffer);
-
-      //var blob = new Blob([byteArray], {type: 'application/zip'});
-      //var url = window.URL.createObjectURL(blob);
-
-      // If you want to use the image in your DOM:
-      //var blob = new Blob(arrayBuffer, {type: "image/png"});
-      //var url = URL.createObjectURL(blob);
-      //someImageElement.src = url;
-
-      var blob = new Blob([arrayBuffer], {type: "application/zip"});
-      var url = window.URL.createObjectURL(blob);
-
-      this.href = url;
-      this.target = '_blank';
-      this.download = 'cryptography-xhr.zip';
-
-      alert(this.href);
-    };
-
-    oReq.send();
-    */
-
     var rawData = lookup();
     if(rawData[1] === "json") {
       $("#response-table").show();
@@ -63,7 +26,6 @@ $(document).ready(function() {
       $("#response-table").hide();
       raw(rawData[0]);
     } else if(rawData[1] === "csv") {
-      //alert("CSV");
       $("#response-table").hide();
       raw(rawData[0]);
     } else if(rawData[1] === "zip") {
@@ -89,13 +51,6 @@ $(document).ready(function() {
       this.target = '_blank';
       this.download = 'cryptography.zip';
       //window.URL.revokeObjectURL(url);
-
-      // This isn't actually AJAX downloading the file,
-      // but I cannot get AJAX to download it without corrupting the file.
-      //this.href = "https://localhost/api/cryptography?id=99&download=true&retrieve=true";
-      //this.target = '_blank';
-      //this.download = 'cryptography.zip';
-      //alert(this.href);
     } else {
       $("#response-table").hide();
       raw(rawData[0]);
@@ -128,9 +83,6 @@ function recurseTable(key, value) {
 }
 
 function lookup() {
-  //var url = "https://localhost/assignments/AJAX/hotbits.php";
-  //var data = {"retrieve": true, "id": 1}; //{retrieve: true, id: 1}; also works here, but not in JSON.parse(...);
-
   var url = $("#url").val(); // https://localhost/assignments/AJAX/hotbits.php
   var json = JSON.parse($("#data").val());
 
@@ -138,8 +90,6 @@ function lookup() {
   //var json = {"download": "base64", "retrieve": true, "id": 99};
 
   var method = "POST";
-
-  //alert("URL: \"" + url + "\" Data: \"" + data + "\"");
 
   var returnvalue;
   /*$.ajaxSetup({
@@ -165,12 +115,9 @@ function lookup() {
        * status throws out error, just like how status in complete throws out success
        * thrown tells what type of error it is */
 
-      alert("Error Bytes: " + data.length + " Status: " + status + " Error: " + thrown);
-      //returnvalue = [data, "zip"];
+      alert("Error Bytes: \"" + data.length + "\" Status: \"" + status + "\" Error: \"" + thrown + "\"");
       returnvalue = [JSON.stringify(data, null, 2), "json"];
     }, success: function(data, status, xhr) {
-      //alert("Success!"); //print("Success!");
-      //alert(typeof(data)); // string
       // https://stackoverflow.com/a/3741604/6828099
       var ct = xhr.getResponseHeader("content-type") || "";
       if (ct.indexOf('html') > -1) {
