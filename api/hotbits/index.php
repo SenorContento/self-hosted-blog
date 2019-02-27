@@ -29,11 +29,13 @@
     public $exec_ent_path;
     public $exec_cat_path;
     public $api_hotbits_path;
+    public $url_ent_path;
     //public $exec_mkdir_path;
     //public $hotbits_tmp_path;
 
     function setVars() {
       $this->api_hotbits_path = "/api/hotbits";
+      $this->url_ent_path = "https://www.fourmilab.ch/random/random.zip";
 
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
@@ -136,7 +138,7 @@
       print('<img width="50px" src="/images/png/SenorContento-1024x1024.png" align="left"></img>');
       print(' ' . "<b style='color: red;'>I am HTML Output!!! Bow Down To My Master HTML Skills!!! Lol...</b>");
       print('<br><br>'); // https://www.uvm.edu/~bnelson/computer/html/wrappingtextaroundimages.html
-      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"https://www.fourmilab.ch/random/random.zip\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
+      print(' ' . "<a style=\"text-decoration: underline red;\" href=\"" . $this->url_ent_path . "\"><b style='color: red;'>Entropy Program's Source Code</b></a>");
 
       // https://codepen.io/vidhill/pen/bNPEmX
       // https://developers.google.com/web/updates/2012/06/Don-t-Build-Blobs-Construct-Them

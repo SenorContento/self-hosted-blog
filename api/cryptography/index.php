@@ -93,17 +93,18 @@
 
   class cryptography {
     public $controlled_file;
+    public $readme_file;
     public $api_hotbits_path;
 
     function setVars() {
       $this->api_hotbits_path = "/api/hotbits";
+      $this->controlled_file = "controlled.txt";
+      $this->readme_file = "readme.txt";
 
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
-        $this->controlled_file = "controlled.txt";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
-        $this->controlled_file = "controlled.txt";
       }
     }
 
@@ -130,14 +131,14 @@
             $generator = isset($_REQUEST["generator"]) ? $_REQUEST["generator"] : "pseudo";
             list($id, $json) = $this->grabNewKey($bytes, $generator);
             $key = $this->grabBinary($json); // GrabNewKey
-            $this->performOperations($id, $key, $download);
+            $this->performOperations($id, $key, $download, $json);
             die();
           }
 
           if($retrieve && $id) {
             list($id, $json) = $this->grabKey($id);
             $key = $this->grabBinary($json); // GrabKey
-            $this->performOperations($id, $key, $download);
+            $this->performOperations($id, $key, $download, $json);
             die();
           }
 
@@ -168,7 +169,7 @@
       return $bool ? 'true' : 'false';
     }*/
 
-    private function performOperations($id, $key, $download) {
+    private function performOperations($id, $key, $download, $json) {
       $encrypted = $this->encrypt($key, "des-ede3-cfb", file_get_contents($this->controlled_file));
       $decrypted = $this->decrypt($key, "des-ede3-cfb", $encrypted);
 
@@ -185,11 +186,12 @@
         $zip = new ZipArchive();
         $zip->open($filename, ZipArchive::CREATE);
 
+        $zip->addFromString("ReadMe.txt", file_get_contents($this->readme_file));
+        $zip->addFromString("original.txt", file_get_contents($this->controlled_file));
         $zip->addFromString("encrypted.bin", $encrypted);
         $zip->addFromString("decrypted.txt", $decrypted);
-        $zip->addFromString("original.txt", file_get_contents($this->controlled_file));
         $zip->addFromString("key.bin", $key);
-        $zip->addFromString("ReadMe.txt", "Insert ReadMe here...");
+        $zip->addFromString("key.json", $json);
         $zip->close();
 
         /* File 99 (Localhost Only)
@@ -249,7 +251,7 @@
                 }, $decrypted);
 
       $jsonArray = ["rowID" => (int) $id,
-                    "download" => "Specify POST or GET request argument, download, as a boolean to download encrypted output as binary file!!!",
+                    "download" => "Specify POST or GET request argument, download, as a string (with parameter zip or base64) to download encrypted output as zip file!!!",
                     "encrypted" => $encrypted_clean,
                     "decrypted" => $decrypted_clean
                    ];
