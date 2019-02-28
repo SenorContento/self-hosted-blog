@@ -17,7 +17,11 @@ function table(json) {
 }
 
 $(document).ready(function() {
-  $('#submit').click(function() {
+  $('#submit').click(function(e) {
+    // https://stackoverflow.com/a/17387382/6828099
+    window.URL.revokeObjectURL(this.href); // This removes the blob from memory
+    this.removeAttribute("href"); // this.href sets link to have href attribute. This resets it.
+
     var rawData = lookup();
     if(rawData[1] === "json") {
       $("#response-table").show();
@@ -47,6 +51,9 @@ $(document).ready(function() {
       var url = window.URL.createObjectURL(blob);
 
       //alert("AJAX URL: " + url);
+
+      // HREF:  TARGET:  DOWNLOAD:
+      //alert("HREF: " + this.href + " TARGET: " + this.target + " DOWNLOAD: " + this.download);
 
       this.href = url;
       this.target = '_blank';
