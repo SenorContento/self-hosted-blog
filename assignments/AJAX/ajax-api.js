@@ -61,9 +61,17 @@ $(document).ready(function() {
   });
 });
 
+// https://stackoverflow.com/a/641874/6828099
+window.onresize = function(event) {
+  $(document).ready(function() {
+    $("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
+  });
+};
+
 function raw(json) {
   $(document).ready(function() {
     $("#ajax-output-debug").html(json); //.text(json);
+    $("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
   });
 }
 

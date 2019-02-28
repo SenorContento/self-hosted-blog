@@ -116,7 +116,9 @@
       print('
       <fieldset>
         <legend>AJAX Debug Output</legend>
-        <pre id="ajax-output-debug"><div class="highlight">Output Not Generated...</div></pre>
+        <div id="highlight">
+          <pre id="ajax-output-debug">Output Not Generated...</pre>
+        </div>
       </fieldset>');
     }
 
@@ -124,7 +126,7 @@
       print('
       <fieldset id="response-table">
         <legend>AJAX Response</legend>
-        <table>
+        <table id="ajax-table">
           <thead>
             <tr>
               <th>Index</th>

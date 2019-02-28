@@ -5,6 +5,19 @@
    cursor: pointer;
 }
 
+#ajax-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+#ajax-table td {
+  word-wrap: break-word;
+}
+
+#highlight {
+  width: 100%;
+}
+
 label {
   color: #90EE90;
 }
