@@ -1,0 +1,1 @@
+In my work to improve page load times, I am converting my images to Progressive Images. This means that they will load with poor quality first and progressively become higher and higher quality until it is finished loading. These images in the "original" folder are from before I converted them to progressive. I am using https://imageoptim.com/online to convert my images.
