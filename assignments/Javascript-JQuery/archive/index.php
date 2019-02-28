@@ -68,7 +68,7 @@
 
   $loadPage->loadHeader();
 
-  $mainPage->printArchiveLink();
+  //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
   $mainPage->printSourceCodeLink();
   $mainPage->printDropDown("Dropdown Menu Example", $mainPage->generateMenu());
@@ -158,20 +158,11 @@
 
       $slides = explode(',', $slideString);*/
 
-      // https://stackoverflow.com/a/18164240/6828099
-      if(strpos($_SERVER['HTTP_ACCEPT'], 'image/webp')) {
-        $slides = array("/images/webp/that-red-tree/original.webp" => "The original photo before I modified it in Gimp and G'Mic.",
-                       "/images/webp/that-red-tree/crayon.webp" => "Heavy use of G'Mic to produce this gridlike 'drawing.'",
-                       "/images/webp/that-red-tree/boxy.webp" => "Used G'Mic to apply boxes to screen and adjust images to boxes.",
-                       "/images/webp/that-red-tree/red-yellow-shift.webp" => "Used plain Gimp to apply 2 different color shifts.",
-                       "/images/webp/that-red-tree/red-shift-solo.webp" => "Used plain Gimp to apply a single color shift.");
-      } else {
-        $slides = array("/images/jpg/that-red-tree/original.jpg" => "The original photo before I modified it in Gimp and G'Mic.",
-                       "/images/jpg/that-red-tree/crayon.jpg" => "Heavy use of G'Mic to produce this gridlike 'drawing.'",
-                       "/images/jpg/that-red-tree/boxy.jpg" => "Used G'Mic to apply boxes to screen and adjust images to boxes.",
-                       "/images/jpg/that-red-tree/red-yellow-shift.jpg" => "Used plain Gimp to apply 2 different color shifts.",
-                       "/images/jpg/that-red-tree/red-shift-solo.jpg" => "Used plain Gimp to apply a single color shift.");
-      }
+      $slides = array("/images/jpg/that-red-tree/original.jpg" => "The original photo before I modified it in Gimp and G'Mic.",
+                     "/images/jpg/that-red-tree/crayon.jpg" => "Heavy use of G'Mic to produce this gridlike 'drawing.'",
+                     "/images/jpg/that-red-tree/boxy.jpg" => "Used G'Mic to apply boxes to screen and adjust images to boxes.",
+                     "/images/jpg/that-red-tree/red-yellow-shift.jpg" => "Used plain Gimp to apply 2 different color shifts.",
+                     "/images/jpg/that-red-tree/red-shift-solo.jpg" => "Used plain Gimp to apply a single color shift.");
 
       return $slides;
     }

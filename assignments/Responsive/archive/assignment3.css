@@ -1,0 +1,251 @@
+/* General */
+
+h1 {
+  /*color: blue;*/
+}
+
+table {
+  /*min-width: 1000px;*/
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_tabs */
+
+/* body {font-family: Arial;} */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: green;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Main Content */
+
+div #main_content { /* Should be unnecessary to add div before */
+  background-color: purple;
+
+  margin: 0px;
+  padding: 0px; /* Set to 8px to have purple border :) */
+
+  /* https://codepen.io/HugoGiraudel/pen/fec8936890d14e842ac4856ce34e5fbe */
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex; /* For Chrome */
+}
+
+div.column p { /* To change paragraphs inside columns */
+  color: white;
+}
+
+div.column {
+  flex: 1;
+  width: 100px;
+
+  /* display: inline-flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* flex: auto; */
+
+  /* flex-grow: 1; */
+  /* flex-basis: 100px; */
+
+  /* align-items: stretch; */
+  /* flex-grow: 1; */
+}
+
+div #column1 { /* Should be unnecessary to add div before */
+  background-color: red;
+}
+
+div #column2 { /* Should be unnecessary to add div before */
+  background-color: green;
+  flex: 2; /* Enable to allow middle column to be twice the size of the other columns */
+}
+
+div #column3 { /* Should be unnecessary to add div before */
+  background-color: blue;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Slideshow */
+
+/* The code below is specifically for modifying the slideshow */
+/* https://www.w3schools.com/howto/howto_js_slideshow.asp */
+div.mySlides {
+  /* This CSS class was intentionally left blank.
+     It exists to have javascript identify tags to scroll through */
+}
+
+img.mySlidesImage {
+  width: 100%;
+}
+
+div.carousel {
+  max-width: 800px;
+  position: relative;
+  margin: auto;
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Table - Phone and Tablet Specifics */
+
+@media all and (min-width: 1025px) {
+  h1, b {
+    color: purple;
+  }
+
+  table {
+    /*min-width: 1000px;*/
+  }
+}
+
+@media all and (min-width: 400px) and (max-width: 1024px) {
+  h1, b {
+    color: red;
+  }
+
+  table {
+    /*min-width: 500px;*/
+    /*max-width: 500px;*/
+  }
+
+  table, thead, tbody, td, tr {
+		display: block;
+	}
+
+  table th {
+    display: none;
+  }
+}
+
+@media all and (max-width: 399px) {
+  h1, b {
+    color: white;
+  }
+
+  table {
+    max-width: 300px;
+  }
+
+  table, thead, tbody, td, tr {
+		display: block;
+	}
+
+  table th {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* Table - Phone and Tablet */
+
+@media all and (max-width: 1024px) {
+  table td {
+    padding-left: 0px;
+  }
+
+  td:before {
+    border: 1px solid #dddddd;
+    /* text-align: left; */
+
+    padding: 8px;
+
+    background-color: green;
+    color: #ffffff;
+    margin-right: 8px;
+    /* margin-left: 0px; */
+    /* white-space: nowrap; */
+	}
+
+  /*tr {
+    margin-left: 0px;
+    padding-left: 0px;
+  }*/
+
+  td:nth-of-type(1):before { content: "Header 1"; }
+  td:nth-of-type(2):before { content: "Header 2"; }
+  td:nth-of-type(3):before { content: "Header 3"; }
+  td:nth-of-type(4):before { content: "Header 4"; }
+  td:nth-of-type(5):before { content: "Header 5"; }
+  td:nth-of-type(6):before { content: "Header 6"; }
+  td:nth-of-type(7):before { content: "Header 7"; }
+  td:nth-of-type(8):before { content: "Header 8"; }
+  td:nth-of-type(9):before { content: "Header 9"; }
+
+  /* Vertical Tabs - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_vertical_tabs */
+
+  * {box-sizing: border-box}
+  /* body {font-family: "Lato", sans-serif;} */
+
+  /* Style the tab */
+  .tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: green;
+    width: 30%;
+    height: 300px;
+  }
+
+  /* Style the buttons inside the tab */
+  .tab button {
+    display: block;
+    background-color: inherit;
+    color: white;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 300px;
+  }
+}
