@@ -21,7 +21,7 @@ $(document).ready(function() {
     var rawData = lookup();
     if(rawData[1] === "json") {
       $("#response-table").show();
-      raw(rawData[0]);
+      raw(syntaxHighlight(prettyPrintArray(rawData[0])));
       table($.parseJSON(rawData[0]));
     } else if(rawData[1] === "html") {
       $("#response-table").hide();
@@ -72,10 +72,10 @@ window.onresize = function(event) {
   });
 };
 
-function raw(json) {
+function raw(string) {
   $(document).ready(function() {
     $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-    $("#ajax-output-debug").html(syntaxHighlight(prettyPrintArray(json))); //.text(json);
+    $("#ajax-output-debug").html(string); //.text(json);
     //$("#ajax-output-debug").css("max-width",(window - 70) + "px");
   });
 }
@@ -91,8 +91,7 @@ function prettyPrintArray(json) {
     if(v instanceof Array)
       return JSON.stringify(v);
     return v;
-  }, 2).replace(/\\/g, '')
-        .replace(/\"\[/g, '[')
+  }, 2).replace(/\"\[/g, '[')//.replace(/\\/g, '') // I intentionally removed this so the JSON is still valid in the debugger.
         .replace(/\]\"/g,']')
         .replace(/\"\{/g, '{')
         .replace(/\}\"/g,'}');
