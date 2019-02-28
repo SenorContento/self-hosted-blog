@@ -27,12 +27,33 @@ $(document).ready(function() {
       $("#response-table").show();
       raw(syntaxHighlight(prettyPrintArray(rawData[0])));
       table($.parseJSON(rawData[0]));
+
+      /*var blob = new Blob([rawData[0]], {type: 'application/json'});
+      var url = window.URL.createObjectURL(blob);
+
+      this.href = url;
+      this.target = '_blank';
+      this.download = 'response.json';*/
     } else if(rawData[1] === "html") {
       $("#response-table").hide();
       raw(rawData[0]);
+
+      /*var blob = new Blob([rawData[0]], {type: 'text/html'});
+      var url = window.URL.createObjectURL(blob);
+
+      this.href = url;
+      this.target = '_blank';
+      this.download = 'manpage.html';*/
     } else if(rawData[1] === "csv") {
       $("#response-table").hide();
       raw(rawData[0]);
+
+      /*var blob = new Blob([rawData[0]], {type: 'text/csv'});
+      var url = window.URL.createObjectURL(blob);
+
+      this.href = url;
+      this.target = '_blank';
+      this.download = 'analyze.csv';*/
     } else if(rawData[1] === "zip") {
       //raw(rawData[0]);
 
