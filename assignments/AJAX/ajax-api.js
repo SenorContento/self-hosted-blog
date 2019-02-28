@@ -21,7 +21,7 @@ $(document).ready(function() {
     var rawData = lookup();
     if(rawData[1] === "json") {
       $("#response-table").show();
-      raw(syntaxHighlight(rawData[0]));
+      raw(rawData[0]);
       table($.parseJSON(rawData[0]));
     } else if(rawData[1] === "html") {
       $("#response-table").hide();
@@ -75,9 +75,29 @@ window.onresize = function(event) {
 function raw(json) {
   $(document).ready(function() {
     $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-    $("#ajax-output-debug").html(json); //.text(json);
+    $("#ajax-output-debug").html(syntaxHighlight(prettyPrintArray(json))); //.text(json);
     //$("#ajax-output-debug").css("max-width",(window - 70) + "px");
   });
+}
+
+// https://stackoverflow.com/a/18452766/6828099
+// https://stackoverflow.com/a/42381024/6828099
+// https://stackoverflow.com/a/54931396/6828099 - My Own Answer
+function prettyPrintArray(json) {
+  if (typeof json === 'string') {
+    json = JSON.parse(json);
+  }
+  output = JSON.stringify(json, function(k,v) {
+    if(v instanceof Array)
+      return JSON.stringify(v);
+    return v;
+  }, 2).replace(/\\/g, '')
+        .replace(/\"\[/g, '[')
+        .replace(/\]\"/g,']')
+        .replace(/\"\{/g, '{')
+        .replace(/\}\"/g,'}');
+
+  return output;
 }
 
 function recurseTable(key, value) {
