@@ -4,9 +4,10 @@
 
   $loadPage->loadHeader();
 
+  $mainPage->printSourceCodeLink();
   $mainPage->printArchiveLink();
   //$mainPage->printWarning();
-  $mainPage->printSourceCodeLink();
+
   $mainPage->printNotice();
 
   $mainPage->printTabbedContent();
@@ -58,6 +59,7 @@
     }
 
     public function printNotice() {
+      print('<br>');
       print('<b>The header and footer css code is in /css/main.css. It is part of my main site and not just this assignment.</b>');
 
       /*

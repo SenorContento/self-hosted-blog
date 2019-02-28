@@ -68,9 +68,10 @@
 
   $loadPage->loadHeader();
 
+  $mainPage->printSourceCodeLink();
   $mainPage->printArchiveLink();
   //$mainPage->printWarning();
-  $mainPage->printSourceCodeLink();
+
   $mainPage->printDropDown("Dropdown Menu Example", $mainPage->generateMenu());
   $mainPage->printMoreLink("Show More Link Demo", $mainPage->generateParagraph());
   $mainPage->printSlideshowSimple($mainPage->generateArrayofImages());
@@ -96,7 +97,7 @@
 
     public function generateMenu() {
       $menu = '<a href="/" class="button menu-button">Main Page</a>' . '<br>' .
-              '<a href="/test/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' .
+              '<a href="/development/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' .
               '<a href="https://www.google.com/" class="button menu-button">Google</a>';
 
       return $menu;

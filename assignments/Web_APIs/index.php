@@ -4,11 +4,11 @@
 
   $loadPage->loadHeader();
 
-  //$mainPage->printArchiveLink();
-  //$mainPage->printTable();
   //$mainPage->printSourceCodeLink();
-  $mainPage->printWarning();
   //$mainPage->printArchiveLink();
+  $mainPage->printWarning();
+
+  //$mainPage->printTable();
 
   $loadPage->loadFooter();
 

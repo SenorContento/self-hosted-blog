@@ -10,21 +10,40 @@
   $loadPage->loadHeader();
 
   $mainPage->printSourceCodeLink();
+  //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
+
+  $mainPage->printTopLink();
+
   $mainPage->printForm();
   $mainPage->printUserControls();
   $mainPage->printDebugOutput();
   $mainPage->printResponsesTable();
 
+  $mainPage->printGoToTopLink();
+
   $loadPage->loadFooter();
 
   class homeworkAssignmentEight {
+    public function printArchiveLink() {
+      print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 8</a>');
+      //print('<br>');
+    }
+
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printWarning() {
       print('<center><h1>Assignment 8 has not been created yet! Please come back later!</h1></center>');
+    }
+
+    public function printTopLink() {
+      print('<a name="top"></a>');
+    }
+
+    public function printGoToTopLink() {
+      print('<a href="#top">Go To Top</a>');
     }
 
     /* AJAX Requests
@@ -55,7 +74,7 @@
       // https://raw.githubusercontent.com/bgbrandongomez/blog/master/sitedata/general/debug/debugger.md
       print('<script src="ajax-api.js"></script>');
 
-      print('
+      print('<a name="ajax-control-form"></a>
       <fieldset>
         <legend>AJAX Control Form</legend>
         <div class="form">
@@ -63,6 +82,7 @@
             <label for="url">URL: </label><input type="text" id="url" value="/api/hotbits">
             <label for="data">Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
 
+            <a href="#ajax-response-table">Go To Table</a>
             <a id="submit">Submit</a>
           </form>
         </div>
@@ -123,9 +143,10 @@
     }
 
     public function printResponsesTable() {
-      print('
+      print('<a name="ajax-response-table"></a>
       <fieldset id="response-table">
         <legend>AJAX Response</legend>
+        <a href="#ajax-control-form">Go Back To Form</a><br><br>
         <table id="ajax-table">
           <thead>
             <tr>

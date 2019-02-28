@@ -9,9 +9,10 @@
 
   $loadPage->loadHeader();
 
+  $mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
-  $mainPage->printSourceCodeLink();
+
   $mainPage->checkValues();
   $mainPage->printForm();
   //$mainPage->printArchiveLink();
