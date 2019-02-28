@@ -14,7 +14,7 @@
             "\n\t\t\t\t" . 'Check out my <a href="' . getenv('alex.github.project') . '">Github Repo!</a>' .
             "\n\t\t\t\t" . '<br>' .
             "\n\t\t\t\t" . 'Perhaps you want to <a class="reset-service-worker" onClick="resetServiceWorker(\'clear-cache\');">clear the cache</a> or <a class="reset-service-worker" onClick="resetServiceWorker(\'uninstall-service-worker\');">uninstall the service worker</a> instead?' .
-            "\n\t\t\t\t" . '<a href="/explanations/debug_service_worker_explanation/">What is this?</a>' .
+            "\n\t\t\t\t" . '<a href="/development/debug_service_worker_explanation/">What is this?</a>' .
             "\n\t\t\t" . '</p>' .
             "\n\t\t" . '</footer>');
     }
