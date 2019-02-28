@@ -2,8 +2,8 @@
 
 function table(json) {
   $(document).ready(function() {
-    $('.index-table').remove();
-    $('.item-table').remove();
+    //$('.index-table').remove();
+    //$('.item-table').remove();
     $('.ajax-table-tr').remove();
     jQuery.each(json, function(index, item) {
         if(item instanceof Object) {
