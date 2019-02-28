@@ -60,8 +60,8 @@
         <legend>AJAX Control Form</legend>
         <div class="form">
           <form id="hotbits">
-            <label>URL: </label><input type="text" id="url" value="/api/hotbits">
-            <label>Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
+            <label for="url">URL: </label><input type="text" id="url" value="/api/hotbits">
+            <label for="data">Data: </label><input type="text" id="data" value=\'{"retrieve": true, "id": 1}\'><br>
 
             <a id="submit">Submit</a>
           </form>
@@ -99,8 +99,8 @@
         <legend>AJAX User Controls</legend>
         <div class="form">
           <form id="user-controls">
-            <label class="form-label-color">Select a JSON Request: </label>
-            <select id="option-color" name="color">
+            <label for="option-user-controls" class="form-label-color">Select a JSON Request: </label>
+            <select id="option-user-controls" name="user-controls">
               <option value="red">Work In Progress...</option>
               <option value="red">Currently Does Nothing!!!</option>
               <option value="red">Red</option>
