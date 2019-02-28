@@ -134,7 +134,7 @@
               </tr>
           </thead>
           <tbody id="ajax-table-body">
-            <tr>
+            <tr class="ajax-table-tr">
               <td class="index-table">Output Not Generated...</td>
               <td class="item-table">Output Not Generated...</td>
               </tr>

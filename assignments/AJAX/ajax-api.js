@@ -4,11 +4,12 @@ function table(json) {
   $(document).ready(function() {
     $('.index-table').remove();
     $('.item-table').remove();
+    $('.ajax-table-tr').remove();
     jQuery.each(json, function(index, item) {
         if(item instanceof Object) {
           recurseTable(index, item);
         } else {
-          $('#ajax-table-body').append("<tr><td class=\"index-table\" style=\"text-align: left\">" + index + "</td>" +
+          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + index + "</td>" +
           "<td class=\"item-table\" style=\"text-align: left\">" + item + "</td></tr>");
         }
     });
@@ -86,7 +87,7 @@ function recurseTable(key, value) {
         if(v instanceof Object) {
           recurseTable(k, v);
         } else {
-          $('#ajax-table-body').append("<tr><td class=\"index-table\" style=\"text-align: left\">" + key + " --> " + k + "</td>" +
+          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + key + " --> " + k + "</td>" +
           "<td class=\"item-table\" style=\"text-align: left\">" + v + "</td></tr>");
         }
       });
