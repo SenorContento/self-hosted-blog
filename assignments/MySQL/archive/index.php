@@ -1,7 +1,7 @@
 <?php
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="assignment5.css">');
-    print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
   }
 
   $loadPage = new loadPage();
@@ -10,7 +10,7 @@
 
   $loadPage->loadHeader();
 
-  $mainPage->printArchiveLink();
+  //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
   $mainPage->printSourceCodeLink();
 

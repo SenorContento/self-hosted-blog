@@ -19,7 +19,7 @@
 
   function customPageHeader() {
     print('<link rel="stylesheet" href="assignment3.css">');
-    print("\n\t\t" . '<script src="/js/jquery-3.3.1.js"></script>');
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
 
     print("\n\n\t\t" . '<!-- The script below changes the way the slideshow functions -->');
     print("\n\t\t" . '<!-- The code was borrowed from https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_slideshow_rr -->');
