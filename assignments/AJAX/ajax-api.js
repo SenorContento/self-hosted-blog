@@ -64,14 +64,18 @@ $(document).ready(function() {
 // https://stackoverflow.com/a/641874/6828099
 window.onresize = function(event) {
   $(document).ready(function() {
-    $("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
+    //$("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
+    // The width detection code doesn't always correctly detect the window size,
+    // but a table with width: 100% that always works can be used as a replacement.
+    $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 70) + "px");
   });
 };
 
 function raw(json) {
   $(document).ready(function() {
+    $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 70) + "px");
     $("#ajax-output-debug").html(json); //.text(json);
-    $("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
+    //$("#ajax-output-debug").css("max-width",(window - 70) + "px");
   });
 }
 
