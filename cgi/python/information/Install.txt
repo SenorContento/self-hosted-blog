@@ -25,7 +25,7 @@ Mac OSX Instructions:
 
   Service:
     Install: launchctl load alex.custom.uwsgi-localhost.plist
-    Uninstall: launchctl unload alex.custom.uwsgi
+    Uninstall: launchctl unload alex.custom.uwsgi.plist
     Start: launchctl start alex.custom.uwsgi
     Stop: launchctl stop alex.custom.uwsgi
 
