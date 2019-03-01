@@ -194,13 +194,13 @@
             <tr>
               <th>Index</th>
               <th>Item</th>
-              </tr>
+            </tr>
           </thead>
           <tbody id="ajax-table-body">
             <tr class="ajax-table-tr">
               <td class="index-table">Output Not Generated...</td>
               <td class="item-table">Output Not Generated...</td>
-              </tr>
+            </tr>
           </tbody>
         </table>
       </fieldset>');
