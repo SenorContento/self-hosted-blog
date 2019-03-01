@@ -93,13 +93,13 @@
     public function downloadCSV($failed_attempts) {
       $this->downloadHeaders("PHPMyAdmin_Fails_" . date("m-d-Y") . ".csv");
       $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " .
-      $this->exec_awk_path . " -F\"&pma_password=\" -v x=\"\\\"\" '{print \",\\=\"x$1x\",\\=\"x$2x\"\"}'");
+      $this->exec_awk_path . " -F\"&pma_password=\" -v x=\"\\\"\" '{print \"1,\\=\"x$1x\",\\=\"x$2x\"\"}'");
 
-      print(",User,Password");
+      print("0,User,Password");
       system($this->exec_echo_path . " " . escapeshellarg($failed_attempts_parsed) . " | " .
       $this->exec_sort_path . " | " .
       $this->exec_uniq_path . " | " .
-      $this->exec_grep_path . " -v \",=\\\"\\\",=\\\"\\\"\"" . " | " .
+      $this->exec_grep_path . " -v \"1,=\\\"\\\",=\\\"\\\"\"" . " | " .
       $this->exec_sed_path . " 's/=\"\"//g'"); //,="",=""
 
       die();
