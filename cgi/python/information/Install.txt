@@ -1,0 +1,38 @@
+RPI Instructions:
+  Install:
+    sudo apt-get install uwsgi uwsgi-src uuid-dev libcap-dev libpcre3-dev
+    cd ~
+    export PYTHON=python3
+    uwsgi --build-plugin "/usr/src/uwsgi/plugins/python python3"
+    sudo mv python3_plugin.so /usr/lib/uwsgi/plugins/
+    sudo chmod 644 /usr/lib/uwsgi/plugins/python3_plugin.so
+
+  Service:
+    Install: sudo cp class-python.ini /etc/uwsgi/apps-enabled/class-python.ini
+    Start: sudo service uwsgi start
+    Stop: sudo service uwsgi stop
+
+  NGinx Config:
+    ```
+    location ~ \.py$ {
+      include uwsgi_params;
+      uwsgi_pass unix:/var/run/uwsgi/app/class-python/socket;
+    }
+    ```
+
+Mac OSX Instructions:
+  Install: sudo pip3 install uwsgi
+
+  Service:
+    Install: launchctl load alex.custom.uwsgi-localhost.plist
+    Uninstall: launchctl unload alex.custom.uwsgi
+    Start: launchctl start alex.custom.uwsgi
+    Stop: launchctl stop alex.custom.uwsgi
+
+  NGinx Config:
+    ```
+    location ~ \.py$ {
+      include uwsgi_params;
+      uwsgi_pass  127.0.0.1:9001;
+    }
+    ```

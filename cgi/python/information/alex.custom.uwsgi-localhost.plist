@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>alex.custom.uwsgi</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/uwsgi</string>
+        <string>--socket</string>
+	<string>0.0.0.0:9001</string>
+	<string>-w</string>
+	<string>interpreter</string>
+	<string>--chdir</string>
+	<string>/Users/senor/Desktop/Website/cgi/python</string>
+	<string>--py-autoreload</string>
+	<string>1</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/usr/local</string>
+  </dict>
+</plist>
