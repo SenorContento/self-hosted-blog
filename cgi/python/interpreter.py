@@ -9,6 +9,8 @@
 # http://raspberrywebserver.com/cgiscripting/setting-up-nginx-and-uwsgi-for-cgi-scripting.html
 # https://www.paulox.net/2017/04/04/how-to-use-uwsgi-with-python3-6-in-ubuntu/
 
+#
+
 # Written By Alex
 
 def startup():
