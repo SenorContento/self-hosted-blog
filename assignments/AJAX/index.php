@@ -168,7 +168,7 @@
 
             <br>
 
-            <a id="build-api-request">Build API Request</a>
+            <a id="build-api-request">Build JSON String</a>
           </form>
         </div>
       </fieldset>');

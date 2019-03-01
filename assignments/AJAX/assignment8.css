@@ -19,6 +19,11 @@
   background-color: darkgray;
 }
 
+select {
+  /*word-wrap: break-word;*/
+  /*max-width: 100px;*/
+}
+
 #submit {
    float: right;
    color: #63c0f5;

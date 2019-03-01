@@ -1,5 +1,10 @@
 // https://raw.githubusercontent.com/bgbrandongomez/blog/master/sitedata/javascripts/github/ajax-api.js
 
+$(document).ready(function() {
+  //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
+  $("select").css("max-width", $("#ajax-table").width() + "px");
+});
+
 // https://stackoverflow.com/a/15009561
 // https://stackoverflow.com/a/10198447
 $(document).ready(function() {
@@ -380,6 +385,7 @@ window.onresize = function(event) {
     // The width detection code doesn't always correctly detect the window size,
     // but a table with width: 100% that always works can be used as a replacement.
     $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
+    $("select").css("max-width", $("#ajax-table").width() + "px");
   });
 };
 
