@@ -851,7 +851,11 @@
         //print("Last ID: " . $id);
         //array_push($decoded, ["rowID" => $id]);
         //$decoded[] = ["rowID" => $id];
-        $decoded["rowID"] = (int) $id;
+        //$decoded["rowID"] = (int) $id;
+
+        // http://php.net/manual/en/function.array-unshift.php
+        //array_unshift($decoded, (int) $id);
+        $decoded = array("rowID"=>(int) $id) + $decoded; 
         $json = json_encode($decoded, JSON_UNESCAPED_SLASHES);
         //$json = json_encode($decoded, JSON_PRETTY_PRINT);
 
