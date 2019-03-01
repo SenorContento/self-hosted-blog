@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 import sys
 
-start();
-
 def start():
     headers = ['content-type: text/html;charset=utf-8']
     body = b'<h1>Hello, world!</h1>\n' #this could be compressed, too, with the according information appended to headers
@@ -13,3 +11,5 @@ def start():
 def application(env, start_response):
     start_response('200 OK', [('Content-Type','text/html')])
     return [b"UWSCGI Response"]
+
+start();
