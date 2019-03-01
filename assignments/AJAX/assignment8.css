@@ -14,6 +14,11 @@
   text-decoration: underline;
 }
 
+:disabled {
+  border: 1px solid darkgray;
+  background-color: darkgray;
+}
+
 #submit {
    float: right;
    color: #63c0f5;

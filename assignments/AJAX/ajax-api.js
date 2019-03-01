@@ -170,6 +170,12 @@ function populateForm(option) {
       }
     });
 
+    $("#option-count option").each(function() {
+      if($(this).val() === "true") {
+        $(this).prop('selected', 'selected');
+      }
+    });
+
     $("#option-request-type option").each(function() {
       if($(this).text() === "Analyze") {
         $(this).removeAttr("disabled");
@@ -228,6 +234,7 @@ function populateForm(option) {
     });
     $("#rowID").removeAttr("disabled");
     $("#bytes").removeAttr("disabled");
+    $("#option-count").removeAttr("disabled");
     $("#option-format-type").removeAttr("disabled");
     $("#option-download-type").removeAttr("disabled");
     $("#option-download-type option[value='zip']").removeAttr("disabled");
