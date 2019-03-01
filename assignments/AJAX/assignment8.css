@@ -1,4 +1,27 @@
+.jump {
+  /*color: #63c0f5;*/
+  /*color: red;*/
+  /*text-decoration: underline red;*/
+  color: #63c0f5;
+  text-decoration: underline;
+}
+
+.jump:visited {
+  /*color: #A200D9;*/
+  /*color: #A200D9;*/
+  /*text-decoration: underline #A200D9;*/
+  color: #63c0f5;
+  text-decoration: underline;
+}
+
 #submit {
+   float: right;
+   color: #63c0f5;
+   text-decoration: underline;
+   cursor: pointer;
+}
+
+#build-api-request {
    float: right;
    color: #63c0f5;
    text-decoration: underline;

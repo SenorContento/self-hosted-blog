@@ -87,8 +87,6 @@
    *
    * bytes(int) and generator(string)
    * retrieve(bool) and id(int)
-   * analyze(bool) and id(int)
-   * analyze(bool) and id(int) and count(bool)
    */
 
   class cryptography {

@@ -28,6 +28,7 @@
   class HotbitsAPI {
     public $exec_ent_path;
     public $exec_cat_path;
+    public $api_real_hotbits_path;
     public $api_hotbits_path;
     public $url_ent_path;
     //public $exec_mkdir_path;
@@ -36,6 +37,7 @@
     function setVars() {
       $this->api_hotbits_path = "/api/hotbits";
       $this->url_ent_path = "https://www.fourmilab.ch/random/random.zip";
+      $this->api_real_hotbits_path = "https://www.fourmilab.ch/cgi-bin/Hotbits.api";
 
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
@@ -58,7 +60,7 @@
       try {
         if(!empty($_REQUEST)) {
           $id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL;
-          $bytes = isset($_REQUEST["bytes"]) ? $_REQUEST["bytes"] : NULL;
+          $bytes = isset($_REQUEST["bytes"]) ? (int) $_REQUEST["bytes"] : NULL;
           $analyze = isset($_REQUEST["analyze"]) ? filter_var($_REQUEST["analyze"], FILTER_VALIDATE_BOOLEAN) : false;
           $retrieve = isset($_REQUEST["retrieve"]) ? filter_var($_REQUEST["retrieve"], FILTER_VALIDATE_BOOLEAN) : false;
           $format = isset($_REQUEST["format"]) ? $_REQUEST["format"] : "json";
@@ -67,7 +69,7 @@
             header("Content-Type: application/json");
 
             $generator = isset($_REQUEST["generator"]) ? $_REQUEST["generator"] : "pseudo";
-            print($manager->formatForSQL($this->grabData((int) $_REQUEST["bytes"], $generator))); // To specify a custom generator
+            print($manager->formatForSQL($this->grabData($bytes, $generator))); // To specify a custom generator
             die();
           }
 
@@ -357,8 +359,6 @@
     private function requestData($data) {
       try {
         // https://stackoverflow.com/a/6609181/6828099
-        $url = 'https://www.fourmilab.ch/cgi-bin/Hotbits.api';
-
         $options = array(
           'http' => array(
             'user_agent' => getenv('alex.server.user_agent'),
@@ -369,7 +369,7 @@
         );
 
         $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context); // http://php.net/manual/en/function.file-get-contents.php - string $filename, bool $use_include_path = FALSE, resource $context, ...
+        $result = file_get_contents($this->api_real_hotbits_path, false, $context); // http://php.net/manual/en/function.file-get-contents.php - string $filename, bool $use_include_path = FALSE, resource $context, ...
         //$result = false;
         //var_dump($result);
 

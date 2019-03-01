@@ -1,5 +1,281 @@
 // https://raw.githubusercontent.com/bgbrandongomez/blog/master/sitedata/javascripts/github/ajax-api.js
 
+// https://stackoverflow.com/a/15009561
+// https://stackoverflow.com/a/10198447
+$(document).ready(function() {
+  $('#build-api-request').click(function(e) {
+    //var json = $("#option-request-type").serializeArray();
+    //alert("JSON: " + JSON.stringify(json));
+    //delete(json);
+    var json = {};
+
+    if(!$('#bytes').is('[disabled]')) {
+      json["bytes"] = parseInt($('#bytes').val()); // int
+      //alert(json["bytes"]);
+    }
+
+    if(!$('#rowID').is('[disabled]')) {
+      json["id"] = parseInt($('#rowID').val()); // int
+      //alert(json["id"]);
+    }
+
+    $("#option-request-type option").each(function() {
+      if(!$(this).is('[disabled]') && $(this).val() !== "bytes") {
+        //alert($(this).val());
+        json[$(this).val()] = true; // bool
+        //alert(json[$(this).val()]);
+      }
+    });
+
+    $("#option-generator-type option").each(function() {
+      if(!$(this).is('[disabled]') && !$("#option-generator-type").is('[disabled]') && $(this).is(':selected')) {
+        //alert($(this).val());
+        json["generator"] = $(this).val(); // string
+        //alert(json[$(this).val()]);
+      }
+    });
+
+    $("#option-format-type option").each(function() {
+      if(!$(this).is('[disabled]') && !$("#option-format-type").is('[disabled]') && $(this).is(':selected')) {
+        //alert($(this).val());
+        json["format"] = $(this).val(); // string
+        //alert(json[$(this).val()]);
+      }
+    });
+
+    // {"id":"1","retrieve":true,"generator":"pseudorandom","format":"csv","download":"base64"}
+    $("#option-download-type option").each(function() {
+      if(!$(this).is('[disabled]') && !$("#option-download-type").is('[disabled]') && $(this).is(':selected')) {
+        //alert($(this).val());
+        json["download"] = $(this).val(); // string
+        //alert(json[$(this).val()]);
+      }
+    });
+
+    $("#option-count option").each(function() {
+      if(!$(this).is('[disabled]') && !$("#option-count").is('[disabled]') && $(this).is(':selected')) {
+        //alert($(this).val());
+        json["count"] = ($(this).val() === 'true'); // string
+        //alert(json[$(this).val()]);
+      }
+    });
+
+    //alert("JSON: " + JSON.stringify(json));
+    $("#data").val(JSON.stringify(json));
+    json = {};
+  });
+});
+
+function populateForm(option) {
+  var hotbits_url = "/api/hotbits"; // $("#url").val(hotbits_url);
+  var cryptography_url = "/api/cryptography"; // $("#url").val(cryptography_url);
+  // This is to read the user controls and populate the form based on the controls
+
+  /* API Methods (POST) - Hotbits and Cryptography
+   *
+   * 1 - bytes(int) and generator(string)
+   * 2 - retrieve(bool) and id(int) and [Cryptography Only] download(string)
+   * 3 - analyze(bool) and id(int) and [Hotbits Only] format(csv)
+   * 4 - analyze(bool) and id(int) and count(bool) and [Hotbits Only] format(csv)
+   */
+
+   /* Responses - Hotbits
+    *
+    * 1 - (JSON) New Data Straight from Hotbits (Do Both Random and Pseudorandom)
+    * 2 - (JSON) Old Data Already In MySQL Database (Do Both Random and Pseudorandom)
+    * 3 - (JSON) Analyze Data From MySQL Database - format (CSV)
+    * 4 - (JSON) Analyze Data From MySQL Database (and Provide Byte Counts) - format (CSV or JSON)
+    */
+
+    /* Responses - Cryptography
+     *
+     * 1 - (JSON) New Data - Encrypt and Decrypt Test File
+     * 2 - (JSON) Old Data - Encrypt and Decrypt Test File - download (base64 and zip)
+     * 3 - (HTML) Analyze Data From MySQL Database
+     * 4 - (HTML) Analyze Data From MySQL Database (and Provide Byte Counts)
+     */
+
+  //option-user-controls, url, and data
+
+  /* user-controls - option-user-controls
+  <option value="grab-new-data">(JSON) Retrieve New Data (Bytes and Generator)</option>
+  <option value="retrieve-existing-data">(JSON) Retrieve Existing Data (ID)</option>
+  <option value="analyze-count-html">(HTML) Analyze Existing Data With Byte Count (ID)</option>
+  <option value="encryption-new-data">(ZIP Archive) New Encrypt/Decrypt Test File (Bytes and Generator)</option>
+  <option value="encryption-existing-data">(ZIP Archive) Existing Encrypt/Decrypt Test File (ID)</option>
+  <option value="free-form">Free Form (Anything Goes)</option>
+  */
+
+  // grab-new-data, retrieve-existing-data, analyze-count-html, encryption-new-data, encryption-existing-data
+  //alert("Option: " + option);
+
+  //IDEA: It's not necessary to do these if statements
+  if(option !== "free-form") {
+    $("#option-download-type option[value='zip']").prop('disabled', 'disabled');
+    $("#option-download-type option[value='base64']").prop('selected', 'true');
+  }
+
+  if(option !== "analyze-count-html" && option !== "free-form") {
+    $("#option-format-type").prop('disabled', 'disabled');
+    $("#option-count").prop('disabled', 'disabled');
+  }
+
+  if(option !== "encryption-new-data" && option !== "encryption-existing-data" && option !== "free-form") {
+    $("#option-download-type").prop('disabled', 'disabled');
+  }
+
+  if(option === "grab-new-data") {
+    $("#url").val(hotbits_url);
+    //alert("1");
+    // https://stackoverflow.com/a/1888946 - Use Prop on New JQuery
+    $("#option-request-type option").each(function() {
+      if($(this).text() === "Bytes") {
+        //this.removeAttribute("disabled");
+        $(this).removeAttr("disabled");
+        $(this).prop('selected', 'selected');
+      }
+      if($(this).text() === "Retrieve" || $(this).text() === "Analyze") {
+        $(this).prop('disabled', 'disabled'); //disabled="true"
+      }
+    });
+
+    $("#bytes").removeAttr("disabled");
+    $("#rowID").prop('disabled', 'disabled');
+    $("#option-generator-type").removeAttr("disabled");
+  } else if(option === "retrieve-existing-data") {
+    $("#url").val(hotbits_url);
+    //alert("2");
+    $("#option-request-type option").each(function() {
+      if($(this).text() === "Retrieve") {
+        $(this).removeAttr("disabled");
+        $(this).prop('selected', 'selected');
+      }
+      if($(this).text() === "Bytes" || $(this).text() === "Analyze") {
+        $(this).prop('disabled', 'disabled'); //disabled="true"
+      }
+    });
+
+    $("#rowID").removeAttr("disabled");
+    $("#bytes").prop('disabled', 'disabled');
+    $("#option-generator-type").prop('disabled', 'disabled');
+  } else if(option === "analyze-count-html") {
+    $("#url").val(hotbits_url);
+    //alert("3");
+    $("#option-format-type").removeAttr("disabled");
+    $("#option-count").removeAttr("disabled");
+
+    $("#option-format-type option").each(function() {
+      if($(this).text() === "HTML") {
+        $(this).prop('selected', 'selected');
+      }
+    });
+
+    $("#option-request-type option").each(function() {
+      if($(this).text() === "Analyze") {
+        $(this).removeAttr("disabled");
+        $(this).prop('selected', 'selected');
+      }
+      if($(this).text() === "Bytes" || $(this).text() === "Retrieve") {
+        $(this).prop('disabled', 'disabled'); //disabled="true"
+      }
+    });
+
+    $("#rowID").removeAttr("disabled");
+    $("#bytes").prop('disabled', 'disabled');
+    $("#option-generator-type").prop('disabled', 'disabled');
+  } else if(option === "encryption-new-data") {
+    $("#url").val(cryptography_url);
+    //alert("4");
+    $("#option-download-type").removeAttr("disabled");
+
+    $("#option-request-type option").each(function() {
+      if($(this).text() === "Bytes") {
+        //this.removeAttribute("disabled");
+        $(this).removeAttr("disabled");
+        $(this).prop('selected', 'selected');
+      }
+      if($(this).text() === "Retrieve" || $(this).text() === "Analyze") {
+        $(this).prop('disabled', 'disabled'); //disabled="true"
+      }
+    });
+
+    $("#bytes").removeAttr("disabled");
+    $("#rowID").prop('disabled', 'disabled');
+    $("#option-generator-type").removeAttr("disabled");
+  } else if(option === "encryption-existing-data") {
+    $("#url").val(cryptography_url);
+    //alert("5");
+    $("#option-download-type").removeAttr("disabled");
+
+    $("#option-request-type option").each(function() {
+      if($(this).text() === "Retrieve") {
+        $(this).removeAttr("disabled");
+        $(this).prop('selected', 'selected');
+      }
+      if($(this).text() === "Bytes" || $(this).text() === "Analyze") {
+        $(this).prop('disabled', 'disabled'); //disabled="true"
+      }
+    });
+
+    $("#rowID").removeAttr("disabled");
+    $("#bytes").prop('disabled', 'disabled');
+    $("#option-generator-type").prop('disabled', 'disabled');
+  } else if(option === "free-form") {
+    //alert("6");
+    //$("#option-download-type option[value='zip']").prop('disabled', 'disabled');
+    $("#option-request-type option").each(function() {
+        $(this).removeAttr("disabled");
+    });
+    $("#rowID").removeAttr("disabled");
+    $("#bytes").removeAttr("disabled");
+    $("#option-format-type").removeAttr("disabled");
+    $("#option-download-type").removeAttr("disabled");
+    $("#option-download-type option[value='zip']").removeAttr("disabled");
+    $("#option-generator-type").removeAttr("disabled");
+  }
+}
+
+/*
+<label for="option-request-type">Request Type: </label>
+<select id="option-request-type" name="request-type">
+  <option value="bytes">Bytes</option>
+  <option value="retrieve">Retrieve</option>
+  <option value="analyze">Analyze</option>
+</select>
+
+<br>
+
+<label for="option-generator-type">Generator: </label>
+<select id="option-generator-type" name="request-type">
+  <option value="random">Random</option>
+  <option value="pseudorandom">Pseudorandom</option>
+</select>
+
+<label for="bytes">Bytes (2048 Max): </label><input type="text" id="bytes" value="2048">
+<label for="rowID">Row ID: </label><input type="text" id="rowID" value="1">
+
+<br>
+
+<label for="option-format-type">Format (Hotbits Only): </label>
+<select id="option-format-type" name="request-type">
+  <option value="random">Random</option>
+  <option value="pseudorandom">Pseudorandom</option>
+</select>
+
+<label for="option-download-type">Download (Cryptography Only): </label>
+<select id="option-download-type" name="request-type">
+  <option value="base64">Base64</option>
+  <option value="zip">Zip (Choose Base64) - I Only Work With Direct Download</option>
+</select>
+*/
+
+$(document).ready(function() {
+  $("#option-user-controls").change(function() {
+    populateForm($(this).val());
+    // grab-new-data, retrieve-existing-data, analyze-count-html, encryption-new-data, encryption-existing-data
+  });
+});
+
 function table(json) {
   $(document).ready(function() {
     //$('.index-table').remove();
