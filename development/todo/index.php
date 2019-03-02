@@ -13,11 +13,13 @@
   class loadPage {
     public function loadHeader() {
       $PageTitle="TO-DO List";
-      include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/header.php");
+      $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
+      include_once($root . "/php_data/header.php");
     }
 
     public function loadFooter() {
-      include_once($_SERVER['DOCUMENT_ROOT'] . "/php_data/footer.php");
+      $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
+      include_once($root . "/php_data/footer.php");
     }
   }
 
