@@ -23,14 +23,6 @@ def startup():
     print("Custom Python 3 Web Interpreter Loaded");
 startup();
 
-def readFile(page): # Never Used
-    with open(page, "r") as file:
-        lines = '';
-        for line in file:
-            lines = lines + line
-
-    return lines.encode('utf-8');
-
 def generatePage(env, title):
     if(env['alex.server.type'] == "development"):
         php_path = "/usr/local/bin/php";
