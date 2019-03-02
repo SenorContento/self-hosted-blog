@@ -23,6 +23,11 @@ def getRequest(env):
 
 def init(env, start_response):
     query = getRequest(env);
+    if len(query) == 0:
+        start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
+        # Insert Function to Print Form Here
+        return '<h1>Try Sending a POST or GET Request</h1>'.encode('utf-8');
+
     start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
 
     test = ''
