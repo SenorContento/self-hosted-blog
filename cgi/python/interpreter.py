@@ -13,4 +13,18 @@ def application(env, start_response):
     #testEnvironment = env['TESTME'].encode('utf-8')
     path = env['PATH_INFO'].encode('utf-8')
 
+    #QUERY_STRING - hello=yes
+    #REQUEST_METHOD - GET
+    #CONTENT_TYPE - ?
+    #CONTENT_LENGTH - ?
+    #REQUEST_URI - /path-to-python/script.py?hello=yes - Client?
+    #PATH_INFO - /path-to-python/script.py?hello=yes - Server?
+    #DOCUMENT_ROOT - /usr/local/Cellar/nginx/1.15.8/html
+    #SERVER_PROTOCOL - HTTP/2.0
+    #REMOTE_ADDR - 127.0.0.1 - Client?
+    #REMOTE_PORT - 49450 - Client?
+    #SERVER_ADDR - ?
+    #SERVER_PORT - 443
+    #SERVER_NAME - localhost
+
     return[path]
