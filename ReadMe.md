@@ -51,7 +51,7 @@ location / {
 	try_files $uri $uri/ =404;
 }
 
-location ~ /(php_data) {
+location ~ /(server_data) {
 	deny all;
 	return 404;
 }

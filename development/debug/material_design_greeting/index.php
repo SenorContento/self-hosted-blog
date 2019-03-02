@@ -42,12 +42,12 @@
     public function loadHeader() {
       $PageTitle="CSCI 3000 - Web Development";
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
-      include_once($root . "/php_data/header.php");
+      include_once($root . "/server_data/header.php");
     }
 
     public function loadFooter() {
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
-      include_once($root . "/php_data/footer.php");
+      include_once($root . "/server_data/footer.php");
     }
   }
 
