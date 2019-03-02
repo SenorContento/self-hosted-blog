@@ -1,6 +1,9 @@
 import sys
 import interpreter;
 
+import sqlite3
+from sqlite3 import Error
+
 def setupImportApplication(env):
     """ Import This Application's Functions From Other Files
         :param env: Environment Variables Dictionary
@@ -23,3 +26,15 @@ def init(env, start_response):
 
     return interpreter.printError404(env, start_response);
 
+def connect(database):
+    """ create a database connection to the SQLite database
+    :param database: database file
+    :return: Connection object or None
+    """
+    try:
+        conn = sqlite3.connect(db_file)
+        return conn
+    except Error as e:
+        print(e)
+
+    return None

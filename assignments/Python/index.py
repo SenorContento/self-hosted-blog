@@ -86,13 +86,15 @@ def init(env, start_response):
         return printForm(env, "Python - Form");
 
     start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
+    return printRequests(env, query);
 
-    test = ''
+def printRequests(env, query):
+    request = ''
     for key in query:
-        test = test + "Key: '" + key + "' Value: '" + query[key] + "'<br>";
+        request = request + "Key: '" + key + "' Value: '" + query[key] + "'<br>";
 
     header, footer = interpreter.generatePage(env, "Python - Results");
-    format = "<h1>" + test + "</h1>";
+    format = "<h1>" + request + "</h1>";
 
     response = header.decode('utf-8') + format + footer.decode('utf-8');
     return response.encode('utf-8');
