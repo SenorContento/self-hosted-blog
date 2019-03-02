@@ -31,7 +31,7 @@ def readFile(page): # Never Used
 
     return lines.encode('utf-8');
 
-def generatePage(env):
+def generatePage(env, title):
     if(env['alex.server.type'] == "development"):
         php_path = "/usr/local/bin/php";
     else:
@@ -43,6 +43,7 @@ def generatePage(env):
     # I need to add a way to automatically poll all variables and pass the ones beginning with php.alex
     os.environ["alex.github.project"] = env['alex.github.project'];
     os.environ["alex.github.branch"] = env['alex.github.branch'];
+    os.environ["alex.server.page.title"] = title;
 
     header_path = env['DOCUMENT_ROOT'] + "/php_data/header.php";
     proch = subprocess.Popen([php_path, header_path], stdout=subprocess.PIPE)
@@ -99,7 +100,7 @@ def load(filepath, env, start_response):
     else:
         start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
 
-        header, footer = generatePage(env);
+        header, footer = generatePage(env, "418 - Missing Init Function");
         response = header.decode('utf-8') + '<h1>The Python Script "' + env['PATH_INFO'] + '" is missing its init function!!!</h1>' + footer.decode('utf-8');
         return response.encode('utf-8')
 

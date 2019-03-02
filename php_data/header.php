@@ -4,6 +4,8 @@
 
   if(isset($PageTitle)) {
     $loadHeader->printTitle($PageTitle);
+  } else if(getenv('alex.server.page.title') !== false) {
+    $loadHeader->printTitle(getenv('alex.server.page.title'));
   } else {
     $loadHeader->printTitle('web.SenorContento.com');
   }
