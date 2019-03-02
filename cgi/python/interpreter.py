@@ -20,10 +20,28 @@ except ImportError:
   print("ImportError! Cannot import Path from pathlib!")
 
 def startup():
+    """ Tests to Ensure Interpreter is Loaded By UWSGI
+    """
     print("Custom Python 3 Web Interpreter Loaded");
 startup();
 
+def init(env, start_response):
+    """ Function that Gets Called by Interpreter
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
+    #start_response('404 File Not Found', [('Content-Type','text/html'), ('charset','utf-8')])
+    #header, footer = generatePage(env, '404 - File Not Found');
+    #return (header.decode('utf-8') + "<p>I am not supposed to be run directly!!!</p>" + footer.decode('utf-8')).encode('utf-8');
+    return printError404(env, start_response);
+
 def generatePage(env, title):
+    """ Generate's HTML Header and Footer Using PHP
+        :param env: Environment Variables Dictionary
+        :param title: Set's HTML Title in Header
+        :return: Tuple Bytes [header, footer]
+    """
     if(env['alex.server.type'] == "development"):
         php_path = "/usr/local/bin/php";
     else:
@@ -48,6 +66,12 @@ def generatePage(env, title):
     return header, footer;
 
 def grabPage(env, page_path):
+    """ Generate's HTML from PHP File
+        under Web Root or Subdirectories
+        :param env: Environment Variables Dictionary
+        :param page_path: Page Path to Pass to PHP
+        :return: Bytes Response
+    """
     if(env['alex.server.type'] == "development"):
         php_path = "/usr/local/bin/php";
     else:
@@ -69,11 +93,22 @@ def grabPage(env, page_path):
     return proc.stdout.read();
 
 def printError404(env, start_response):
+    """ Prints 404 File Not Found Error
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     start_response('404 File Not Found', [('Content-Type','text/html'), ('charset','utf-8')])
     return grabPage(env, "/errors/404/index.php");
 
 # Came from https://github.com/SenorContento/Rover/blob/f04b7713fda355cc158756bf74529ab076cd91d8/modules.py
 def load(filepath, env, start_response):
+    """ Load's Python Script Requested by User
+        :param filepath: Page Path to Requested Python Script
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     if not Path(filepath).is_file():
         return printError404(env, start_response);
 
@@ -98,6 +133,11 @@ def load(filepath, env, start_response):
     return function
 
 def application(env, start_response):
+    """ Function that Gets Called by UWSGI (Main Entry Point)
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     # https://uwsgi-docs.readthedocs.io/en/latest/Nginx.html#what-is-the-uwsgi-params-file
 
     # Example Environment - https://localhost/path-to-python/script.py?hello=yes

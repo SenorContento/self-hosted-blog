@@ -5,6 +5,11 @@ from urllib import parse
 from ast import literal_eval
 
 def generatePage(env, title):
+    """ Generate's HTML Header and Footer Using PHP
+        :param env: Environment Variables Dictionary
+        :param title: Set's HTML Title in Header
+        :return: Tuple Bytes [header, footer]
+    """
     if(env['alex.server.type'] == "development"):
         php_path = "/usr/local/bin/php";
     else:
@@ -29,6 +34,10 @@ def generatePage(env, title):
     return header, footer;
 
 def readFile(page):
+    """ Read's File
+        :param page: File Path String
+        :return: File Content Bytes
+    """
     with open(page, "r") as file:
         lines = '';
         for line in file:
@@ -37,12 +46,21 @@ def readFile(page):
     return lines;
 
 def printForm(env, title):
+    """ Print's HTML Form for Assignment 9
+        :param env: Environment Variables Dictionary
+        :param title: Set's HTML Title in Header
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     header, footer = generatePage(env, title);
 
     response = header.decode('utf-8') + readFile(env['DOCUMENT_ROOT'] + "/assignments/Python/form.html") + footer.decode('utf-8');
     return response.encode('utf-8');
 
 def getRequest(env):
+    """ Interpret's HTML Request Sent By User
+        :param env: Environment Variables Dictionary
+        :return: Dictionary Response of Request Parameters
+    """
     # environ = dict(os.environ.items())
     if(env['REQUEST_METHOD'] == "GET"):
         #return('<h1>GET: "' + env['QUERY_STRING'] + '"</h1>').encode('utf-8');
@@ -63,6 +81,11 @@ def getRequest(env):
         return literal_eval(error)
 
 def init(env, start_response):
+    """ Function that Gets Called by Interpreter
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     query = getRequest(env);
     if len(query) == 0:
         start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
