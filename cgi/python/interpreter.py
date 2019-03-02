@@ -40,6 +40,10 @@ def generatePage(env):
     os.environ["alex.server.name"] = env['alex.server.name'];
     os.environ["alex.server.type"] = env['alex.server.type'];
 
+    # I need to add a way to automatically poll all variables and pass the ones beginning with php.alex
+    os.environ["alex.github.project"] = env['alex.github.project'];
+    os.environ["alex.github.branch"] = env['alex.github.branch'];
+
     header_path = env['DOCUMENT_ROOT'] + "/php_data/header.php";
     proch = subprocess.Popen([php_path, header_path], stdout=subprocess.PIPE)
     header = proch.stdout.read();
@@ -59,6 +63,11 @@ def grabPage(env, page_path):
     # https://stackoverflow.com/a/4514776
     os.environ["alex.server.name"] = env['alex.server.name'];
     os.environ["alex.server.type"] = env['alex.server.type'];
+
+    # I need to add a way to automatically poll all variables and pass the ones beginning with php.alex
+    os.environ["alex.github.project"] = env['alex.github.project'];
+    os.environ["alex.github.branch"] = env['alex.github.branch'];
+
     os.environ["PWD"] = env['DOCUMENT_ROOT'];
     #return os.environ["PWD"].encode('utf-8');
     page = env['DOCUMENT_ROOT'] + page_path;
