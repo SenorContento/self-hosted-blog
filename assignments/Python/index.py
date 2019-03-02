@@ -1,37 +1,23 @@
 import os
+import sys
 import subprocess
 
 from urllib import parse
 from ast import literal_eval
 
-def generatePage(env, title):
-    """ Generate's HTML Header and Footer Using PHP
+import interpreter;
+
+def setupImportApplication(env):
+    """ Import This Application's Functions From Other Files
         :param env: Environment Variables Dictionary
-        :param title: Set's HTML Title in Header
-        :return: Tuple Bytes [header, footer]
     """
-    if(env['alex.server.type'] == "development"):
-        php_path = "/usr/local/bin/php";
-    else:
-        php_path = "/usr/bin/php";
+    # This isn't necessary, probably because Interpreter was the caller for this file
+    #interpreter_folder = env['DOCUMENT_ROOT'] + "/cgi/python/"
+    #sys.path.insert(0, interpreter_folder)
 
-    os.environ["alex.server.name"] = env['alex.server.name'];
-    os.environ["alex.server.type"] = env['alex.server.type'];
-
-    # I need to add a way to automatically poll all variables and pass the ones beginning with php.alex
-    os.environ["alex.github.project"] = env['alex.github.project'];
-    os.environ["alex.github.branch"] = env['alex.github.branch'];
-    os.environ["alex.server.page.title"] = title;
-
-    header_path = env['DOCUMENT_ROOT'] + "/php_data/header.php";
-    proch = subprocess.Popen([php_path, header_path], stdout=subprocess.PIPE)
-    header = proch.stdout.read();
-
-    footer_path = env['DOCUMENT_ROOT'] + "/php_data/footer.php";
-    procf = subprocess.Popen([php_path, footer_path], stdout=subprocess.PIPE)
-    footer = procf.stdout.read();
-
-    return header, footer;
+    # https://stackoverflow.com/a/4383597/6828099
+    this_folder = env['DOCUMENT_ROOT'] + "/assignments/Python/"
+    sys.path.insert(0, this_folder)
 
 def readFile(page):
     """ Read's File
@@ -51,7 +37,7 @@ def printForm(env, title):
         :param title: Set's HTML Title in Header
         :return: Bytes Response for UWSGI to Return to Browser
     """
-    header, footer = generatePage(env, title);
+    header, footer = interpreter.generatePage(env, title);
 
     response = header.decode('utf-8') + readFile(env['DOCUMENT_ROOT'] + "/assignments/Python/form.html") + footer.decode('utf-8');
     return response.encode('utf-8');
@@ -86,6 +72,14 @@ def init(env, start_response):
         :param start_response: Function to Start Response to Browser
         :return: Bytes Response for UWSGI to Return to Browser
     """
+    setupImportApplication(env); # Set's Up Environment for Custom Libraries
+
+    try:
+        import database;
+    except ImportError:
+        start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
+        return "ImportError! Cannot import database!".encode('utf-8');
+
     query = getRequest(env);
     if len(query) == 0:
         start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
@@ -97,7 +91,7 @@ def init(env, start_response):
     for key in query:
         test = test + "Key: '" + key + "' Value: '" + query[key] + "'<br>";
 
-    header, footer = generatePage(env, "Python - Results");
+    header, footer = interpreter.generatePage(env, "Python - Results");
     format = "<h1>" + test + "</h1>";
 
     response = header.decode('utf-8') + format + footer.decode('utf-8');
