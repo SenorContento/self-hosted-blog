@@ -16,7 +16,7 @@
   //$mainPage->printMidterm(); //Midterm (Index)
 
   $mainPage->printAssignment8(); //AJAX
-  //$mainPage->printAssignment9(); //Python
+  $mainPage->printAssignment9(); //Python
   //$mainPage->printAssignment10(); //C#.NET-MSSQL
   //$mainPage->printAssignment11(); //Web APIs
   //$mainPage->printAssignment12(); //Web Security
