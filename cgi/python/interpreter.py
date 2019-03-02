@@ -10,6 +10,11 @@ except ImportError:
   print("ImportError! Cannot import imp!")
 
 try:
+  import subprocess
+except ImportError:
+  print("ImportError! Cannot import subprocess!")
+
+try:
   from pathlib import Path
 except ImportError:
   print("ImportError! Cannot import Path from pathlib!")
@@ -18,24 +23,53 @@ def startup():
     print("Custom Python 3 Web Interpreter Loaded");
 startup();
 
-#environment = [];
-
-def printError404(env, start_response):
-    #global environment;
-    start_response('404 File Not Found', [('Content-Type','text/html'), ('charset','utf-8')])
-
-    # Since I cannot execute the PHP server from here (afaict), I am just returning a basic html message for now
-    return b'<h1>404 File Not Found</h1>';
-
-    errorpage = env['DOCUMENT_ROOT'] + "/errors/404/index.php"
-
-    with open(errorpage, "r") as file:
-        #return 'test'.encode('utf-8');
+def readFile(page): # Never Used
+    with open(page, "r") as file:
         lines = '';
         for line in file:
             lines = lines + line
 
-        return lines.encode('utf-8');
+    return lines.encode('utf-8');
+
+def generatePage(env):
+    if(env['alex.server.type'] == "development"):
+        php_path = "/usr/local/bin/php";
+    else:
+        php_path = "/usr/bin/php";
+
+    os.environ["alex.server.name"] = env['alex.server.name'];
+    os.environ["alex.server.type"] = env['alex.server.type'];
+
+    header_path = env['DOCUMENT_ROOT'] + "/php_data/header.php";
+    proch = subprocess.Popen([php_path, header_path], stdout=subprocess.PIPE)
+    header = proch.stdout.read();
+
+    footer_path = env['DOCUMENT_ROOT'] + "/php_data/footer.php";
+    procf = subprocess.Popen([php_path, footer_path], stdout=subprocess.PIPE)
+    footer = procf.stdout.read();
+
+    return header, footer;
+
+def grabPage(env, page_path):
+    if(env['alex.server.type'] == "development"):
+        php_path = "/usr/local/bin/php";
+    else:
+        php_path = "/usr/bin/php";
+
+    # https://stackoverflow.com/a/4514776
+    os.environ["alex.server.name"] = env['alex.server.name'];
+    os.environ["alex.server.type"] = env['alex.server.type'];
+    os.environ["PWD"] = env['DOCUMENT_ROOT'];
+    #return os.environ["PWD"].encode('utf-8');
+    page = env['DOCUMENT_ROOT'] + page_path;
+    proc = subprocess.Popen([php_path, page], stdout=subprocess.PIPE)
+
+    return proc.stdout.read();
+
+def printError404(env, start_response):
+    #global environment;
+    start_response('404 File Not Found', [('Content-Type','text/html'), ('charset','utf-8')])
+    return grabPage(env, "/errors/404/index.php");
 
 # Came from https://github.com/SenorContento/Rover/blob/f04b7713fda355cc158756bf74529ab076cd91d8/modules.py
 def load(filepath, env, start_response):
@@ -55,7 +89,9 @@ def load(filepath, env, start_response):
         function = getattr(module, init)(env, start_response)
     else:
         start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
-        response = '<h1>The Python Script "' + env['PATH_INFO'] + '" is missing its init function!!!</h1>';
+
+        header, footer = generatePage(env);
+        response = header.decode('utf-8') + '<h1>The Python Script "' + env['PATH_INFO'] + '" is missing its init function!!!</h1>' + footer.decode('utf-8');
         return response.encode('utf-8')
 
     return function
