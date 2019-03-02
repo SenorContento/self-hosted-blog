@@ -53,6 +53,10 @@ def load(filepath, env, start_response):
     init = 'init'
     if hasattr(module, init):
         function = getattr(module, init)(env, start_response)
+    else:
+        start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
+        response = '<h1>The Python Script "' + env['PATH_INFO'] + '" is missing its init function!!!</h1>';
+        return response.encode('utf-8')
 
     return function
 
