@@ -74,21 +74,22 @@ def init(env, start_response):
     """
     setupImportApplication(env); # Set's Up Environment for Custom Libraries
 
-    try:
-        import database;
-    except ImportError:
-        start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
-        return "ImportError! Cannot import database!".encode('utf-8');
-
     query = getRequest(env);
     if len(query) == 0:
         start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
         return printForm(env, "Python - Form");
 
-    start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
-    return printRequests(env, query);
+    #start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
+    #return printRequests(env, query);
+
+    return handleRequest(env, start_response, query);
 
 def printRequests(env, query):
+    """ Test Function to Make Sure Requests Are Handled Properly
+        :param env: Environment Variables Dictionary
+        :param query: Dictionary of Queries
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
     request = ''
     for key in query:
         request = request + "Key: '" + key + "' Value: '" + query[key] + "'<br>";
@@ -98,3 +99,25 @@ def printRequests(env, query):
 
     response = header.decode('utf-8') + format + footer.decode('utf-8');
     return response.encode('utf-8');
+
+def handleRequest(env, start_response, query):
+    """ Handle Dictionary Request from Query
+        :param env: Environment Variables Dictionary
+        :param start_response: Function to Start Response to Browser
+        :param query: Dictionary of Queries
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
+    try:
+        import database;
+    except ImportError:
+        start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
+        return "ImportError! Cannot import database!".encode('utf-8');
+
+    database_file = env['DOCUMENT_ROOT'] + "/assignments/Python/test-sqlite.db"
+
+    conn = database.connect(database_file)
+    with conn:
+        None
+
+    start_response('200 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
+    return conn;

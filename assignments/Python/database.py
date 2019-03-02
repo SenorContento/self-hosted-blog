@@ -29,12 +29,10 @@ def init(env, start_response):
 def connect(database):
     """ create a database connection to the SQLite database
     :param database: database file
-    :return: Connection object or None
+    :return: Connection object or Error as String
     """
     try:
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect(database)
         return conn
     except Error as e:
-        print(e)
-
-    return None
+        return e.encode('utf-8');
