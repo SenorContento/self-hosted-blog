@@ -372,7 +372,7 @@
     private function requestData($data) {
       try {
         // https://stackoverflow.com/a/6609181/6828099
-        $url = getenv("alex.server.host") . $this->api_hotbits_path;
+        $url = getenv("alex.server.host") . $this->api_hotbits_path; // I could set to localhost on production server and disable peer checking
 
         $options = array(
           // https://stackoverflow.com/q/32211301/6828099
