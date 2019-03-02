@@ -74,4 +74,8 @@ def init(env, start_response):
     for key in query:
         test = test + "Key: '" + key + "' Value: '" + query[key] + "'<br>";
 
-    return test.encode('utf-8');
+    header, footer = generatePage(env, "Python - Results");
+    format = "<h1>" + test + "</h1>";
+
+    response = header.decode('utf-8') + format + footer.decode('utf-8');
+    return response.encode('utf-8');
