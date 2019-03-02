@@ -9,7 +9,8 @@ def application(env, start_response):
     #response = b"<h1>Hello World From Python 3!</h1>";
     response = '<h1>This is an encoded string!!!</h1>'.encode('utf-8') # Could also use ASCII
 
-    #readbytes = env['REQUEST_METHOD'].read() # returns bytes object
-    #readstr = readbytes.decode('utf-8')
+    # https://uwsgi-docs.readthedocs.io/en/latest/Nginx.html#what-is-the-uwsgi-params-file
+    #testEnvironment = env['TESTME'].encode('utf-8')
+    path = env['PATH_INFO'].encode('utf-8')
 
-    return[response]
+    return[path]

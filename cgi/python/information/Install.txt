@@ -34,5 +34,7 @@ Mac OSX Instructions:
     location ~ \.py$ {
       include uwsgi_params;
       uwsgi_pass  127.0.0.1:9001;
+
+      uwsgi_param TESTME "hello";
     }
     ```
