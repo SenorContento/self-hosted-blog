@@ -121,8 +121,13 @@ def validateQuery(query):
         if key.startswith('language-'):
             request = request + query[key] + ", ";
 
+    if request == '':
+        request = "None"
+    else:
+        request = request[0:-2]
+
     if complete:
-        return (query['first_name'], query['last_name'], query['color'], query['food'], request[0:-2]);
+        return (query['first_name'], query['last_name'], query['color'], query['food'], request);
     else:
         #return ("first_name", "last_name", "color", "food", "languages");
         return "Sorry, but you are missing a parameter!!!".encode('utf-8');
