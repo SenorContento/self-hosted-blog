@@ -42,7 +42,8 @@ def createTable(conn):
     """ Create a Table in the SQLite Database
     :param conn: SQLite Connection Object
     """
-    sql = ''' CREATE TABLE Assignment9 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    sql = ''' CREATE TABLE if not exists Assignment9 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                                          firstname TEXT NOT NULL,
                                          lastname TEXT NOT NULL,
                                          color TEXT NOT NULL,
@@ -78,6 +79,20 @@ def readFromTable(conn):
     :return: Array of Table Rows
     """
     sql = ''' SELECT * FROM Assignment9 '''
+
+    cur = conn.cursor()
+    cur.execute(sql)
+
+    rows = cur.fetchall()
+    return rows
+
+def readFromTableLimit(conn):
+    """ Reads Data From a Table in the SQLite Database
+        Limited to Last 10 Entries
+    :param conn: SQLite Connection Object
+    :return: Array of Table Rows
+    """
+    sql = ''' SELECT * FROM Assignment9 ORDER BY id DESC LIMIT 10 '''
 
     cur = conn.cursor()
     cur.execute(sql)

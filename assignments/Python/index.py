@@ -139,7 +139,8 @@ def printTable(env, rows):
 
     table = table + "</tbody></table>"
 
-    response = header.decode('utf-8') + table + footer.decode('utf-8');
+    message = "<h1>Limited to Last 10 Entries</h1>"
+    response = header.decode('utf-8') + message + table + footer.decode('utf-8');
     return response.encode('utf-8');
 
 def handleRequest(env, start_response, query):
@@ -159,8 +160,8 @@ def handleRequest(env, start_response, query):
 
     conn = database.connect(database_file)
     with conn:
-        #database.createTable(conn)
-        #database.insertIntoTable(conn, validateQuery(query))
+        database.createTable(conn)
+        database.insertIntoTable(conn, validateQuery(query))
 
         start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
-        return printTable(env, database.readFromTable(conn))
+        return printTable(env, database.readFromTableLimit(conn))
