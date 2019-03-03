@@ -17,60 +17,57 @@ input {
   margin: 2.5px;
 }
 
-/* Fix Table For Small Screens */
+/* Fix Table For Small Screens - https://codepen.io/AllThingsSmitty/pen/MyqmdM */
 
-/* -------------------------------------------------------------------------------------------------------------------- */
-/* Table - Phone and Tablet Specifics */
-
-@media all and (min-width: 400px) and (max-width: 1024px) {
-  table, thead, tbody, td, tr {
-		display: block;
-	}
-
-  table th {
-    display: none;
-  }
-}
-
-@media all and (max-width: 399px) {
+@media screen and (max-width: 600px) {
   table {
-    max-width: 300px;
+    border: 0;
   }
 
-  table, thead, tbody, td, tr {
-		display: block;
-	}
-
-  table th {
-    display: none;
+  table caption {
+    font-size: 1.3em;
   }
-}
 
-/* -------------------------------------------------------------------------------------------------------------------- */
-/* Table - Phone and Tablet */
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
 
-@media all and (max-width: 1024px) {
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
   table td {
-    padding-left: 0px;
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
   }
 
-  td:before {
-    border: 1px solid #dddddd;
-    /* text-align: left; */
+  table td::before {
+    /*content: attr(data-label);*/
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-right: 100px;
+  }
 
-    padding: 8px;
+  table td:last-child {
+    border-bottom: 0;
+  }
 
-    background-color: green;
-    color: #ffffff;
-    margin-right: 8px;
-    /* margin-left: 0px; */
-    /* white-space: nowrap; */
-	}
-
-  td:nth-of-type(1):before { padding-right: 70px; content: "ID"; }
-  td:nth-of-type(2):before { padding-right: 8px; content: "First Name"; }
-  td:nth-of-type(3):before { padding-right: 9px; content: "Last Name"; }
-  td:nth-of-type(4):before { padding-right: 48px; content: "Color"; }
-  td:nth-of-type(5):before { padding-right: 50px; content: "Food"; }
-  td:nth-of-type(6):before { padding-right: 7px; content: "Languages"; }
+  td:nth-of-type(1)::before { content: "ID"; }
+  td:nth-of-type(2)::before { content: "First Name"; }
+  td:nth-of-type(3)::before { content: "Last Name"; }
+  td:nth-of-type(4)::before { content: "Color"; }
+  td:nth-of-type(5)::before { content: "Food"; }
+  td:nth-of-type(6)::before { content: "Languages"; }
 }
