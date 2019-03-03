@@ -140,7 +140,8 @@ def printTable(env, rows):
     """
     header, footer = interpreter.generatePage(env, 'Python - Results');
 
-    table = '<table><thead><tr>'
+    table = '<link rel="stylesheet" href="assignment9.css">'
+    table = table + '<table><thead><tr>'
 
     table = table + "<th>ID</th>"
     table = table + "<th>First Name</th>"
