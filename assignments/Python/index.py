@@ -20,7 +20,7 @@ def setupImportApplication(env):
     sys.path.insert(0, this_folder)
 
 def readFile(page):
-    """ Read's File
+    """ Read File
         :param page: File Path String
         :return: File Content Bytes
     """
@@ -32,7 +32,7 @@ def readFile(page):
     return lines;
 
 def printForm(env, title):
-    """ Print's HTML Form for Assignment 9
+    """ Print HTML Form for Assignment 9
         :param env: Environment Variables Dictionary
         :param title: Set's HTML Title in Header
         :return: Bytes Response for UWSGI to Return to Browser
@@ -43,7 +43,7 @@ def printForm(env, title):
     return response.encode('utf-8');
 
 def getRequest(env):
-    """ Interpret's HTML Request Sent By User
+    """ Interpret HTML Request Sent By User
         :param env: Environment Variables Dictionary
         :return: Dictionary Response of Request Parameters
     """
@@ -100,6 +100,48 @@ def printRequests(env, query):
     response = header.decode('utf-8') + format + footer.decode('utf-8');
     return response.encode('utf-8');
 
+def validateQuery(query):
+    """ Validate Queries from User
+        :param query: Dictionary of Queries
+        :return: Tuple of Parsed and Validated Queries or Bytes Response for Error
+    """
+    return ("firstname", "lastname", "color", "food", "languages");
+
+def printTable(env, rows):
+    """ Print HTML Table for Assignment 9
+        :param env: Environment Variables Dictionary
+        :param title: Set's HTML Title in Header
+        :return: Bytes Response for UWSGI to Return to Browser
+    """
+    header, footer = interpreter.generatePage(env, 'Python - Results');
+
+    table = '<table><thead><tr>'
+
+    table = table + "<th>ID</th>"
+    table = table + "<th>First Name</th>"
+    table = table + "<th>Last Name</th>"
+    table = table + "<th>Color</th>"
+    table = table + "<th>Food</th>"
+    table = table + "<th>Languages</th>"
+
+    table = table + "</thead><tbody>"
+    for row in rows:
+        id, firstname, lastname, color, food, languages = row;
+
+        table = table + "<tr>"
+        table = table + "<td>" + str(id) + "</td>" # ID
+        table = table + "<td>" + firstname + "</td>" # First Name
+        table = table + "<td>" + lastname + "</td>" # Last Name
+        table = table + "<td>" + color + "</td>" # Color
+        table = table + "<td>" + food + "</td>" # Food
+        table = table + "<td>" + languages + "</td>" # Languages
+        table = table + "</tr>"
+
+    table = table + "</tbody></table>"
+
+    response = header.decode('utf-8') + table + footer.decode('utf-8');
+    return response.encode('utf-8');
+
 def handleRequest(env, start_response, query):
     """ Handle Dictionary Request from Query
         :param env: Environment Variables Dictionary
@@ -117,7 +159,8 @@ def handleRequest(env, start_response, query):
 
     conn = database.connect(database_file)
     with conn:
-        None
+        #database.createTable(conn)
+        #database.insertIntoTable(conn, validateQuery(query))
 
-    start_response('200 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
-    return conn;
+        start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
+        return printTable(env, database.readFromTable(conn))
