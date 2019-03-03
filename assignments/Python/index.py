@@ -105,7 +105,27 @@ def validateQuery(query):
         :param query: Dictionary of Queries
         :return: Tuple of Parsed and Validated Queries or Bytes Response for Error
     """
-    return ("firstname", "lastname", "color", "food", "languages");
+
+    complete = True;
+    if not "first_name" in query:
+        complete = False;
+    elif not "last_name" in query:
+        complete = False;
+    elif not "color" in query:
+        complete = False;
+    elif not "food" in query:
+        complete = False;
+
+    request = ''
+    for key in query:
+        if key.startswith('language-'):
+            request = request + query[key] + ", ";
+
+    if complete:
+        return (query['first_name'], query['last_name'], query['color'], query['food'], request[0:-2]);
+    else:
+        #return ("first_name", "last_name", "color", "food", "languages");
+        return "Sorry, but you are missing a parameter!!!".encode('utf-8');
 
 def printTable(env, rows):
     """ Print HTML Table for Assignment 9
@@ -161,7 +181,18 @@ def handleRequest(env, start_response, query):
     conn = database.connect(database_file)
     with conn:
         database.createTable(conn)
-        database.insertIntoTable(conn, validateQuery(query))
+
+        queries = validateQuery(query);
+
+        if type(queries) is bytes:
+            header, footer = interpreter.generatePage(env, "Python - Invalid Submission");
+            format = "<h1>" + queries.decode('utf-8') + "</h1>";
+
+            response = header.decode('utf-8') + format + footer.decode('utf-8');
+            start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
+            return response.encode('utf-8');
+        else:
+            database.insertIntoTable(conn, queries)
 
         start_response('200 OK', [('Content-Type','text/html'), ('charset','utf-8')])
         return printTable(env, database.readFromTableLimit(conn))
