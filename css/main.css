@@ -27,6 +27,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Source-Code-Regular';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ZCOOL-Sans-Regular';
+  src: url('/fonts/Sans/ZCOOL_QingKe_HuangYou/ttf/ZCOOLQingKeHuangYou-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic3-Regular';
+  src: url('/fonts/Sans/open-dyslexic/ttf/OpenDyslexic3-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Header Tags Below */
 
 /* For JET - This code resets any potential borders a browser may have. I set them back manually in #container */
