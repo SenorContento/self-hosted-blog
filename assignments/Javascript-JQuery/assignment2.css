@@ -106,7 +106,8 @@
 
   /* Stylizes the button text */
   color: #b5e853;
-  font-family: Helvetica, Arial, sans-serif;
+  /* font-family: Helvetica, Arial, sans-serif; */
+  font-family: 'OpenSans-Regular';
   font-weight: bold;
   font-size: 13px;
   text-decoration: none;

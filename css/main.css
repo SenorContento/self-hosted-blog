@@ -13,6 +13,20 @@
 /* CSS Reset - https://stackoverflow.com/a/15249332/6828099
  * Also Useful - https://github.com/murtaugh/HTML5-Reset/ */
 
+@font-face {
+  font-family: 'PT-Serif-Regular';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Header Tags Below */
 
 /* For JET - This code resets any potential borders a browser may have. I set them back manually in #container */
@@ -53,6 +67,7 @@ header {
 /* Body Tags Below */
 
 body {
+  font-family: 'PT-Serif-Regular';
   background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
   text-align: center;
   /*padding-bottom: 8px;*/
@@ -133,7 +148,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Normal usage will always require that the related tags be a child of <table> */
 
 table {
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  font-family: 'OpenSans-Regular';
   border-collapse: collapse;
   margin: auto;
 }
