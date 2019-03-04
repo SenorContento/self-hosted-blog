@@ -1,0 +1,60 @@
+RPI Instructions:
+  Install:
+    sudo apt-get install uwsgi uwsgi-src uuid-dev libcap-dev libpcre3-dev
+    mkdir -p ~/uwsgi-temp/plugins/mono
+    sudo cp /usr/src/uwsgi/plugins/mono/* ~/uwsgi-temp/plugins/mono/
+    sn -k ~/uwsgi-temp/plugins/mono/uwsgi.key
+
+    cd ~/uwsgi-temp/
+
+    uwsgi --build-plugin "/usr/src/uwsgi/plugins/mono mono"
+    sudo mv mono_plugin.so /usr/lib/uwsgi/plugins/
+    sudo chmod 644 /usr/lib/uwsgi/plugins/mono_plugin.so
+
+  Service:
+    Install: sudo cp class-python-rpi.ini /etc/uwsgi/apps-enabled/class-python.ini
+    Start: sudo service uwsgi start
+    Stop: sudo service uwsgi stop
+
+  NGinx Config:
+    ```
+    location ~ \.asp$ {
+      include uwsgi_params;
+      uwsgi_pass unix:/var/run/uwsgi/app/class-mono/socket;
+    }
+    ```
+
+Mac OSX Instructions:
+  Install:
+    brew install uwsgi
+
+    mkdir -p ~/Desktop/mono
+    scp -r rover:~/uwsgi-temp/ ~/Desktop/mono
+
+    # Install Mono First (Stable Channel) - https://www.mono-project.com/download/stable/
+    export PKG_CONFIG_PATH="/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig"
+
+    cd /usr/local/lib
+    sudo ln -s ../../lib/libSystem.B.dylib libgcc_s.10.5.dylib
+    cd ~/Desktop/mono/uwsgi-temp/
+
+    uwsgi --build-plugin "./plugins/mono mono"
+    mv mono_plugin.so /usr/local/Cellar/uwsgi/2.0.17.1/libexec/uwsgi/
+    mv ./plugins/mono /usr/local/etc/nginx/
+
+    mkdir -p /usr/local/etc/uwsgi/apps-enabled/ # Look in /usr/local/Cellar/uwsgi/2.0.17.1/homebrew.mxcl.uwsgi.plist
+
+  Service:
+    Start: brew services start uwsgi
+    Stop: brew services stop uwsgi
+    Restart: brew services restart uwsgi
+
+  NGinx Config:
+    ```
+    location ~ \.asp$ {
+      include uwsgi_params;
+      uwsgi_pass  127.0.0.1:9002;
+
+      uwsgi_param TESTME "Hello-ASP";
+    }
+    ```

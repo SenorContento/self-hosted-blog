@@ -8,7 +8,7 @@ RPI Instructions:
     sudo chmod 644 /usr/lib/uwsgi/plugins/python3_plugin.so
 
   Service:
-    Install: sudo cp class-python.ini /etc/uwsgi/apps-enabled/class-python.ini
+    Install: sudo cp class-python-rpi.ini /etc/uwsgi/apps-enabled/class-python.ini
     Start: sudo service uwsgi start
     Stop: sudo service uwsgi stop
 
@@ -19,6 +19,42 @@ RPI Instructions:
       uwsgi_pass unix:/var/run/uwsgi/app/class-python/socket;
     }
     ```
+
+Mac OSX Instructions:
+  Install:
+    brew install uwsgi
+    sudo pip3 install uwsgi
+
+    mkdir -p ~/Desktop/python
+    scp -r rover:/usr/src/uwsgi/plugins/python ~/Desktop/python
+
+    cd /usr/local/lib
+    sudo ln -s ../../lib/libSystem.B.dylib libgcc_s.10.5.dylib
+    cd ~/Desktop/python/uwsgi-temp/
+
+    uwsgi --build-plugin "./plugins/python python3"
+    mv python3_plugin.so /usr/local/Cellar/uwsgi/2.0.17.1/libexec/uwsgi/
+
+    mkdir -p /usr/local/etc/uwsgi/apps-enabled/ # Look in /usr/local/Cellar/uwsgi/2.0.17.1/homebrew.mxcl.uwsgi.plist
+
+  # Log is in /usr/local/var/log/uwsgi.log
+  Service:
+    Install: sudo cp class-python-osx.ini /usr/local/etc/uwsgi/apps-enabled/class-python.ini
+    Start: brew services start uwsgi
+    Stop: brew services stop uwsgi
+    Restart: brew services restart uwsgi
+
+  NGinx Config:
+    ```
+    location ~ \.py$ {
+      include uwsgi_params;
+      uwsgi_pass  127.0.0.1:9001;
+
+      uwsgi_param TESTME "hello";
+    }
+    ```
+
+# DO NOT USE BELOW INSTRUCTIONS UNLESS YOU ONLY WANT TO SUPPORT PYTHON 3 FOR UWSGI!!!
 
 Mac OSX Instructions:
   Install: sudo pip3 install uwsgi

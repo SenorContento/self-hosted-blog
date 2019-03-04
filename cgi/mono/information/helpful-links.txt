@@ -1,0 +1,9 @@
+# https://docs.microsoft.com/en-us/dotnet/framework/app-domains/how-to-create-a-public-private-key-pair
+# https://linux.die.net/man/1/sn
+# http://buildd.raspbian.org/status/fetch.php?pkg=uwsgi&arch=armhf&ver=2.0.15-11&stamp=1527516089
+# https://uwsgi-docs.readthedocs.io/en/latest/Mono.html
+
+# https://stackoverflow.com/a/32654062/6828099
+# https://github.com/Homebrew/homebrew-core/blob/master/Formula/uwsgi.rb
+
+# https://asp.net-tutorials.com/basics/hello-world/

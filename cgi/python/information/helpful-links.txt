@@ -4,3 +4,6 @@
 # https://stackoverflow.com/questions/22798105/uwsgi-cannot-find-python-module
 # http://raspberrywebserver.com/cgiscripting/setting-up-nginx-and-uwsgi-for-cgi-scripting.html
 # https://www.paulox.net/2017/04/04/how-to-use-uwsgi-with-python3-6-in-ubuntu/
+
+# https://stackoverflow.com/a/32654062/6828099
+# https://github.com/Homebrew/homebrew-core/blob/master/Formula/uwsgi.rb
