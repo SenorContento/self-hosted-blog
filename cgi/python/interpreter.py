@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 try:
+  import sys
+except ImportError:
+  print("ImportError! Cannot import sys!")
+
+try:
   import os
 except ImportError:
   print("ImportError! Cannot import os!")
@@ -22,7 +27,7 @@ except ImportError:
 def startup():
     """ Tests to Ensure Interpreter is Loaded By UWSGI
     """
-    print("Custom Python 3 Web Interpreter Loaded");
+    print("Custom Python 3 Web Interpreter Loaded - Python Version: " + sys.version);
 startup();
 
 def init(env, start_response):

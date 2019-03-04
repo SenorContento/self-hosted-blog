@@ -1,3 +1,6 @@
+# This file is a mess, so while the instructions should work, it will need some tweaking!!!
+# You may want to copy all of '/usr/src/uwsgi/' and not just the specific plugins I mention!!!
+
 RPI Instructions:
   Install:
     sudo apt-get install uwsgi uwsgi-src uuid-dev libcap-dev libpcre3-dev
@@ -23,7 +26,9 @@ RPI Instructions:
 Mac OSX Instructions:
   Install:
     brew install uwsgi
-    sudo pip3 install uwsgi
+    # sudo pip3 install uwsgi - IF YOU HAVE THIS, REMOVE IT.
+    # IT WILL MESS YOU UP!!! REINSTALL BREW'S VERSION AFTERWARDS
+    # AND RECOMPILE THE PLUGINS (OR COPY THEM BACK)
 
     mkdir -p ~/Desktop/python
     scp -r rover:/usr/src/uwsgi/plugins/python ~/Desktop/python
@@ -32,6 +37,7 @@ Mac OSX Instructions:
     sudo ln -s ../../lib/libSystem.B.dylib libgcc_s.10.5.dylib
     cd ~/Desktop/python/uwsgi-temp/
 
+    export PYTHON=python3
     uwsgi --build-plugin "./plugins/python python3"
     mv python3_plugin.so /usr/local/Cellar/uwsgi/2.0.17.1/libexec/uwsgi/
 

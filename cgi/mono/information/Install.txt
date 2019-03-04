@@ -1,3 +1,6 @@
+# This file is a mess, so while the instructions should work, it will need some tweaking!!!
+# You may want to copy all of '/usr/src/uwsgi/' and not just the specific plugins I mention!!!
+
 RPI Instructions:
   Install:
     sudo apt-get install uwsgi uwsgi-src uuid-dev libcap-dev libpcre3-dev
@@ -12,9 +15,10 @@ RPI Instructions:
     sudo chmod 644 /usr/lib/uwsgi/plugins/mono_plugin.so
 
   Service:
-    Install: sudo cp class-python-rpi.ini /etc/uwsgi/apps-enabled/class-python.ini
+    Install: sudo cp class-mono-rpi.ini /etc/uwsgi/apps-enabled/class-mono.ini
     Start: sudo service uwsgi start
     Stop: sudo service uwsgi stop
+    Restart: sudo service uwsgi restart
 
   NGinx Config:
     ```
@@ -45,6 +49,7 @@ Mac OSX Instructions:
     mkdir -p /usr/local/etc/uwsgi/apps-enabled/ # Look in /usr/local/Cellar/uwsgi/2.0.17.1/homebrew.mxcl.uwsgi.plist
 
   Service:
+    Install: sudo cp class-mono-osx.ini /usr/local/etc/uwsgi/apps-enabled/class-mono.ini
     Start: brew services start uwsgi
     Stop: brew services stop uwsgi
     Restart: brew services restart uwsgi
