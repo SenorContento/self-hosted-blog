@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
   //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-  $("select").css("max-width", $("#ajax-table").width() + "px");
+  $("select").css("max-width", $("#highlight").width() + "px");
 });
 
 // https://stackoverflow.com/a/15009561

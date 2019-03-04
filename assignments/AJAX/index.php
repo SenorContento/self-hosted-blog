@@ -15,8 +15,9 @@
 
   $mainPage->printTopLink();
 
-  $mainPage->printForm();
+  $mainPage->printMessage();
   $mainPage->printUserControls();
+  $mainPage->printForm();
   $mainPage->printDebugOutput();
   $mainPage->printResponsesTable();
 
@@ -36,6 +37,10 @@
 
     public function printWarning() {
       print('<center><h1>Assignment 8 has not been created yet! Please come back later!</h1></center>');
+    }
+
+    public function printMessage() {
+      print('<p>Select an option from the "Select a Preset Request" dropdown, then press the "Build JSON String" button. After that, press "Submit API Request". Enjoy!!!</p>');
     }
 
     public function printTopLink() {
