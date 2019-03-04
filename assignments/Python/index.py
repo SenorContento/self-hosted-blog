@@ -182,7 +182,7 @@ def handleRequest(env, start_response, query):
         start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
         return "ImportError! Cannot import database!".encode('utf-8');
 
-    database_file = env['DOCUMENT_ROOT'] + "/server_data/assignment9.db"
+    database_file = env['DOCUMENT_ROOT'] + "/server_data/databases/assignment9.db"
 
     conn = database.connect(database_file)
     with conn:
