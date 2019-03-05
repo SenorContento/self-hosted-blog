@@ -101,7 +101,6 @@
 
     <br><br>
 
-
     <label>Favorite Languages:</label><br>
     <label class="form-label-language">Python </label><input type="checkbox" name="language-python" value="python" checked><br>
     <label class="form-label-language">PHP </label><input type="checkbox" name="language-php" value="php"><br>
