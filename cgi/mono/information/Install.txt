@@ -14,6 +14,10 @@ RPI Instructions:
     sudo mv mono_plugin.so /usr/lib/uwsgi/plugins/
     sudo chmod 644 /usr/lib/uwsgi/plugins/mono_plugin.so
 
+    mkdir -p /home/web/mono-asp/
+    sudo cp -r /usr/src/uwsgi/plugins/mono /home/web/mono-asp/
+    sudo gacutil -i /home/web/mono-asp/uwsgi.dll
+
   Service:
     Install: sudo cp class-mono-rpi.ini /etc/uwsgi/apps-enabled/class-mono.ini
     Start: sudo service uwsgi start
