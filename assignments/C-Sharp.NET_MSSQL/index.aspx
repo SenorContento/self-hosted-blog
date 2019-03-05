@@ -51,8 +51,32 @@
   }
 
   if(validated) {
-    valid.Text = String.Format("{0}", "Validated!!!");
+    //valid.Text = String.Format("{0}", "Validated!!!");
+    valid.Text = String.Format("{0}", "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
     //valid.Text = String.Format("{0}", "Test: " + Request.Form);
+
+    /*Response.Write("<p style=\"color: blue;\">");
+    Response.Write("Request Headers: <br />");
+    for (int i = 0; i < Request.Headers.Count; i++) {
+      Response.Write(Request.Headers.Keys[i] + ": ");
+      Response.Write(Request.Headers[i] + "<br />");
+    }
+    Response.Write("</p>");
+
+    Response.Write("<p style=\"color: red;\">");
+    Response.Write("Server Variables: <br />");
+    for (int i = 0; i < Request.ServerVariables.Count; i++) {
+      Response.Write(Request.ServerVariables.Keys[i] + ": ");
+      Response.Write(Request.ServerVariables[i] + "<br />");
+    }
+    Response.Write("</p>");
+
+    Response.Write("<p>");
+    Response.Write("Environment Variables: <br />");
+    foreach(DictionaryEntry e in System.Environment.GetEnvironmentVariables()) {
+      Response.Write(e.Key  + " : " + e.Value + "<br />");
+    }
+    Response.Write("</p>");*/
   }
 %>
 

@@ -29,6 +29,9 @@ RPI Instructions:
     location ~ \.aspx$ {
       include uwsgi_params;
       uwsgi_pass unix:/var/run/uwsgi/app/class-mono/socket;
+
+      # Broken - Use INI files with env variable
+      # Broken - uwsgi_param TESTME "Hello-ASP";
     }
     ```
 
@@ -66,6 +69,7 @@ Mac OSX Instructions:
       include uwsgi_params;
       uwsgi_pass  127.0.0.1:9002;
 
-      uwsgi_param TESTME "Hello-ASP";
+      # Broken - Use INI files with env variable
+      # Broken - uwsgi_param TESTME "Hello-ASP";
     }
     ```
