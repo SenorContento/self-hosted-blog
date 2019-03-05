@@ -22,7 +22,7 @@ RPI Instructions:
 
   NGinx Config:
     ```
-    location ~ \.asp$ {
+    location ~ \.aspx$ {
       include uwsgi_params;
       uwsgi_pass unix:/var/run/uwsgi/app/class-mono/socket;
     }
@@ -35,7 +35,7 @@ Mac OSX Instructions:
     mkdir -p ~/Desktop/mono
     scp -r rover:~/uwsgi-temp/ ~/Desktop/mono
 
-    # Install Mono First (Stable Channel) - https://www.mono-project.com/download/stable/
+    # Install Mono First (<strike>Stable Channel</strike> or Visual Studio Channel) - https://www.mono-project.com/download/stable/
     export PKG_CONFIG_PATH="/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig"
 
     cd /usr/local/lib
@@ -44,7 +44,9 @@ Mac OSX Instructions:
 
     uwsgi --build-plugin "./plugins/mono mono"
     mv mono_plugin.so /usr/local/Cellar/uwsgi/2.0.17.1/libexec/uwsgi/
-    mv ./plugins/mono /usr/local/etc/nginx/
+    cp -r ./plugins/mono /usr/local/etc/nginx/
+
+    sudo gacutil -i /usr/local/etc/nginx/mono/uwsgi.dll
 
     mkdir -p /usr/local/etc/uwsgi/apps-enabled/ # Look in /usr/local/Cellar/uwsgi/2.0.17.1/homebrew.mxcl.uwsgi.plist
 
@@ -56,7 +58,7 @@ Mac OSX Instructions:
 
   NGinx Config:
     ```
-    location ~ \.asp$ {
+    location ~ \.aspx$ {
       include uwsgi_params;
       uwsgi_pass  127.0.0.1:9002;
 
