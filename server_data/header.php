@@ -7,7 +7,8 @@
   } else if(getenv('alex.server.page.title') !== false) {
     $loadHeader->printTitle(getenv('alex.server.page.title'));
   } else {
-    $loadHeader->printTitle('web.SenorContento.com');
+    //$loadHeader->printTitle('web.SenorContento.com');
+    $loadHeader->printTitle('Alex\'s Site');
   }
 
   $loadHeader->printAuthorMetadata();
