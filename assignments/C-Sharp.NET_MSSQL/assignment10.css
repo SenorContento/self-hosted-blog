@@ -1,0 +1,73 @@
+label {
+  color: #90EE90;
+}
+
+form {
+  display: inline-block;
+  text-align: left;
+  /* margin: 20px; */
+}
+
+div.form {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  margin: 2.5px;
+}
+
+/* Fix Table For Small Screens - https://codepen.io/AllThingsSmitty/pen/MyqmdM */
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*content: attr(data-label);*/
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-right: 100px;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  td:nth-of-type(1)::before { content: "ID"; }
+  td:nth-of-type(2)::before { content: "First Name"; }
+  td:nth-of-type(3)::before { content: "Last Name"; }
+  td:nth-of-type(4)::before { content: "Color"; }
+  td:nth-of-type(5)::before { content: "Food"; }
+  td:nth-of-type(6)::before { content: "Languages"; }
+}
