@@ -1,9 +1,29 @@
 <%@ Page Language="C#" %>
 <%
-  HelloWorldLabel.Text = String.Format("{0}", Request.Form["first_name"]);
+  bool validated = true;
+  if(Request.Form["first_name"] == "" || Request.Form["first_name"] == null) {
+    validated = false;
+    valid.Text = String.Format("{0}", "First Name!!!");
+  } else if(Request.Form["last_name"] == "" || Request.Form["last_name"] == null) {
+    validated = false;
+    valid.Text = String.Format("{0}", "Last Name!!!");
+  } else if(Request.Form["color"] == "" || Request.Form["color"] == null) {
+    validated = false;
+    valid.Text = String.Format("{0}", "Color!!!");
+  } else if(Request.Form["food"] == "" || Request.Form["food"] == null) {
+    validated = false;
+    valid.Text = String.Format("{0}", "Food!!!");
+  }
+
+  if(validated) {
+    valid.Text = String.Format("{0}", "Validated!!!");
+  }
 %>
+
   <!-- https://stackoverflow.com/questions/389149/how-to-access-html-form-input-from-asp-net-code-behind -->
-  <h1><asp:Label runat="server" id="HelloWorldLabel"></asp:Label></h1>
+  <!-- https://stackoverflow.com/a/3063456/6828099 -->
+
+  <h1><asp:Label runat="server" id="valid"></asp:Label></h1>
 
   <link rel="stylesheet" href="assignment9.css">
   <!--Example Input
