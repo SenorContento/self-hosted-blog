@@ -6,6 +6,11 @@
   header_proc.StartInfo.Arguments = Server.MapPath("~") + "server_data/header.php";
   header_proc.StartInfo.RedirectStandardOutput = true;
   header_proc.StartInfo.UseShellExecute = false;
+
+  header_proc.StartInfo.EnvironmentVariables.Add("alex.server.page.title", "Mono - ASP.Net");
+  //header_proc.StartInfo.EnvironmentVariables.Add("alex.server.type", System.Environment.GetEnvironmentVariable("alex.server.type"));
+  // ASP.Net Automatically Passes Environment Variables to External Processes
+
   header_proc.Start();
 
   StringBuilder header_string = new StringBuilder();
@@ -86,6 +91,7 @@
   <%-- https://stackoverflow.com/a/1390577/6828099 --%>
   <%-- https://stackoverflow.com/a/14587606/6828099 --%>
   <%-- https://stackoverflow.com/a/36252712/6828099 --%>
+  <%-- https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.environmentvariables?view=netframework-4.7.2 --%>
 
   <%-- https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data --%>
 
