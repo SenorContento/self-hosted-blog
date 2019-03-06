@@ -13,82 +13,8 @@
 /* CSS Reset - https://stackoverflow.com/a/15249332/6828099
  * Also Useful - https://github.com/murtaugh/HTML5-Reset/ */
 
-/* PT Serif Font */
-
-@font-face {
-  font-family: 'PT-Serif';
-  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PT-Serif';
-  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PT-Serif';
-  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Italic.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'PT-Serif';
-  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-BoldItalic.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-/* OpenSans Font */
-/* TODO: FINISH ADDING FONTS */
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-/* Source-Code Font */
-/* TODO: FINISH ADDING FONTS */
-
-@font-face {
-  font-family: 'Source-Code';
-  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* ZCOOL-Sans Font */
-/* TODO: FINISH ADDING FONTS */
-
-@font-face {
-  font-family: 'ZCOOL-Sans';
-  src: url('/fonts/Sans/ZCOOL_QingKe_HuangYou/ttf/ZCOOLQingKeHuangYou-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* OpenDyslexic3 Font */
-/* TODO: FINISH ADDING FONTS */
-
-@font-face {
-  font-family: 'OpenDyslexic3';
-  src: url('/fonts/Sans/open-dyslexic/ttf/OpenDyslexic3-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+/* Import Fonts CSS */
+@import 'fonts.css' all;
 
 /* Header Tags Below */
 
