@@ -1,4 +1,7 @@
 <%@ Page Language="C#" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Security" %>
 <%
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work
   var header_proc = new System.Diagnostics.Process();
@@ -56,33 +59,50 @@
   }
 
   if(validated) {
-    //valid.Text = String.Format("{0}", "Validated!!!");
-    valid.Text = String.Format("{0}", "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
+    valid.Text = String.Format("{0}", "Validated!!!");
+    //valid.Text = String.Format("{0}", "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
     //valid.Text = String.Format("{0}", "Test: " + Request.Form);
 
-    /*Response.Write("<p style=\"color: blue;\">");
-    Response.Write("Request Headers: <br />");
-    for (int i = 0; i < Request.Headers.Count; i++) {
-      Response.Write(Request.Headers.Keys[i] + ": ");
-      Response.Write(Request.Headers[i] + "<br />");
+    String pwdstring = System.Environment.GetEnvironmentVariable("alex.server.mssql.password");
+    SecureString pwd = new SecureString();
+    foreach(char c in pwdstring.ToCharArray()) {
+      pwd.AppendChar(c);
     }
-    Response.Write("</p>");
+    SqlCredential cred = new SqlCredential(System.Environment.GetEnvironmentVariable("alex.server.mssql.username"), pwd);
 
-    Response.Write("<p style=\"color: red;\">");
-    Response.Write("Server Variables: <br />");
-    for (int i = 0; i < Request.ServerVariables.Count; i++) {
-      Response.Write(Request.ServerVariables.Keys[i] + ": ");
-      Response.Write(Request.ServerVariables[i] + "<br />");
-    }
-    Response.Write("</p>");
+    using(SqlConnection connection = new SqlConnection("Server=" + System.Environment.GetEnvironmentVariable("alex.server.mssql.host") + ";"
+    + "Integrated Security=false;"
+    + "Persist Security Info=true;", cred)) {
+        connection.Open();
+        // Do work here; connection closed on following line.
 
-    Response.Write("<p>");
-    Response.Write("Environment Variables: <br />");
-    foreach(DictionaryEntry e in System.Environment.GetEnvironmentVariables()) {
-      Response.Write(e.Key  + " : " + e.Value + "<br />");
     }
-    Response.Write("</p>");*/
   }
+%>
+
+<%
+  /*Response.Write("<p style=\"color: blue;\">");
+  Response.Write("Request Headers: <br />");
+  for (int i = 0; i < Request.Headers.Count; i++) {
+    Response.Write(Request.Headers.Keys[i] + ": ");
+    Response.Write(Request.Headers[i] + "<br />");
+  }
+  Response.Write("</p>");
+
+  Response.Write("<p style=\"color: red;\">");
+  Response.Write("Server Variables: <br />");
+  for (int i = 0; i < Request.ServerVariables.Count; i++) {
+    Response.Write(Request.ServerVariables.Keys[i] + ": ");
+    Response.Write(Request.ServerVariables[i] + "<br />");
+  }
+  Response.Write("</p>");
+
+  Response.Write("<p>");
+  Response.Write("Environment Variables: <br />");
+  foreach(DictionaryEntry e in System.Environment.GetEnvironmentVariables()) {
+    Response.Write(e.Key  + " : " + e.Value + "<br />");
+  }
+  Response.Write("</p>");*/
 %>
 
   <%-- https://stackoverflow.com/questions/389149/how-to-access-html-form-input-from-asp-net-code-behind --%>
@@ -94,10 +114,15 @@
   <%-- https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.environmentvariables?view=netframework-4.7.2 --%>
 
   <%-- https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/5-working-with-data --%>
+  <%-- https://www.expertrating.com/courseware/DotNetCourse/DotNet-ASP.Net-4-1.asp --%>
+  <%-- https://stackoverflow.com/a/24294824/6828099 --%>
+  <%-- https://console.aws.amazon.com/rds/home --%><%-- Make sure to create a new account for free tier and open database to public. URL is endpoint. --%>
+  <%-- https://tableplus.io/ --%><%-- Program has a free trial and can access MS SQL from RDS if RDS is set up correctly --%>
 
   <asp:Literal runat="server" id="header"></asp:Literal>
   <%--<h1><asp:Label runat="server" id="date"></asp:Label></h1>--%>
   <h1><asp:Label runat="server" id="valid"></asp:Label></h1>
+  <asp:Literal runat="server" id="table"></asp:Literal>
 
   <link rel="stylesheet" href="assignment10.css">
   <!--Example Input
