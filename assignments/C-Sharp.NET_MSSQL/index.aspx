@@ -59,8 +59,36 @@
     validated = false;
   }
 
-  if(validated) {
-    valid.Text = String.Format("" + "Validated!!!");
+  /* Python Equivalent
+  request = ''
+    for key in query:
+        if key.startswith('language-'):
+            request = request + query[key] + ", ";
+
+    if request == '':
+        request = "None"
+    else:
+        request = request[0:-2]
+  */
+
+  // https://stackoverflow.com/a/4807750/6828099
+  StringBuilder languageoutput = new StringBuilder();
+  foreach(string key in Request.Form) {
+    if (!key.StartsWith("language-")) continue;
+    languageoutput.Append(Request.Form[key] + ", ");
+  }
+
+  // https://docs.microsoft.com/en-us/dotnet/api/system.text.stringbuilder.remove?view=netframework-4.7.2
+  // https://docs.microsoft.com/en-us/dotnet/api/system.text.stringbuilder.length?view=netframework-4.7.2
+  try {
+    languageoutput.Remove(languageoutput.Length - 2, 2);
+  } catch(Exception e) {
+    languageoutput.Append("None");
+  }
+
+  //valid.Text = String.Format(languageoutput.ToString());
+  if(validated) { // if(validated && !validated)
+    valid.Text = String.Format("Validated!!!");
     //valid.Text = String.Format("" + "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
     //valid.Text = String.Format("" + "Test: " + Request.Form);
 
@@ -90,14 +118,12 @@
       command.Connection = connection;
       command.Transaction = transaction;
 
-      // Do Stuff to Languages Here!!!
-
       try {
         // https://stackoverflow.com/a/10992101/6828099
         //command.CommandText = "CREATE TABLE Assignment10 (id INT IDENTITY(1,1) PRIMARY KEY, firstname TEXT NOT NULL, lastname TEXT NOT NULL, color TEXT NOT NULL, food TEXT NOT NULL, languages TEXT NOT NULL);";
         //command.ExecuteNonQuery();
 
-        command.CommandText = "Insert into Assignment10 (firstname, lastname, color, food, languages) VALUES ('" + Request.Form["first_name"] + "', '" + Request.Form["last_name"] + "', '" + Request.Form["color"] + "', '" + Request.Form["food"] + "', 'Test');";
+        command.CommandText = "Insert into Assignment10 (firstname, lastname, color, food, languages) VALUES ('" + Request.Form["first_name"] + "', '" + Request.Form["last_name"] + "', '" + Request.Form["color"] + "', '" + Request.Form["food"] + "', '" + languageoutput.ToString() + "');";
         command.ExecuteNonQuery();
 
         StringBuilder tableoutput = new StringBuilder();
