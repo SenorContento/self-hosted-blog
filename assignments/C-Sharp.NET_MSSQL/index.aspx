@@ -113,8 +113,8 @@
 
         // http://csharp.net-informations.com/data-providers/csharp-executereader-executenonquery.htm
         // https://forums.asp.net/post/4075854.aspx
-        //command.CommandText = "Select * From Assignment10;";
-        command.CommandText = "Select * From Assignment10 ORDER BY id DESC LIMIT 10;";
+        command.CommandText = "Select * From Assignment10;";
+        //command.CommandText = "Select * From Assignment10 ORDER BY id DESC LIMIT 10;";
         SqlDataReader reader = command.ExecuteReader();
         while(reader.Read()) {
           //Response.Write(reader["firstname"]);
