@@ -101,6 +101,7 @@
         command.ExecuteNonQuery();
 
         StringBuilder tableoutput = new StringBuilder();
+        tableoutput.Append("<fieldset><legend>MSSQL Entries</legend>");
         tableoutput.Append("<h1>Limited to Last 10 Entries</h1>");
         tableoutput.Append("<table><thead><tr>");
         tableoutput.Append("<th>ID</th>");
@@ -130,12 +131,13 @@
         }
         reader.Close();
         tableoutput.Append("</tbody></table>");
+        tableoutput.Append("</fieldset>");
 
-        table.Text = "<p>Table: " + tableoutput.ToString() + "</p>";
+        table.Text = tableoutput.ToString();
 
         // Attempt to commit the transaction.
         transaction.Commit();
-        Response.Write("Both records are written to database.");
+        //Response.Write("Both records are written to database.");
       } catch (Exception ex) {
         Response.Write("Commit Exception Type: " + ex.GetType());
         Response.Write("  Message: " + ex.Message);
@@ -210,6 +212,7 @@
   Key: 'language-php' Value: 'php'
   Key: 'language-html' Value: 'html'-->
 
+  <fieldset><legend>MSSQL Form</legend>
   <form method="post">
     <label class="form-label-first_name">First Name: </label><input name="first_name" type="text"><br>
     <label class="form-label-last_name">Last Name: </label><input name="last_name" type="text">
@@ -241,4 +244,5 @@
 
     <input type="submit" value="Submit">
   </form>
+  </fieldset>
   <asp:Literal runat="server" id="footer"></asp:Literal>
