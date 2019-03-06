@@ -13,36 +13,78 @@
 /* CSS Reset - https://stackoverflow.com/a/15249332/6828099
  * Also Useful - https://github.com/murtaugh/HTML5-Reset/ */
 
+/* PT Serif Font */
+
 @font-face {
-  font-family: 'PT-Serif-Regular';
+  font-family: 'PT-Serif';
   src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'OpenSans-Regular';
-  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Regular.ttf') format('truetype');
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* OpenSans Font */
+/* TODO: FINISH ADDING FONTS */
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Source-Code-Regular';
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Source-Code Font */
+/* TODO: FINISH ADDING FONTS */
+
+@font-face {
+  font-family: 'Source-Code';
   src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+/* ZCOOL-Sans Font */
+/* TODO: FINISH ADDING FONTS */
+
 @font-face {
-  font-family: 'ZCOOL-Sans-Regular';
+  font-family: 'ZCOOL-Sans';
   src: url('/fonts/Sans/ZCOOL_QingKe_HuangYou/ttf/ZCOOLQingKeHuangYou-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+/* OpenDyslexic3 Font */
+/* TODO: FINISH ADDING FONTS */
+
 @font-face {
-  font-family: 'OpenDyslexic3-Regular';
+  font-family: 'OpenDyslexic3';
   src: url('/fonts/Sans/open-dyslexic/ttf/OpenDyslexic3-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -88,7 +130,7 @@ header {
 /* Body Tags Below */
 
 body {
-  font-family: 'PT-Serif-Regular';
+  font-family: 'PT-Serif';
   background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
   text-align: center;
   /*padding-bottom: 8px;*/
@@ -170,7 +212,7 @@ h1, h2, h3, h4, h5, h6 {
 
 table {
   /* font-family: sans-serif; */
-  font-family: 'OpenSans-Regular';
+  font-family: 'OpenSans';
   border-collapse: collapse;
   margin: auto;
 }

@@ -1,3 +1,11 @@
+
+
+strong.aws-warning {
+  color: red;
+  font-family: 'PT-Serif';
+  font-weight: bold;
+}
+
 label {
   color: #90EE90;
 }

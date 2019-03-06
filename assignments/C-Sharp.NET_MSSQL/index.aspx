@@ -86,9 +86,15 @@
     languageoutput.Append("None");
   }
 
-  //valid.Text = String.Format(languageoutput.ToString());
-  if(validated) { // if(validated && !validated)
+  // This exists so the Validated message will still show up when I delete the database!!!
+  if(validated) {
     valid.Text = String.Format("Validated!!!");
+  }
+
+  bool active = true; // I will flip this to false when I delete the database!!!
+  //valid.Text = String.Format(languageoutput.ToString());
+  if(validated && active) { // if(validated && !validated)
+    //valid.Text = String.Format("Validated!!!");
     //valid.Text = String.Format("" + "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
     //valid.Text = String.Format("" + "Test: " + Request.Form);
 
@@ -229,6 +235,9 @@
   <%-- https://tableplus.io/ --%><%-- Program has a free trial and can access MS SQL from RDS if RDS is set up correctly --%>
 
   <asp:Literal runat="server" id="header"></asp:Literal>
+
+  <strong class="aws-warning">This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I am deleting the database immediately after the assignment is graded and this assignment will no longer function.</strong>
+
   <%--<h1><asp:Label runat="server" id="date"></asp:Label></h1>--%>
   <h1><asp:Label runat="server" id="valid"></asp:Label></h1>
   <asp:Literal runat="server" id="printerror"></asp:Literal>
