@@ -72,7 +72,7 @@
     SqlCredential cred = new SqlCredential(System.Environment.GetEnvironmentVariable("alex.server.mssql.username"), pwd);
 
     // Create the database first using CREATE DATABASE database_name
-    Response.Write("<p style='color: blue;'>");
+    //Response.Write("<p style='color: blue;'>");
     using(SqlConnection connection = new SqlConnection("Server=" + System.Environment.GetEnvironmentVariable("alex.server.mssql.host") + ";"
     + "Integrated Security=false;"
     + "Persist Security Info=true;database=" + System.Environment.GetEnvironmentVariable("alex.server.mssql.database.class") + ";", cred)) {
@@ -139,8 +139,9 @@
         transaction.Commit();
         //Response.Write("Both records are written to database.");
       } catch (Exception ex) {
-        Response.Write("Commit Exception Type: " + ex.GetType());
-        Response.Write("  Message: " + ex.Message);
+        //Response.Write("Commit Exception Type: " + ex.GetType());
+        //Response.Write("  Message: " + ex.Message);
+        printerror.Text = "<h1>" + ex.GetType() + " : " + ex.Message + "</h1>";
 
         // Attempt to roll back the transaction.
         try {
@@ -149,12 +150,14 @@
           // This catch block will handle any errors that may have occurred
           // on the server that would cause the rollback to fail, such as
           // a closed connection.
-          Response.Write("Rollback Exception Type: " + ex2.GetType());
-          Response.Write("  Message: " + ex2.Message);
+          //Response.Write("Rollback Exception Type: " + ex2.GetType());
+          //Response.Write("  Message: " + ex2.Message);
+          printerror.Text = printerror.Text + "<br>" + "<h1>"
+          ex2.GetType() + " : " + ex2.Message + "</h1>";
         }
       }
     }
-    Response.Write("</p>");
+    //Response.Write("</p>");
   }
 %>
 
@@ -200,6 +203,7 @@
   <asp:Literal runat="server" id="header"></asp:Literal>
   <%--<h1><asp:Label runat="server" id="date"></asp:Label></h1>--%>
   <h1><asp:Label runat="server" id="valid"></asp:Label></h1>
+  <asp:Literal runat="server" id="printerror"></asp:Literal>
   <asp:Literal runat="server" id="table"></asp:Literal>
 
   <link rel="stylesheet" href="assignment10.css">
