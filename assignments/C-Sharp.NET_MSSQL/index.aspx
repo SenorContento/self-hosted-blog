@@ -2,6 +2,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Security" %>
+<%-- <%@ Import Namespace="System.Data.SqlClient.SqlDataReader" %> --%>
 <%
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work
   var header_proc = new System.Diagnostics.Process();
@@ -43,25 +44,25 @@
   if(!string.IsNullOrWhiteSpace(Request.Form.ToString())) {
     if(string.IsNullOrWhiteSpace(Request.Form["first_name"])) {
       validated = false;
-      valid.Text = String.Format("{0}", "You Are Missing The \"First Name\" Parameter!!!");
+      valid.Text = String.Format("" + "You Are Missing The \"First Name\" Parameter!!!");
     } else if(string.IsNullOrWhiteSpace(Request.Form["last_name"])) {
       validated = false;
-      valid.Text = String.Format("{0}", "You Are Missing The \"Last Name\" Parameter!!!");
+      valid.Text = String.Format("" + "You Are Missing The \"Last Name\" Parameter!!!");
     } else if(string.IsNullOrWhiteSpace(Request.Form["color"])) {
       validated = false;
-      valid.Text = String.Format("{0}", "You Are Missing The \"Color\" Parameter!!!");
+      valid.Text = String.Format("" + "You Are Missing The \"Color\" Parameter!!!");
     } else if(string.IsNullOrWhiteSpace(Request.Form["food"])) {
       validated = false;
-      valid.Text = String.Format("{0}", "You Are Missing The \"Food\" Parameter!!!");
+      valid.Text = String.Format("" + "You Are Missing The \"Food\" Parameter!!!");
     }
   } else {
     validated = false;
   }
 
   if(validated) {
-    valid.Text = String.Format("{0}", "Validated!!!");
-    //valid.Text = String.Format("{0}", "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
-    //valid.Text = String.Format("{0}", "Test: " + Request.Form);
+    valid.Text = String.Format("" + "Validated!!!");
+    //valid.Text = String.Format("" + "Validated!!! \"" + System.Environment.GetEnvironmentVariable("alex.server.type") + "\"");
+    //valid.Text = String.Format("" + "Test: " + Request.Form);
 
     String pwdstring = System.Environment.GetEnvironmentVariable("alex.server.mssql.password");
     SecureString pwd = new SecureString();
@@ -70,13 +71,88 @@
     }
     SqlCredential cred = new SqlCredential(System.Environment.GetEnvironmentVariable("alex.server.mssql.username"), pwd);
 
+    // Create the database first using CREATE DATABASE database_name
+    Response.Write("<p style='color: blue;'>");
     using(SqlConnection connection = new SqlConnection("Server=" + System.Environment.GetEnvironmentVariable("alex.server.mssql.host") + ";"
     + "Integrated Security=false;"
-    + "Persist Security Info=true;", cred)) {
-        connection.Open();
-        // Do work here; connection closed on following line.
+    + "Persist Security Info=true;database=" + System.Environment.GetEnvironmentVariable("alex.server.mssql.database.class") + ";", cred)) {
+      connection.Open();
 
+      SqlCommand command = connection.CreateCommand();
+      SqlTransaction transaction;
+
+      // https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection.begintransaction?view=netframework-4.7.2#System_Data_SqlClient_SqlConnection_BeginTransaction
+      // Start a local transaction.
+      transaction = connection.BeginTransaction(); //connection.BeginTransaction("SampleTransaction");
+
+      // Must assign both transaction object and connection
+      // to Command object for a pending local transaction
+      command.Connection = connection;
+      command.Transaction = transaction;
+
+      // Do Stuff to Languages Here!!!
+
+      try {
+        // https://stackoverflow.com/a/10992101/6828099
+        //command.CommandText = "CREATE TABLE Assignment10 (id INT IDENTITY(1,1) PRIMARY KEY, firstname TEXT NOT NULL, lastname TEXT NOT NULL, color TEXT NOT NULL, food TEXT NOT NULL, languages TEXT NOT NULL);";
+        //command.ExecuteNonQuery();
+
+        command.CommandText = "Insert into Assignment10 (firstname, lastname, color, food, languages) VALUES ('" + Request.Form["first_name"] + "', '" + Request.Form["last_name"] + "', '" + Request.Form["color"] + "', '" + Request.Form["food"] + "', 'Test');";
+        command.ExecuteNonQuery();
+
+        StringBuilder tableoutput = new StringBuilder();
+        tableoutput.Append("<h1>Limited to Last 10 Entries</h1>");
+        tableoutput.Append("<table><thead><tr>");
+        tableoutput.Append("<th>ID</th>");
+        tableoutput.Append("<th>First Name</th>");
+        tableoutput.Append("<th>Last Name</th>");
+        tableoutput.Append("<th>Color</th>");
+        tableoutput.Append("<th>Food</th>");
+        tableoutput.Append("<th>Languages</th>");
+        tableoutput.Append("</thead><tbody>");
+
+        // http://csharp.net-informations.com/data-providers/csharp-executereader-executenonquery.htm
+        // https://forums.asp.net/post/4075854.aspx
+        //command.CommandText = "Select * From Assignment10;";
+        command.CommandText = "Select * From Assignment10 ORDER BY id DESC LIMIT 10;";
+        SqlDataReader reader = command.ExecuteReader();
+        while(reader.Read()) {
+          //Response.Write(reader["firstname"]);
+
+          tableoutput.Append("<tr>");
+          tableoutput.Append("<td>" + reader["id"] + "</td>");
+          tableoutput.Append("<td>" + reader["firstname"] + "</td>");
+          tableoutput.Append("<td>" + reader["lastname"] + "</td>");
+          tableoutput.Append("<td>" + reader["color"] + "</td>");
+          tableoutput.Append("<td>" + reader["food"] + "</td>");
+          tableoutput.Append("<td>" + reader["languages"] + "</td>");
+          tableoutput.Append("</tr>");
+        }
+        reader.Close();
+        tableoutput.Append("</tbody></table>");
+
+        table.Text = "<p>Table: " + tableoutput.ToString() + "</p>";
+
+        // Attempt to commit the transaction.
+        transaction.Commit();
+        Response.Write("Both records are written to database.");
+      } catch (Exception ex) {
+        Response.Write("Commit Exception Type: " + ex.GetType());
+        Response.Write("  Message: " + ex.Message);
+
+        // Attempt to roll back the transaction.
+        try {
+          transaction.Rollback();
+        } catch (Exception ex2) {
+          // This catch block will handle any errors that may have occurred
+          // on the server that would cause the rollback to fail, such as
+          // a closed connection.
+          Response.Write("Rollback Exception Type: " + ex2.GetType());
+          Response.Write("  Message: " + ex2.Message);
+        }
+      }
     }
+    Response.Write("</p>");
   }
 %>
 
