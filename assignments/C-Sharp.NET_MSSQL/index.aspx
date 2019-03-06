@@ -152,7 +152,7 @@
           // a closed connection.
           //Response.Write("Rollback Exception Type: " + ex2.GetType());
           //Response.Write("  Message: " + ex2.Message);
-          printerror.Text = printerror.Text + "<br>" + "<h1>"
+          printerror.Text = printerror.Text + "<br>" + "<h1>" +
           ex2.GetType() + " : " + ex2.Message + "</h1>";
         }
       }
