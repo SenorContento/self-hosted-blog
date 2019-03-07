@@ -1,4 +1,4 @@
-<%@ Page Language="C#" validateRequest="false" %>
+<%@ Page Language="C#" %> <%-- validateRequest="false" (Doesn't Work) --%>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Security" %>
