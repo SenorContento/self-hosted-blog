@@ -143,16 +143,17 @@
       try {
         $conn = $this->connectMySQL();
 
+        // http://php.net/manual/en/function.htmlspecialchars.php
         //$sql = "SELECT * FROM Assignment5"; // Display Everything
         $sql = "SELECT * FROM Assignment5 ORDER BY id DESC LIMIT 10"; // Limit to Last 10 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
         foreach ($conn->query($sql) as $row) {
           print("
           <tr>
-            <td>" . $row['id'] . "</td>
-            <td>" . $row['firstname'] . "</td>
-            <td>" . $row['lastname'] . "</td>
-            <td>" . $row['color'] . "</td>
-            <td>" . $row['food'] . "</td>
+            <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td>" . htmlspecialchars($row['firstname'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td>" . htmlspecialchars($row['lastname'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td>" . htmlspecialchars($row['color'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td>" . htmlspecialchars($row['food'], ENT_QUOTES, 'UTF-8') . "</td>
           </tr>");
         }
       } catch(PDOException $e) {

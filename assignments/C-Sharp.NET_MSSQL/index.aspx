@@ -1,4 +1,4 @@
-<%@ Page Language="C#" %>
+<%@ Page Language="C#" validateRequest="false" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Security" %>
@@ -155,12 +155,12 @@
           //Response.Write(reader["firstname"]);
 
           tableoutput.Append("<tr>");
-          tableoutput.Append("<td>" + reader["id"] + "</td>");
-          tableoutput.Append("<td>" + reader["firstname"] + "</td>");
-          tableoutput.Append("<td>" + reader["lastname"] + "</td>");
-          tableoutput.Append("<td>" + reader["color"] + "</td>");
-          tableoutput.Append("<td>" + reader["food"] + "</td>");
-          tableoutput.Append("<td>" + reader["languages"] + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["id"].ToString()) + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["firstname"].ToString()) + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["lastname"].ToString()) + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["color"].ToString()) + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["food"].ToString()) + "</td>");
+          tableoutput.Append("<td>" + HttpContext.Current.Server.HtmlEncode(reader["languages"].ToString()) + "</td>");
           tableoutput.Append("</tr>");
         }
         reader.Close();

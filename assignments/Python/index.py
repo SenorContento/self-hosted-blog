@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import html; # https://docs.python.org/3/library/html.html#html.escape
 
 from urllib import parse
 from ast import literal_eval
@@ -151,16 +152,17 @@ def printTable(env, rows):
     table = table + "<th>Languages</th>"
 
     table = table + "</thead><tbody>"
+
     for row in rows:
         id, firstname, lastname, color, food, languages = row;
 
         table = table + "<tr>"
         table = table + "<td>" + str(id) + "</td>" # ID
-        table = table + "<td>" + firstname + "</td>" # First Name
-        table = table + "<td>" + lastname + "</td>" # Last Name
-        table = table + "<td>" + color + "</td>" # Color
-        table = table + "<td>" + food + "</td>" # Food
-        table = table + "<td>" + languages + "</td>" # Languages
+        table = table + "<td>" + html.escape(firstname, quote=True) + "</td>" # First Name
+        table = table + "<td>" + html.escape(lastname, quote=True) + "</td>" # Last Name
+        table = table + "<td>" + html.escape(color, quote=True) + "</td>" # Color
+        table = table + "<td>" + html.escape(food, quote=True) + "</td>" # Food
+        table = table + "<td>" + html.escape(languages, quote=True) + "</td>" # Languages
         table = table + "</tr>"
 
     table = table + "</tbody></table>"
