@@ -23,7 +23,7 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
-  $mainPage->checkSQLiteValues();
+  $mainPage->checkMySQLValues();
   $mainPage->printMySQLData();
   $mainPage->checkValues();
   $mainPage->printForm();
@@ -179,22 +179,22 @@
 
     public function checkValues() {
       if(!empty($_POST)) {
-        //$this->verifySQLiteVars();
+        //$this->verifyMySQLVars();
         $this->printData();
       }
     }
 
-    public function checkSQLiteValues() {
+    public function checkMySQLValues() {
       if(!empty($_POST)) {
         /* I am intentionally separating this from checkValues(),
          * so I can insert data into the database before I read the database
          */
-        $this->verifySQLiteVars();
+        $this->verifyMySQLVars();
       }
     }
 
-    public function verifySQLiteVars() {
-        // I could refuse to add this to SQLite if the value is not set. It is not set up this way though.
+    public function verifyMySQLVars() {
+        // I could refuse to add this to MySQL if the value is not set. It is not set up this way though.
         $fname = $this->getValue('first_name');
         $lname = $this->getValue('last_name');
         $color = $this->getValue('color');
