@@ -6,3 +6,8 @@ Documentation is in Midterm_part1.docx. The files are encrypted because the midt
 ------------------------------------------------------------------------------------
 
 Submit: Unavailable
+
+------------------------------------------------------------------------------------
+
+Grade: 31 / 31 - 100 %
+Reason: None Provided

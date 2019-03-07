@@ -16,3 +16,8 @@ Post the link to your page in this dropbox
 ------------------------------------------------------------------------------------
 
 Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db=1596151&grpid=0&isprv=0&bp=0&ou=1766201
+
+------------------------------------------------------------------------------------
+
+Grade: 9.75 / 10 - 97.5 %
+Reason: Table missing <thead> and <tbody>

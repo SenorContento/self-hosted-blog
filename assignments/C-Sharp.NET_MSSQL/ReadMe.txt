@@ -14,3 +14,8 @@ Output an HTML table containing the values in your DB table
 ------------------------------------------------------------------------------------
 
 Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db=1596159&grpid=0&isprv=&bp=0&ou=1766201
+
+------------------------------------------------------------------------------------
+
+Grade: Not Available Yet
+Reason: None Provided

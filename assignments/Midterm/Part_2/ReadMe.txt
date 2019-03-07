@@ -8,3 +8,8 @@ I didn't get to finish this midterm, but then again, nobody did. I failed to rep
 ------------------------------------------------------------------------------------
 
 Submit: Unavailable
+
+------------------------------------------------------------------------------------
+
+Grade: 28 / 29 - 96.55 %
+Reason: Did not refill dropdown/checkboxes

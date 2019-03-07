@@ -10,3 +10,8 @@ Provide links to both pages and some example input that would cause safe SQL Inj
 ------------------------------------------------------------------------------------
 
 Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db=1596162&grpid=0&isprv=&bp=0&ou=1766201
+
+------------------------------------------------------------------------------------
+
+Grade: Not Available Yet
+Reason: None Provided

@@ -20,3 +20,8 @@ Tabbed content in desktop view that switches to vertical expandable content in t
 ------------------------------------------------------------------------------------
 
 Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db=1596154&grpid=0&isprv=&bp=0&ou=1766201
+
+------------------------------------------------------------------------------------
+
+Grade: 22 / 20 - 110 %
+Reason: None Provided
