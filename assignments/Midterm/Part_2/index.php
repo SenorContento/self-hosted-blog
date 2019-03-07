@@ -1,18 +1,24 @@
 <?php
-  $loadPage = new loadPage();
+  //$loadPage = new loadPage();
   $mainPage = new homeworkAssignmentSeven();
 
-  $loadPage->loadHeader();
+  //$loadPage->loadHeader();
 
+  $mainPage->redirectToAssignment();
   //$mainPage->printArchiveLink();
   //$mainPage->printTable();
   //$mainPage->printSourceCodeLink();
-  $mainPage->printWarning();
+  //$mainPage->printWarning();
   //$mainPage->printArchiveLink();
 
-  $loadPage->loadFooter();
+  //$loadPage->loadFooter();
 
   class homeworkAssignmentSeven {
+    public function redirectToAssignment() {
+      header("Location: brandon_gomez.php");
+      exit();
+    }
+
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 7</a>');
       //print('<br>');

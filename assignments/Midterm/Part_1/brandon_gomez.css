@@ -1,0 +1,47 @@
+h1 {
+  color: red
+}
+
+h3 {
+  color: green;
+}
+
+.table-header {
+    /*background-color: blue;*/
+    color: #ffffff;
+    padding: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.table {
+  /*border: 1px solid blue;*/
+  border-collapse: collapse;
+  background-color: blue;
+}
+
+#car-model-lable {
+  color: green;
+}
+
+#car-color-label {
+  color: red;
+}
+
+#model {
+  border: 2px solid blue;
+  border-radius: 4px;
+}
+
+#color {
+  border: 2px solid green;
+  border-radius: 4px;
+}
+
+.table-even {
+  background-color: red;
+}
+
+.table-odd {
+  background-color: green;
+}
