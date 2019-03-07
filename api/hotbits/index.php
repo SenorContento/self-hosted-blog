@@ -99,6 +99,13 @@
                 $response = $decoded["response"];
 
                 header("Content-Type: text/csv");
+                header("Content-length: " . strlen($response));
+
+                if(!$count) {
+                  header("Content-Disposition: attachment; filename=\"Hotbits-Analysis-$id.csv\"");
+                } else {
+                  header("Content-Disposition: attachment; filename=\"Hotbits-Analysis-$id-Count.csv\"");
+                }
                 print($response);
                 die();
             }
@@ -855,7 +862,7 @@
 
         // http://php.net/manual/en/function.array-unshift.php
         //array_unshift($decoded, (int) $id);
-        $decoded = array("rowID"=>(int) $id) + $decoded; 
+        $decoded = array("rowID"=>(int) $id) + $decoded;
         $json = json_encode($decoded, JSON_UNESCAPED_SLASHES);
         //$json = json_encode($decoded, JSON_PRETTY_PRINT);
 
