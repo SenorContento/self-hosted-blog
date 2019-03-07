@@ -65,6 +65,14 @@
   font-style: normal;
 }
 
+/* TODO: Debug Wrongly Chosen Fonts */
+@font-face {
+  font-family: 'OpenSans - Lighter';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
 @font-face {
   font-family: 'OpenSans';
   src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-LightItalic.ttf') format('truetype');
