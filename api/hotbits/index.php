@@ -199,7 +199,7 @@
         if(!is_int($bytes) || $bytes > 2048 || $bytes < 1)
           throw new Exception("InvalidByteCount"); // Too many, too few, or not even a number (integer)!!!
 
-        if($generator === "pseudo")
+        if($generator === "pseudo" || $generator === "pseudorandom")
           return $this->requestData($this->setParameters("pseudo", "json", $bytes));
 
         $this->checkRateLimit($bytes);
