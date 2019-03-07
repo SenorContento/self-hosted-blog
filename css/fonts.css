@@ -121,14 +121,14 @@ TODO: Figure Out Font Weight for SemiBold
 }
 
 @font-face {
-  font-family: 'Source-Code';
+  font-family: 'Source-Code-Bold';
   src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Source-Code';
+  font-family: 'Source-Code-Bolder';
   src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Black.ttf') format('truetype');
   font-weight: bolder;
   font-style: normal;
