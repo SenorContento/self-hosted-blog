@@ -60,16 +60,28 @@
 
         // Set chart options
         var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300,
-                       'colors': ['green', '#b5e853', 'red', 'blue', 'purple'],
+                       'width':600,
+                       'height':500,
+                       'colors': ['green', '#0f0f0f', 'red', 'blue', 'purple'],
                        'is3D': true,
-                       //'chartArea': {
-                         'backgroundColor': {
-                           'fill': 'black',
-                           'fillOpacity': 1
+                       'backgroundColor': {
+                         'fill': 'black',
+                         'fillOpacity': 1
+                       },
+                       fontName: 'OpenSans - Lighter',
+                       fontSize: '14',
+                       titleTextStyle: {
+                         color: '#90EE90',
+                         fontName: 'OpenSans - Lighter',
+                         fontSize: '22'
+                       },
+                       legend: {
+                         textStyle: {
+                           color: 'red',
+                           fontName: 'OpenSans - Lighter',
+                           fontSize: '14'
                          }
-                       //}
+                       }
                      };
 
         // Instantiate and draw our chart, passing in some options.
@@ -81,6 +93,7 @@
     }
     // https://developers.google.com/chart/interactive/docs/quick_start
     // https://jsfiddle.net/csabatoth/v3h9ycd4/2/
+    // https://stackoverflow.com/a/22021224/6828099
   }
 
   class loadPage {
