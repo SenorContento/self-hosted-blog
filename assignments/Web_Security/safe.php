@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    print("\n\t\t" . '<link rel="stylesheet" href="assignment12.css">');
+    //print("\n\t\t" . '<link rel="stylesheet" href="assignment12.css">');
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 

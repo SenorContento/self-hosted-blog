@@ -1,4 +1,9 @@
 <?php
+  function customPageHeader() {
+    print("\n\t\t" . '<link rel="stylesheet" href="assignment11.css">');
+    print("\n\t\t" . '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentEleven();
 
@@ -8,7 +13,7 @@
   //$mainPage->printArchiveLink();
   $mainPage->printWarning();
 
-  //$mainPage->printTable();
+  $mainPage->drawTable();
 
   $loadPage->loadFooter();
 
@@ -26,27 +31,56 @@
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
-    public function printTable() {
-      print('<div id="table">
-        <fieldset>
-          <legend>Example Table</legend>
-          <table>
-            <tr>
-              <th>Students</th>
-              <th>Grades</th>
-            </tr>
-            <tr>
-              <td>Alex</td>
-              <td>100%</td>
-            </tr>
-            <tr>
-              <td>Josh</td>
-              <td>90%</td>
-            </tr>
-            </table>
-          </fieldset>
-      </div>');
+    public function drawTable() {
+      print("
+      <script type=\"text/javascript\">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 3],
+          ['Onions', 1],
+          ['Olives', 1],
+          ['Zucchini', 1],
+          ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300,
+                       'colors': ['green', '#b5e853', 'red', 'blue', 'purple'],
+                       'is3D': true,
+                       //'chartArea': {
+                         'backgroundColor': {
+                           'fill': 'black',
+                           'fillOpacity': 1
+                         }
+                       //}
+                     };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+    <div id=\"chart_div\"></div>");
     }
+    // https://developers.google.com/chart/interactive/docs/quick_start
+    // https://jsfiddle.net/csabatoth/v3h9ycd4/2/
   }
 
   class loadPage {
