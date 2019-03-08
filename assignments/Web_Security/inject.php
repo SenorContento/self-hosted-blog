@@ -229,13 +229,26 @@
         print("SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1");
         print("</p>");
 
+        $count = 1;
         print("<table><thead><th>ID</th><th>Statement</th></thead><tbody>");
         foreach($result as $row) {
-          print("
-          <tr>
-            <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
-            <td>" . htmlspecialchars($row['statement'], ENT_QUOTES, 'UTF-8') . "</td>
-          </tr>");
+          if($count == 11) {
+            print("
+            <tr>
+              <td>$count</td>
+              <td>Sorry, I am limiting this to $count entries!!! Resetting Table!!!</td>
+            </tr>");
+            $this->resetTable();
+            $this->insertData("The Table Was Reset!!!");
+            break;
+          } else {
+            print("
+            <tr>
+              <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
+              <td>" . htmlspecialchars($row['statement'], ENT_QUOTES, 'UTF-8') . "</td>
+            </tr>");
+            $count++;
+          }
         }
         print("</tbody></table>");
       } catch(PDOException $e) {
