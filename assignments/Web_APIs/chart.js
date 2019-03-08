@@ -37,6 +37,7 @@ google.charts.setOnLoadCallback(drawChart);
 
 window.onresize = function(event) {
   $(document).ready(function() {
+    $("#chart-div").css("max-width", $("#sum-field").width() + "px");
     drawChart();
   });
 };
@@ -107,6 +108,6 @@ function drawChart() {
                };
 
   // Instantiate and draw our chart, passing in some options.
-  var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+  var chart = new google.visualization.BarChart(document.getElementById('chart-div'));
   chart.draw(data, options);
 }

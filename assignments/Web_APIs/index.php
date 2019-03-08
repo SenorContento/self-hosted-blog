@@ -14,7 +14,7 @@
 
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
-  $mainPage->printWarning();
+  //$mainPage->printWarning();
 
   $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
                           getenv('alex.server.phpmyadmin.username'),
@@ -27,6 +27,10 @@
 
   $mainPage->checkMySQLValues();
   $mainPage->printMySQLData();
+
+  list($mushrooms, $onions, $bacon, $pepperoni) = $sqlCommands->sumData();
+  $mainPage->setSumData($mushrooms, $onions, $bacon, $pepperoni);
+  $mainPage->drawSumTable();
   $mainPage->drawTable();
 
   $mainPage->printForm();
@@ -34,6 +38,15 @@
   $loadPage->loadFooter();
 
   class homeworkAssignmentEleven {
+    private $mushrooms, $onions, $bacon, $pepperoni;
+
+    public function setSumData($mushrooms, $onions, $bacon, $pepperoni) {
+      $this->mushrooms = $mushrooms;
+      $this->onions = $onions;
+      $this->bacon = $bacon;
+      $this->pepperoni = $pepperoni;
+    }
+
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 11</a>');
       //print('<br>');
@@ -47,23 +60,55 @@
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
+    public function drawSumTable() {
+      $total = $this->mushrooms + $this->onions + $this->bacon + $this->pepperoni;
+      print("<fieldset id=\"sum-field\">
+        <legend>Total Votes</legend>
+        <table>
+          <thead>
+            <tr>
+              <th>Total</th>
+              <th>Mushrooms</th>
+              <th>Onions</th>
+              <th>Bacon</th>
+              <th>Pepperoni</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td name=\"Total\">" . $total . "</td>
+              <td name=\"Mushrooms\">$this->mushrooms</td>
+              <td name=\"Onions\">$this->onions</td>
+              <td name=\"Bacon\">$this->bacon</td>
+              <td name=\"Pepperoni\">$this->pepperoni</td>
+            </tr>
+          </tbody>
+        </table>
+      </fieldset>");
+    }
+
     public function drawTable() {
-      global $sqlCommands;
-      list($mushrooms, $onions, $bacon, $pepperoni) = $sqlCommands->sumData();
-      //print("<p>$mushrooms, $onions, $bacon, $pepperoni</p>");
+      $total = $this->mushrooms + $this->onions + $this->bacon + $this->pepperoni;
+      //print("<p>$this->mushrooms, $this->onions, $this->bacon, $this->pepperoni</p>");
+
+      print("<fieldset id=\"chart-field\"><legend>Bar Chart</legend>");
 
       print("
       <script type=\"text/javascript\" src=\"chart.js\"></script>
       <script type=\"text/javascript\">
-        CHARTDATA.init([$mushrooms, $onions, $bacon, $pepperoni]);
+        CHARTDATA.init([$this->mushrooms, $this->onions, $this->bacon, $this->pepperoni]);
         CHARTDATA.setData();
       </script>
-      <div id=\"chart_div\"></div>
-      <h3>Total Votes: " . ($mushrooms + $onions + $bacon + $pepperoni) . "</h3>");
+      <div id=\"chart-div\"></div>
+      <h3>Total Votes: " . $total . "</h3>");
+
+      print("</fieldset>");
     }
 
     public function printForm() {
+      print("<fieldset><legend>Submit Data</legend>");
       print("<p>I am a form!!!</p>");
+      print("</fieldset>");
     }
 
     public function printMySQLData() {
@@ -253,11 +298,11 @@
         foreach ($conn->query($sql) as $row) {
           print("
           <tr>
-            <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
-            <td>" . htmlspecialchars($row['Mushrooms'], ENT_QUOTES, 'UTF-8') . "</td>
-            <td>" . htmlspecialchars($row['Onions'], ENT_QUOTES, 'UTF-8') . "</td>
-            <td>" . htmlspecialchars($row['Bacon'], ENT_QUOTES, 'UTF-8') . "</td>
-            <td>" . htmlspecialchars($row['Pepperoni'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td name=\"ID\">" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td name=\"Mushrooms\">" . htmlspecialchars($row['Mushrooms'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td name=\"Onions\">" . htmlspecialchars($row['Onions'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td name=\"Bacon\">" . htmlspecialchars($row['Bacon'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td name=\"Pepperoni\">" . htmlspecialchars($row['Pepperoni'], ENT_QUOTES, 'UTF-8') . "</td>
           </tr>");
         }
       } catch(PDOException $e) {
