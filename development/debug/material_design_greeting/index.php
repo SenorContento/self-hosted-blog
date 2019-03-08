@@ -54,7 +54,7 @@
   class materialDesignTest {
     public function loadTextFields() {
       print('<br><br>');
-      print('<center><p>The below greeting demo is a test to ensure Material Design works as intended! The demo was modified from <a href="https://stackblitz.com/edit/mdc-web-quick-start-demo">this live demo program</a>.</p>');
+      print('<p>The below greeting demo is a test to ensure Material Design works as intended! The demo was modified from <a href="https://stackblitz.com/edit/mdc-web-quick-start-demo">this live demo program</a>.</p>');
 
       print('<h6 class="mdc-typography mdc-typography--headline6 demo-headline">Demo Greeting</h6>');
 
@@ -81,11 +81,11 @@
       //print('<div class="mdc-typography mdc-typography--overline greet-message"></div>');
       print('<div class="mdc-typography mdc-typography--overline greet-message"></div>');
 
-      print('</center>');
+      print('');
 
       print('<br>');
 
-      print('<center><p>The above "theme" isn\'t a true dark theme, it is just what I could hack together in 30 minutes from the light theme.</p></center>');
+      print('<p>The above "theme" isn\'t a true dark theme, it is just what I could hack together in 30 minutes from the light theme.</p>');
     }
 
     public function loadScripts() {

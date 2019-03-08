@@ -11,7 +11,7 @@
 
   class debugExplanation {
     public function printWarning() {
-      print('<center><h1>The explanation is not available right now! Please come back later!</h1></center>');
+      print('<h1>The explanation is not available right now! Please come back later!</h1>');
     }
 
     public function printPhraseDebugInfo() {

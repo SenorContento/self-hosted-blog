@@ -50,7 +50,7 @@
     }
 
     public function printWarning() {
-      print('<center><h1>Assignment 3 has not been created yet! Please come back later!</h1></center>');
+      print('<h1>Assignment 3 has not been created yet! Please come back later!</h1>');
     }
 
     public function printSourceCodeLink() {

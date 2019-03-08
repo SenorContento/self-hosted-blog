@@ -8,7 +8,7 @@
 
   class tutorialsIndex {
     public function printWarning() {
-      print('<center><h1>There are no available tutorials right now! Please come back later!</h1></center>');
+      print('<h1>There are no available tutorials right now! Please come back later!</h1>');
     }
   }
 
