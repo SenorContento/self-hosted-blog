@@ -44,7 +44,6 @@ window.onresize = function(event) {
 // instantiates the pie chart, passes in the data and
 // draws it.
 function drawChart() {
-
   // Create the data table.
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Topping');

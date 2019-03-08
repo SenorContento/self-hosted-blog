@@ -2,6 +2,7 @@
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="assignment11.css">');
     print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+    //print("\n\t\t" . '<script src="/js/charts.js"></script>');
     print("\n\t\t" . '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>');
   }
 
