@@ -1,6 +1,29 @@
 // https://developers.google.com/chart/interactive/docs/quick_start
 // https://jsfiddle.net/csabatoth/v3h9ycd4/2/
 // https://stackoverflow.com/a/22021224/6828099
+// https://developers.google.com/chart/interactive/docs/gallery/barchart
+
+var mushrooms = 0;
+var onions = 0;
+var bacon = 0;
+var pepperoni = 0;
+
+var CHARTDATA = CHARTDATA || (function(){
+    var _args = {}; // private
+
+    return {
+        init : function(Args) {
+            _args = Args;
+            // some other initialising
+        },
+        setData : function() {
+            mushrooms = _args[0];
+            onions = _args[1];
+            bacon = _args[2];
+            pepperoni = _args[3];
+        }
+    };
+}());
 
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart']});
@@ -25,17 +48,17 @@ function drawChart() {
   // Create the data table.
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Topping');
-  data.addColumn('number', 'Slices');
+  data.addColumn('number', 'Votes');
   data.addRows([
-    ['Mushrooms', 3],
-    ['Onions', 1],
-    ['Olives', 1],
-    ['Zucchini', 1],
-    ['Pepperoni', 2]
+    ['Mushrooms', mushrooms],
+    ['Onions', onions],
+    ['Bacon', bacon],
+    ['Pepperoni', pepperoni],
+    //['Total', (mushrooms + onions + bacon + pepperoni)]
   ]);
 
   // Set chart options
-  var options = {'title':'How Much Pizza I Ate Last Night',
+  var options = {'title':'Favorite Type of Pizza',
                  //'width': 100,
                  //'height': 200,
                  //colors: ['green', '#0f0f0f', 'red', 'blue', 'purple'],
