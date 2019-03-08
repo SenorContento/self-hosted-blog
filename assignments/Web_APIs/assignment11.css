@@ -1,5 +1,5 @@
 div#chart_div {
   display: inline-block;
-  width: 70%;
+  width: 100%;
   min-height: 450px;
 }

@@ -38,11 +38,12 @@ function drawChart() {
   var options = {'title':'How Much Pizza I Ate Last Night',
                  //'width': 100,
                  //'height': 200,
-                 'colors': ['green', '#0f0f0f', 'red', 'blue', 'purple'],
-                 'is3D': true,
-                 'backgroundColor': {
-                   'fill': 'black',
-                   'fillOpacity': 1
+                 //colors: ['green', '#0f0f0f', 'red', 'blue', 'purple'],
+                 colors: ['green'],
+                 is3D: true,
+                 backgroundColor: {
+                   fill: 'black',
+                   fillOpacity: 1
                  },
                  fontName: 'OpenSans - Lighter',
                  fontSize: '14',
@@ -57,10 +58,32 @@ function drawChart() {
                      fontName: 'OpenSans - Lighter',
                      fontSize: '14'
                    }
-                 }
+                 },
+
+                 vAxis: {
+                  textStyle: {
+                    color: 'red',
+                    fontName: 'Source-Code',
+                    fontSize: '14',
+
+                  },
+                 },
+
+                 hAxis: {
+                  textStyle: {
+                    color: 'cyan',
+                    fontName: 'Source-Code',
+                    fontSize: '14'
+                  },
+                  gridlines: {
+                    color: "purple"
+                  },
+                  baselineColor: 'red',
+                  direction: 1
+                 },
                };
 
   // Instantiate and draw our chart, passing in some options.
-  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
   chart.draw(data, options);
 }
