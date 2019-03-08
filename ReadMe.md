@@ -5,7 +5,7 @@
 [issues-tab]: https://github.com/bgbrandongomez/self-hosted-blog/issues
 [PHPMyAdmin-fails]: https://web.senorcontento.com/test/failed_pma/
 [material-design]: https://material.io/
-n
+
 # What Is This?
 
 This is the server side code to my website. I am making my code available to the public so any potential future employers can see my work. I am currently developing for CSCI 3000 (Web Development) class at University of North Georgia in Dahlonega, Georgia. The class is individual work only, so you are only going to see commits from me as I am not allowed to work in a team, but, it will still be a fun project to work on. I am also adding features which are outside of the scope of the class such as having a [Javascript Service Worker][service-worker] so I can make a [Progressive Web App][pwa]. A current idea I am working on, after I finish the CSS related projects for my teacher, is changing my site's theme to use [Material Design][material-design]. It will help me make my website look more like an app which will be awesome!!!
