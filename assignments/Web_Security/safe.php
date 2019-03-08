@@ -21,11 +21,29 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
+  $mainPage->getValues();
+
   $loadPage->loadFooter();
 
   class SafeMySQL {
     public function printForm() {
       print('<p>I am Safe!!!</p>');
+    }
+
+    public function getValues() {
+      global $sqlCommands;
+      $reset = isset($_REQUEST["reset"]) ? filter_var($_REQUEST["reset"], FILTER_VALIDATE_BOOLEAN) : false;
+      $inject = isset($_REQUEST["inject"]) ? filter_var($_REQUEST["inject"], FILTER_VALIDATE_BOOLEAN) : false;
+
+      if($reset) {
+        $sqlCommands->resetTable();
+        $sqlCommands->insertData("Example Data");
+        $sqlCommands->readDataSafe(false);
+      } else if($inject) {
+        $sqlCommands->readDataSafe(true);
+      } else {
+        $sqlCommands->readDataSafe(false);
+      }
     }
   }
 
@@ -113,14 +131,48 @@
       }
     }
 
-    public function insertData($statement) {
+    public function dropTable() {
+      try {
+        $conn = $this->connectMySQL();
+
+        // https://stackoverflow.com/a/8829122/6828099
+        $checkTableSQL = "SELECT count(*)
+          FROM information_schema.TABLES
+          WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'Assignment12')
+        ";
+
+        $sql = "DROP TABLE Assignment12";
+
+        $tableExists = false;
+        // http://php.net/manual/en/pdo.query.php
+        foreach ($conn->query($checkTableSQL) as $row) {
+          if($row['count(*)'] > 0)
+            $tableExists = true;
+        }
+
+        if($tableExists) {
+          // use exec() because no results are returned
+          $conn->exec($sql);
+        }
+      } catch(PDOException $e) {
+          //echo $sql . "<br>" . $e->getMessage();
+          echo "<p>Drop Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+
+    public function resetTable() {
+      $this->dropTable();
+      $this->createTable();
+    }
+
+    public function insertData($statementstring) {
       try {
         $conn = $this->connectMySQL();
         $statement = $conn->prepare("INSERT INTO Assignment12 (statement)
-                                     VALUES (:fname)");
+                                     VALUES (:statement)");
 
         $statement->execute([
-          'statement' => $statement,
+          'statement' => $statementstring,
         ]);
       } catch(PDOException $e) {
           echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
@@ -143,6 +195,49 @@
         }
       } catch(PDOException $e) {
           echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+      }
+    }
+
+    public function readDataSafe($isinject) {
+      try {
+        $conn = $this->connectMySQL();
+
+        // http://php.net/manual/en/function.htmlspecialchars.php
+        //$sql = "SELECT * FROM Assignment12"; // Display Everything
+        //$unsafe = "1 OR 1=1 --";
+
+        if($isinject) {
+          $unsafe = "1 OR 1=1; INSERT INTO Assignment12 (statement) VALUES (\"I am an Injected SQL Row!!!\") --";
+        } else {
+          $unsafe = "1";
+        }
+
+        //$sql = "INSERT INTO Assignment12 (statement) VALUES (\"Test\")";
+        $sql = "SELECT * FROM Assignment12 WHERE id = ? LIMIT 1";
+        $injectme = $conn->prepare($sql);
+
+        $injectme->execute(array($unsafe));
+        $result = $injectme->fetchAll(PDO::FETCH_ASSOC);
+
+        print("<p>");
+        //print("Results: ");
+        //var_dump($result);
+
+        print("<br>SQL Query: ");
+        print("SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1");
+        print("</p>");
+
+        print("<table><thead><th>ID</th><th>Statement</th></thead><tbody>");
+        foreach($result as $row) {
+          print("
+          <tr>
+            <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
+            <td>" . htmlspecialchars($row['statement'], ENT_QUOTES, 'UTF-8') . "</td>
+          </tr>");
+        }
+        print("</tbody></table>");
+      } catch(PDOException $e) {
+        echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
       }
     }
   }
