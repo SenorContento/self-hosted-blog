@@ -17,8 +17,10 @@
     }
 
     public function printIndex() {
-      print('<a href="Part_1" style="text-align: center;display: block">Go to Homework Assignment 6 - Midterm (Part 1)</a>');
-      print('<a href="Part_2" style="text-align: center;display: block">Go to Homework Assignment 7 - Midterm (Part 2)</a>');
+      print("<h1>");
+      print('<a href="Part_1" class="index-link" style="text-align: center;display: block">Go to Midterm (Part 1)</a>');
+      print('<a href="Part_2" class="index-link" style="text-align: center;display: block">Go to Midterm (Part 2)</a>');
+      print("</h1>");
     }
   }
 
