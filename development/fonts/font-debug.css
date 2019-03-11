@@ -1,0 +1,7 @@
+span {
+  color: #90EE90;
+}
+
+span::after {
+  content: " - 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz !@#$%^&*() -=_+ {} [] |\\ '\" ?/ <>., ~`"
+}
