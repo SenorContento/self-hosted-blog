@@ -40,7 +40,8 @@ def printForm(env, title):
     """
     header, footer = interpreter.generatePage(env, title);
 
-    response = header.decode('utf-8') + readFile(env['DOCUMENT_ROOT'] + "/assignments/Python/form.html") + footer.decode('utf-8');
+    source_code_link = '<a class="source-code-link" href="' + env['alex.github.project'] + '/tree/' + env['alex.github.branch'] + env['PATH_INFO'] + '">View Source Code</a>';
+    response = header.decode('utf-8') + source_code_link + readFile(env['DOCUMENT_ROOT'] + "/assignments/Python/form.html") + footer.decode('utf-8');
     return response.encode('utf-8');
 
 def getRequest(env):
