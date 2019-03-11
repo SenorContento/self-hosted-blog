@@ -12,7 +12,7 @@
 
   $loadPage->loadHeader();
 
-  //$mainPage->printSourceCodeLink();
+  $mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
   //$mainPage->printWarning();
 
