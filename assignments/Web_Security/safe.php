@@ -10,6 +10,7 @@
 
   $loadPage->loadHeader();
 
+  $mainPage->printSourceCodeLink();
   $mainPage->printForm();
 
   $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
@@ -26,6 +27,10 @@
   $loadPage->loadFooter();
 
   class SafeMySQL {
+    public function printSourceCodeLink() {
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
+    }
+
     public function printForm() {
       print("<fieldset><legend>Submit Data</legend>");
 
