@@ -107,8 +107,17 @@
 
     public function printForm() {
       print("<fieldset><legend>Submit Data</legend>");
-      print("<p>I am a form!!!</p>");
-      print("</fieldset>");
+
+      print('<form method="POST">
+      <label>Favorite Pizza Toppings:</label><br>
+      <label>Bacon </label><input type="checkbox" name="bacon" value="true" checked><br>
+      <label>Mushrooms </label><input type="checkbox" name="mushrooms" value="true"><br>
+      <label>Onions </label><input type="checkbox" name="onions" value="true"><br>
+      <label>Pepperoni </label><input type="checkbox" name="pepperoni" value="true"><br>
+      <br>
+      <button type="submit">Vote</button>');
+
+      print("</form></fieldset>");
     }
 
     public function printMySQLData() {

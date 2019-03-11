@@ -1,3 +1,22 @@
+label {
+  color: #90EE90;
+}
+
+form {
+  display: inline-block;
+  text-align: left;
+  /* margin: 20px; */
+}
+
+div.form {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  margin: 2.5px;
+}
+
 div#chart-div {
   display: inline-block;
   width: 100%;
