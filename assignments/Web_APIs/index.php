@@ -25,6 +25,8 @@
   $sqlCommands->connectMySQL();
   $sqlCommands->createTable();
 
+  $mainPage->printForm();
+
   $mainPage->checkMySQLValues();
   $mainPage->printMySQLData();
 
@@ -32,8 +34,6 @@
   $mainPage->setSumData($mushrooms, $onions, $bacon, $pepperoni);
   $mainPage->drawSumTable();
   $mainPage->drawTable();
-
-  $mainPage->printForm();
 
   $loadPage->loadFooter();
 
@@ -138,7 +138,7 @@
       if($tableExists) {
         print('
           <fieldset>
-            <legend>Last 10 MySQL Entries</legend>
+            <legend>Last 3 MySQL Entries</legend>
             <table>
               <thead>
                 <tr>
@@ -303,7 +303,7 @@
 
         // http://php.net/manual/en/function.htmlspecialchars.php
         //$sql = "SELECT * FROM Assignment11"; // Display Everything
-        $sql = "SELECT * FROM Assignment11 ORDER BY id DESC LIMIT 10"; // Limit to Last 10 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
+        $sql = "SELECT * FROM Assignment11 ORDER BY id DESC LIMIT 3"; // Limit to Last 3 Entries (Reverse Order) - https://stackoverflow.com/a/14057040/6828099
         foreach ($conn->query($sql) as $row) {
           print("
           <tr>
