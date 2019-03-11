@@ -4,6 +4,10 @@
 <%@ Import Namespace="System.Security" %>
 <%-- <%@ Import Namespace="System.Data.SqlClient.SqlDataReader" %> --%>
 <%
+  // print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
+  sourcecode.Text = "<a class=\"source-code-link\" href=\"" + Environment.GetEnvironmentVariable("alex.github.project") + "/tree/" + Environment.GetEnvironmentVariable("alex.github.branch") + Request.ServerVariables["SCRIPT_NAME"] + "\">View Source Code</a>"; // Strangely Enough, my Mono Implementation does not use ServerVariables the same way as W3Schools (https://www.w3schools.com/asp/coll_servervariables.asp) says to use it!!!
+%>
+<%
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work
   var header_proc = new System.Diagnostics.Process();
   header_proc.StartInfo.FileName = "/usr/bin/php";
@@ -235,6 +239,7 @@
   <%-- https://tableplus.io/ --%><%-- Program has a free trial and can access MS SQL from RDS if RDS is set up correctly --%>
 
   <asp:Literal runat="server" id="header"></asp:Literal>
+  <asp:Literal runat="server" id="sourcecode"></asp:Literal>
 
   <strong class="aws-warning">This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I am deleting the database immediately after the assignment is graded and this assignment will no longer function.</strong>
 
