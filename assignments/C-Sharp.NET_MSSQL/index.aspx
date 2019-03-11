@@ -96,6 +96,14 @@
   }
 
   bool active = true; // I will flip this to false when I delete the database!!!
+
+  if(!active) {
+    awswarning.Text = "This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I deleted the database now that the assignment has been graded!";
+    //awswarningBreaks.Text = null;
+    awsactive.Text = "The AWS Database is NOT active!!!";
+    awsactive.CssClass="aws-inactive";
+  }
+
   //valid.Text = String.Format(languageoutput.ToString());
   if(validated && active) { // if(validated && !validated)
     //valid.Text = String.Format("Validated!!!");
@@ -241,7 +249,10 @@
   <asp:Literal runat="server" id="header"></asp:Literal>
   <asp:Literal runat="server" id="sourcecode"></asp:Literal>
 
-  <strong class="aws-warning">This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I am deleting the database immediately after the assignment is graded and this assignment will no longer function.</strong>
+  <strong class="aws-warning"><asp:Label runat="server" id="awswarning">This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I am deleting the database immediately after the assignment is graded and this assignment will no longer function.</asp:Label></strong>
+
+  <asp:Literal runat="server" id="awswarningBreaks"><br><br></asp:Literal>
+  <strong class="aws-active"><asp:Label runat="server" CssClass="aws-active" id="awsactive">The AWS Database is active!!!</asp:Label></strong>
 
   <%--<h1><asp:Label runat="server" id="date"></asp:Label></h1>--%>
   <h1><asp:Label runat="server" id="valid"></asp:Label></h1>

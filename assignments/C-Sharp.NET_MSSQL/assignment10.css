@@ -4,6 +4,19 @@ strong.aws-warning {
   font-weight: bold;
 }
 
+strong.aws-active {
+  font-family: 'PT-Serif';
+  font-weight: bold;
+}
+
+span.aws-active {
+  color: green;
+}
+
+span.aws-inactive {
+  color: red;
+}
+
 label {
   color: #90EE90;
 }
