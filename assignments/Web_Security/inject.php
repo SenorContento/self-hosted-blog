@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    //print("\n\t\t" . '<link rel="stylesheet" href="assignment12.css">');
+    print("\n\t\t" . '<link rel="stylesheet" href="assignment12.css">');
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
@@ -27,7 +27,24 @@
 
   class InjectionMySQL {
     public function printForm() {
-      print('<p>I am Not Safe!!!</p>');
+      print("<fieldset><legend>Submit Data</legend>");
+
+      print('<form method="POST">
+      <label>Submit Unsafe Form Data:</label><br>');
+
+      $inject = isset($_REQUEST["inject"]) ? filter_var($_REQUEST["inject"], FILTER_VALIDATE_BOOLEAN) : false;
+      if($inject) {
+        print('<label>Retrieve Row 1 - Normal </label><input id="retrieve-row" name="inject" value="false" type="radio"><br>
+        <label>Retrieve Row 1 - Injection </label><input id="retrieve-row" name="inject" value="true" type="radio" checked="checked"><br>');
+      } else {
+        print('<label>Retrieve Row 1 - Normal </label><input id="retrieve-row" name="inject" value="false" type="radio" checked="checked"><br>
+        <label>Retrieve Row 1 - Injection </label><input id="retrieve-row" name="inject" value="true" type="radio"><br>');
+      }
+
+      print('<br>
+      <button type="submit">Submit Form</button> <button name="reset" value="true" type="submit">Reset Table</button>');
+
+      print("</form></fieldset>");
     }
 
     public function getValues() {
@@ -221,12 +238,19 @@
         $injectme->execute(array($unsafe));
         $result = $injectme->fetchAll(PDO::FETCH_ASSOC);
 
-        print("<p>");
+        print("<p id=\"injection-status\">");
         //print("Results: ");
         //var_dump($result);
 
-        print("<br>SQL Query: ");
-        print("SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1");
+        print("The Form Data: \"<span style='color: red'>" . $unsafe . "</span>\"");
+        print(" was injected as <br>");
+
+        print("SQL Query: ");
+        print("\"<span style='color: red'>" . "SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1" . "</span>\"");
+        print("</p>");
+
+        print("<p id=\"injection-info\">");
+        print("Because of the nature of this SQL statement, you may have to inject twice to read the first injection's results!!!");
         print("</p>");
 
         $count = 1;
