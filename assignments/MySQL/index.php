@@ -165,7 +165,7 @@
   class homeworkAssignmentFive {
     public function printArchiveLink() {
       //print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 5</a>');
-      print('<a href="https://github.com/bgbrandongomez/self-hosted-blog/commit/f3a53a91d1b7a2d94b2c5fab87b822a449a1cdad#diff-7b64b33e114a6c006a65e1d57fdfd8c2" style="text-align: center;display: block">Go to Archived Homework Assignment 5 Source Code</a>');
+      print('<a href="' . getenv('alex.github.project') . '/commit/f3a53a91d1b7a2d94b2c5fab87b822a449a1cdad#diff-7b64b33e114a6c006a65e1d57fdfd8c2" style="text-align: center;display: block">Go to Archived Homework Assignment 5 Source Code</a>');
       //print('<br>');
     }
 
