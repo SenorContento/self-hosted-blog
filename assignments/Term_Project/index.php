@@ -18,18 +18,11 @@
   class homeworkAssignmentThirteen {
     public function redirectMe() {
       //print("Address: " . $_SERVER['SERVER_NAME']); // The fact that this works (and looking at curl), I can conclude that PHP waits until execution is finished before it even begins to send data. It's like my Python Script.
-      if(getenv('alex.server.type') === "production") {
-        $host = "term.web.senorcontento.com";
-        if($host !== $_SERVER['SERVER_NAME']) {
-          header("Location: https://" . $host . "/");
-          exit();
-        }
-      } else if(getenv('alex.server.type') === "development") {
-        $host = "term.project";
-        if($host !== $_SERVER['SERVER_NAME']) {
-          header("Location: https://" . $host . "/");
-          exit();
-        }
+      $host = (getenv('alex.server.type') === "production") ? "term.web.senorcontento.com" : "term.project";
+
+      if($host !== $_SERVER['SERVER_NAME']) {
+        header("Location: https://" . $host . "/");
+        exit();
       }
     }
 
@@ -44,7 +37,7 @@
 
     public function printSourceCodeLink() {
       // I had to manually specify the source URL as the term project being on it's own domain messed up the link - /blob/master/assignments/Term_Project/index.php
-      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project/index.php" . '">View Source Code</a>');
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
     }
 
     public function printDomainURL() {
