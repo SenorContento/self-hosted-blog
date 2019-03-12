@@ -53,7 +53,7 @@
     }
 
     public function mainBody() {
-      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo($_SERVER["REMOTE_ADDR"]);
+      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo(600, $_SERVER["REMOTE_ADDR"]);
       //$banned_check = $this->checkBan() ? "Yes" : "No";
 
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
@@ -69,7 +69,7 @@
       } else if($banned === 1) {
         print("Banned: Yes");
         print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
-        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
+        print("<br>Time Remaining (Not Accurate, Yet): " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
       }
       print('</h1>');
     }
@@ -101,7 +101,7 @@
       return in_array($_SERVER["REMOTE_ADDR"], $ban_array_trimmed) ? true : false;
     }
 
-    public function getBanTimeInfo($ipaddress) {
+    public function getBanTimeInfo($timelimit, $ipaddress) {
       $this->exec_fail2ban_path;
       $ban_time = shell_exec($this->exec_fail2ban_log . " | " .
                              $this->exec_grep_path . " fail2ban.actions | " .
