@@ -54,15 +54,20 @@
 
     public function mainBody() {
       list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo($_SERVER["REMOTE_ADDR"]);
-      $banned_check = ($banned === 1) ? "Yes" : "No";
       //$banned_check = $this->checkBan() ? "Yes" : "No";
 
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
       print("<p>I will explain what this page is about later!!! Just Know It Has To Do With Fail2Ban and SSH!!!</p>");
 
       print('<h1>');
-      print("Banned: " . $banned_check);
-      if($banned === 1) {
+      //print("Banned: " . $banned_check);
+
+      if($banned === 0) {
+        print("Banned: No");
+      } else if($banned === -1) {
+        print("Banned: Never");
+      } else if($banned === 1) {
+        print("Banned: Yes");
         print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
         print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
       }
@@ -111,6 +116,7 @@
       //print_r($ban_time_array);
 
       if($ban_time === "" || $ban_time === null) { // It equals null
+        //print("<h1>Never Banned!!!</h1>");
         return [new DateTime(date('Y-m-d H:i:s T', 0)), new DateTime(date('Y-m-d H:i:s T', 0)), -1];
       }
 
@@ -132,9 +138,11 @@
       //print("</h1>");
 
       if($ban_time_array[14] === "Unban") {
+        //print("<h1>Unbanned!!!</h1>");
         return [$timebanned, $timeremaining, 0];
       }
 
+      //print("<h1>Banned!!!</h1>");
       return [$timebanned, $timeremaining, 1];
     }
   }
