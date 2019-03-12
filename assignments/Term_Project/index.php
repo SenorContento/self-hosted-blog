@@ -2,15 +2,17 @@
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentThirteen();
 
-  $loadPage->loadHeader();
+  //$loadPage->loadHeader();
 
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
   $mainPage->printWarning();
+  $mainPage->printSourceCodeLink();
+  $mainPage->printDomainURL();
 
   //$mainPage->printTable();
 
-  $loadPage->loadFooter();
+  //$loadPage->loadFooter();
 
   class homeworkAssignmentThirteen {
     public function printArchiveLink() {
@@ -23,7 +25,13 @@
     }
 
     public function printSourceCodeLink() {
-      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
+      // I had to manually specify the source URL as the term project being on it's own domain messed up the link - /blob/master/assignments/Term_Project/index.php
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project/index.php" . '">View Source Code</a>');
+    }
+
+    public function printDomainURL() {
+      print('<br>');
+      print('<a id="domain-url" href="https://term.web.senorcontento.com/">Check Out This Project On It\'s Own Domain!!!</a>');
     }
 
     public function printTable() {
