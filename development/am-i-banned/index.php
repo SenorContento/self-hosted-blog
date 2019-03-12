@@ -53,22 +53,26 @@
     }
 
     public function mainBody() {
-      list($timebanned, $timeremaining, $banned) = $this->getTimeRemaining(600, $_SERVER["REMOTE_ADDR"]);
-      $banned_check = $this->checkBan() ? "Yes" : "No";
+      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo($_SERVER["REMOTE_ADDR"]);
+      $banned_check = ($banned === 1) ? "Yes" : "No";
+      //$banned_check = $this->checkBan() ? "Yes" : "No";
 
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
       print("<p>I will explain what this page is about later!!! Just Know It Has To Do With Fail2Ban and SSH!!!</p>");
 
       print('<h1>');
       print("Banned: " . $banned_check);
-      //print(" Banned 2: " . $banned);
-      print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
-      print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s")); // 51.77.230.195
-      //print("<br>Time Now: " . date('Y-m-d H:i:s T', time()));
+      if($banned === 1) {
+        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
+        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
+      }
       print('</h1>');
     }
 
     public function checkBan() {
+      // I originally was going to use this method, but since the ban log provides this info too.
+      // I have decided against it. I am still leaving it in this file for future reference.
+
       // This Command was added to sudoers, I do not allow arbitrary sudo access to web.
       // sudo /usr/bin/fail2ban-client status thp-ssh
 
@@ -92,7 +96,7 @@
       return in_array($_SERVER["REMOTE_ADDR"], $ban_array_trimmed) ? true : false;
     }
 
-    public function getTimeRemaining($maxtime, $ipaddress) {
+    public function getBanTimeInfo($ipaddress) {
       $this->exec_fail2ban_path;
       $ban_time = shell_exec($this->exec_fail2ban_log . " | " .
                              $this->exec_grep_path . " fail2ban.actions | " .
@@ -102,6 +106,13 @@
                              $this->exec_tail_path . " -n 1");
 
       $ban_time_array = explode(" ", $ban_time);
+
+      //print("<h1>\"" . $ban_time . "\"</h1>");
+      //print_r($ban_time_array);
+
+      if($ban_time === "" || $ban_time === null) { // It equals null
+        return [new DateTime(date('Y-m-d H:i:s T', 0)), new DateTime(date('Y-m-d H:i:s T', 0)), -1];
+      }
 
       //print("<br>Time Banned: " . $ban_time_array[0] . " " . substr($ban_time_array[1], 0, -4));
       //print("<br>Banned?: " . $ban_time_array[14]);
