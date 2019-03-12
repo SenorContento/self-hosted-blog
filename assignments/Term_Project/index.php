@@ -6,6 +6,7 @@
 
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
+  $mainPage->redirectMe();
   $mainPage->printWarning();
   $mainPage->printSourceCodeLink();
   $mainPage->printDomainURL();
@@ -15,6 +16,23 @@
   //$loadPage->loadFooter();
 
   class homeworkAssignmentThirteen {
+    public function redirectMe() {
+      //print("Address: " . $_SERVER['SERVER_NAME']); // The fact that this works (and looking at curl), I can conclude that PHP waits until execution is finished before it even begins to send data. It's like my Python Script.
+      if(getenv('alex.server.type') === "production") {
+        $host = "term.web.senorcontento.com";
+        if($host !== $_SERVER['SERVER_NAME']) {
+          header("Location: https://" . $host . "/");
+          exit();
+        }
+      } else if(getenv('alex.server.type') === "development") {
+        $host = "term.project";
+        if($host !== $_SERVER['SERVER_NAME']) {
+          header("Location: https://" . $host . "/");
+          exit();
+        }
+      }
+    }
+
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 13</a>');
       //print('<br>');
