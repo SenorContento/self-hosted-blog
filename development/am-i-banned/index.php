@@ -72,9 +72,9 @@
         print("Banned: Never");
       } else if($banned === 1) {
         print("Banned: Yes");
-        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s") + " UTC");
+        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s") . " UTC");
         // Add IP Address Somewhere Around Here
-        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s") + " UTC");
+        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s") . " UTC");
       }
       print('</h1>');
     }
@@ -151,7 +151,7 @@
       $timeunbanned = new DateTime(date('Y-m-d H:i:s T', strtotime('+ ' . $timelimit . ' seconds', strtotime($timebanned_string))));
       $timeremaining = $now->diff($timeunbanned);
       //$timeremaining = $timebanned->diff($now);
-      print_r($timeremaining);
+      //print_r($timeremaining);
 
       //print("<h1>");
       //print("TimeBanned String: " . $timebanned_string);
