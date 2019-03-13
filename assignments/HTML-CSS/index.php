@@ -59,7 +59,7 @@
               <tr>
                 <th>Students</th>
                 <th>Grades</th>
-                </tr>
+              </tr>
             </thead>
             <tbody>
               <tr>

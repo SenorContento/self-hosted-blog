@@ -59,24 +59,26 @@
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
       print("<p>I will explain what this page is about later!!! Just Know It Has To Do With Fail2Ban and SSH!!!</p>");
 
-      print('<h1 style="display: inline-block; text-align: left;">');
-      //print("Banned: " . $banned_check);
+      print("<table><thead>");
+      print("<th>Info</th>");
+      print("<th>Response</th>");
+      print("</thead><tbody>");
 
-      print("<br>Current # of Bans: " . $this->getCurrentBanCount("thp-ssh"));
-      print("<br>Total # of Bans: " . $this->getTotalBanCount("thp-ssh"));
-      print("<br>");
+
+      print("<tr><td>Current # of Bans</td><td>" . $this->getCurrentBanCount("thp-ssh") . "</td></tr>");
+      print("<tr><td>Total # of Bans</td><td>" . $this->getTotalBanCount("thp-ssh") . "</td></tr>");
+      print("<tr><td>IP Address</td><td>" . $_SERVER["REMOTE_ADDR"] . "</td></tr>");
 
       if($banned === 0) {
-        print("Banned: No");
+        print("<tr><td>Banned</td><td>No</td></tr>");
       } else if($banned === -1) {
-        print("Banned: Never");
+        print("<tr><td>Banned</td><td>Never</td></tr>");
       } else if($banned === 1) {
-        print("Banned: Yes");
-        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s") . " UTC");
-        // Add IP Address Somewhere Around Here
-        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
+        print("<tr><td>Banned</td><td>Yes</td></tr>");
+        print("<tr><td>Time Banned</td><td>" . $timebanned->format("y-m-d h:i:s") . " UTC</td></tr>");
+        print("<tr><td>Time Remaining</td><td>" . $timeremaining->format("%r %y-%m-%d %h:%i:%s") . "</td></tr>");
       }
-      print('</h1>');
+      print("</tbody></table>");
     }
 
     public function getCurrentBanCount($service) {
