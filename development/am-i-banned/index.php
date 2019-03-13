@@ -16,6 +16,11 @@
   class loadPage {
     public function loadHeader() {
       $PageTitle="Am I Banned?";
+
+      // TODO: Add Metadata to Improve SEO
+      // Metadata Here...
+      // Also, Finish That Paragraph Below To Explain About This Page
+
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
       include_once($root . "/server_data/header.php");
     }
