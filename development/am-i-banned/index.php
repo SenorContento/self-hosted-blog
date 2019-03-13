@@ -81,7 +81,9 @@
       } else if($banned === 1) {
         print("<tr><td>Banned</td><td>Yes</td></tr>");
         print("<tr><td>Time Banned</td><td>" . $timebanned->format("y-m-d h:i:s") . " UTC</td></tr>");
-        print("<tr><td>Time Remaining</td><td><span id=\"time-remaining\">" . $timeremaining->format("%r %M %d, %Y %H:%I:%S") . "</span></td></tr>"); // "%r %Y-%M-%D %H:%I:%S"
+
+        // days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+        print("<tr><td>Time Remaining</td><td><span id=\"time-remaining\">" . $timeremaining->format("%r %dd %hh %im %ss") . "</span></td></tr>"); // "%r %Y-%M-%D %H:%I:%S" and "%r %M %d, %Y %H:%I:%S"
         $this->addJSTimer($timeunbanned->format("M d, Y H:i:s")); // Mar 13, 2019 14:30:18 // This is in UTC Format
       }
       print("</tbody></table>");
