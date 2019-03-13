@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    print("\n\t\t" . '<link rel="stylesheet" href="banme.css">');
+    //print("\n\t\t" . '<link rel="stylesheet" href="banme.css">');
   }
 
   $loadPage = new loadPage();
@@ -47,13 +47,18 @@
         $this->exec_fail2ban_path = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/banned-command.txt\"";
         $this->exec_grep_path = "/usr/bin/grep";
         $this->exec_cut_path = "/usr/bin/cut";
-        $this->exec_fail2ban_log = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/fail2ban.log\"";
+        $this->exec_fail2ban_log = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/fail2ban-banned.log\"";
         $this->exec_tail_path = "/usr/bin/tail";
       }
     }
 
+    public function addJSTimer($time) {
+      print("<script src=\"countdown.js\"></script>");
+      print("<script>setTimer(\"" . $time . "\");</script>"); // Jan 5, 2021 15:37:25
+    }
+
     public function mainBody() {
-      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo("thp-ssh", 600, $_SERVER["REMOTE_ADDR"]);
+      list($timebanned, $timeunbanned, $timeremaining, $banned) = $this->getBanTimeInfo("thp-ssh", 600, $_SERVER["REMOTE_ADDR"]);
       //$banned_check = $this->checkBan("thp-ssh") ? "Yes" : "No";
 
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
@@ -76,7 +81,8 @@
       } else if($banned === 1) {
         print("<tr><td>Banned</td><td>Yes</td></tr>");
         print("<tr><td>Time Banned</td><td>" . $timebanned->format("y-m-d h:i:s") . " UTC</td></tr>");
-        print("<tr><td>Time Remaining</td><td>" . $timeremaining->format("%r %y-%m-%d %h:%i:%s") . "</td></tr>");
+        print("<tr><td>Time Remaining</td><td><span id=\"time-remaining\">" . $timeremaining->format("%r %M %d, %Y %H:%I:%S") . "</span></td></tr>"); // "%r %Y-%M-%D %H:%I:%S"
+        $this->addJSTimer($timeunbanned->format("M d, Y H:i:s")); // Mar 13, 2019 14:30:18 // This is in UTC Format
       }
       print("</tbody></table>");
     }
@@ -126,10 +132,10 @@
     public function getBanTimeInfo($service, $timelimit, $ipaddress) {
       $this->exec_fail2ban_path;
       $ban_time = shell_exec($this->exec_fail2ban_log . " | " .
-                             $this->exec_grep_path . " fail2ban.actions | " .
-                             $this->exec_grep_path . " \"" . $service . "\" | " .
-                             $this->exec_grep_path . " \"NOTICE\" | " .
-                             $this->exec_grep_path . " \"" . $ipaddress . "\" | " .
+                             $this->exec_grep_path . " fail2ban.actions | " . # Is This Needed?
+                             $this->exec_grep_path . " \"" . $service . "\" | " . # This helps limit list to specific services
+                             $this->exec_grep_path . " \"NOTICE\" | " . # Is This Needed?
+                             $this->exec_grep_path . " -w \"" . $ipaddress . "\" | " . # -w means whole word only
                              $this->exec_tail_path . " -n 1");
 
       $ban_time_array = explode(" ", $ban_time);
@@ -162,11 +168,11 @@
 
       if($ban_time_array[14] === "Unban") {
         //print("<h1>Unbanned!!!</h1>");
-        return [$timebanned, $timeremaining, 0];
+        return [$timebanned, $timeunbanned, $timeremaining, 0];
       }
 
       //print("<h1>Banned!!!</h1>");
-      return [$timebanned, $timeremaining, 1];
+      return [$timebanned, $timeunbanned, $timeremaining, 1];
     }
   }
 ?>
