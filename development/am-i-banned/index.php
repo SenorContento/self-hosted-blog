@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    // Intentionally left blank!!!
+    print("\n\t\t" . '<link rel="stylesheet" href="banme.css">');
   }
 
   $loadPage = new loadPage();
@@ -37,7 +37,7 @@
     function setVars() {
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
-        $this->exec_fail2ban_path = "sudo /usr/bin/fail2ban-client status thp-ssh";
+        $this->exec_fail2ban_path = "sudo /usr/bin/fail2ban-client status ";
         $this->exec_grep_path = "/bin/grep";
         $this->exec_cut_path = "/usr/bin/cut";
         $this->exec_fail2ban_log = "/bin/cat /var/log/fail2ban.log";
@@ -53,14 +53,18 @@
     }
 
     public function mainBody() {
-      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo(600, $_SERVER["REMOTE_ADDR"]);
-      //$banned_check = $this->checkBan() ? "Yes" : "No";
+      list($timebanned, $timeremaining, $banned) = $this->getBanTimeInfo("thp-ssh", 600, $_SERVER["REMOTE_ADDR"]);
+      //$banned_check = $this->checkBan("thp-ssh") ? "Yes" : "No";
 
       // This Code is Still in Alpha. Copy At Your Own Risk!!!
       print("<p>I will explain what this page is about later!!! Just Know It Has To Do With Fail2Ban and SSH!!!</p>");
 
-      print('<h1>');
+      print('<h1 style="display: inline-block; text-align: left;">');
       //print("Banned: " . $banned_check);
+
+      print("<br>Current # of Bans: " . $this->getCurrentBanCount("thp-ssh"));
+      print("<br>Total # of Bans: " . $this->getTotalBanCount("thp-ssh"));
+      print("<br>");
 
       if($banned === 0) {
         print("Banned: No");
@@ -69,19 +73,35 @@
       } else if($banned === 1) {
         print("Banned: Yes");
         print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
+        // Add IP Address Somewhere Around Here
         print("<br>Time Remaining (Not Accurate, Yet): " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
       }
       print('</h1>');
     }
 
-    public function checkBan() {
+    public function getCurrentBanCount($service) {
+      $service = (getenv('alex.server.type') === "development") ? "" : $service;
+      $ban_count = shell_exec($this->exec_fail2ban_path . $service . " | " . $this->exec_grep_path . " \"Currently banned\" | " . $this->exec_cut_path . " -d':' -f2");
+
+      return trim($ban_count);
+    }
+
+    public function getTotalBanCount($service) {
+      $service = (getenv('alex.server.type') === "development") ? "" : $service;
+      $ban_count = shell_exec($this->exec_fail2ban_path . $service . " | " . $this->exec_grep_path . " \"Total banned\" | " . $this->exec_cut_path . " -d':' -f2");
+
+      return trim($ban_count);
+    }
+
+    public function checkBan($service) {
       // I originally was going to use this method, but since the ban log provides this info too.
       // I have decided against it. I am still leaving it in this file for future reference.
 
       // This Command was added to sudoers, I do not allow arbitrary sudo access to web.
       // sudo /usr/bin/fail2ban-client status thp-ssh
 
-      $ban_list = shell_exec($this->exec_fail2ban_path . " | " . $this->exec_grep_path . " \"Banned IP list\" | " . $this->exec_cut_path . " -d':' -f2");
+      $service = (getenv('alex.server.type') === "development") ? "" : $service;
+      $ban_list = shell_exec($this->exec_fail2ban_path . $service . " | " . $this->exec_grep_path . " \"Banned IP list\" | " . $this->exec_cut_path . " -d':' -f2");
       $ban_array = explode(" ", $ban_list);
       $ban_array_trimmed = array_map('trim', $ban_array); // https://stackoverflow.com/a/5762453/6828099
 
@@ -101,11 +121,11 @@
       return in_array($_SERVER["REMOTE_ADDR"], $ban_array_trimmed) ? true : false;
     }
 
-    public function getBanTimeInfo($timelimit, $ipaddress) {
+    public function getBanTimeInfo($service, $timelimit, $ipaddress) {
       $this->exec_fail2ban_path;
       $ban_time = shell_exec($this->exec_fail2ban_log . " | " .
                              $this->exec_grep_path . " fail2ban.actions | " .
-                             $this->exec_grep_path . " \"thp-ssh\" | " .
+                             $this->exec_grep_path . " \"" . $service . "\" | " .
                              $this->exec_grep_path . " \"NOTICE\" | " .
                              $this->exec_grep_path . " \"" . $ipaddress . "\" | " .
                              $this->exec_tail_path . " -n 1");
@@ -128,9 +148,9 @@
       $timebanned = new DateTime(date('Y-m-d H:i:s T', strtotime($timebanned_string))); // Format 2019-02-23T06:09:06Z
       $now = new DateTime(date('Y-m-d H:i:s T', time()));
       //print("Formatted: $timebanned<br>");
-      $timeremaining = $now->diff($timebanned);
+      $timeremaining = $now->diff($timebanned+$timelimit);
       //$timeremaining = $timebanned->diff($now);
-      //print_r($timeremaining);
+      print_r($timeremaining);
 
       //print("<h1>");
       //print("TimeBanned String: " . $timebanned_string);
