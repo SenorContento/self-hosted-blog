@@ -148,7 +148,8 @@
       $timebanned = new DateTime(date('Y-m-d H:i:s T', strtotime($timebanned_string))); // Format 2019-02-23T06:09:06Z
       $now = new DateTime(date('Y-m-d H:i:s T', time()));
       //print("Formatted: $timebanned<br>");
-      $timeremaining = $now->diff($timebanned+$timelimit);
+      $timeunbanned = new DateTime(date('Y-m-d H:i:s T', strtotime('+ ' . $timelimit . ' seconds', strtotime($timebanned_string))));
+      $timeremaining = $now->diff($timeunbanned);
       //$timeremaining = $timebanned->diff($now);
       print_r($timeremaining);
 
