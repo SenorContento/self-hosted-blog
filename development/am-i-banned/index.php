@@ -47,7 +47,7 @@
         $this->exec_fail2ban_path = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/banned-command.txt\"";
         $this->exec_grep_path = "/usr/bin/grep";
         $this->exec_cut_path = "/usr/bin/cut";
-        $this->exec_fail2ban_log = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/fail2ban-banned.log\"";
+        $this->exec_fail2ban_log = "/bin/cat \"/Users/senor/Documents/Class/2019/Spring/CSCI 3000/Fail2Ban/fail2ban-unbanned.log\"";
         $this->exec_tail_path = "/usr/bin/tail";
       }
     }
