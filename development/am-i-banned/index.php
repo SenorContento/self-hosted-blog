@@ -72,9 +72,9 @@
         print("Banned: Never");
       } else if($banned === 1) {
         print("Banned: Yes");
-        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s"));
+        print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s") + " UTC");
         // Add IP Address Somewhere Around Here
-        print("<br>Time Remaining (Not Accurate, Yet): " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
+        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s") + " UTC");
       }
       print('</h1>');
     }
