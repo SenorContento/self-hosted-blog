@@ -145,7 +145,7 @@
 
       if($ban_time === "" || $ban_time === null) { // It equals null
         //print("<h1>Never Banned!!!</h1>");
-        return [new DateTime(date('Y-m-d H:i:s T', 0)), new DateTime(date('Y-m-d H:i:s T', 0)), -1];
+        return [-1, -1, -1, -1];
       }
 
       //print("<br>Time Banned: " . $ban_time_array[0] . " " . substr($ban_time_array[1], 0, -4));
