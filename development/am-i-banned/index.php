@@ -74,7 +74,7 @@
         print("Banned: Yes");
         print("<br>Time Banned: " . $timebanned->format("y-m-d h:i:s") . " UTC");
         // Add IP Address Somewhere Around Here
-        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s") . " UTC");
+        print("<br>Time Remaining: " . $timeremaining->format("%r %y-%m-%d %h:%i:%s"));
       }
       print('</h1>');
     }
