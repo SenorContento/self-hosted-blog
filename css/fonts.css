@@ -184,3 +184,40 @@ TODO: Figure Out Font Weight for SemiBold
   font-weight: normal;
   font-style: normal;
 }
+
+/* FiraCode Font */
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Medium.ttf') format('truetype');
+  font-weight: Medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode-Retina';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Retina.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
