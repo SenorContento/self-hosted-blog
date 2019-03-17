@@ -50,7 +50,7 @@ class generateSitemap {
     # { find . -type d -print | sed 's!$!/!'; find . \! -type d; } | sort
     #return ($this->exec_find_path . ' ' . $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
     #        $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
-    #        $this->exec_grep_path . ' -v "/server_data" | ' . # and server_data for all servers
+    #        $this->exec_grep_path . ' -v "/server-data" | ' . # and server-data for all servers
     #        $this->exec_grep_path . ' -v "/sql_admin" | ');
 
     #print("Host: " . $this->server_host . "\n");
@@ -62,7 +62,7 @@ class generateSitemap {
                    $this->exec_sed_path . " 's/\/\//\//' | " . # To remove double slashed root
 
                    $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
-                   $this->exec_grep_path . ' -v "/server_data" | ' . # and server_data for all servers
+                   $this->exec_grep_path . ' -v "/server-data" | ' . # and server-data for all servers
                    $this->exec_grep_path . ' -v "' . getenv('alex.server.phpmyadmin') . '" | ' .  # and sql_admin for all servers
                    $this->exec_grep_path . ' -v "' . getenv('alex.server.phpliteadmin') . '" | ');
   }
@@ -110,7 +110,7 @@ class generateSitemap {
     #$URLS = shell_exec($this->exec_find_path . ' ' .
     #        $_SERVER['DOCUMENT_ROOT'] . '/ | ' .
     #        $this->exec_grep_path . ' -v ".git" | ' . # Added the .git part for the development server
-    #        $this->exec_grep_path . ' -v "/server_data" | ' . # and server_data for all servers
+    #        $this->exec_grep_path . ' -v "/server-data" | ' . # and server-data for all servers
     #        $this->exec_grep_path . ' -v "/sql_admin" | ' .
     #        $this->exec_awk_path . " -F '" . $_SERVER['DOCUMENT_ROOT'] . "' '{ print $2 }'"); # and sql_admin for all servers
 

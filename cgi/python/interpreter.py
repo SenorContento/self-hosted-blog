@@ -60,11 +60,11 @@ def generatePage(env, title):
     os.environ["alex.github.branch"] = env['alex.github.branch'];
     os.environ["alex.server.page.title"] = title;
 
-    header_path = env['DOCUMENT_ROOT'] + "/server_data/header.php";
+    header_path = env['DOCUMENT_ROOT'] + "/server-data/header.php";
     proch = subprocess.Popen([php_path, header_path], stdout=subprocess.PIPE)
     header = proch.stdout.read();
 
-    footer_path = env['DOCUMENT_ROOT'] + "/server_data/footer.php";
+    footer_path = env['DOCUMENT_ROOT'] + "/server-data/footer.php";
     procf = subprocess.Popen([php_path, footer_path], stdout=subprocess.PIPE)
     footer = procf.stdout.read();
 
