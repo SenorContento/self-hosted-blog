@@ -130,6 +130,11 @@ a.index-link::before {
 
 h1, h2, h3, h4, h5, h6 {
   color: #90EE90;
+
+  /* The effects this produces across a multiline h1 tag is cool */
+  /*background: -webkit-linear-gradient(#ff0000, #00ff00, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
 }
 
 /* Table Modifiers */
@@ -206,6 +211,11 @@ li {
 
 p {
   color: #90EE90;
+
+  /*background: -webkit-linear-gradient(left, #ff0000, #00ff00, #0000ff);*/
+  /*background: -webkit-radial-gradient(#ff0000, #00ff00, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
 }
 
 /* Text Modifiers */
