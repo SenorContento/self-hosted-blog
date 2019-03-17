@@ -85,6 +85,7 @@ pre {
 /* Taken from my blog */
 pre {
   font-family: 'Source-Code';
+  /*font-family: 'FiraCode';*/
   font-weight: normal;
   font-style: normal;
   background: rgba(0, 0, 0, 0.9);
