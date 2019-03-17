@@ -423,7 +423,7 @@ function recurseTable(key, value) {
         if(v instanceof Object) {
           recurseTable(k, v);
         } else {
-          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + key + " --> " + k + "</td>" +
+          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + key + " <span class=\"arrow\">--></span> " + k + "</td>" +
           "<td class=\"item-table\" style=\"text-align: left\">" + v + "</td></tr>");
         }
       });

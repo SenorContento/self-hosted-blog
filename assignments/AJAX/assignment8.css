@@ -103,6 +103,13 @@ pre {
   white-space: pre-wrap;
 }
 
+span.arrow {
+  /*font-family: 'Source-Code';*/
+  font-family: 'FiraCode';
+  font-weight: normal;
+  font-style: normal;
+}
+
 #ajax-output-debug {
   display: inline-block;
   text-align: left;
