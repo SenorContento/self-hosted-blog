@@ -1,6 +1,6 @@
 <?php
   function customPageHeader() {
-    //print("\n\t\t" . '<link rel="stylesheet" href="banme.css">');
+    print("\n\t\t" . '<link rel="stylesheet" href="banme.css">');
   }
 
   $loadPage = new loadPage();
@@ -9,6 +9,7 @@
   $loadPage->loadHeader();
 
   $mainPage->setVars();
+  $mainPage->blockPort22();
   $mainPage->mainBody();
 
   $loadPage->loadFooter();
@@ -57,6 +58,22 @@
       }
     }
 
+    public function blockPort22() {
+      try {
+        if(!empty($_REQUEST)) {
+          $block = isset($_REQUEST["blockme"]) ? filter_var($_REQUEST["blockme"], FILTER_VALIDATE_BOOLEAN) : false;
+          $ipaddress = $_SERVER["REMOTE_ADDR"];
+
+          if($block) {
+            print("<h1 class='redblue popup ligature'>->Block Me Activated for $ipaddress!!!<-</h1>");
+          }
+        }
+      }
+      catch(Exception $e) {
+          print("<h1>Block Port 22 Exception: $e</h1>");
+      }
+    }
+
     public function addJSTimer($time) {
       print("<script src=\"countdown.js\"></script>");
       print("<script>setTimer(\"" . $time . "\");</script>"); // Jan 5, 2021 15:37:25
@@ -92,6 +109,8 @@
         $this->addJSTimer($timeunbanned->format("M d, Y H:i:s")); // Mar 13, 2019 14:30:18 // This is in UTC Format
       }
       print("</tbody></table>");
+
+      // TODO: Add a button that blocks port 22 for this ip address!!!
     }
 
     public function getCurrentBanCount($service) {

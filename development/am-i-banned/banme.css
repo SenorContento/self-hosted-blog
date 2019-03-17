@@ -1,0 +1,21 @@
+h1.rgb {
+  background: -webkit-linear-gradient(#ff0000, #00ff00, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1.redblue {
+  background: -webkit-linear-gradient(#ff0000, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1.popup {
+  text-shadow: 2px 2px #00ff00;
+}
+
+.ligature {
+  font-family: 'FiraCode';
+  font-weight: normal;
+  font-style: normal;
+}
