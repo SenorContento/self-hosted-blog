@@ -9,6 +9,7 @@
 
   $loadPage->loadHeader();
   $mainPage->mainBody();
+  $mainPage->printForm();
   $loadPage->loadFooter();
 
   class loadPage {
@@ -30,6 +31,16 @@
       // https://blog.teamtreehouse.com/an-introduction-to-websockets
       print('Something cool will be here soon!!!');
       print('</h1>');
+
+      print("<pre class='ligature' id='received'></pre>");
+    }
+
+    public function printForm() {
+      print('<form id="message-form" action="#" method="post">
+              <textarea id="message" placeholder="Write your message here..." required></textarea>
+              <button type="submit">Send Message</button>
+              <button type="button" id="close">Close Connection</button>
+            </form>');
     }
   }
 ?>
