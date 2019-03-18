@@ -11,7 +11,7 @@
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work
   var header_proc = new System.Diagnostics.Process();
   header_proc.StartInfo.FileName = "/usr/bin/php";
-  header_proc.StartInfo.Arguments = Server.MapPath("~") + "server-data/header.php";
+  header_proc.StartInfo.Arguments = "\"" + Server.MapPath("~") + "server-data/header.php" + "\"";
   header_proc.StartInfo.RedirectStandardOutput = true;
   header_proc.StartInfo.UseShellExecute = false;
 
@@ -31,7 +31,7 @@
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work
   var footer_proc = new System.Diagnostics.Process();
   footer_proc.StartInfo.FileName = "/usr/bin/php";
-  footer_proc.StartInfo.Arguments = Server.MapPath("~") + "server-data/footer.php";
+  footer_proc.StartInfo.Arguments = "\"" + Server.MapPath("~") + "server-data/footer.php" + "\"";
   footer_proc.StartInfo.RedirectStandardOutput = true;
   footer_proc.StartInfo.UseShellExecute = false;
   footer_proc.Start();
