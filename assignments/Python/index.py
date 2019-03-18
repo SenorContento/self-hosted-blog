@@ -185,6 +185,8 @@ def handleRequest(env, start_response, query):
         start_response('418 I\'m a teapot', [('Content-Type','text/html'), ('charset','utf-8')])
         return "ImportError! Cannot import database!".encode('utf-8');
 
+    # TODO: Move Database Outside of Webroot (So Git Doesn't Overwrite It - It is Not Publicly Accessible Regardless)
+    # TODO: Add A Mkdir Command
     database_file = env['DOCUMENT_ROOT'] + "/server-data/databases/assignment9.db"
 
     conn = database.connect(database_file)
