@@ -270,7 +270,8 @@
         print("Reset Counter: "); //filter_var((), FILTER_VALIDATE_BOOLEAN)
       }*/
 
-      if(((int) $requestedBytes > (int) $quotaBytesRemaining) && ((int) $quotaRequestsRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
+      //print("Quota Requests Remaining: " . $quotaRequestsRemaining);
+      if(((int) $requestedBytes > (int) $quotaBytesRemaining) || ((int) $quotaRequestsRemaining === 0) && ($now < $collectGO)) // Maybe turn these zeros into variables to kill the rate limit before it actually ends
         throw new Exception("Exceeded Rate Limit! Wait until $collectGO! Current Time is $now! (Requests: $quotaRequestsRemaining) (Bytes: $quotaBytesRemaining) (Requested Bytes: $requestedBytes)");
     }
 

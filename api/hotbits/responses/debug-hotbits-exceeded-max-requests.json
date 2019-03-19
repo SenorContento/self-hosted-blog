@@ -1,0 +1,16 @@
+{
+  "rowID": 273,
+  "version": "1.0",
+  "schema": "http://www.fourmilab.ch/hotbits/json/hotbits.schema.json",
+  "status": 200,
+  "requestInformation": {
+    "serverVersion": "Release 3.9, January 2019",
+    "generationTime": "2019-03-19T17:21:11Z",
+    "bytesRequested": 10,
+    "bytesReturned": 10,
+    "quotaRequestsRemaining": 0,
+    "quotaBytesRemaining": 11088,
+    "generatorType": "random"
+  },
+  "data": [120,43,38,205,80,195,199,176,17,150]
+}
