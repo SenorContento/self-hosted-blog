@@ -1,0 +1,14 @@
+#ff0000 - Red
+#00ff00 - Green
+#0000ff - Blue
+
+#ffff00 - Yellow
+#ff00ff - Pink
+#00ffff - Cyan
+
+#000000 - Black
+#ffffff - White
+
+-------------
+Gauntlet of Ire - Yellow, Blue, Red
+Muser Physics - https://www.greatreality.com/ColorPrimary.htm
