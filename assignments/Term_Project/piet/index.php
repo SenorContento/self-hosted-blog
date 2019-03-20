@@ -67,13 +67,23 @@
         $target_file = $target_dir . basename($_FILES["piet-image"]["name"]); // Change to Randomly Generated UUID
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION)); // Change to Mime Type
 
-        if(file_exists($target_file)) {
-          print("<span class=\"error\">File Already Exists!!!</span><br>");
+        // Check If File Size Is Under 1 MB (1024 KB)
+        if($_FILES["piet-image"]["size"] > 1024000) {
+          print("<span class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</span><br>");
           return -1;
         }
 
-        ($_FILES["piet-image"]["size"] > 500000); // 500 Kb
-        ($imageFileType != "png"); // If Not PNG
+        // Check If PNG Format
+        if($imageFileType != "png") {
+          print("<span class=\"error\">Image Has to Be A PNG File!!!</span><br>");
+          return -2;
+        }
+
+        // If File Already Exists
+        if(file_exists($target_file)) {
+          print("<span class=\"error\">File Already Exists!!!</span><br>");
+          return -3;
+        }
 
         print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
 
