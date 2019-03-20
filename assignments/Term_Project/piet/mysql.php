@@ -50,10 +50,11 @@ class sqlCommands {
 
       $sql = "CREATE TABLE programs (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        firstname TEXT NOT NULL,
-        lastname TEXT NOT NULL,
-        color TEXT NOT NULL,
-        food TEXT NOT NULL
+        programid TEXT NOT NULL,
+        programname TEXT NOT NULL,
+        filename TEXT NOT NULL,
+        uploaderipaddress TEXT NOT NULL,
+        programabout TEXT NOT NULL
       )";
 
       $tableExists = false;
@@ -73,17 +74,18 @@ class sqlCommands {
     }
   }
 
-  public function insertData($fname, $lname, $color, $food) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (firstname, lastname, color, food)
-                                   VALUES (:fname, :lname, :color, :food)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout)");
 
       $statement->execute([
-        'fname' => $fname,
-        'lname' => $lname,
-        'color' => $color,
-        'food' => $food,
+        'programid' => $programid,
+        'programname' => $programname,
+        'filename' => $filename,
+        'uploaderipaddress' => $ipaddress,
+        'programabout' => $programabout,
       ]);
     } catch(PDOException $e) {
         echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
@@ -101,10 +103,11 @@ class sqlCommands {
         print("
         <tr>
           <td>" . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . "</td>
-          <td>" . htmlspecialchars($row['firstname'], ENT_QUOTES, 'UTF-8') . "</td>
-          <td>" . htmlspecialchars($row['lastname'], ENT_QUOTES, 'UTF-8') . "</td>
-          <td>" . htmlspecialchars($row['color'], ENT_QUOTES, 'UTF-8') . "</td>
-          <td>" . htmlspecialchars($row['food'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['programid'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['programname'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['filename'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['uploaderipaddress'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['programabout'], ENT_QUOTES, 'UTF-8') . "</td>
         </tr>");
       }
     } catch(PDOException $e) {
