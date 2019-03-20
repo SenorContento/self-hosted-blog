@@ -2,18 +2,18 @@
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentThirteen();
 
-  //$loadPage->loadHeader();
+  $loadPage->loadHeader();
 
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
   $mainPage->redirectMe();
   $mainPage->printWarning();
   $mainPage->printSourceCodeLink();
-  $mainPage->printDomainURL();
+  //$mainPage->printDomainURL();
 
   //$mainPage->printTable();
 
-  //$loadPage->loadFooter();
+  $loadPage->loadFooter();
 
   class homeworkAssignmentThirteen {
     public function redirectMe() {
