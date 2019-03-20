@@ -1,3 +1,15 @@
+/* Import Fonts CSS */
+@import 'fonts.css' all;
+
+/*html {
+  min-height: 100%;
+  position: relative;
+}
+
+html, body {
+  padding: 0;
+}*/
+
 body {
   background-color: purple; /* This is just to test the CSS Loading */
 }

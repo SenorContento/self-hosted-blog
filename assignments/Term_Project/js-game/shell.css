@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+.rgb {
+  background: -webkit-linear-gradient(#ff0000, #00ff00, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.redblue {
+  background: -webkit-linear-gradient(#ff0000, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.popup {
+  text-shadow: 2px 2px #00ff00;
+}
+
+.ligature {
+  font-family: 'FiraCode';
+  font-weight: normal;
+  font-style: normal;
+}
+
+#received {
+  max-width: 800px;
+  width: 90%;
+  color: #90EE90;
+  display: inline-block;
+  text-align: left;
+}
+
+pre {
+  border: 1px solid #b5e853;
+  padding: 8px;
+  /*border-bottom: 0px;*/
+
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+form {
+  /* Intentionally Left Blank */
+}
+
+#command {
+  background-color: #000000;
+  color: #b5e853;
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+#command:focus{
+  /*outline: none;*/
+  /*outline-color: blue;*/
+  outline-color: #0075ff;
+  caret-color: auto; /* Specifies Color of Pipe Character. Can Be Animated */
+
+  /*outline-color: royalblue;*/
+}
+
+span.black {
+  color: black;
+}
+
+span.red {
+  color: red;
+}
+
+span.green {
+  color: green;
+}
+
+span.yellow {
+  color: yellow;
+}
+
+span.blue {
+  color: blue;
+}
+
+span.magenta {
+  color: magenta;
+}
+
+span.cyan {
+  color: cyan;
+}
+
+span.white {
+  color: white;
+}
+
+span.reset {
+  color: #90EE90;
+}

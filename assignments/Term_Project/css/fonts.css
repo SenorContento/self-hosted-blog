@@ -1,0 +1,223 @@
+/* https://stackoverflow.com/a/2436830/6828099 */
+
+/* PT Serif Font */
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PT-Serif';
+  src: url('/fonts/Serif/PT_Serif/ttf/PT_Serif-Web-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* OpenSans Font */
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+/* TODO: Debug Wrongly Chosen Fonts */
+@font-face {
+  font-family: 'OpenSans - Lighter';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-LightItalic.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: italic;
+}
+
+/*@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-SemiBold.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+TODO: Figure Out Font Weight for SemiBold
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}*/
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-ExtraBold.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Sans/Open_Sans/ttf/OpenSans-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: italic;
+}
+
+/* Source-Code Font */
+/* TODO: FINISH ADDING FONTS */
+
+@font-face {
+  font-family: 'Source-Code';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source-Code-Bold';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source-Code-Bolder';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Black.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+/* TODO: Figure Out Font Weight
+@font-face {
+  font-family: 'Source-Code';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Light.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source-Code';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Medium.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source-Code';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-Semibold.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source-Code';
+  src: url('/fonts/Mono/Source_Code_Pro/ttf/SourceCodePro-ExtraLight.ttf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+*/
+
+/* ZCOOL-Sans Font */
+
+@font-face {
+  font-family: 'ZCOOL-Sans';
+  src: url('/fonts/Sans/ZCOOL_QingKe_HuangYou/ttf/ZCOOLQingKeHuangYou-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* OpenDyslexic3 Font */
+/* TODO: FINISH ADDING FONTS */
+
+@font-face {
+  font-family: 'OpenDyslexic3';
+  src: url('/fonts/Sans/open-dyslexic/ttf/OpenDyslexic3-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* FiraCode Font */
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Medium.ttf') format('truetype');
+  font-weight: Medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FiraCode-Retina';
+  src: url('/fonts/Mono/FiraCode/ttf/FiraCode-Retina.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
