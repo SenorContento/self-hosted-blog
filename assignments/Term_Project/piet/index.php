@@ -1,15 +1,35 @@
 <?php
+  function customPageHeader() {
+    print("\n\t\t" . '<link rel="stylesheet" href="piet.css">');
+    //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+  }
+
+  require_once 'mysql.php';
+
   $loadPage = new loadPage();
+  $sqlCommands = new sqlCommands();
   $mainPage = new PietUploader();
 
-  //$loadPage->loadHeader();
+  $loadPage->loadHeader();
+
+  // While the PHP form uses the web user, the bash script uses the piet user.
+  // The piet user will only have read permission while PHP will get read/write.
+  // I created a whole separate database for the piet project.
+  $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
+                          getenv('alex.server.phpmyadmin.username'),
+                          getenv('alex.server.phpmyadmin.password'),
+                          "piet");
+
+  $sqlCommands->testConnection();
+  $sqlCommands->connectMySQL();
+  $sqlCommands->createTable();
 
   $mainPage->setVars();
   $mainPage->checkUpload();
   $mainPage->printSourceCodeLink();
   $mainPage->printUploadForm();
 
-  //$loadPage->loadFooter();
+  $loadPage->loadFooter();
 
   class PietUploader {
     function setVars() {
@@ -47,7 +67,11 @@
         $target_file = $target_dir . basename($_FILES["piet-image"]["name"]); // Change to Randomly Generated UUID
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION)); // Change to Mime Type
 
-        file_exists($target_file);
+        if(file_exists($target_file)) {
+          print("<span class=\"error\">File Already Exists!!!</span><br>");
+          return -1;
+        }
+
         ($_FILES["piet-image"]["size"] > 500000); // 500 Kb
         ($imageFileType != "png"); // If Not PNG
 

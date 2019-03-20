@@ -18,12 +18,12 @@
   $loadHeader->printScripts();
 
   $loadHeader->printIcons();
-  $loadHeader->printServiceWorker();
+  //$loadHeader->printServiceWorker();
 
   $loadHeader->printCustomPageHeader();
   $loadHeader->printEndHeader();
   $loadHeader->printStartBody();
-  $loadHeader->printNotificationMessage();
+  //$loadHeader->printNotificationMessage();
   $loadHeader->printEndStartBody();
 
   class loadHeader {
@@ -39,7 +39,7 @@
     }
 
     public function printAuthorMetadata() {
-      print("\n\t\t" . '<link rel="author" href="/humans.txt" />');
+      print("\n\t\t" . '<link rel="author" href="https://web.senorcontento.com/humans.txt" />');
     }
 
     public function printMobileStyling() {
