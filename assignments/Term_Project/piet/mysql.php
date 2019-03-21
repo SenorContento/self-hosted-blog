@@ -54,7 +54,8 @@ class sqlCommands {
         programname TEXT NOT NULL,
         filename TEXT NOT NULL,
         uploaderipaddress TEXT NOT NULL,
-        programabout TEXT NOT NULL
+        programabout TEXT NOT NULL,
+        checksum TEXT NOT NULL
       )";
 
       $tableExists = false;
@@ -74,11 +75,11 @@ class sqlCommands {
     }
   }
 
-  public function insertData($programid, $programname, $filename, $ipaddress, $programabout) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout)
-                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum)");
 
       $statement->execute([
         'programid' => $programid,
@@ -86,9 +87,30 @@ class sqlCommands {
         'filename' => $filename,
         'uploaderipaddress' => $ipaddress,
         'programabout' => $programabout,
+        'checksum' => $checksum
       ]);
     } catch(PDOException $e) {
         echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+    }
+  }
+
+  public function readChecksum($checksum) {
+    try {
+      $conn = $this->connectMySQL();
+      $statement = $conn->prepare("SELECT * FROM programs where checksum=:checksum LIMIT 1");
+
+      $statement->execute([
+        'checksum' => $checksum
+      ]);
+
+      foreach($statement->fetchAll() as $row) {
+        # This should only execute once anyway
+        return[true, $row['programid'], $row['checksum']];
+      }
+
+      return[false, "Null", $checksum];
+    } catch(PDOException $e) {
+        echo "<p>Read Checksum from Table Failed: " . $e->getMessage() . "</p>";
     }
   }
 
@@ -108,6 +130,7 @@ class sqlCommands {
           <td>" . htmlspecialchars($row['filename'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['uploaderipaddress'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['programabout'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['checksum'], ENT_QUOTES, 'UTF-8') . "</td>
         </tr>");
       }
     } catch(PDOException $e) {

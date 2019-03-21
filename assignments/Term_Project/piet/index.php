@@ -70,10 +70,11 @@
 
           $filename = $metadata[1];
           $ipaddress = $_SERVER["REMOTE_ADDR"];
+          $checksum = $metadata[2];
 
           //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
           global $sqlCommands;
-          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout);
+          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum);
         }
     }
 
@@ -96,7 +97,14 @@
         $randomid = uniqid('piet_');
         $target_dir = $this->piet_upload_path;
         $target_file = $target_dir . $randomid . ".png";
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION)); // Change to Mime Type
+        $imageFileType = mime_content_type($_FILES["piet-image"]["tmp_name"]); // Change to Mime Type
+        $checksum = hash_file("sha256", $_FILES["piet-image"]["tmp_name"]);
+
+        global $sqlCommands;
+        if($sqlCommands->readChecksum($checksum)[0]) {
+          print("<span class=\"error\">Image Already Exists!!!</span><br>");
+          return -4;
+        }
 
         // Check If File Size Is Under 1 MB (1024 KB)
         if($_FILES["piet-image"]["size"] > 1024000) {
@@ -105,8 +113,8 @@
         }
 
         // Check If PNG Format
-        if($imageFileType != "png") {
-          print("<span class=\"error\">Image Has to Be A PNG File!!!</span><br>");
+        if($imageFileType != "image/png") {
+          print("<span class=\"error\">Image Has to Be A PNG File!!! It is a $imageFileType file!!!</span><br>");
           return -2;
         }
 
@@ -119,7 +127,7 @@
 
         if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
           print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
-          return [$randomid, basename($_FILES["piet-image"]["name"])];
+          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum];
         } else {
           print("<span class=\"error\">Failed To Move File To Storage Directory!!!</span><br>");
           return -3;
