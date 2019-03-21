@@ -120,7 +120,7 @@
         $verifyExists = $sqlCommands->readChecksum($checksum);
         if($verifyExists[0]) {
           if($verifyExists[3]) {
-            print("<span class=\"error\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "</span><br>");
+            print("<span class=\"error\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</span><br>");
           } else {
             print("<span class=\"error\">Image Was Previously Banned!!!</span><br>");
           }
