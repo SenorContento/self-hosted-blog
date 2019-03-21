@@ -100,17 +100,17 @@
         $imageFileType = mime_content_type($_FILES["piet-image"]["tmp_name"]);
         $checksum = hash_file("sha256", $_FILES["piet-image"]["tmp_name"]);
 
+        // Check If File Size Is Under 1 MB (1024 KB)
+        if($_FILES["piet-image"]["size"] > 1024000) {
+          print("<span class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</span><br>");
+          return -1;
+        }
+
         global $sqlCommands;
         // Check If Image Already Exists By Comparing Checksum
         if($sqlCommands->readChecksum($checksum)[0]) {
           print("<span class=\"error\">Image Already Exists!!!</span><br>");
           return -4;
-        }
-
-        // Check If File Size Is Under 1 MB (1024 KB)
-        if($_FILES["piet-image"]["size"] > 1024000) {
-          print("<span class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</span><br>");
-          return -1;
         }
 
         // Check If PNG Format
