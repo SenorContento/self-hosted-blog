@@ -71,10 +71,11 @@
           $filename = $metadata[1];
           $ipaddress = $_SERVER["REMOTE_ADDR"];
           $checksum = $metadata[2];
+          $allowed = $metadata[3];
 
           //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
           global $sqlCommands;
-          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum);
+          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed);
         }
     }
 
@@ -88,6 +89,14 @@
       }
 
       return $return_me;
+    }
+
+    public function checkImageAllowed() {
+      // Check If Image Is ALLOWED!!!
+      // I could restrict the color palette
+      // to only what is expected in a Piet Program.
+      // http://www.dangermouse.net/esoteric/piet.html
+      return 1;
     }
 
     public function checkUpload() {
@@ -126,9 +135,12 @@
           $target_file = $target_dir . $randomid . ".png";
         }
 
+        // Check against porn or other content not allowed
+        $allowed = $this->checkImageAllowed();
+
         if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
           print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
-          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum];
+          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed];
         } else {
           print("<span class=\"error\">Failed To Move File To Storage Directory!!!</span><br>");
           return -3;

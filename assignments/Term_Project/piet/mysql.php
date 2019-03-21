@@ -48,14 +48,15 @@ class sqlCommands {
         WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'programs')
       ";
 
-      $sql = "CREATE TABLE programs (
+      $sql = "CREATE TABLE programstwo (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         programid TEXT NOT NULL,
         programname TEXT NOT NULL,
         filename TEXT NOT NULL,
         uploaderipaddress TEXT NOT NULL,
         programabout TEXT NOT NULL,
-        checksum TEXT NOT NULL
+        checksum TEXT NOT NULL,
+        allowed BOOLEAN NOT NULL
       )";
 
       $tableExists = false;
@@ -75,11 +76,11 @@ class sqlCommands {
     }
   }
 
-  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum)
-                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed)");
 
       $statement->execute([
         'programid' => $programid,
@@ -87,7 +88,8 @@ class sqlCommands {
         'filename' => $filename,
         'uploaderipaddress' => $ipaddress,
         'programabout' => $programabout,
-        'checksum' => $checksum
+        'checksum' => $checksum,
+        'allowed' => $allowed
       ]);
     } catch(PDOException $e) {
         echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
@@ -131,6 +133,7 @@ class sqlCommands {
           <td>" . htmlspecialchars($row['uploaderipaddress'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['programabout'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['checksum'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['allowed'], ENT_QUOTES, 'UTF-8') . "</td>
         </tr>");
       }
     } catch(PDOException $e) {

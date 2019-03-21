@@ -1,4 +1,5 @@
 span.error {
   color: red;
-  font-family: fantasy;
+  font-family: FiraCode;
+  font-weight: bold;
 }
