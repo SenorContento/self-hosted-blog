@@ -107,10 +107,10 @@ class sqlCommands {
 
       foreach($statement->fetchAll() as $row) {
         # This should only execute once anyway
-        return[true, $row['programid'], $row['checksum']];
+        return[true, $row['programid'], $row['checksum'], $row['allowed']];
       }
 
-      return[false, "Null", $checksum];
+      return[false, "Null", $checksum, 1];
     } catch(PDOException $e) {
         echo "<p>Read Checksum from Table Failed: " . $e->getMessage() . "</p>";
     }
