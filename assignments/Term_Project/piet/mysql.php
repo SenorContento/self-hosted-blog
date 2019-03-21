@@ -56,7 +56,10 @@ class sqlCommands {
         uploaderipaddress TEXT NOT NULL,
         programabout TEXT NOT NULL,
         checksum TEXT NOT NULL,
-        allowed BOOLEAN NOT NULL
+        allowed BOOLEAN NOT NULL,
+        banreason TEXT,
+        reported BOOLEAN NOT NULL,
+        cleared BOOLEAN NOT NULL
       )";
 
       $tableExists = false;
@@ -76,11 +79,11 @@ class sqlCommands {
     }
   }
 
-  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed)
-                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, reported, cleared)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed, :banreason, :reported, :cleared)");
 
       $statement->execute([
         'programid' => $programid,
@@ -89,7 +92,10 @@ class sqlCommands {
         'uploaderipaddress' => $ipaddress,
         'programabout' => $programabout,
         'checksum' => $checksum,
-        'allowed' => $allowed
+        'allowed' => $allowed,
+        'banreason' => $banreason,
+        'reported' => $reported,
+        'cleared' => $cleared
       ]);
     } catch(PDOException $e) {
         echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
@@ -134,6 +140,9 @@ class sqlCommands {
           <td>" . htmlspecialchars($row['programabout'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['checksum'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['allowed'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['banreason'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['reported'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['cleared'], ENT_QUOTES, 'UTF-8') . "</td>
         </tr>");
       }
     } catch(PDOException $e) {

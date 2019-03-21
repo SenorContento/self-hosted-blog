@@ -26,8 +26,6 @@
 
   $mainPage->setVars();
 
-  // TODO: Add a Report Boolean Column
-  // and add a Cleared Boolean Column
   $mainPage->verifyMySQLVars($mainPage->checkUpload());
 
   $mainPage->printSourceCodeLink();
@@ -74,10 +72,13 @@
           $ipaddress = $_SERVER["REMOTE_ADDR"];
           $checksum = $metadata[2];
           $allowed = $metadata[3];
+          $banreason = $metadata[4]; // Just Setting Up for manual intervention later if needed and also automated fail ban message.
+          $reported = 0; // Checks if image was reported (e.g. bad program/porn/hate symbol/hate speech/etc...)
+          $cleared = 0; // Once I check the image by hand, if I see nothing wrong with it, I will manually flip this to true to stop notifying me about reports.
 
           //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
           global $sqlCommands;
-          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed);
+          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared);
         }
     }
 
@@ -144,10 +145,19 @@
 
         // Check against porn or other content not allowed
         $allowed = $this->checkImageAllowed();
+        $banreason = Null;
+
+        if(!$allowed) {
+          $issues=getenv('alex.github.project') . "/issues";
+          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check!!! Contact Me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</span>');
+          //return -5;
+          // I am still allowing upload of not allowed images so I can manually override incase the image was mistaken.
+          $banreason = "Failed Automated Check";
+        }
 
         if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
           print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
-          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed];
+          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason];
         } else {
           print("<span class=\"error\">Failed To Move File To Storage Directory!!!</span><br>");
           return -3;
