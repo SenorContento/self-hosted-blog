@@ -59,7 +59,8 @@ class sqlCommands {
         allowed BOOLEAN NOT NULL,
         banreason TEXT,
         reported BOOLEAN NOT NULL,
-        cleared BOOLEAN NOT NULL
+        cleared BOOLEAN NOT NULL,
+        dateadded TEXT NOT NULL
       )";
 
       $tableExists = false;
@@ -79,11 +80,11 @@ class sqlCommands {
     }
   }
 
-  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared, $dateadded) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, reported, cleared)
-                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed, :banreason, :reported, :cleared)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, reported, cleared, dateadded)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed, :banreason, :reported, :cleared, :dateadded)");
 
       $statement->execute([
         'programid' => $programid,
@@ -95,7 +96,8 @@ class sqlCommands {
         'allowed' => $allowed,
         'banreason' => $banreason,
         'reported' => $reported,
-        'cleared' => $cleared
+        'cleared' => $cleared,
+        'dateadded' => $dateadded
       ]);
     } catch(PDOException $e) {
         echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
@@ -143,6 +145,7 @@ class sqlCommands {
           <td>" . htmlspecialchars($row['banreason'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['reported'], ENT_QUOTES, 'UTF-8') . "</td>
           <td>" . htmlspecialchars($row['cleared'], ENT_QUOTES, 'UTF-8') . "</td>
+          <td>" . htmlspecialchars($row['dateadded'], ENT_QUOTES, 'UTF-8') . "</td>
         </tr>");
       }
     } catch(PDOException $e) {

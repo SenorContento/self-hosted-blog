@@ -73,12 +73,13 @@
           $checksum = $metadata[2];
           $allowed = $metadata[3];
           $banreason = $metadata[4]; // Just Setting Up for manual intervention later if needed and also automated fail ban message.
+          $dateadded = $metadata[5]; // Helps determine when to autodelete banned images if not cleared.
           $reported = 0; // Checks if image was reported (e.g. bad program/porn/hate symbol/hate speech/etc...)
           $cleared = 0; // Once I check the image by hand, if I see nothing wrong with it, I will manually flip this to true to stop notifying me about reports.
 
           //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
           global $sqlCommands;
-          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared);
+          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared, $dateadded);
         }
     }
 
@@ -155,9 +156,12 @@
           $banreason = "Failed Automated Check";
         }
 
+        date_default_timezone_set("UTC"); // Set Time To UTC Format
+        $dateadded = time(); // Get Current Server Time
+
         if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
           print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
-          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason];
+          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason, $dateadded];
         } else {
           print("<span class=\"error\">Failed To Move File To Storage Directory!!!</span><br>");
           return -3;
