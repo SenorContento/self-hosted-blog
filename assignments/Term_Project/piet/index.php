@@ -26,6 +26,8 @@
 
   $mainPage->setVars();
 
+  // TODO: Add a Report Boolean Column
+  // and add a Cleared Boolean Column
   $mainPage->verifyMySQLVars($mainPage->checkUpload());
 
   $mainPage->printSourceCodeLink();
