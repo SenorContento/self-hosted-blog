@@ -131,9 +131,9 @@
           return -4;
         }
 
-        // Check If PNG Format
-        if($imageFileType != "image/png") {
-          print("<span class=\"error\">Image Has to Be A PNG File!!! It is a $imageFileType file!!!</span><br>");
+        // Check If PNG or GIF Format
+        if($imageFileType != "image/png" && $imageFileType != "image/gif") {
+          print("<span class=\"error\">Image Has to Be A PNG Or GIF File!!! It is a $imageFileType file!!!</span><br>");
           return -2;
         }
 
