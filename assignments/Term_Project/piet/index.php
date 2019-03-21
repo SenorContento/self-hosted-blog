@@ -97,10 +97,11 @@
         $randomid = uniqid('piet_');
         $target_dir = $this->piet_upload_path;
         $target_file = $target_dir . $randomid . ".png";
-        $imageFileType = mime_content_type($_FILES["piet-image"]["tmp_name"]); // Change to Mime Type
+        $imageFileType = mime_content_type($_FILES["piet-image"]["tmp_name"]);
         $checksum = hash_file("sha256", $_FILES["piet-image"]["tmp_name"]);
 
         global $sqlCommands;
+        // Check If Image Already Exists By Comparing Checksum
         if($sqlCommands->readChecksum($checksum)[0]) {
           print("<span class=\"error\">Image Already Exists!!!</span><br>");
           return -4;
