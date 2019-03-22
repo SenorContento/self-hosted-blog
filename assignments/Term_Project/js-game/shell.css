@@ -65,6 +65,11 @@ form {
   /*outline-color: royalblue;*/
 }
 
+span.newsession {
+  /* Modify Line for New Session (After PlayedOnce is Set) */
+  /* ------------------------------------------------ */
+}
+
 span.black {
   color: black;
 }
