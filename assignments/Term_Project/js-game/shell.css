@@ -65,9 +65,45 @@ form {
   /*outline-color: royalblue;*/
 }
 
+/* https://stackoverflow.com/a/6382036/6828099 */
+hr.newsession {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid blue;
+  margin: 1em 0;
+  padding: 0;
+  /*background-color*/
+}
+
 span.newsession {
   /* Modify Line for New Session (After PlayedOnce is Set) */
-  /* ------------------------------------------------ */
+  /*border: 1px solid blue;*/
+  font-family: 'FiraCode';
+  font-weight: normal;
+  font-style: normal;
+
+  color: green;
+}
+
+div.newsession-copy {
+  /* Allows For A Line that Can Be Copied By The User */
+  /* https://stackoverflow.com/a/37927056/6828099 */
+  /* ------------------------------------------------ - Keyboard */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ - U+2501 */
+  /* ──────────────────────────────────────────────── - U+2500 */
+  color: inherit;
+  font-size: 0;
+}
+
+span.newsession::before {
+  /* I can use this to make the text unselectable -
+   * you have to set the span tag to empty content on the html part */
+  /* content: "────────────────────────────────────────────────"; */
+}
+
+span.newsession::before, span.newsession::after {
+  /* Intentionally Left Blank */
 }
 
 span.black {

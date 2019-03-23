@@ -62,7 +62,9 @@ function startSocket(command) {
   var messageField = document.getElementById('command');
 
   // Create a new WebSocket.
-  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/');
+  var socket = new WebSocket('ws://localhost/');
+  //var socket = new WebSocket('wss://web.senorcontento.com/game/'); // wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/
+  //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/'); //5c92cd6054ce1/
 
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function(event) {
@@ -72,8 +74,10 @@ function startSocket(command) {
 
     if(playedOnce) {
       // Allows extra spacer to separate out sessions of connections
-      received.innerHTML += "<span class=\"green newsession\">------------------------------------------------</span>";
-      received.innerHTML += '\n';
+      /*received.innerHTML += "<span class=\"newsession\">────────────────────────────────────────────────</span>";*/
+      received.innerHTML += '<hr class=\"newsession\"></hr>';
+      received.innerHTML += '<div class=\"newsession-copy\">────────────────────────────────────────────────</div>';
+      //received.innerHTML += '\n';
     }
 
     // Allows for sending command from previously closed session!!!
