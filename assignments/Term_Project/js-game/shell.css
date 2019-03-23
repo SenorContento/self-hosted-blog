@@ -76,24 +76,23 @@ hr.newsession {
   /*background-color*/
 }
 
-span.newsession {
-  /* Modify Line for New Session (After PlayedOnce is Set) */
-  /*border: 1px solid blue;*/
-  font-family: 'FiraCode';
-  font-weight: normal;
-  font-style: normal;
-
-  color: green;
-}
-
 div.newsession-copy {
   /* Allows For A Line that Can Be Copied By The User */
   /* https://stackoverflow.com/a/37927056/6828099 */
   /* ------------------------------------------------ - Keyboard */
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ - U+2501 */
   /* ──────────────────────────────────────────────── - U+2500 */
-  color: inherit;
+  /* background-color: white; */
+  color: blue;
   font-size: 0;
+}
+
+pre.copy {
+  /* An Experiment to Force Cleared Background Color for Copy and Paste */
+  /* Currently Make Background Color Change Visible in Application */
+  /* display: none; */
+  /* font-size: 0; */
+  /* background-color: white; */
 }
 
 span.newsession::before {

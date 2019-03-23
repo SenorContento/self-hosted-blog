@@ -33,7 +33,7 @@
       print('Super Secret Terminal Game!!!');
       print('</h1>');
 
-      print("<pre class='ligature' id='received'></pre>");
+      print("<pre class='ligature copy' id='received'></pre>");
     }
 
     public function printForm() {

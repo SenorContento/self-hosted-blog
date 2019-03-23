@@ -4,8 +4,21 @@ window.onload = function() {
   resizeCommand(); // Helps Resize Command TextBox
   //alert("Received 2 Max-Width: " + document.getElementById("received").style.maxWidth);
 
-  scroll=true; // Sets autoscrolling to active
+  // Adds Event Listener to Received Pre Tag Only
+  document.getElementById('received').addEventListener('copy', function(e) {
+    // https://stackoverflow.com/a/42090132/6828099
+    // https://stackoverflow.com/a/45857394/6828099
 
+    // This allows me to remove html formatting from copied text so
+    // it won't look wonky from improperly formatted backgrounds or
+    // hard to see text colors on a different user colored background.
+    console.log('Copied Shell Output!!!');
+    var selectedText = window.getSelection().toString();
+    e.clipboardData.setData('text/plain', selectedText);
+    e.preventDefault();
+  });
+
+  scroll=true; // Sets autoscrolling to active
   startSocket(); // Opens WebSocket
 }
 
