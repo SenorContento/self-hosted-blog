@@ -26,9 +26,9 @@
 
   $mainPage->setVars();
 
+  $mainPage->printSourceCodeLink();
   $mainPage->verifyMySQLVars($mainPage->checkUpload());
 
-  $mainPage->printSourceCodeLink();
   $mainPage->printUploadForm();
 
   $loadPage->loadFooter();
@@ -48,7 +48,7 @@
 
     public function printSourceCodeLink() {
       // I had to manually specify the source URL as the term project being on it's own domain messed up the link - /blob/master/assignments/Term_Project/index.php
-      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
+      print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
     }
 
     public function printUploadForm() {

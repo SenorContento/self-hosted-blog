@@ -4,8 +4,8 @@
 <%@ Import Namespace="System.Security" %>
 <%-- <%@ Import Namespace="System.Data.SqlClient.SqlDataReader" %> --%>
 <%
-  // print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a>');
-  sourcecode.Text = "<a class=\"source-code-link\" href=\"" + Environment.GetEnvironmentVariable("alex.github.project") + "/tree/" + Environment.GetEnvironmentVariable("alex.github.branch") + Request.ServerVariables["SCRIPT_NAME"] + "\">View Source Code</a>"; // Strangely Enough, my Mono Implementation does not use ServerVariables the same way as W3Schools (https://www.w3schools.com/asp/coll_servervariables.asp) says to use it!!!
+  // print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
+  sourcecode.Text = "<a class=\"source-code-link\" href=\"" + Environment.GetEnvironmentVariable("alex.github.project") + "/tree/" + Environment.GetEnvironmentVariable("alex.github.branch") + Request.ServerVariables["SCRIPT_NAME"] + "\">View Source Code</a><br>"; // Strangely Enough, my Mono Implementation does not use ServerVariables the same way as W3Schools (https://www.w3schools.com/asp/coll_servervariables.asp) says to use it!!!
 %>
 <%
   // Environment.GetEnvironmentVariable("DOCUMENT_ROOT") Does Not Work

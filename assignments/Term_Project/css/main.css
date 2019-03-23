@@ -32,7 +32,8 @@ a.source-code-link {
   text-decoration-style: none; /* Not the underline, but setting anyway */
   text-decoration-line: none;
 
-  display: block;
+  /*display: block;*/
+  display: inline-block;
 
   /* margin-top: auto; */
   /* margin-bottom: auto; */
