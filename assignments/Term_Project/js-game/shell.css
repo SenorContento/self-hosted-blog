@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+/* Removes Text From Being Able to Be Copied */
+/* Useful For Select All Function */
+/* https://stackoverflow.com/a/43206727/6828099 */
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .rgb {
   background: -webkit-linear-gradient(#ff0000, #00ff00, #0000ff);
   -webkit-background-clip: text;

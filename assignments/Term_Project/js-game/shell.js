@@ -6,6 +6,9 @@ window.onload = function() {
 
   // Adds Event Listener to Received Pre Tag Only
   document.getElementById('received').addEventListener('copy', function(e) {
+
+  // Adds Event Listener to Whole Page
+  //document.addEventListener('copy', function(e) {
     // https://stackoverflow.com/a/42090132/6828099
     // https://stackoverflow.com/a/45857394/6828099
 
@@ -75,7 +78,7 @@ function startSocket(command) {
   var messageField = document.getElementById('command');
 
   // Create a new WebSocket.
-  var socket = new WebSocket('ws://localhost/');
+  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/');
   //var socket = new WebSocket('wss://web.senorcontento.com/game/'); // wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/
   //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/'); //5c92cd6054ce1/
 

@@ -28,7 +28,7 @@
 
   class mainPage {
     public function mainBody() {
-      print('<h1 class="redblue popup ligature">');
+      print('<h1 class="redblue popup ligature unselectable">');
       // https://blog.teamtreehouse.com/an-introduction-to-websockets
       print('Super Secret Terminal Game!!!');
       print('</h1>');
@@ -37,7 +37,7 @@
     }
 
     public function printForm() {
-      print('<form id="sendCommand" method="post">
+      print('<form id="sendCommand" class="unselectable" method="post">
               <input type="text" id="command" placeholder="Command..." autocomplete="off" required><br>
               <!--<button type="submit">Send Command</button>-->
             </form>');
