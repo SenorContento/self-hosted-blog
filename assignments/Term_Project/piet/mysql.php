@@ -11,16 +11,16 @@ class sqlCommands {
 
   public function testConnection() {
     if($this->server === NULL || $this->username === NULL || $this->password === NULL || $this->database === NULL) {
-      print("<p>Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p>");
+      print("<p class=\"mysql-error\">Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p></br>");
       die();
     }
 
     $return_response = $this->connectMySQL();
     if(gettype($return_response) === "string") {
-      print("<p>Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p>");
+      print("<p class=\"mysql-error\">Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p></br>");
       die();
     } else {
-      print("<p>Connected to MySQL Successfully!!!</p>"); //object
+      //print("<p class=\"mysql-success\">Connected to MySQL Successfully!!!</p></br>"); //object
     }
   }
 
@@ -48,7 +48,7 @@ class sqlCommands {
         WHERE (TABLE_SCHEMA = '$this->database') AND (TABLE_NAME = 'programs')
       ";
 
-      $sql = "CREATE TABLE programstwo (
+      $sql = "CREATE TABLE programs (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         programid TEXT NOT NULL,
         programname TEXT NOT NULL,
@@ -76,7 +76,7 @@ class sqlCommands {
       }
     } catch(PDOException $e) {
         //echo $sql . "<br>" . $e->getMessage();
-        echo "<p>Create Table Failed: " . $e->getMessage() . "</p>";
+        echo "<p class=\"mysql-error\">Create Table Failed: " . $e->getMessage() . "</p></br>";
     }
   }
 
@@ -100,7 +100,7 @@ class sqlCommands {
         'dateadded' => $dateadded
       ]);
     } catch(PDOException $e) {
-        echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+        echo "<p class=\"mysql-error\">Insert Data into Table Failed: " . $e->getMessage() . "</p></br>";
     }
   }
 
@@ -120,7 +120,7 @@ class sqlCommands {
 
       return[false, "Null", $checksum, 1];
     } catch(PDOException $e) {
-        echo "<p>Read Checksum from Table Failed: " . $e->getMessage() . "</p>";
+        echo "<p class=\"mysql-error\">Read Checksum from Table Failed: " . $e->getMessage() . "</p></br>";
     }
   }
 
@@ -149,7 +149,7 @@ class sqlCommands {
         </tr>");
       }
     } catch(PDOException $e) {
-        echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+        echo "<p class=\"mysql-error\">Read Data from Table Failed: " . $e->getMessage() . "</p></br>";
     }
   }
 }

@@ -10,6 +10,33 @@ html, body {
   padding: 0;
 }*/
 
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: purple; /* This is just to test the CSS Loading */
+  font-family: 'PT-Serif';
+  background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
+  text-align: center;
+  /*padding-bottom: 8px;*/
+}
+
+a.source-code-link {
+  font-size: 2em;
+  text-decoration-style: none; /* Not the underline, but setting anyway */
+  text-decoration-line: none;
+
+  display: block;
+
+  /* margin-top: auto; */
+  /* margin-bottom: auto; */
+
+  /* padding-top: 2px; */
+  padding-bottom: 8px;
 }

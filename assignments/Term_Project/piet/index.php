@@ -54,8 +54,8 @@
     public function printUploadForm() {
       print('
       <form method="post" enctype="multipart/form-data">
-        Select image to upload:
-        <input type="file" name="piet-image" id="piet-image">
+        <label class="upload">Select image to upload: </label>
+        <input type="file" name="piet-image" class="upload-box" id="piet-image">
         <input type="submit" value="Upload Image" name="submit">
       </form>
       ');
@@ -115,7 +115,7 @@
 
         // Check If File Size Is Under 1 MB (1024 KB)
         if($_FILES["piet-image"]["size"] > 1024000) {
-          print("<span class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</span><br>");
+          print("<div class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</div></br>");
           return -1;
         }
 
@@ -124,16 +124,16 @@
         $verifyExists = $sqlCommands->readChecksum($checksum);
         if($verifyExists[0]) {
           if($verifyExists[3]) {
-            print("<span class=\"error\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</span><br>");
+            print("<div class=\"error\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</div></br>");
           } else {
-            print("<span class=\"error\">Image Was Previously Banned!!!</span><br>");
+            print("<div class=\"error\">Image Was Previously Banned!!!</div></br>");
           }
           return -4;
         }
 
         // Check If PNG or GIF Format
         if($imageFileType != "image/png" && $imageFileType != "image/gif") {
-          print("<span class=\"error\">Image Has to Be A PNG Or GIF File!!! It is a $imageFileType file!!!</span><br>");
+          print("<div class=\"error\">Image Has to Be A PNG Or GIF File!!! It is a $imageFileType file!!!</div></br>");
           return -2;
         }
 
@@ -150,7 +150,7 @@
 
         if(!$allowed) {
           $issues=getenv('alex.github.project') . "/issues";
-          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check!!! Contact Me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</span>');
+          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check!!! Contact Me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
           //return -5;
           // I am still allowing upload of not allowed images so I can manually override incase the image was mistaken.
           $banreason = "Failed Automated Check";
@@ -160,10 +160,11 @@
         $dateadded = time(); // Get Current Server Time
 
         if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
-          print('<span id="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!!</span>');
+          print('<div class="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!! ');
+          print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
           return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason, $dateadded];
         } else {
-          print("<span class=\"error\">Failed To Move File To Storage Directory!!!</span><br>");
+          print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div></br>");
           return -3;
         }
       }
