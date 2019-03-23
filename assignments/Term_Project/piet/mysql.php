@@ -58,9 +58,10 @@ class sqlCommands {
         checksum TEXT NOT NULL,
         allowed BOOLEAN NOT NULL,
         banreason TEXT,
-        reported BOOLEAN NOT NULL,
-        cleared BOOLEAN NOT NULL,
-        dateadded TEXT NOT NULL
+        reported BOOLEAN NOT NULL DEFAULT 0,
+        cleared BOOLEAN NOT NULL DEFAULT 0,
+        dateadded TEXT NOT NULL,
+        reportreason TEXT
       )";
 
       $tableExists = false;
@@ -83,8 +84,8 @@ class sqlCommands {
   public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared, $dateadded) {
     try {
       $conn = $this->connectMySQL();
-      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, reported, cleared, dateadded)
-                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed, :banreason, :reported, :cleared, :dateadded)");
+      $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, dateadded)
+                                   VALUES (:programid, :programname, :filename, :uploaderipaddress, :programabout, :checksum, :allowed, :banreason, :dateadded)");
 
       $statement->execute([
         'programid' => $programid,
@@ -95,8 +96,6 @@ class sqlCommands {
         'checksum' => $checksum,
         'allowed' => $allowed,
         'banreason' => $banreason,
-        'reported' => $reported,
-        'cleared' => $cleared,
         'dateadded' => $dateadded
       ]);
     } catch(PDOException $e) {
