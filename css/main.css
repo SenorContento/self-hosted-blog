@@ -114,10 +114,20 @@ a:visited {
   color: #A200D9;
 }
 
+div.index-container {
+  text-align: center;
+}
+
+div.index-alignment {
+  display: inline-block;
+  text-align: left;
+}
+
 a.index-link {
   text-align: left;
   padding: 5px;
-  display: block;
+  /*display: block;*/
+  display: inline-block;
   text-decoration: none;
 }
 

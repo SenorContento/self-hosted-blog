@@ -25,10 +25,13 @@
 
   class mainPage {
     public function mainBody() {
-      print('<div style="display: inline-block; text-align: left;"><h1>');
-      print('<a class="index-link" href="/assignments/">Class Assignments</a>');
-      print('<a class="index-link" href="/development/failed_pma/">Failed Login Attempts for PHPMyAdmin</a>');
-      print('<a class="index-link" href="/development/apis/">3rd Party Databases and APIs to Checkout</a>');
+      print('<div class="index-container">');
+      print('<div class="index-alignment">');
+      print('<h1>');
+
+      print('<a class="index-link" href="/assignments/">Class Assignments</a></br>');
+      print('<a class="index-link" href="/development/failed_pma/">Failed Login Attempts for PHPMyAdmin</a></br>');
+      print('<a class="index-link" href="/development/apis/">3rd Party Databases and APIs to Checkout</a></br>');
       print('</h1></div>');
     }
   }
