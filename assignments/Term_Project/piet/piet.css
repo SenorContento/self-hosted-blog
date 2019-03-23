@@ -1,6 +1,6 @@
 div.error {
   color: black;
-  font-family: FiraCode;
+  font-family: "FiraCode";
   font-weight: bold;
 
   display: inline-block;
@@ -14,7 +14,7 @@ div.error {
 
 div.uploaded {
   color: black;
-  font-family: FiraCode;
+  font-family: "FiraCode";
   font-weight: bold;
 
   display: inline-block;
@@ -46,7 +46,7 @@ input.upload-box:hover {
 
 p.error {
   color: black;
-  font-family: FiraCode;
+  font-family: "FiraCode";
   font-weight: bold;
 
   display: inline-block;
@@ -60,7 +60,7 @@ p.error {
 
 p.mysql-success {
   color: black;
-  font-family: FiraCode;
+  font-family: "FiraCode";
   font-weight: bold;
 
   display: inline-block;
