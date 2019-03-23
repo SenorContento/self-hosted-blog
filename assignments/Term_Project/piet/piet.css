@@ -1,4 +1,4 @@
-div.error {
+.error {
   color: black;
   font-family: "FiraCode";
   font-weight: bold;
@@ -12,7 +12,7 @@ div.error {
   border: red solid 1px;
 }
 
-div.uploaded {
+.uploaded {
   color: black;
   font-family: "FiraCode";
   font-weight: bold;

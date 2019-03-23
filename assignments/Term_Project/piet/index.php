@@ -100,7 +100,8 @@
       // I could restrict the color palette
       // to only what is expected in a Piet Program.
       // http://www.dangermouse.net/esoteric/piet.html
-      return 1;
+      //return [0, "Test Ban!!!"];
+      return [1, Null];
     }
 
     public function checkUpload() {
@@ -145,15 +146,14 @@
         }
 
         // Check against porn or other content not allowed
-        $allowed = $this->checkImageAllowed();
-        $banreason = Null;
+        $isallowed = $this->checkImageAllowed();
+        $allowed = $isallowed[0];
+        $banreason = $isallowed[1];
 
         if(!$allowed) {
           $issues=getenv('alex.github.project') . "/issues";
-          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check!!! Contact Me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
-          //return -5;
-          // I am still allowing upload of not allowed images so I can manually override incase the image was mistaken.
-          $banreason = "Failed Automated Check";
+          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
+          ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
         }
 
         date_default_timezone_set("UTC"); // Set Time To UTC Format
