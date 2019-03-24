@@ -24,12 +24,13 @@
     }
 
     public function printPageLinks() {
-      print('<div style="text-align: center;">');
-      print('<div style="display: inline-block; text-align: left;">');
+      print('<div class="index-container">');
+      print('<div class="index-alignment">');
       print("<h1>");
-      print('<a class="index-link" href="safe.php">Go to Form With Proper SQL Validation</a>');
+      print('<a class="index-link" href="safe.php">Go to Form With Proper SQL Validation</a></br>');
       print('<a class="index-link" href="inject.php">Go to Form With Improper SQL Validation</a>');
       print("</h1>");
+      print("</div></div>");
     }
 
     public function printSourceCodeLink() {
