@@ -1,6 +1,7 @@
 <?php
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="piet.css">');
+    print("\n\t\t" . '<script src="fileupload.js"></script>');
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
@@ -55,8 +56,8 @@
       print('
       <form method="post" enctype="multipart/form-data">
         <label class="upload">Select image to upload: </label>
-        <input type="file" name="piet-image" class="upload-box" id="piet-image">
-        <input type="submit" value="Upload Image" name="submit">
+        <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" name="piet-image" class="upload-box" id="piet-file-input"></label>
+        <input type="submit" class="submit-button" value="Upload Image" name="submit">
       </form>
       ');
     }

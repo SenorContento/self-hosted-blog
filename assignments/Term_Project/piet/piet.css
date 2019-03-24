@@ -1,5 +1,46 @@
-label.upload {
-  color: green;
+/* Submit Button Input */
+
+.submit-button {
+  border: 1px solid green;
+  padding: 6px 12px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+/* End Submit Button Input */
+
+/* File Upload Input */
+
+/* https://stackoverflow.com/a/25825731 */
+.file-button {
+  border: 1px solid green;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+.select-file-message {
+  /* Intentionally Left Blank */
+}
+
+#piet-filename {
+  /* Intentionally Left Blank */
+}
+
+input[type="file"] {
+    display: none;
 }
 
 input.upload-box {
@@ -14,21 +55,13 @@ input.upload-box:hover {
   /*border: green solid 1px;*/
 }
 
-/* MySQL Messages */
-
-p.error {
-  color: black;
-  font-family: "FiraCode";
-  font-weight: bold;
-
-  display: inline-block;
-  padding: 8px;
-  margin: 8px;
-
-  background-color: rgba(255, 0, 0, 0.75);
-
-  border: red solid 1px;
+label.upload {
+  color: green;
 }
+
+/* End File Upload Input */
+
+/* MySQL Messages */
 
 p.mysql-success {
   color: black;
@@ -43,3 +76,5 @@ p.mysql-success {
 
   border: green solid 1px;
 }
+
+/* End MySQL Messages */
