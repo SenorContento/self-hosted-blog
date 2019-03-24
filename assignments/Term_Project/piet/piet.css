@@ -1,31 +1,3 @@
-.error {
-  color: black;
-  font-family: "FiraCode";
-  font-weight: bold;
-
-  display: inline-block;
-  padding: 8px;
-  margin: 8px;
-
-  background-color: rgba(255, 0, 0, 0.75);
-
-  border: red solid 1px;
-}
-
-.uploaded {
-  color: black;
-  font-family: "FiraCode";
-  font-weight: bold;
-
-  display: inline-block;
-  padding: 8px;
-  margin: 8px;
-
-  background-color: rgba(0, 255, 0, 0.75);
-
-  border: green solid 1px;
-}
-
 label.upload {
   color: green;
 }
