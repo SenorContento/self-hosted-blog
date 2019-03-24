@@ -42,6 +42,20 @@ a.source-code-link {
   padding-bottom: 8px;
 }
 
+.success {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
 .warning {
   color: black;
   font-family: "FiraCode";
@@ -54,4 +68,18 @@ a.source-code-link {
   background-color: rgba(255, 255, 0, 0.75);
 
   border: yellow solid 1px;
+}
+
+.error {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(255, 0, 0, 0.75);
+
+  border: red solid 1px;
 }

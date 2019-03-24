@@ -167,7 +167,7 @@
         $dateadded = time(); // Get Current Server Time
 
         if(move_uploaded_file($uploaded_file, $target_file)) {
-          print('<div class="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!! ');
+          print('<div class="success">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!! ');
           print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
           return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason, $dateadded];
         } else {
