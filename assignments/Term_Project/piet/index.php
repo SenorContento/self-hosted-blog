@@ -65,8 +65,8 @@
         // I could refuse to add this to MySQL if the value is not set. It is not set up this way though.
         if(is_array($metadata)) { // Verifies a File Was Actually Uploaded
           $programid = explode("_", $metadata[0])[1]; // Name looks like "piet_5c92bb736591c", I want "5c92bb736591c" out of it.
-          $programname = $this->getValue('program_name');
-          $programabout = $this->getValue('program_about');
+          $programname = htmlspecialchars($this->getValue('program_name'), ENT_QUOTES, 'UTF-8');
+          $programabout = htmlspecialchars($this->getValue('program_about'), ENT_QUOTES, 'UTF-8');
 
           $filename = $metadata[1];
           $ipaddress = $_SERVER["REMOTE_ADDR"];
@@ -111,6 +111,7 @@
         $randomid = uniqid('piet_');
         $target_dir = $this->piet_upload_path;
         $target_file = $target_dir . $randomid . ".png";
+        $uploaded_file_name = htmlspecialchars($_FILES["piet-image"]["name"], ENT_QUOTES, 'UTF-8');
         $uploaded_file = $_FILES["piet-image"]["tmp_name"];
 
         if(empty($uploaded_file)) {
@@ -159,7 +160,7 @@
 
         if(!$allowed) {
           $issues=getenv('alex.github.project') . "/issues";
-          print('<span class="error">Image "' . $_FILES["piet-image"]["name"] . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
+          print('<span class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
           ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
         }
 
@@ -167,9 +168,9 @@
         $dateadded = time(); // Get Current Server Time
 
         if(move_uploaded_file($uploaded_file, $target_file)) {
-          print('<div class="success">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!! ');
+          print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
           print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
-          return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason, $dateadded];
+          return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded];
         } else {
           print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div></br>");
           return -3;
