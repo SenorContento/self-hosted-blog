@@ -111,8 +111,15 @@
         $randomid = uniqid('piet_');
         $target_dir = $this->piet_upload_path;
         $target_file = $target_dir . $randomid . ".png";
-        $imageFileType = mime_content_type($_FILES["piet-image"]["tmp_name"]);
-        $checksum = hash_file("sha256", $_FILES["piet-image"]["tmp_name"]);
+        $uploaded_file = $_FILES["piet-image"]["tmp_name"];
+
+        if(empty($uploaded_file)) {
+          print("<div class=\"error\">No File Uploaded!!!</div></br>");
+          return -5;
+        }
+
+        $imageFileType = mime_content_type($uploaded_file);
+        $checksum = hash_file("sha256", $uploaded_file);
 
         // Check If File Size Is Under 1 MB (1024 KB)
         if($_FILES["piet-image"]["size"] > 1024000) {
@@ -159,7 +166,7 @@
         date_default_timezone_set("UTC"); // Set Time To UTC Format
         $dateadded = time(); // Get Current Server Time
 
-        if(move_uploaded_file($_FILES["piet-image"]["tmp_name"], $target_file)) {
+        if(move_uploaded_file($uploaded_file, $target_file)) {
           print('<div class="uploaded">Uploaded: ' . $_FILES["piet-image"]["name"] . '!!! ');
           print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
           return [$randomid, basename($_FILES["piet-image"]["name"]), $checksum, $allowed, $banreason, $dateadded];
