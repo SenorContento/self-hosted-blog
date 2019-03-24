@@ -43,6 +43,7 @@ function stopScrollMouse() {
   scroll=false;
 };
 
+/* This might be why the autoscroll is slightly buggy */
 window.addEventListener("scroll",function(){
     window.lastScrollTime = new Date().getTime();
 });
