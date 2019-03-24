@@ -78,7 +78,7 @@ function startSocket(command) {
   var messageField = document.getElementById('command');
 
   // Create a new WebSocket.
-  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92c662a53ef/'); //(Piet's Quest) 5c92cd6054ce1 - (Cow Say) 5c92c662a53ef
+  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/'); //(Piet's Quest) 5c92cd6054ce1 - (Cow Say) 5c92c662a53ef
   //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/');
 
   // Show a connected message when the WebSocket is opened.
