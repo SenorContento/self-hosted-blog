@@ -81,7 +81,7 @@ class sqlCommands {
     }
   }
 
-  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared, $dateadded) {
+  public function insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $dateadded) {
     try {
       $conn = $this->connectMySQL();
       $statement = $conn->prepare("INSERT INTO programs (programid, programname, filename, uploaderipaddress, programabout, checksum, allowed, banreason, dateadded)

@@ -74,12 +74,10 @@
           $allowed = $metadata[3];
           $banreason = $metadata[4]; // Just Setting Up for manual intervention later if needed and also automated fail ban message.
           $dateadded = $metadata[5]; // Helps determine when to autodelete banned images if not cleared.
-          $reported = 0; // Checks if image was reported (e.g. bad program/porn/hate symbol/hate speech/etc...)
-          $cleared = 0; // Once I check the image by hand, if I see nothing wrong with it, I will manually flip this to true to stop notifying me about reports.
 
           //$sqlCommands = new sqlCommands(); // I cannot set this unless I want to specify the auth multiple times.
           global $sqlCommands;
-          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $reported, $cleared, $dateadded);
+          $sqlCommands->insertData($programid, $programname, $filename, $ipaddress, $programabout, $checksum, $allowed, $banreason, $dateadded);
         }
     }
 
