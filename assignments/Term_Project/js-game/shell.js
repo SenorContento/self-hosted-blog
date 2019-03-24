@@ -78,9 +78,8 @@ function startSocket(command) {
   var messageField = document.getElementById('command');
 
   // Create a new WebSocket.
-  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/');
-  //var socket = new WebSocket('wss://web.senorcontento.com/game/'); // wss://term.web.senorcontento.com/piet-websocket/5c92cd6054ce1/
-  //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/'); //5c92cd6054ce1/
+  var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/5c92c662a53ef/'); //(Piet's Quest) 5c92cd6054ce1 - (Cow Say) 5c92c662a53ef
+  //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/');
 
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function(event) {
@@ -120,7 +119,7 @@ function startSocket(command) {
 
   socket.onmessage = function(event) {
     var message = event.data;
-    received.innerHTML += processMessage(message);
+    received.innerHTML += processMessage(escapeHtml(message));
 
     scroll=true;
 
@@ -149,6 +148,19 @@ function startSocket(command) {
 
     return false;
   };
+}
+
+/* https://stackoverflow.com/a/4835406 */
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
 // Useful - https://stackoverflow.com/a/21648161
