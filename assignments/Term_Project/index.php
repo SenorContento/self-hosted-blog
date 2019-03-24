@@ -32,7 +32,7 @@
     }
 
     public function printWarning() {
-      print('<h1>Assignment 13 has not been created yet! Please come back later!</h1>');
+      print('<div class="warning">Assignment 13 has not been created yet! Please come back later!</div><br>');
     }
 
     public function printSourceCodeLink() {

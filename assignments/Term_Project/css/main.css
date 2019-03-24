@@ -41,3 +41,17 @@ a.source-code-link {
   /* padding-top: 2px; */
   padding-bottom: 8px;
 }
+
+.warning {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(255, 255, 0, 0.75);
+
+  border: yellow solid 1px;
+}
