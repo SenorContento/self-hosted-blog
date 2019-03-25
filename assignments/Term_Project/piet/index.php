@@ -104,16 +104,17 @@
       return $return_me;
     }
 
-    public function checkImageAllowed($uploaded_file, $randomid) {
+    public function checkImageAllowed($randomid) {
       // Check If Image Is ALLOWED!!!
       // I could restrict the color palette
       // to only what is expected in a Piet Program.
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
 
-      // This works, but it slightly slows down the response of the page.
-      // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
-      // https://stackoverflow.com/a/222445/6828099
+      return [1, Null];
+    }
+
+    public function scanForViruses($uploaded_file, $randomid) {
       $command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       $log = $this->antivirus_log_path . $randomid . ".scan";
 
@@ -127,16 +128,17 @@
       $proc = proc_open($command, $descriptorspec, $pipes);
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
-      print('<div class="error">Command "' . $command . '"!!!</div></br>');
+      print('<div class="warning">Command "' . $command . '"!!!</div></br>');
 
-      /* For A Functional Method Which Doesn't Work In Background */
+      // This works, but it slightly slows down the response of the page.
+      // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
+      // https://stackoverflow.com/a/222445/6828099
+      // This Was Originally In checkImageAllowed(...);
       //exec($command, $antivirus, $antivirus_return);
       /*if($antivirus_return) {
         //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
         //return [0, "Failed Antivirus Scan"];
       }*/
-
-      return [1, Null];
     }
 
     public function checkUpload() {
@@ -189,7 +191,8 @@
         }
 
         // Check against porn or other content not allowed
-        $isallowed = $this->checkImageAllowed($uploaded_file, explode("_", $randomid)[1]);
+        $explodedRandomID = explode("_", $randomid)[1];
+        $isallowed = $this->checkImageAllowed($explodedRandomID);
         $allowed = $isallowed[0];
         $banreason = $isallowed[1];
 
@@ -201,7 +204,7 @@
             return -6;
           } else {
             print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
-            ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
+            ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . $explodedRandomID . '"!!!</div></br>');
           }
         }
 
@@ -210,7 +213,9 @@
 
         if(move_uploaded_file($uploaded_file, $target_file)) {
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
-          print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
+          print('The Program\'s ID is: ' . $explodedRandomID . '!!!</div></br>');
+
+          $isallowed = $this->scanForViruses($target_file, $explodedRandomID);
 
           return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded];
         } else {
