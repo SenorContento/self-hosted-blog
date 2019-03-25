@@ -114,10 +114,23 @@
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
       // https://stackoverflow.com/a/222445/6828099
-      $command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &> ' . $this->antivirus_log_path . $randomid . ".scan" . ' &';
-      $antivirus = shell_exec($command);
+      $command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
+      $log = $this->antivirus_log_path . $randomid . ".scan";
+
+      // https://stackoverflow.com/a/4626970/6828099
+      $descriptorspec = array(
+        array('pipe', 'r'), // stdin
+        array('file', $log, 'a'), // stdout
+        array('file', $log, 'w'), // stderr
+      );
+
+      $proc = proc_open($command, $descriptorspec, $pipes);
+      //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
+
       print('<div class="error">Command "' . $command . '"!!!</div></br>');
 
+      /* For A Functional Method Which Doesn't Work In Background */
+      //exec($command, $antivirus, $antivirus_return);
       /*if($antivirus_return) {
         //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
         //return [0, "Failed Antivirus Scan"];
