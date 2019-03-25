@@ -48,7 +48,7 @@
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->piet_upload_path = "./uploads/";
-        $this->exec_maldet_path = "/bin/echo"; // Response to &&
+        $this->exec_maldet_path = "$(return 0)"; // Response to &&
         $this->exec_echo_path = "/bin/echo";
       }
     }
@@ -100,17 +100,19 @@
       return $return_me;
     }
 
-    public function checkImageAllowed() {
+    public function checkImageAllowed($uploaded_file) {
       // Check If Image Is ALLOWED!!!
       // I could restrict the color palette
       // to only what is expected in a Piet Program.
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
 
-      $antivirus = shell_exec($this->$exec_maldet_path . ' --scan-all "' . $uploaded_file . '" && ' . $this->$exec_echo_path . ' "Passed" || ' . $this->$exec_echo_path . ' "Failed Antivirus Scan"');
-      $line = $antivirus[count($antivirus)-1];
+      $antivirus = shell_exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" && ' . $this->exec_echo_path . ' "Passed" || ' . $this->exec_echo_path . ' "Failed Antivirus Scan"');
+      $lines = explode("\n", $antivirus);
+      $line = $lines[count($lines)-1];
 
-      print("Antivirus: $antivirus");
+      print("<div class=\"error\">$line</div></br>");
+      //return [0, $line];
 
       return [1, Null];
     }
@@ -165,7 +167,7 @@
         }
 
         // Check against porn or other content not allowed
-        $isallowed = $this->checkImageAllowed();
+        $isallowed = $this->checkImageAllowed($uploaded_file);
         $allowed = $isallowed[0];
         $banreason = $isallowed[1];
 
