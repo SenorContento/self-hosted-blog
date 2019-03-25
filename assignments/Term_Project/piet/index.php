@@ -128,7 +128,7 @@
       $proc = proc_open($command, $descriptorspec, $pipes);
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
-      print('<div class="warning">Command "' . $command . '"!!!</div></br>');
+      //print('<div class="warning">Command "' . $command . '"!!!</div></br>');
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
