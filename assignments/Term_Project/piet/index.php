@@ -35,21 +35,21 @@
   $loadPage->loadFooter();
 
   class PietUploader {
-    function setVars() {
-      $this->piet_upload_path = "";
-      $this->$exec_maldet_path = "";
-      $this->$exec_echo_path = "";
+    public $piet_upload_path;
+    public $exec_maldet_path;
+    public $exec_echo_path;
 
+    function setVars() {
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         $this->piet_upload_path = "/var/web/term-uploads/";
-        $this->$exec_maldet_path = "/usr/local/sbin/maldet";
-        $this->$exec_echo_path = "/bin/echo";
+        $this->exec_maldet_path = "/usr/local/sbin/maldet";
+        $this->exec_echo_path = "/bin/echo";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->piet_upload_path = "./uploads/";
-        $this->$exec_maldet_path = "$(return 0)"; // Response to &&
-        $this->$exec_echo_path = "/bin/echo";
+        $this->exec_maldet_path = "/bin/echo"; // Response to &&
+        $this->exec_echo_path = "/bin/echo";
       }
     }
 
@@ -100,16 +100,17 @@
       return $return_me;
     }
 
-    public function checkImageAllowed($uploaded_file) {
+    public function checkImageAllowed() {
       // Check If Image Is ALLOWED!!!
       // I could restrict the color palette
       // to only what is expected in a Piet Program.
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
-      //$antivirus = shell_exec($this->$exec_maldet_path . " --scan-all \"" . $uploaded_file "\" && " . $this->$exec_echo_path . " \"Passed\" || " . $this->$exec_echo_path . " \"Failed Antivirus Scan\"");
-      //$line = $antivirus[count($antivirus)-1];
 
-      //print("Antivirus: $antivirus");
+      $antivirus = shell_exec($this->$exec_maldet_path . ' --scan-all "' . $uploaded_file '" && ' . $this->$exec_echo_path . ' "Passed" || ' . $this->$exec_echo_path . ' "Failed Antivirus Scan"');
+      $line = $antivirus[count($antivirus)-1];
+
+      print("Antivirus: $antivirus");
 
       return [1, Null];
     }
@@ -164,7 +165,7 @@
         }
 
         // Check against porn or other content not allowed
-        $isallowed = $this->checkImageAllowed($uploaded_file);
+        $isallowed = $this->checkImageAllowed();
         $allowed = $isallowed[0];
         $banreason = $isallowed[1];
 
