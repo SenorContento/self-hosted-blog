@@ -48,7 +48,7 @@
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->piet_upload_path = "./uploads/";
-        $this->exec_maldet_path = "$(return 0)"; // Response to &&
+        $this->exec_maldet_path = "/bin/echo"; // Response to &&
         $this->exec_echo_path = "/bin/echo";
       }
     }
@@ -107,12 +107,14 @@
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
 
-      $antivirus = shell_exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" && ' . $this->exec_echo_path . ' "Passed" || ' . $this->exec_echo_path . ' "Failed Antivirus Scan"');
-      //$lines = explode("\n", $antivirus);
-      //$line = $lines[count($lines)-1];
+      $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '"', $antivirus, $antivirus_return);
 
-      print("<div class=\"error\">$antivirus</div></br>");
-      //return [0, $line];
+      if($antivirus_return) {
+        print("<div class=\"error\">Failed Antivirus!!!</div></br>");
+        //return [0, $line];
+      } else {
+        print("<div class=\"success\">Passed Antivirus!!!</div></br>");
+      }
 
       return [1, Null];
     }
