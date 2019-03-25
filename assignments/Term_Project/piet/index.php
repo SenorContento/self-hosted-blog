@@ -36,6 +36,8 @@
 
   class PietUploader {
     public $piet_upload_path;
+    public $antivirus_log_path;
+
     public $exec_maldet_path;
     public $exec_echo_path;
 
@@ -45,11 +47,13 @@
         $this->piet_upload_path = "/var/web/term-uploads/";
         $this->exec_maldet_path = "/usr/local/sbin/maldet";
         $this->exec_echo_path = "/bin/echo";
+        $this->antivirus_log_path = "/var/log/web/antivirus/";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         $this->piet_upload_path = "./uploads/";
         $this->exec_maldet_path = "/bin/echo"; // Response to &&
         $this->exec_echo_path = "/bin/echo";
+        $this->antivirus_log_path = "./uploads/antivirus/";
       }
     }
 
@@ -100,7 +104,7 @@
       return $return_me;
     }
 
-    public function checkImageAllowed($uploaded_file) {
+    public function checkImageAllowed($uploaded_file, $randomid) {
       // Check If Image Is ALLOWED!!!
       // I could restrict the color palette
       // to only what is expected in a Piet Program.
@@ -109,12 +113,13 @@
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
-      $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '"', $antivirus, $antivirus_return);
+      // https://stackoverflow.com/a/222445/6828099
+      $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" " &> ' . $this->antivirus_log_path . $randomid . ".scan" . ' &"', $antivirus, $antivirus_return);
 
-      if($antivirus_return) {
+      /*if($antivirus_return) {
         //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
-        return [0, "Failed Antivirus Scan"];
-      }
+        //return [0, "Failed Antivirus Scan"];
+      }*/
 
       return [1, Null];
     }
@@ -169,7 +174,7 @@
         }
 
         // Check against porn or other content not allowed
-        $isallowed = $this->checkImageAllowed($uploaded_file);
+        $isallowed = $this->checkImageAllowed($uploaded_file, explode("_", $randomid)[1]);
         $allowed = $isallowed[0];
         $banreason = $isallowed[1];
 
