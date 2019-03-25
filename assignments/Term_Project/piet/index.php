@@ -114,7 +114,7 @@
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
       // https://stackoverflow.com/a/222445/6828099
-      $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" " &> ' . $this->antivirus_log_path . $randomid . ".scan" . ' &"', $antivirus, $antivirus_return);
+      //$antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" " &> ' . $this->antivirus_log_path . $randomid . ".scan" . ' &"', $antivirus, $antivirus_return);
 
       /*if($antivirus_return) {
         //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
