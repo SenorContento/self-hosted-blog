@@ -178,6 +178,7 @@
 
           if("$banreason" == "Failed Antivirus Scan") {
             print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!</div><br>');
+            return -6;
           } else {
             print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
             ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
