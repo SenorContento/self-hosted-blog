@@ -106,7 +106,7 @@
       // to only what is expected in a Piet Program.
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
-      $antivirus = shell_exec($this->$exec_maldet_path . " --scan-all \"" . $uploaded_file "\" && " . $this->$exec_echo_path . " \"Passed\" || " . $this->$exec_echo_path . " \"Failed Antivirus Scan\"");
+      //$antivirus = shell_exec($this->$exec_maldet_path . " --scan-all \"" . $uploaded_file "\" && " . $this->$exec_echo_path . " \"Passed\" || " . $this->$exec_echo_path . " \"Failed Antivirus Scan\"");
       //$line = $antivirus[count($antivirus)-1];
 
       print("Antivirus: $antivirus");
