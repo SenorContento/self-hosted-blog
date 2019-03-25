@@ -108,12 +108,12 @@
       //return [0, "Test Ban!!!"];
 
       // This works, but it slightly slows down the response of the page.
-      // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response. 
+      // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
       $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '"', $antivirus, $antivirus_return);
 
       if($antivirus_return) {
         //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
-        return [0, "Failed Antivirus Scan!!!"];
+        return [0, "Failed Antivirus Scan"];
       }
 
       return [1, Null];
@@ -175,8 +175,13 @@
 
         if(!$allowed) {
           $issues=getenv('alex.github.project') . "/issues";
-          print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
-          ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
+
+          if("$banreason" == "Failed Antivirus Scan") {
+            print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!</div><br>');
+          } else {
+            print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
+            ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . explode("_", $randomid)[1] . '"!!!</div></br>');
+          }
         }
 
         date_default_timezone_set("UTC"); // Set Time To UTC Format
@@ -185,6 +190,7 @@
         if(move_uploaded_file($uploaded_file, $target_file)) {
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
           print('The Program\'s ID is: ' . explode("_", $randomid)[1] . '!!!</div></br>');
+
           return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded];
         } else {
           print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div></br>");
