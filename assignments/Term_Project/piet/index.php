@@ -107,13 +107,13 @@
       // http://www.dangermouse.net/esoteric/piet.html
       //return [0, "Test Ban!!!"];
 
+      // This works, but it slightly slows down the response of the page.
+      // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response. 
       $antivirus = exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '"', $antivirus, $antivirus_return);
 
       if($antivirus_return) {
-        print("<div class=\"error\">Failed Antivirus!!!</div></br>");
-        //return [0, $line];
-      } else {
-        print("<div class=\"success\">Passed Antivirus!!!</div></br>");
+        //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
+        return [0, "Failed Antivirus Scan!!!"];
       }
 
       return [1, Null];
