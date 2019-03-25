@@ -108,10 +108,10 @@
       //return [0, "Test Ban!!!"];
 
       $antivirus = shell_exec($this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" && ' . $this->exec_echo_path . ' "Passed" || ' . $this->exec_echo_path . ' "Failed Antivirus Scan"');
-      $lines = explode("\n", $antivirus);
-      $line = $lines[count($lines)-1];
+      //$lines = explode("\n", $antivirus);
+      //$line = $lines[count($lines)-1];
 
-      print("<div class=\"error\">$line</div></br>");
+      print("<div class=\"error\">$antivirus</div></br>");
       //return [0, $line];
 
       return [1, Null];
