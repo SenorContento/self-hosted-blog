@@ -187,7 +187,8 @@ def handleRequest(env, start_response, query):
 
     # TODO: Move Database Outside of Webroot (So Git Doesn't Overwrite It - It is Not Publicly Accessible Regardless)
     # TODO: Add A Mkdir Command
-    database_file = env['DOCUMENT_ROOT'] + "/server-data/databases/assignment9.db"
+    #database_file = env['DOCUMENT_ROOT'] + "/server-data/databases/assignment9.db"
+    database_file = "/var/web/databases/assignment9.db"
 
     conn = database.connect(database_file)
     with conn:
