@@ -6,7 +6,7 @@
 
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
-  $mainPage->redirectMe();
+  //$mainPage->redirectMe();
   $mainPage->printWarning();
   $mainPage->printSourceCodeLink();
   //$mainPage->printDomainURL();
