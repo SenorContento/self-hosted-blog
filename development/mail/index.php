@@ -1,6 +1,7 @@
 <?php
 // This is to test that PHP sendmail works correctly on my Real Server
 // https://stackoverflow.com/a/12313090
+// https://stackoverflow.com/a/23650991
 
 //$to = "web@senorcontento.com";
 $to = "random@senorcontento.com";
@@ -18,16 +19,36 @@ $headers .= 'Content-Type: multipart/mixed; boundary="' . $checksum . '"' . "\r\
 //$headers .= "BCC: random@senorcontento.com\r\n";
 //$headers .= "CC: postmaster@senorcontento.com";
 
-// Message
-$message = "--" . $checksum . "\r\n";
-$message .= "Content-Type: text/html; charset=ISO-8859-1" . "\r\n" . "\r\n";
-//$message .= "Content-Transfer-Encoding: 8bit" . "\r\n";
-$message .= "<!DOCTYPE HTML>";
-$message .= "<html>";
-$message .= '<body bgcolor="blue">';
-$message .= "<h1>Hello World!</h1>";
-$message .= "</body>";
-$message .= "</html>";
+// Message Headers
+$messagehead = "--" . $checksum . "\r\n";
+$messagehead .= "Content-Type: text/html; charset=ISO-8859-1" . "\r\n" . "\r\n";
+//$messagehead .= "Content-Transfer-Encoding: 8bit" . "\r\n";
+
+
+$bgcolor = "cyan";
+// Header
+$head = "<!DOCTYPE HTML>";
+$head .= "<html>";
+$head .= '<body bgcolor="' . $bgcolor . '" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">';
+$head .= '<table width="100%" border="0" cellpadding="0" cellspacing="0">';
+$head .= '<tr>';
+$head .= '<td width="650" valign="top" align="center" bgcolor="' . $bgcolor . '">';
+
+$content = "<h1 style='color: red'>Hello World!!!</h1>";
+
+$content .= "<p style='color: red'>";
+$max = 200;
+for ($i = 1; $i <= $max; $i++) {
+    $content .= "Number: $i/$max" . "<br>" . "\r\n";
+}
+$content .= "</p>";
+
+// Footer
+$foot = '</td>';
+$foot .= '</tr>';
+$foot .= '</table>';
+$foot .= "</body>";
+$foot .= "</html>";
 
 // Attachment
 $filename = "date.txt";
@@ -42,7 +63,7 @@ $attachment .= base64_encode($file) . "\r\n";
 $attachment .= "--" . $checksum . "--";
 
 // Combine Message and Attachment
-$body = $message . "\r\n" . $attachment;
+$body = $messagehead . $head . $content . $foot. "\r\n" . $attachment;
 
 header("Content-Type: text/plain");
 print($body);
