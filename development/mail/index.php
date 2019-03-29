@@ -65,8 +65,11 @@ $attachment .= "--" . $checksum . "--";
 // Combine Message and Attachment
 $body = $messagehead . $head . $content . $foot. "\r\n" . $attachment;
 
-header("Content-Type: text/plain");
-print($body);
+//header("Content-Type: text/plain");
+//print($body);
+
+header("Content-Type: text/html");
+print($head . $content . $foot);
 //print(htmlspecialchars($body, ENT_QUOTES, 'UTF-8'));
 
 mail($to,$subject,$body,$headers);
