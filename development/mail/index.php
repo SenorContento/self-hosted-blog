@@ -30,12 +30,15 @@ $message .= "</body>";
 $message .= "</html>";
 
 // Attachment
-$filename = "test.txt";
+$filename = "date.txt";
+date_default_timezone_set('UTC');
+$file = date('l jS \of F Y h:i:s A e');
+
 $attachment = "--" . $checksum . "\r\n";
 $attachment .= 'Content-Type: text/plain; name="' . $filename . '"' . "\r\n";
-//$attachment .= "Content-Transfer-Encoding: base64" . "\r\n";
+$attachment .= "Content-Transfer-Encoding: base64" . "\r\n";
 $attachment .= "Content-Disposition: attachment" . "\r\n" . "\r\n";
-$attachment .= "This is a text file!!!\r\n";
+$attachment .= base64_encode($file) . "\r\n";
 $attachment .= "--" . $checksum . "--";
 
 // Combine Message and Attachment
