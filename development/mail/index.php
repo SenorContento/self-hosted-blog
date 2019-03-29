@@ -21,8 +21,8 @@ $headers .= 'Content-Type: multipart/mixed; boundary="' . $checksum . '"' . "\r\
 
 // Message Headers
 $messagehead = "--" . $checksum . "\r\n";
-$messagehead .= "Content-Type: text/html; charset=ISO-8859-1" . "\r\n" . "\r\n";
-//$messagehead .= "Content-Transfer-Encoding: 8bit" . "\r\n";
+$messagehead .= "Content-Type: text/html; charset=ISO-8859-1" . "\r\n";
+$messagehead .= "Content-Transfer-Encoding: base64" . "\r\n" . "\r\n";
 
 
 $bgcolor = "cyan";
@@ -63,7 +63,7 @@ $attachment .= base64_encode($file) . "\r\n";
 $attachment .= "--" . $checksum . "--";
 
 // Combine Message and Attachment
-$body = $messagehead . $head . $content . $foot. "\r\n" . $attachment;
+$body = $messagehead . base64_encode($head . $content . $foot). "\r\n" . $attachment;
 
 //header("Content-Type: text/plain");
 //print($body);
