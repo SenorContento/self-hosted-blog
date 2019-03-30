@@ -4,8 +4,8 @@
 // https://stackoverflow.com/a/23650991
 
 //$to = "web@senorcontento.com";
-$to = "random@senorcontento.com";
-$from = "web@senorcontento.com";
+$to = getenv('alex.server.mail.to');
+$from = getenv('alex.server.mail.from');
 
 $subject = "PHP Mail Test";
 
@@ -16,8 +16,8 @@ $headers .= "MIME-Version: 1.0" . "\r\n";
 //$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 $headers .= 'Content-Type: multipart/mixed; boundary="' . $checksum . '"' . "\r\n";
 
-//$headers .= "BCC: random@senorcontento.com\r\n";
-//$headers .= "CC: postmaster@senorcontento.com";
+//$headers .= "BCC: random@example.com\r\n";
+//$headers .= "CC: postmaster@example.com";
 
 // Message Headers
 $messagehead = "--" . $checksum . "\r\n";

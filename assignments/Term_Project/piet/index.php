@@ -19,7 +19,7 @@
   $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
                           getenv('alex.server.phpmyadmin.username'),
                           getenv('alex.server.phpmyadmin.password'),
-                          "piet");
+                          getenv('alex.server.piet.database'));
 
   $sqlCommands->testConnection();
   $sqlCommands->connectMySQL();
