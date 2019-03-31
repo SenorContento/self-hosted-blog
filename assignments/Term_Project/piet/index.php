@@ -120,6 +120,7 @@
     public function scanForViruses($uploaded_file, $randomid) {
       #$command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       #$log = $this->antivirus_log_path . $randomid . ".scan";
+      // I am not using the log method anymore now I have maldet set to email me about failed scans!!!
       $command = $this->exec_virusscan_path . " " . "$randomid" . " " . "piet_dev" . " &"; // piet_dev
       //print("Command: $command!!!");
 
@@ -134,8 +135,6 @@
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
       //print('<div class="warning">Command "' . $command . '"!!!</div></br>');
-
-      //exec($command, $antivirus, $antivirus_return);
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
