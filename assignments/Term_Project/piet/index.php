@@ -121,6 +121,7 @@
       #$command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       #$log = $this->antivirus_log_path . $randomid . ".scan";
       $command = $this->exec_virusscan_path . " " . "$uploaded_file";
+      print("Command: $command!!!");
 
       // https://stackoverflow.com/a/4626970/6828099
       $descriptorspec = array(
