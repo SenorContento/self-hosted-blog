@@ -47,7 +47,7 @@
         # The below variables are for the production server
         $this->piet_upload_path = "/var/web/term-uploads/";
         #$this->exec_maldet_path = "/usr/local/sbin/maldet";
-        $this->exec_virusscan_path = "/bin/bash -e /home/alex/programs/VirusScan.sh";
+        $this->exec_virusscan_path = "/home/alex/programs/VirusScan.sh";
         $this->exec_echo_path = "/bin/echo";
         #$this->antivirus_log_path = "/var/log/web/antivirus/";
       } else if(getenv('alex.server.type') === "development") {
@@ -120,20 +120,22 @@
     public function scanForViruses($uploaded_file, $randomid) {
       #$command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       #$log = $this->antivirus_log_path . $randomid . ".scan";
-      $command = $this->exec_virusscan_path . " " . "$randomid";
-      print("Command: $command!!!");
+      $command = $this->exec_virusscan_path . " " . "$randomid" . " " . "piet_dev"; // piet_dev
+      #print("Command: $command!!!");
 
       // https://stackoverflow.com/a/4626970/6828099
-      $descriptorspec = array(
-        array('pipe', 'r'), // stdin
-        array('file', $log, 'a'), // stdout
-        array('file', $log, 'w'), // stderr
-      );
+      #$descriptorspec = array(
+      #  array('pipe', 'r'), // stdin
+      #  array('file', $log, 'a'), // stdout
+      #  array('file', $log, 'w'), // stderr
+      #);
 
-      $proc = proc_open($command, $descriptorspec, $pipes);
+      #$proc = proc_open($command, $descriptorspec, $pipes);
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
       //print('<div class="warning">Command "' . $command . '"!!!</div></br>');
+
+      exec($command, $antivirus, $antivirus_return);
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
