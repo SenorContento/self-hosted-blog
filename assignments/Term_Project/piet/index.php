@@ -121,21 +121,21 @@
       #$command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       #$log = $this->antivirus_log_path . $randomid . ".scan";
       $command = $this->exec_virusscan_path . " " . "$randomid" . " " . "piet_dev" . " &"; // piet_dev
-      #print("Command: $command!!!");
+      print("Command: $command!!!");
 
       // https://stackoverflow.com/a/4626970/6828099
-      #$descriptorspec = array(
-      #  array('pipe', 'r'), // stdin
-      #  array('file', $log, 'a'), // stdout
-      #  array('file', $log, 'w'), // stderr
-      #);
+      $descriptorspec = array(
+        array('pipe', 'r'), // stdin
+        #array('file', $log, 'a'), // stdout
+        #array('file', $log, 'w'), // stderr
+      );
 
-      #$proc = proc_open($command, $descriptorspec, $pipes);
+      $proc = proc_open($command, $descriptorspec, $pipes);
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
       //print('<div class="warning">Command "' . $command . '"!!!</div></br>');
 
-      exec($command, $antivirus, $antivirus_return);
+      //exec($command, $antivirus, $antivirus_return);
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
