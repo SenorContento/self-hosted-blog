@@ -1,28 +1,57 @@
 $(document).ready(function() {
   //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
   //$("select").css("max-width", $("#highlight").width() + "px");
-  var rawData = lookup("5ca11aadc7741"); // Failed: 5ca11aadc7741; Success: 5ca11aadc7742
+  //checkScan("5ca11aadc7743");
+});
+
+var SCANID = SCANID || (function(){
+    var _args = {}; // private
+
+    return {
+        init : function(Args) {
+            _args = Args;
+            // some other initialising
+        },
+        setData : function() {
+            programid = _args[0];
+            //alert("Program ID: " + programid);
+            checkScan(programid);
+        }
+    };
+}());
+
+function checkScan(lookupid) {
+  var rawData = lookup(lookupid); // Failed: 5ca11aadc7741; Success: 5ca11aadc7742
 
   if(rawData[1] === "json") {
-    var rowid = rawData[0]["id"];
-    var programid = rawData[0]["programid"];
-    var failed = rawData[0]["failed"];
+    if(!rawData[0]["error"]) {
+      var rowid = rawData[0]["id"];
+      var programid = rawData[0]["programid"];
+      var failed = rawData[0]["failed"];
 
-    //alert(failed);
+      //alert(failed);
 
-    $("#scanresults").removeClass("hidden");
-    $("#scanresults").removeClass("warning");
-    $("#scanresults-newline").removeClass("hidden-newline");
+      $("#scanresults").removeClass("hidden");
+      $("#scanresults").removeClass("warning");
+      $("#scanresults-newline").removeClass("hidden-newline");
 
-    if(failed === "1") {
-      $("#scanresults").text("Failed: " + failed);
-      $("#scanresults").addClass("error");
+      if(failed === "1") {
+        // Failed Virus Scan
+        $("#scanresults").text("The program " + programid + " failed the virus scan!!!");
+        $("#scanresults").addClass("error");
+      } else {
+        // Passed Virus Scan
+        $("#scanresults").text("The program " + programid + " passed the virus scan!!!");
+        $("#scanresults").addClass("success");
+      }
     } else {
-      $("#scanresults").text("Failed: " + failed);
-      $("#scanresults").addClass("success");
-    }
+      // Executes if Still Scanning For Viruses
+      $("#scanresults").removeClass("hidden");
+      $("#scanresults-newline").removeClass("hidden-newline");
 
-    alert(failed);
+      // https://javascript.info/settimeout-setinterval
+      setTimeout(checkScan, 1000, lookupid);
+    }
   } else if(rawData[1] === "html") {
     // This only shows up on 200 Response.
     //alert(rawData[0]);
@@ -31,7 +60,7 @@ $(document).ready(function() {
     // Never Runs even on 404!!!
     // For Unknown Responses (e.g. Glitched Proxy or Excessive Firewall)
   }
-});
+}
 
 function lookup(programid) {
   var url = "/api/antivirus";

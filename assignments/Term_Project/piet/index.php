@@ -3,12 +3,13 @@
     print("\n\t\t" . '<link rel="stylesheet" href="piet.css">');
     //print("\n\t\t" . '<link rel="stylesheet" href="assignment8.css">');
 
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
   function customPageFooter() {
     print("\n\t\t" . '<script src="fileupload.js"></script>');
+    //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
 
-    print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
     print("\n\t\t" . '<script src="ajax-api.js"></script>');
   }
 
@@ -234,6 +235,13 @@
         if(move_uploaded_file($uploaded_file, $target_file)) {
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
           print('The Program\'s ID is: ' . $explodedRandomID . '!!!</div></br>');
+
+          print('<script type="text/javascript">
+                  $(document).ready(function() {
+                    SCANID.init(["' . $explodedRandomID . '"]);
+                    SCANID.setData();
+                  });
+                </script>');
 
           $isallowed = $this->scanForViruses($target_file, $explodedRandomID);
 
