@@ -221,3 +221,12 @@ TODO: Figure Out Font Weight for SemiBold
   font-weight: normal;
   font-style: normal;
 }
+
+/* Weather Icons */
+
+@font-face {
+  font-family: 'Weather';
+  src: url('/fonts/Icons/artill-weather/otf/artill_clean_icons.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
