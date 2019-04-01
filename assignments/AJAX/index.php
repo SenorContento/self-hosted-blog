@@ -4,6 +4,10 @@
     print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
+  function customPageFooter() {
+    //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentEight();
 

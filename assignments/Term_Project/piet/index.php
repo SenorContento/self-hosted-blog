@@ -1,8 +1,15 @@
 <?php
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="piet.css">');
+    //print("\n\t\t" . '<link rel="stylesheet" href="assignment8.css">');
+
+  }
+
+  function customPageFooter() {
     print("\n\t\t" . '<script src="fileupload.js"></script>');
-    //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+
+    print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
+    print("\n\t\t" . '<script src="ajax-api.js"></script>');
   }
 
   // https://stackoverflow.com/a/2397010/6828099
