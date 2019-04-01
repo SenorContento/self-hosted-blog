@@ -39,7 +39,18 @@
             //print($manager->formatForSQL($this->grabData($bytes, $generator))); // To specify a custom generator
 
             global $sqlCommands;
-            print($sqlCommands->readData($programid));
+            $antivirus_response = $sqlCommands->readData($programid);
+            // htmlspecialchars($results['failed'], ENT_QUOTES, 'UTF-8')
+
+            if($antivirus_response['programid'] == NULL) {
+              $jsonArray = ["error" => "Program Doesn't Exist!!! Try Again In A Minute!!!"];
+            } else {
+              $jsonArray = $antivirus_response;
+            }
+
+            $json = json_encode($jsonArray);
+            print($json);
+
             die();
           }
 

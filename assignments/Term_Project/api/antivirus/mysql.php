@@ -87,25 +87,24 @@ class sqlCommands {
   public function readData($programid) {
     try {
       $conn = $this->connectMySQL();
-      print("Database: $this->database\n");
-      print("Program ID: $programid\n\n");
+      //print("Database: $this->database\n");
+      //print("Program ID: $programid\n\n");
 
       // http://php.net/manual/en/function.htmlspecialchars.php
       // https://phpdelusions.net/pdo_examples/select
       //$sql = "SELECT * FROM programs"; // Display Everything
-      $sql = "SELECT * FROM VirusScans WHERE programid=':programid' LIMIT 1";
+      $sql = "SELECT * FROM VirusScans WHERE programid=:programid LIMIT 1";
       $query = $conn->prepare($sql);
       $query->execute(['programid' => $programid]);
       $results = $query->fetch();
 
-      # TODO: Currently Not Populating
-      var_dump($results);
+      //var_dump($results);
 
-      htmlspecialchars($results['id'], ENT_QUOTES, 'UTF-8');
-      htmlspecialchars($results['programid'], ENT_QUOTES, 'UTF-8');
-      htmlspecialchars($results['failed'], ENT_QUOTES, 'UTF-8');
+      //print("ID: " . htmlspecialchars($results['id'], ENT_QUOTES, 'UTF-8') . "\n");
+      //print("Program ID: " . htmlspecialchars($results['programid'], ENT_QUOTES, 'UTF-8') . "\n");
+      //print("Failed: " . htmlspecialchars($results['failed'], ENT_QUOTES, 'UTF-8') . "\n");
 
-      }
+      return["id" => $results['id'], "programid" => $results['programid'], "failed" => $results['failed']];
     } catch(PDOException $e) {
         echo "<p class=\"mysql-error\">Read Data from Table Failed: " . $e->getMessage() . "</p></br>";
     }
