@@ -1,5 +1,4 @@
 <?php
-  // TODO: Read From MySQL Database To See If Failed Virus Scan
   // https://stackoverflow.com/a/3406181/6828099
   // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
   set_error_handler(
