@@ -1,13 +1,41 @@
 $(document).ready(function() {
   //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-  $("select").css("max-width", $("#highlight").width() + "px");
+  //$("select").css("max-width", $("#highlight").width() + "px");
+  var rawData = lookup("5ca11aadc7741"); // Failed: 5ca11aadc7741; Success: 5ca11aadc7742
+
+  if(rawData[1] === "json") {
+    var rowid = rawData[0]["id"];
+    var programid = rawData[0]["programid"];
+    var failed = rawData[0]["failed"];
+
+    //alert(failed);
+
+    $("#scanresults").removeClass("hidden");
+    $("#scanresults").removeClass("warning");
+    $("#scanresults-newline").removeClass("hidden-newline");
+
+    if(failed === "1") {
+      $("#scanresults").text("Failed: " + failed);
+      $("#scanresults").addClass("error");
+    } else {
+      $("#scanresults").text("Failed: " + failed);
+      $("#scanresults").addClass("success");
+    }
+
+    alert(failed);
+  } else if(rawData[1] === "html") {
+    // This only shows up on 200 Response.
+    //alert(rawData[0]);
+    alert("Received HTML Response!!!");
+  } else {
+    // Never Runs even on 404!!!
+    // For Unknown Responses (e.g. Glitched Proxy or Excessive Firewall)
+  }
 });
 
-function lookup() {
-  var json = JSON.parse($("#data").val());
-
+function lookup(programid) {
   var url = "/api/antivirus";
-  //var json = {"download": "base64", "retrieve": true, "id": 99};
+  var json = {"programid": programid};
 
   var method = "POST";
 
@@ -35,25 +63,19 @@ function lookup() {
        * status throws out error, just like how status in complete throws out success
        * thrown tells what type of error it is */
 
-      alert("Error Bytes: \"" + data.length + "\" Status: \"" + status + "\" Error: \"" + thrown + "\"");
+      //alert("Error Bytes: \"" + data.length + "\" Status: \"" + status + "\" Error: \"" + thrown + "\"");
       returnvalue = [JSON.stringify(data, null, 2), "json"];
     }, success: function(data, status, xhr) {
       // https://stackoverflow.com/a/3741604/6828099
       var ct = xhr.getResponseHeader("content-type") || "";
       if (ct.indexOf('html') > -1) {
+        //alert("HTML");
         returnvalue = [data, "html"];
       } else if (ct.indexOf('json') > -1) {
-        returnvalue = [JSON.stringify(data, null, 2), "json"];
-      } else if (ct.indexOf('csv') > -1) {
-        returnvalue = [data, "csv"];
-      } else if(ct.indexOf('zip') > -1) {
-        //this.href = "https://localhost" + url + "/api/cryptography?id=99&download=true&retrieve=true";
-        //this.target = '_blank';
-        //this.download = 'cryptography-temp.zip';
-
-        //alert("Bytes: " + data.length); // {"download": true, "retrieve": true, "id": 99}
-        returnvalue = [data, "zip"];
+        returnvalue = [data, "json"]; //[JSON.stringify(data, null, 2), "json"];
       } else {
+        // Never Runs even on 404!!!
+        alert("Unknown Data Type!!! Are you behind a proxy???");
         returnvalue = [data, "unknown"];
       }
     }, complete: function(data, status) {

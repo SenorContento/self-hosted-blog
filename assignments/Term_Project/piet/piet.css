@@ -1,3 +1,14 @@
+/* Virus Scan Message */
+
+.hidden {
+  display: none;
+}
+
+/* https://stackoverflow.com/a/7596709/6828099 */
+.hidden-newline br {
+  display: none;
+}
+
 /* Submit Button Input */
 
 .submit-button {

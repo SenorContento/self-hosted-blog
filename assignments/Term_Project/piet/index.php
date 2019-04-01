@@ -39,6 +39,7 @@
   $mainPage->printSourceCodeLink();
   $mainPage->verifyMySQLVars($mainPage->checkUpload());
 
+  $mainPage->printVirusScanResults();
   $mainPage->printUploadForm();
 
   $loadPage->loadFooter();
@@ -72,6 +73,10 @@
     public function printSourceCodeLink() {
       // I had to manually specify the source URL as the term project being on it's own domain messed up the link - /blob/master/assignments/Term_Project/index.php
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
+    }
+
+    public function printVirusScanResults() {
+      print("<div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!</div><span id=\"scanresults-newline\" class=\"hidden-newline\"></br></span>");
     }
 
     public function printUploadForm() {
