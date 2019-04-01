@@ -137,7 +137,7 @@
       #$command = $this->exec_maldet_path . ' --scan-all "' . $uploaded_file . '" &';
       #$log = $this->antivirus_log_path . $randomid . ".scan";
       // I am not using the log method anymore now I have maldet set to email me about failed scans!!!
-      $command = $this->exec_virusscan_path . " " . "$randomid" . " " . "piet_dev" . " &"; // piet_dev
+      $command = $this->exec_virusscan_path . " " . "$randomid" . " " . getenv('alex.server.piet.database') . " &"; // piet_dev
       //print("Command: $command!!!");
 
       // https://stackoverflow.com/a/4626970/6828099
