@@ -5,6 +5,8 @@
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
+  // https://stackoverflow.com/a/2397010/6828099
+  define('INCLUDED', 1);
   require_once 'mysql.php';
 
   $loadPage = new loadPage();

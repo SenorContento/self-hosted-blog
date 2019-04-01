@@ -1,4 +1,13 @@
 <?php
+// https://stackoverflow.com/a/2397010/6828099
+//defined('INCLUDED') or die();
+if(!defined('INCLUDED')) {
+  header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+  $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
+  include($root . "/errors/404/index.php");
+  die();
+}
+
 class sqlCommands {
   private $server, $username, $password, $database;
 
