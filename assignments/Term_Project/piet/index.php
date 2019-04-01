@@ -84,7 +84,7 @@
       print('
       <form method="post" enctype="multipart/form-data">
         <label class="upload">Select image to upload: </label>
-        <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" name="piet-image" class="upload-box" id="piet-file-input"></label>
+        <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
         <input type="submit" class="submit-button" value="Upload Image" name="submit">
       </form>
       ');
