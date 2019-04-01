@@ -11,7 +11,8 @@
     $loadHeader->printTitle('Alex\'s Site');
   }
 
-  $loadHeader->printAuthorMetadata();
+  $loadHeader->printMetadata();
+  $loadHeader->printCustomMetadata();
   $loadHeader->printMobileStyling();
 
   $loadHeader->printStylesheets();
@@ -38,8 +39,10 @@
       print("\n\t\t" . '<title>' . $pageTitle . '</title>');
     }
 
-    public function printAuthorMetadata() {
+    public function printMetadata() {
+      print("\n\t\t" . '<meta charset="UTF-8">');
       print("\n\t\t" . '<link rel="author" href="https://web.senorcontento.com/humans.txt" />');
+      print("\n\t\t" . '<meta name="author" content="Alex Contento">');
     }
 
     public function printMobileStyling() {
@@ -93,6 +96,13 @@
       print("\n");
       if (function_exists('customPageHeader')){
         customPageHeader();
+      }
+    }
+
+    public function printCustomMetadata() {
+      print("\n");
+      if (function_exists('customMetadata')){
+        customMetadata();
       }
     }
 
