@@ -31,6 +31,7 @@ Disallow: /apc/
 Disallow: /test/
 Disallow: /errors/
 Disallow: /explanations/
+Disallow: /development/
 
 # A data collection bot for public analysis. URL: https://commoncrawl.org/
 # Since I strongly believe in open-source and open-data, I will allow it to analyse everything it can see.
