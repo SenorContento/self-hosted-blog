@@ -1,6 +1,9 @@
+# Temporarily Block Whole Site From Search Engines
+
 # Add All
 User-agent: *
-Allow: /
+Disallow: /
+#Allow: /
 #Allow: /humans.txt
 #Noindex: /sitemap/
 #Noindex: *archive/
