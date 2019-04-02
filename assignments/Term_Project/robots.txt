@@ -3,5 +3,6 @@ User-agent: *
 Allow: /
 #Allow: /humans.txt
 #Noindex: /sitemap/
+#Noindex: *archive/
 Disallow: *.txt
 Disallow: /errors/
