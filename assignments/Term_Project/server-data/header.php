@@ -28,8 +28,8 @@
   $loadHeader->printEndStartBody();
 
   class loadHeader {
-    public $domain = "https://web.senorcontento.com";
-    
+    public $domain = "https://term.senorcontento.com";
+
     public function printStartHeader() {
       print('<!DOCTYPE html>');
       print("\n" . '<html lang="en">');
