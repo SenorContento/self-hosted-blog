@@ -102,6 +102,8 @@ form * {
   display: none;
 }
 
+/* End Virus Scan Message */
+
 /* Submit Button Input */
 
 .submit-button {
@@ -167,6 +169,7 @@ label.upload, label.name, label.about {
 /* End File Upload Input */
 
 /* MySQL Messages */
+/* Not Relevant Because Message Is Turned Off */
 
 p.mysql-success {
   color: black;
