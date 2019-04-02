@@ -63,6 +63,13 @@
           "\n\t\t" . '</script>');
   }
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 2 for CSCI3000 Web Development Class. Named: Javascript/JQuery Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP,Javascript,JQuery">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentTwo();
 

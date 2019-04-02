@@ -6,6 +6,13 @@
     print("\n\t\t" . '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>');
   }
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 11 for CSCI3000 Web Development Class. Named: Web APIs Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP,Javascript,JQuery">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   $loadPage = new loadPage();
   $sqlCommands = new sqlCommands();
   $mainPage = new homeworkAssignmentEleven();

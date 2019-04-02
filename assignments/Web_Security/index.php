@@ -14,6 +14,13 @@
 
   $loadPage->loadFooter();
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 12 for CSCI3000 Web Development Class. Named: Web Security Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   class homeworkAssignmentTwelve {
     public function printArchiveLink() {
       print('<a href="archive" style="text-align: center;display: block">Go to Archived Homework Assignment 12</a>');

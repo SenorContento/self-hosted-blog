@@ -40,9 +40,12 @@
     }
 
     public function printMetadata() {
-      print("\n\t\t" . '<meta charset="UTF-8">');
+      //print("\n\t\t" . '<meta charset="UTF-8">');
+      print("\n\t\t" . '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
       print("\n\t\t" . '<link rel="author" href="/humans.txt" />');
       print("\n\t\t" . '<meta name="author" content="Alex Contento">');
+      print("\n\t\t" . '<meta name="copyright" content="GPL3 License">');
+      print("\n\t\t" . '<meta name="license" content="/LICENSE.md">');
     }
 
     public function printMobileStyling() {

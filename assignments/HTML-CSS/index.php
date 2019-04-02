@@ -15,6 +15,13 @@
     */
   }
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 1 for CSCI3000 Web Development Class. Named: HTML-CSS Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentOne();
 

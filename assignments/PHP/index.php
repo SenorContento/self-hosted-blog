@@ -4,6 +4,13 @@
     print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
   }
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 4 for CSCI3000 Web Development Class. Named: PHP Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP,Javascript,JQuery">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   $loadPage = new loadPage();
   $mainPage = new homeworkAssignmentFour();
 

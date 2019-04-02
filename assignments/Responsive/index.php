@@ -18,6 +18,13 @@
 
   $loadPage->loadFooter();
 
+  function customMetadata() {
+    print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Assignment 3 for CSCI3000 Web Development Class. Named: Responsive Design Assignment">');
+    print("\n\t\t" . '<meta name="keywords" content="HTML,CSS,PHP,Javascript,JQuery">');
+    print("\n\t\t" . '<!--End Custom Metadata-->');
+  }
+
   function customPageHeader() {
     print('<link rel="stylesheet" href="assignment3.css">');
     print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
