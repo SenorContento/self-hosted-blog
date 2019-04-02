@@ -26,6 +26,8 @@ Allow: /
 Allow: /humans.txt
 Noindex: /sitemap/
 Noindex: *archive/
+Noindex: *Midterm/Part_1
+Noindex: *Midterm/Part_2
 Disallow: *.txt
 Disallow: /apc/
 Disallow: /test/
