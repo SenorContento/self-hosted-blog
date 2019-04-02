@@ -83,7 +83,7 @@
     }
 
     public function printVirusScanResults() {
-      print("<div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!</div><span id=\"scanresults-newline\" class=\"hidden-newline\"></br></span>");
+      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"></br></span>");
     }
 
     public function printUploadForm() {
