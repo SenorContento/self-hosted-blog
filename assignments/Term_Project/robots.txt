@@ -1,0 +1,7 @@
+# Add All
+User-agent: *
+Allow: /
+#Allow: /humans.txt
+#Noindex: /sitemap/
+Disallow: *.txt
+Disallow: /errors/

@@ -17,10 +17,15 @@
 # I have my server set to redirect to the slashed equivalent URLs and it uses a 301 redirect which will keep Google
 # from indexing the original URL.
 
+# Noindex Directive
+# https://www.deepcrawl.com/blog/best-practice/robots-txt-noindex-the-best-kept-secret-in-seo/
+
 # Add All
 User-agent: *
 Allow: /
 Allow: /humans.txt
+Noindex: /sitemap/
+Disallow: *.txt
 Disallow: /apc/
 Disallow: /test/
 Disallow: /errors/
