@@ -90,13 +90,17 @@
       // https://stackoverflow.com/a/23706177/6828099
       print('
       <form method="post" enctype="multipart/form-data">
-        <label class="name">Program Name: </label>
-        <input class="name-input" name="program_name" type="text" required></input></br>
+        <span data-tip="Limited to 20 Characters!!!">
+          <label class="name">Program Name: </label>
+          <input class="name-input tooltip" name="program_name" type="text" maxlength="20" required></input>
+        </span></br>
 
-        <div class="about-textarea">
-          <label class="about">About Program: </label><br>
-          <textarea class="textarea" name="program_about" required></textarea></br>
-        </div>
+        <span data-tip="Limited to 50 Characters!!!">
+          <div class="about-textarea">
+            <label class="about">About Program: </label><br>
+            <textarea class="textarea tooltip" name="program_about" maxlength="50" required></textarea></br>
+          </div>
+        </span>
 
         </br>
         <label class="upload">Select image to upload: </label>
@@ -184,8 +188,11 @@
       // https://www.w3schools.com/php/php_file_upload.asp
       if(isset($_FILES["piet-image"])) {
         try {
-          $programname = htmlspecialchars($this->getValue('program_name'), ENT_QUOTES, 'UTF-8');
-          $programabout = htmlspecialchars($this->getValue('program_about'), ENT_QUOTES, 'UTF-8');
+          $textbox_limit = 20;
+          $textarea_limit = 50;
+
+          $programname = htmlspecialchars(substr($this->getValue('program_name'), 0, $textbox_limit), ENT_QUOTES, 'UTF-8');
+          $programabout = htmlspecialchars(substr($this->getValue('program_about'), 0, $textarea_limit), ENT_QUOTES, 'UTF-8');
         } catch(Exception $e) {
           if($e->getMessage() === "program_name") {
             print('<div class="error">Program Name is Not Set!!!</div></br>');

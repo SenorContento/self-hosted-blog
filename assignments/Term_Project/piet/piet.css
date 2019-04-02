@@ -1,3 +1,37 @@
+/* Data Tip */
+
+[data-tip]:after {
+  /* http://jsfiddle.net/BumU5/3/ */
+  content: attr(data-tip) '\A';
+  white-space: pre-wrap;
+
+  /*display: none;*/
+  position: absolute;
+  z-index: 0;
+
+  visibility: none;
+  opacity: 0;
+
+  /*transition:visibility 0s, opacity 0.4s ease-out;*/
+
+  color: white;
+}
+
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+  /* Work In Progress Tooltip */
+  /*display: inline;*/
+
+  /*position: static;
+  z-index: 9999;
+
+  visibility: visible;
+  opacity: 1;
+  bottom:-35px;*/
+}
+
+/* End Data Tip */
+
 /* Spinner CSS */
 /* https://www.w3schools.com/howto/howto_css_loader.asp */
 
