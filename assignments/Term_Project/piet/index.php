@@ -38,9 +38,15 @@
   $mainPage->setVars();
 
   $mainPage->printSourceCodeLink();
-  $mainPage->verifyMySQLVars($mainPage->checkUpload());
+  $upload_metadata = $mainPage->checkUpload();
 
-  $mainPage->printVirusScanResults();
+  //print("Metadata: $upload_metadata");
+
+  if(is_array($upload_metadata)) {
+    $mainPage->verifyMySQLVars($upload_metadata);
+    $mainPage->printVirusScanResults();
+  }
+
   $mainPage->printUploadForm();
 
   $loadPage->loadFooter();
@@ -84,6 +90,15 @@
       // https://stackoverflow.com/a/23706177/6828099
       print('
       <form method="post" enctype="multipart/form-data">
+        <label class="name">Program Name: </label>
+        <input class="name-input" name="program_name" type="text" required></input></br>
+
+        <div class="about-textarea">
+          <label class="about">About Program: </label><br>
+          <textarea class="textarea" name="program_about" required></textarea></br>
+        </div>
+
+        </br>
         <label class="upload">Select image to upload: </label>
         <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
         <input type="submit" class="submit-button" value="Upload Image" name="submit">
@@ -95,8 +110,9 @@
         // I could refuse to add this to MySQL if the value is not set. It is not set up this way though.
         if(is_array($metadata)) { // Verifies a File Was Actually Uploaded
           $programid = explode("_", $metadata[0])[1]; // Name looks like "piet_5c92bb736591c", I want "5c92bb736591c" out of it.
-          $programname = htmlspecialchars($this->getValue('program_name'), ENT_QUOTES, 'UTF-8');
-          $programabout = htmlspecialchars($this->getValue('program_about'), ENT_QUOTES, 'UTF-8');
+
+          $programname = $metadata[6];
+          $programabout = $metadata[7];
 
           $filename = $metadata[1];
           $ipaddress = $_SERVER["REMOTE_ADDR"];
@@ -117,7 +133,8 @@
       if(isset($_REQUEST[$value]) && $_REQUEST[$value] !== '') {
         $return_me = $_REQUEST[$value];
       } else {
-        $return_me = "Not Set";
+        //$return_me = "Not Set";
+        throw new Exception("$value");
       }
 
       return $return_me;
@@ -166,6 +183,22 @@
     public function checkUpload() {
       // https://www.w3schools.com/php/php_file_upload.asp
       if(isset($_FILES["piet-image"])) {
+        try {
+          $programname = htmlspecialchars($this->getValue('program_name'), ENT_QUOTES, 'UTF-8');
+          $programabout = htmlspecialchars($this->getValue('program_about'), ENT_QUOTES, 'UTF-8');
+        } catch(Exception $e) {
+          if($e->getMessage() === "program_name") {
+            print('<div class="error">Program Name is Not Set!!!</div></br>');
+          } else if($e->getMessage() === "program_about") {
+            print('<div class="error">About Program is Not Set!!!</div></br>');
+          } else {
+            print('<div class="error">"' . $e->getMessage() . '" is Not Set!!!</div></br>');
+          }
+
+          return -1;
+          //die();
+        }
+
         //$id = isset($_REQUEST["id"]) ? (int) $_REQUEST["id"] : NULL; // Single Line If Statement
         $randomid = uniqid('piet_');
         $target_dir = $this->piet_upload_path;
@@ -192,7 +225,7 @@
         $verifyExists = $sqlCommands->readChecksum($checksum);
         if($verifyExists[0]) {
           if($verifyExists[3]) {
-            print("<div class=\"error\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</div></br>");
+            print("<div class=\"warning\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</div></br>");
           } else {
             print("<div class=\"error\">Image Was Previously Banned!!!</div></br>");
           }
@@ -246,7 +279,7 @@
 
           $isallowed = $this->scanForViruses($target_file, $explodedRandomID);
 
-          return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded];
+          return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded, $programname, $programabout];
         } else {
           print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div></br>");
           return -3;

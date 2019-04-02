@@ -1,3 +1,65 @@
+/* Form CSS */
+
+form * {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.name-input {
+  background-color: #000000;
+  color: #b5e853;
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+label.about {
+  horizontal-align: left;
+}
+
+.textarea {
+  overflow: auto;
+  /*resize: none;*/
+  max-height: 200px;
+  max-width: 1000px;
+
+  height: 186px;
+  width: 260px;
+
+  background-color: #000000;
+  color: #b5e853;
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.about-textarea {
+  display: inline-block;
+}
+
+/* https://stackoverflow.com/a/1839450/6828099 */
+.about-textarea * {
+  vertical-align: top;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.about-textarea .about {
+  float: left;
+}
+
+/* End Form CSS */
+
 /* Virus Scan Message */
 
 .hidden {
@@ -67,7 +129,7 @@ input.upload-box:hover {
   /*border: green solid 1px;*/
 }
 
-label.upload {
+label.upload, label.name, label.about {
   color: green;
 }
 
