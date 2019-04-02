@@ -25,7 +25,10 @@
 
   class mainPage {
     public function mainBody() {
-      print('<div style="display: inline-block; text-align: left;"><h1>');
+      print('<div class="index-container">');
+      print('<div class="index-alignment">');
+      print('<h1>');
+      
       print('This post is not currently available yet.');
       print('</h1></div>');
     }

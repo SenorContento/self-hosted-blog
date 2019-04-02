@@ -25,11 +25,14 @@
 
   class mainPage {
     public function mainBody() {
-      print('<div style="display: inline-block; text-align: left;"><h1>');
-      print('<a class="index-link" href="https://wave.webaim.org/">Visual Screenreader (For Development)</a>');
-      print('<a class="index-link" href="https://webaim.org/techniques/screenreader/">Why Developing for Screenreaders is Important</a>');
-      print('<a class="index-link" href="https://webaim.org/articles/screenreader_testing/">Best Practices for Testing</a>');
-      print('<a class="index-link" href="https://webaim.org/techniques/semanticstructure/">HTML Tags to Be Careful With</a>');
+      print('<div class="index-container">');
+      print('<div class="index-alignment">');
+      print('<h1>');
+      
+      print('<a class="index-link" href="https://wave.webaim.org/">Visual Screenreader (For Development)</a></br>');
+      print('<a class="index-link" href="https://webaim.org/techniques/screenreader/">Why Developing for Screenreaders is Important</a></br>');
+      print('<a class="index-link" href="https://webaim.org/articles/screenreader_testing/">Best Practices for Testing</a></br>');
+      print('<a class="index-link" href="https://webaim.org/techniques/semanticstructure/">HTML Tags to Be Careful With</a></br>');
       print('</h1></div>');
     }
   }
