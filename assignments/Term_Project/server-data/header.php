@@ -28,6 +28,8 @@
   $loadHeader->printEndStartBody();
 
   class loadHeader {
+    public $domain = "https://web.senorcontento.com";
+    
     public function printStartHeader() {
       print('<!DOCTYPE html>');
       print("\n" . '<html lang="en">');
@@ -42,6 +44,7 @@
     public function printMetadata() {
       //print("\n\t\t" . '<meta charset="UTF-8">');
       print("\n\t\t" . '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+      print("\n\t\t" . '<link rel="canonical" href="' . $this->domain . $_SERVER['REQUEST_URI'] . '" />');
       print("\n\t\t" . '<link rel="author" href="https://web.senorcontento.com/humans.txt" />');
       print("\n\t\t" . '<meta name="author" content="Alex Contento">');
       print("\n\t\t" . '<meta name="copyright" content="GPL-3 License">');

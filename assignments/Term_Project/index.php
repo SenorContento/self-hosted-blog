@@ -18,7 +18,7 @@
   class homeworkAssignmentThirteen {
     public function redirectMe() {
       //print("Address: " . $_SERVER['SERVER_NAME']); // The fact that this works (and looking at curl), I can conclude that PHP waits until execution is finished before it even begins to send data. It's like my Python Script.
-      $host = (getenv('alex.server.type') === "production") ? "term.web.senorcontento.com" : "term.project";
+      $host = (getenv('alex.server.type') === "production") ? "term.senorcontento.com" : "term.project";
 
       if($host !== $_SERVER['SERVER_NAME']) {
         header("Location: https://" . $host . "/");
