@@ -109,7 +109,8 @@
 
     public function printTable() {
       $failed_attempts = $this->generateTable();
-      // Currently Awk does not want to work with htmlspecialchars
+      //$failed_attempts = htmlspecialchars($this->generateTable(), ENT_QUOTES, 'UTF-8');
+
       //print("Original: " . mb_detect_encoding($failed_attempts));
       //print("HTMLSpecialChars: " . mb_detect_encoding(htmlspecialchars(escapeshellarg($failed_attempts), ENT_NOQUOTES, 'UTF-8')));
       $failed_attempts_parsed = shell_exec($this->exec_echo_path . " " . escapeshellarg($failed_attempts) . " | " .

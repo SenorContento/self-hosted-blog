@@ -73,7 +73,7 @@
     }
 
     public function printCurrentUserAgent() {
-      print("<p>Your User Agent: \"" . $_SERVER['HTTP_USER_AGENT'] . "\"</p></br>");
+      print("<p>Your User Agent: \"" . htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8') . "\"</p></br>");
     }
 
     public function printAllUserAgentShort() {
@@ -81,13 +81,17 @@
       print("<pre style=\"display: inline-block; text-align: left;\"><code>");
 
       // Removing the awk command between gunzip and cut causes the command to organize access by IP Address instead of User Agent
-      system($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " .
+      exec($this->exec_find_path . " \"" . $this->log_path . "\" -name \"access.log*\" -follow -type f -print0 | " .
       $this->exec_xargs_path . " -0 " . $this->exec_gunzip_path . " -cf | " .
       $this->exec_awk_path . " -F'\"' '/GET/ {print $6}' | " .
       $this->exec_cut_path . " -d' ' -f1 | " .
       $this->exec_sort_path . " | " .
       $this->exec_uniq_path . " -c | " .
-      $this->exec_sort_path . " -rn");
+      $this->exec_sort_path . " -rn", $shortagents);
+
+      foreach ($shortagents as $shortagent) {
+        print(htmlspecialchars($shortagent, ENT_QUOTES, 'UTF-8') . "\n");
+      }
 
       print("</code></pre></p>");
     }
