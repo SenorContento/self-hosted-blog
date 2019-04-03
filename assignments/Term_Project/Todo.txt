@@ -1,0 +1,2 @@
+* An Idea For The Search Engine: https://stackoverflow.com/a/9024759/6828099 - JQuery asuggest
+ - Combine ASuggest With AJAX Search
