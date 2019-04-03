@@ -74,6 +74,20 @@ form * {
   margin-bottom: 8px;
 }
 
+/* https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(0, 255, 0, 0.75);
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+}
+
 .name-input {
   font-family: 'FiraCode';
   font-size: 14px;

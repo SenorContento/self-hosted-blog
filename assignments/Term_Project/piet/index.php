@@ -91,19 +91,19 @@
       print('
       <form method="post" enctype="multipart/form-data">
         <span data-tip="Limited to 20 Characters!!!">
-          <label class="name">Program Name: </label>
-          <input class="name-input tooltip" name="program_name" type="text" maxlength="20" required></input>
+          <label for="program_name" class="name">Program Name: </label>
+          <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required></input>
         </span></br>
 
         <span data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
-            <label class="about">About Program: </label><br>
-            <textarea class="textarea tooltip" name="program_about" maxlength="365" required></textarea></br>
+            <label for="program_about" class="about">About Program: </label><br>
+            <textarea class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea></br>
           </div>
         </span>
 
         </br>
-        <label class="upload">Select image to upload: </label>
+        <label for="piet-filename" class="upload">Select image to upload: </label>
         <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
         <input type="submit" class="submit-button" value="Upload Image" name="submit">
       </form>
