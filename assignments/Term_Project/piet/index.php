@@ -59,7 +59,13 @@
     #public $exec_maldet_path;
     public $exec_echo_path;
 
+    public $piet_launcher;
+    //public $piet_url;
+    //public $piet_arguments;
+
     function setVars() {
+      $this->piet_launcher = "/piet/launcher/";
+
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         $this->piet_upload_path = "/var/web/term-uploads/";
@@ -234,7 +240,9 @@
         $verifyExists = $sqlCommands->readChecksum($checksum);
         if($verifyExists[0]) {
           if($verifyExists[3]) {
-            print("<div class=\"warning\">Image Already Exists!!! Check It Out With Program ID " . $verifyExists[1] . "!!!</div></br>");
+            $piet_url = $verifyExists[1];
+            $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
+            print("<div class=\"warning\">Image Already Exists!!! Check It Out With Program ID <a class=\"warning-link\" href='" . $piet_launcher . "'>$piet_url</a>!!!</div></br>");
           } else {
             print("<div class=\"error\">Image Was Previously Banned!!!</div></br>");
           }
@@ -276,8 +284,10 @@
         $dateadded = time(); // Get Current Server Time
 
         if(move_uploaded_file($uploaded_file, $target_file)) {
+          $piet_url = $explodedRandomID;
+          $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
-          print('The Program\'s ID is: ' . $explodedRandomID . '!!!</div></br>');
+          print('The Program\'s ID is: <a class="success-link" href="' . $piet_launcher . '">' . $explodedRandomID . '</a>!!!</div></br>');
 
           print('<script type="text/javascript">
                   $(document).ready(function() {

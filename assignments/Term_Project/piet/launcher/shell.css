@@ -60,6 +60,9 @@ button[type="submit"] {
 }
 
 input[type="text"] {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
   background-color: #000000;
   color: #b5e853;
 

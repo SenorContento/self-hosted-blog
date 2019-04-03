@@ -27,6 +27,11 @@ body {
   /*padding-bottom: 8px;*/
 }
 
+/* For Error Pages */
+h1 {
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+}
+
 a.source-code-link {
   font-size: 2em;
   text-decoration-style: none; /* Not the underline, but setting anyway */

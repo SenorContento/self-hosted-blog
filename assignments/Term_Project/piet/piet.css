@@ -244,3 +244,19 @@ p.mysql-success {
 }
 
 /* End MySQL Messages */
+
+/* Custom Message Links */
+
+.success-link {
+  color: black;
+}
+
+.warning-link {
+  color: black;
+}
+
+.error-link {
+  color: black;
+}
+
+/* End Custom Message Links */
