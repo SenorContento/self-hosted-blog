@@ -7,9 +7,10 @@
   }
 
   function customPageFooter() {
-    print("\n\t\t" . '<script src="fileupload.js"></script>');
     //print("\n\t\t" . '<script src="/js/jquery-3.3.1.min.js"></script>');
 
+    print("\n\t\t" . '<script src="stylize.js"></script>');
+    print("\n\t\t" . '<script src="fileupload.js"></script>');
     print("\n\t\t" . '<script src="ajax-api.js"></script>');
   }
 
@@ -95,6 +96,9 @@
     public function printUploadForm() {
       // https://stackoverflow.com/a/23706177/6828099
       print('
+      <!--This Pre Tag Exists to Help With Javascript Resizing-->
+      <pre class="sizing-tag-hidden" id="sizing-tag">Hello</pre>
+
       <form method="post" enctype="multipart/form-data">
         <span data-tip="Limited to 20 Characters!!!">
           <label for="program_name" class="name">Program Name: </label>
@@ -104,7 +108,7 @@
         <span data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
             <label for="program_about" class="about">About Program: </label><br>
-            <textarea class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea></br>
+            <textarea type="text" class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea></br>
           </div>
         </span>
 

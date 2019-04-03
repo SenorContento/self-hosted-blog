@@ -92,6 +92,8 @@ select:-webkit-autofill:focus {
   font-family: 'FiraCode';
   font-size: 14px;
 
+  max-width: 850px;
+
   background-color: #000000;
   color: rgba(0, 255, 0, 0.75); /* #b5e853; */
 
@@ -116,8 +118,11 @@ select:-webkit-autofill:focus {
   height: 186px;
   width: 315px;
 
-  min-height: 186px;
-  min-width: 315px;
+  /*min-height: 186px;*/
+  /*min-width: 315px;*/
+
+  /*min-height: 10px;*/
+  /*min-width: 20px;*/
 
   background-color: #000000;
   color: rgba(0, 255, 0, 0.75); /* #b5e853; */
@@ -144,6 +149,15 @@ select:-webkit-autofill:focus {
 
 .about-textarea .about {
   float: left;
+}
+
+pre {
+  margin: 8px;
+  /*border: 1px solid #b5e853;*/
+}
+
+.sizing-tag-hidden {
+  font-size: 0px;
 }
 
 /* End Form CSS */
