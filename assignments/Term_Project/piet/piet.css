@@ -106,6 +106,12 @@ select:-webkit-autofill:focus {
   padding-bottom: 2px;
 }
 
+.name-input:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
 .textarea {
   font-family: 'FiraCode';
   font-size: 14px;
@@ -134,6 +140,12 @@ select:-webkit-autofill:focus {
   padding-left: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
+}
+
+.textarea:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
 }
 
 .div-name-input {
