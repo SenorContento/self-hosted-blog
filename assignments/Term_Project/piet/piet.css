@@ -136,6 +136,14 @@ select:-webkit-autofill:focus {
   padding-bottom: 2px;
 }
 
+.div-name-input {
+  display: inline-block;
+}
+
+.div-name-input .name {
+  float: left;
+}
+
 .about-textarea {
   display: inline-block;
 }
@@ -149,6 +157,12 @@ select:-webkit-autofill:focus {
 
 .about-textarea .about {
   float: left;
+}
+
+@media only screen and (max-width: 500px) {
+  .upload-break {
+    display: block;
+  }
 }
 
 pre {

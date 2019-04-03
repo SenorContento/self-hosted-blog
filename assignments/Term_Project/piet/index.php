@@ -101,8 +101,10 @@
 
       <form method="post" enctype="multipart/form-data">
         <span data-tip="Limited to 20 Characters!!!">
-          <label for="program_name" class="name">Program Name: </label>
-          <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required></input>
+          <div class="div-name-input">
+            <label for="program_name" class="name">Program Name: </label>
+            <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required></input>
+          </div>
         </span></br>
 
         <span data-tip="Limited to 365 Characters!!!">
@@ -113,9 +115,13 @@
         </span>
 
         </br>
-        <label for="piet-filename" class="upload">Select image to upload: </label>
-        <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
-        <input type="submit" class="submit-button" value="Upload Image" name="submit">
+        <div class="file-input">
+          <label for="piet-filename" class="upload">Select image to upload: </label>
+          <span class="upload-break">
+            <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
+            <input type="submit" class="submit-button" value="Upload Image" name="submit">
+          </span>
+        </div>
       </form>
       ');
     }
