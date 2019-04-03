@@ -90,14 +90,15 @@
     }
 
     public function printVirusScanResults() {
-      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"><br></span>");
+      //print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"><br></span>");
+      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"></span>");
     }
 
     public function printUploadForm() {
       // https://stackoverflow.com/a/23706177/6828099
       print('
       <!--This Pre Tag Exists to Help With Javascript Resizing-->
-      <pre class="sizing-tag-hidden" id="sizing-tag">Hello</pre>
+      <pre class="sizing-tag-hidden" id="sizing-tag"></pre>
 
       <form method="post" enctype="multipart/form-data">
         <div class="minified" data-tip="Limited to 20 Characters!!!">
