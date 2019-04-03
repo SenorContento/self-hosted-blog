@@ -76,6 +76,7 @@ form * {
 
 .name-input {
   font-family: 'FiraCode';
+  font-size: 14px;
 
   background-color: #000000;
   color: rgba(0, 255, 0, 0.75); /* #b5e853; */
@@ -91,6 +92,7 @@ form * {
 
 .textarea {
   font-family: 'FiraCode';
+  font-size: 14px;
 
   overflow: auto;
   /*resize: none;*/
@@ -98,10 +100,10 @@ form * {
   max-width: 1000px;
 
   height: 186px;
-  width: 295px;
+  width: 315px;
 
   min-height: 186px;
-  min-width: 295px;
+  min-width: 315px;
 
   background-color: #000000;
   color: rgba(0, 255, 0, 0.75); /* #b5e853; */
