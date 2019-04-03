@@ -75,8 +75,10 @@ form * {
 }
 
 .name-input {
+  font-family: 'FiraCode';
+
   background-color: #000000;
-  color: #b5e853; /* rgba(0, 255, 0, 0.75); /* #b5e853; */
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
 
   border: 1px solid blue;
   margin: 8px;
@@ -88,16 +90,21 @@ form * {
 }
 
 .textarea {
+  font-family: 'FiraCode';
+
   overflow: auto;
   /*resize: none;*/
   max-height: 200px;
   max-width: 1000px;
 
   height: 186px;
-  width: 260px;
+  width: 295px;
+
+  min-height: 186px;
+  min-width: 295px;
 
   background-color: #000000;
-  color: #b5e853; /* rgba(0, 255, 0, 0.75); /* #b5e853; */
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
 
   border: 1px solid blue;
   margin: 8px;
@@ -197,6 +204,7 @@ input.upload-box:hover {
 }
 
 label.upload, label.name, label.about {
+  font-family: "FiraCode";
   color: rgba(0, 255, 0, 0.75);
 }
 
