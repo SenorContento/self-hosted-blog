@@ -39,21 +39,21 @@
 
       $websocketurl = isset($_REQUEST["piet-url"]) ? $_REQUEST["piet-url"] : "";
       if(isset($websocketurl) && trim($websocketurl) !== '') {
-        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="' . $websocketurl . '" autocomplete="off"></input>');
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="' . $websocketurl . '" autocomplete="off">');
       } else {
-        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="5c92cd6054ce1" autocomplete="off"></input>');
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="5c92cd6054ce1" autocomplete="off">');
       }
 
       $arguments = isset($_REQUEST["piet-arguments"]) ? $_REQUEST["piet-arguments"] : "";
       if(isset($arguments) && trim($arguments) !== '') {
-        print('<input id="arguments" name="piet-arguments" type="text" value="' . $arguments . '" placeholder="Program Arguments..." autocomplete="off"></input>');
+        print('<input id="arguments" name="piet-arguments" type="text" value="' . $arguments . '" placeholder="Program Arguments..." autocomplete="off">');
       } else {
-        print('<input id="arguments" name="piet-arguments" type="text" placeholder="Program Arguments..." autocomplete="off"></input>');
+        print('<input id="arguments" name="piet-arguments" type="text" placeholder="Program Arguments..." autocomplete="off">');
       }
 
       print('
           <button type="submit">Set URL</button>
-          </br>
+          <br>
         </form>
       ');
       print("<pre class='ligature copy' id='received'></pre>");

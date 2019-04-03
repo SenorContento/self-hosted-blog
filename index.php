@@ -29,9 +29,9 @@
       print('<div class="index-alignment">');
       print('<h1>');
 
-      print('<a class="index-link" href="/assignments/">Class Assignments</a></br>');
-      print('<a class="index-link" href="/development/failed_pma/">Failed Login Attempts for PHPMyAdmin</a></br>');
-      print('<a class="index-link" href="/development/apis/">3rd Party Databases and APIs to Checkout</a></br>');
+      print('<a class="index-link" href="/assignments/">Class Assignments</a><br>');
+      print('<a class="index-link" href="/development/failed_pma/">Failed Login Attempts for PHPMyAdmin</a><br>');
+      print('<a class="index-link" href="/development/apis/">3rd Party Databases and APIs to Checkout</a><br>');
       print('</h1></div>');
     }
   }

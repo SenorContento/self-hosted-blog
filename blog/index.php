@@ -29,8 +29,8 @@
       print('<div class="index-alignment">');
       print('<h1>');
       
-      print('<a class="index-link" href="/blog/about-my-blog/">About My Blog</a></br>');
-      print('<a class="index-link" href="/blog/hacking-the-router/">Hacking My Sagemcom 1704N Router</a></br>');
+      print('<a class="index-link" href="/blog/about-my-blog/">About My Blog</a><br>');
+      print('<a class="index-link" href="/blog/hacking-the-router/">Hacking My Sagemcom 1704N Router</a><br>');
       print('</h1></div>');
     }
   }

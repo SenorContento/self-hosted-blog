@@ -90,7 +90,7 @@
     }
 
     public function printVirusScanResults() {
-      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"></br></span>");
+      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"><br></span>");
     }
 
     public function printUploadForm() {
@@ -103,22 +103,22 @@
         <span data-tip="Limited to 20 Characters!!!">
           <div class="div-name-input">
             <label for="program_name" class="name">Program Name: </label>
-            <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required></input>
+            <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required>
           </div>
-        </span></br>
+        </span><br>
 
         <span data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
             <label for="program_about" class="about">About Program: </label><br>
-            <textarea type="text" class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea></br>
+            <textarea type="text" class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea><br>
           </div>
         </span>
 
-        </br>
+        <br>
         <div class="file-input">
-          <label for="piet-filename" class="upload">Select image to upload: </label>
+          <label for="piet-file-input" class="upload">Select image to upload: </label>
           <span class="upload-break">
-            <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
+            <label class="file-button"><span id="piet-filename" class="select-file-message">No File Selected</span><input type="file" accept=".png,.gif,image/png,image/gif" name="piet-image" class="upload-box" id="piet-file-input"></label>
             <input type="submit" class="submit-button" value="Upload Image" name="submit">
           </span>
         </div>
@@ -189,7 +189,7 @@
       $proc = proc_open($command, $descriptorspec, $pipes);
       //proc_close($proc); // Don't Activate This Otherwise The Script Will Hang Until Process Is Finished!!!
 
-      //print('<div class="warning">Command "' . $command . '"!!!</div></br>');
+      //print('<div class="warning">Command "' . $command . '"!!!</div><br>');
 
       // This works, but it slightly slows down the response of the page.
       // I am going to see if I cannot figure out how to asynchronously scan the file and send the user the response.
@@ -197,7 +197,7 @@
       // This Was Originally In checkImageAllowed(...);
       //exec($command, $antivirus, $antivirus_return);
       /*if($antivirus_return) {
-        //print("<div class=\"error\">Failed Antivirus!!!</div></br>");
+        //print("<div class=\"error\">Failed Antivirus!!!</div><br>");
         //return [0, "Failed Antivirus Scan"];
       }*/
     }
@@ -213,11 +213,11 @@
           $programabout = htmlspecialchars(substr($this->getValue('program_about'), 0, $textarea_limit), ENT_QUOTES, 'UTF-8');
         } catch(Exception $e) {
           if($e->getMessage() === "program_name") {
-            print('<div class="error">Program Name is Not Set!!!</div></br>');
+            print('<div class="error">Program Name is Not Set!!!</div><br>');
           } else if($e->getMessage() === "program_about") {
-            print('<div class="error">About Program is Not Set!!!</div></br>');
+            print('<div class="error">About Program is Not Set!!!</div><br>');
           } else {
-            print('<div class="error">"' . $e->getMessage() . '" is Not Set!!!</div></br>');
+            print('<div class="error">"' . $e->getMessage() . '" is Not Set!!!</div><br>');
           }
 
           return -1;
@@ -232,7 +232,7 @@
         $uploaded_file = $_FILES["piet-image"]["tmp_name"];
 
         if(empty($uploaded_file)) {
-          print("<div class=\"error\">No File Uploaded!!!</div></br>");
+          print("<div class=\"error\">No File Uploaded!!!</div><br>");
           return -5;
         }
 
@@ -241,7 +241,7 @@
 
         // Check If File Size Is Under 1 MB (1024 KB)
         if($_FILES["piet-image"]["size"] > 1024000) {
-          print("<div class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</div></br>");
+          print("<div class=\"error\">Image Cannot Be Over 1 MB (1024 KB)!!!</div><br>");
           return -1;
         }
 
@@ -252,16 +252,16 @@
           if($verifyExists[3]) {
             $piet_url = $verifyExists[1];
             $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
-            print("<div class=\"warning\">Image Already Exists!!! Check It Out With Program ID <a class=\"warning-link\" href='" . $piet_launcher . "'>$piet_url</a>!!!</div></br>");
+            print("<div class=\"warning\">Image Already Exists!!! Check It Out With Program ID <a class=\"warning-link\" href='" . $piet_launcher . "'>$piet_url</a>!!!</div><br>");
           } else {
-            print("<div class=\"error\">Image Was Previously Banned!!!</div></br>");
+            print("<div class=\"error\">Image Was Previously Banned!!!</div><br>");
           }
           return -4;
         }
 
         // Check If PNG or GIF Format
         if($imageFileType != "image/png" && $imageFileType != "image/gif") {
-          print("<div class=\"error\">Image Has to Be A PNG Or GIF File!!! It is a $imageFileType file!!!</div></br>");
+          print("<div class=\"error\">Image Has to Be A PNG Or GIF File!!! It is a $imageFileType file!!!</div><br>");
           return -2;
         }
 
@@ -286,7 +286,7 @@
             return -6;
           } else {
             print('<div class="error">Image "' . $uploaded_file_name . '" Failed The Automated Check for the reason "' . $banreason . '"!!!' .
-            ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . $explodedRandomID . '"!!!</div></br>');
+            ' If you believe this is in error, contact me on <a href="' . $issues . '">Github Issues</a> with the Program ID "' . $explodedRandomID . '"!!!</div><br>');
           }
         }
 
@@ -297,7 +297,7 @@
           $piet_url = $explodedRandomID;
           $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
-          print('The Program\'s ID is: <a class="success-link" href="' . $piet_launcher . '">' . $explodedRandomID . '</a>!!!</div></br>');
+          print('The Program\'s ID is: <a class="success-link" href="' . $piet_launcher . '">' . $explodedRandomID . '</a>!!!</div><br>');
 
           print('<script type="text/javascript">
                   $(document).ready(function() {
@@ -310,7 +310,7 @@
 
           return [$randomid, basename($uploaded_file_name), $checksum, $allowed, $banreason, $dateadded, $programname, $programabout];
         } else {
-          print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div></br>");
+          print("<div class=\"error\">Failed To Move File To Storage Directory!!!</div><br>");
           return -3;
         }
       }

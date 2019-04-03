@@ -27,7 +27,7 @@
       print('<div class="index-container">');
       print('<div class="index-alignment">');
       print("<h1>");
-      print('<a href="Part_1" class="index-link">Go to Midterm (Part 1)</a></br>');
+      print('<a href="Part_1" class="index-link">Go to Midterm (Part 1)</a><br>');
       print('<a href="Part_2" class="index-link">Go to Midterm (Part 2)</a>');
       print("</h1>");
       print("</div></div>");

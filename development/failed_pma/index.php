@@ -125,7 +125,7 @@
       $this->exec_wc_path . " -l");
 
       print("<p>No Real Logins Show Up Here because Real Logins use POST requests, these attacks use GET requests.");
-      print("</br></br><a href=\"?download_csv\">Download Table as CSV</a></p>");
+      print("<br><br><a href=\"?download_csv\">Download Table as CSV</a></p>");
 
       print("<p>Failed Attempts at Hacking PHPMyAdmin:</p>");
 

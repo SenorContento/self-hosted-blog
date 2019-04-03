@@ -20,16 +20,16 @@ class sqlCommands {
 
   public function testConnection() {
     if($this->server === NULL || $this->username === NULL || $this->password === NULL || $this->database === NULL) {
-      print("<p class=\"mysql-error\">Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p></br>");
+      print("<p class=\"mysql-error\">Sorry, but you are missing a value to connect to the MySQL server! Not Attempting Connection!!!</p><br>");
       die();
     }
 
     $return_response = $this->connectMySQL();
     if(gettype($return_response) === "string") {
-      print("<p class=\"mysql-error\">Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p></br>");
+      print("<p class=\"mysql-error\">Connection to MySQL Failed: " . $return_response . "! Not Attempting Connection!!!</p><br>");
       die();
     } else {
-      //print("<p class=\"mysql-success\">Connected to MySQL Successfully!!!</p></br>"); //object
+      //print("<p class=\"mysql-success\">Connected to MySQL Successfully!!!</p><br>"); //object
     }
   }
 
@@ -76,12 +76,12 @@ class sqlCommands {
       }
     } catch(PDOException $e) {
         //echo $sql . "<br>" . $e->getMessage();
-        echo "<p class=\"mysql-error\">Create Table Failed: " . $e->getMessage() . "</p></br>";
+        echo "<p class=\"mysql-error\">Create Table Failed: " . $e->getMessage() . "</p><br>";
     }
   }
 
   public function insertData() {
-    echo "<p class=\"mysql-error\">Inserting Data is Not Supported!!!</p></br>";
+    echo "<p class=\"mysql-error\">Inserting Data is Not Supported!!!</p><br>";
   }
 
   public function readData($programid) {
@@ -106,7 +106,7 @@ class sqlCommands {
 
       return["id" => $results['id'], "programid" => $results['programid'], "failed" => $results['failed']];
     } catch(PDOException $e) {
-        echo "<p class=\"mysql-error\">Read Data from Table Failed: " . $e->getMessage() . "</p></br>";
+        echo "<p class=\"mysql-error\">Read Data from Table Failed: " . $e->getMessage() . "</p><br>";
     }
   }
 }

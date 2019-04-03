@@ -73,11 +73,11 @@
     }
 
     public function printCurrentUserAgent() {
-      print("<p>Your User Agent: \"" . htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8') . "\"</p></br>");
+      print("<p>Your User Agent: \"" . htmlspecialchars($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8') . "\"</p><br>");
     }
 
     public function printAllUserAgentShort() {
-      print("<p>All User Agents (Short): </br>");
+      print("<p>All User Agents (Short): <br>");
       print("<pre style=\"display: inline-block; text-align: left;\"><code>");
 
       // Removing the awk command between gunzip and cut causes the command to organize access by IP Address instead of User Agent

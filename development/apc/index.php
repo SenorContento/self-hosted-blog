@@ -70,7 +70,7 @@
     }
 
     public function displayDateUTC() {
-      print('</br><p>');
+      print('<br><p>');
       system($this->exec_date_path . ' -u || echo "Sorry, but the date command cannot be found!!!"');
       print('</p>');
     }
