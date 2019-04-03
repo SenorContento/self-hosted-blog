@@ -76,7 +76,7 @@ form * {
 
 .name-input {
   background-color: #000000;
-  color: #b5e853;
+  color: #b5e853; /* rgba(0, 255, 0, 0.75); /* #b5e853; */
 
   border: 1px solid blue;
   margin: 8px;
@@ -97,7 +97,7 @@ form * {
   width: 260px;
 
   background-color: #000000;
-  color: #b5e853;
+  color: #b5e853; /* rgba(0, 255, 0, 0.75); /* #b5e853; */
 
   border: 1px solid blue;
   margin: 8px;
@@ -197,7 +197,7 @@ input.upload-box:hover {
 }
 
 label.upload, label.name, label.about {
-  color: green;
+  color: rgba(0, 255, 0, 0.75);
 }
 
 /* End File Upload Input */
