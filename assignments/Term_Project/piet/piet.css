@@ -185,6 +185,13 @@ select:-webkit-autofill:focus {
   }
 }
 
+@media only screen and (min-width: 501px) {
+  .success, .warning, .error {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+}
+
 @media only screen and (min-width: 1029px) {
   .div-name-input .name::after {
     /*background-color: red;*/
