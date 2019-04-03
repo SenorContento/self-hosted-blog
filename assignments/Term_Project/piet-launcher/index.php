@@ -15,7 +15,7 @@
 
   class loadPage {
     public function loadHeader() {
-      $PageTitle="Super Secret Game Or Is It!?!?!?";
+      $PageTitle="Piet Launcher!!!";
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
       include_once($root . "/server-data/header.php");
     }
@@ -30,16 +30,39 @@
     public function mainBody() {
       print('<h1 class="redblue popup ligature unselectable">');
       // https://blog.teamtreehouse.com/an-introduction-to-websockets
-      print('Super Secret Terminal Game!!!');
+      print('Piet Launcher!!!');
       print('</h1>');
 
+      print('
+        <form id="seturl" class="unselectable" method="post">
+      ');
+
+      $websocketurl = isset($_REQUEST["piet-url"]) ? $_REQUEST["piet-url"] : "";
+      if(isset($websocketurl) && trim($websocketurl) !== '') {
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Websocket URL..." value="' . $websocketurl . '" autocomplete="off"></input>');
+      } else {
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Websocket URL..." value="5c92cd6054ce1" autocomplete="off"></input>');
+      }
+
+      $arguments = isset($_REQUEST["piet-arguments"]) ? $_REQUEST["piet-arguments"] : "";
+      if(isset($arguments) && trim($arguments) !== '') {
+        print('<input id="arguments" name="piet-arguments" type="text" value="' . $arguments . '" placeholder="Program Arguments..." autocomplete="off"></input>');
+      } else {
+        print('<input id="arguments" name="piet-arguments" type="text" placeholder="Program Arguments..." autocomplete="off"></input>');
+      }
+
+      print('
+          <button type="submit">Set URL</button>
+          </br>
+        </form>
+      ');
       print("<pre class='ligature copy' id='received'></pre>");
     }
 
     public function printForm() {
       print('<form id="sendCommand" class="unselectable" method="post">
               <input type="text" id="command" placeholder="Command..." autocomplete="off" required><br>
-              <!--<button type="submit">Send Command</button>-->
+              <button type="submit">Send Command</button>
             </form>');
     }
   }

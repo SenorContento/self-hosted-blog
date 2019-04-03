@@ -55,7 +55,11 @@ form {
   /* Intentionally Left Blank */
 }
 
-#command {
+button[type="submit"] {
+  display: none;
+}
+
+input[type="text"] {
   background-color: #000000;
   color: #b5e853;
 
@@ -68,7 +72,7 @@ form {
   padding-bottom: 2px;
 }
 
-#command:focus{
+input[type="text"]:focus{
   /*outline: none;*/
   /*outline-color: blue;*/
   outline-color: #0075ff;

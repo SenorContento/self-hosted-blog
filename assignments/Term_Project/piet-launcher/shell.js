@@ -78,8 +78,12 @@ function startSocket(command) {
   var form = document.getElementById('sendCommand');
   var messageField = document.getElementById('command');
 
+  var piet_url = document.getElementById('piet_url').value;
+  var websocketurl = "wss://term.senorcontento.com/piet-websocket/";
+  var program_arguments = "/" + document.getElementById('arguments').value;
+
   // Create a new WebSocket.
-  var socket = new WebSocket('wss://term.senorcontento.com/piet-websocket/5c92cd6054ce1/'); //(Piet's Quest) 5c92cd6054ce1 - (Cow Say) 5c92c662a53ef
+  var socket = new WebSocket(websocketurl + piet_url + program_arguments); //(Piet's Quest) 5c92cd6054ce1 - (Cow Say) 5c92c662a53ef
   //var socket = new WebSocket('wss://term.web.senorcontento.com/piet-websocket/');
 
   // Show a connected message when the WebSocket is opened.
@@ -130,8 +134,19 @@ function startSocket(command) {
     pageScroll(); // This allows autoscrolling on the page.
   };
 
+  document.getElementById('seturl').onsubmit = async function(e) {
+    e.preventDefault();
+
+    socket.close();
+    await sleep(1000);
+    startSocket();
+
+    return false;
+  };
+
   // Send a message when the form is submitted.
-  form.onsubmit = function(e) {
+  //form.onsubmit = function(e) {
+  document.getElementById('sendCommand').onsubmit = function(e) {
     e.preventDefault();
 
     // Retrieve the message from the textarea.
@@ -149,6 +164,11 @@ function startSocket(command) {
 
     return false;
   };
+}
+
+// https://stackoverflow.com/a/39914235/6828099
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /* https://stackoverflow.com/a/4835406 */
