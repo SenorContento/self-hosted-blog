@@ -297,7 +297,7 @@
           $piet_url = $explodedRandomID;
           $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
           print('<div class="success">Uploaded: ' . $uploaded_file_name . '!!! ');
-          print('The Program\'s ID is: <a class="success-link" href="' . $piet_launcher . '">' . $explodedRandomID . '</a>!!!</div><br>');
+          print('The Program\'s ID is: <a class="success-link" href="' . $piet_launcher . '">' . $explodedRandomID . '</a>!!!</div>'); //<br>');
 
           print('<script type="text/javascript">
                   $(document).ready(function() {

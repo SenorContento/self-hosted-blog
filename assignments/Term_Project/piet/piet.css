@@ -173,6 +173,16 @@ select:-webkit-autofill:focus {
   .upload-break {
     display: block;
   }
+
+  .success, .warning, .error {
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 @media only screen and (min-width: 1029px) {
