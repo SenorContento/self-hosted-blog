@@ -95,10 +95,10 @@
           <input class="name-input tooltip" name="program_name" type="text" maxlength="20" required></input>
         </span></br>
 
-        <span data-tip="Limited to 50 Characters!!!">
+        <span data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
             <label class="about">About Program: </label><br>
-            <textarea class="textarea tooltip" name="program_about" maxlength="50" required></textarea></br>
+            <textarea class="textarea tooltip" name="program_about" maxlength="365" required></textarea></br>
           </div>
         </span>
 
@@ -191,7 +191,7 @@
       if(isset($_FILES["piet-image"])) {
         try {
           $textbox_limit = 20;
-          $textarea_limit = 50;
+          $textarea_limit = 365;
 
           $programname = htmlspecialchars(substr($this->getValue('program_name'), 0, $textbox_limit), ENT_QUOTES, 'UTF-8');
           $programabout = htmlspecialchars(substr($this->getValue('program_about'), 0, $textarea_limit), ENT_QUOTES, 'UTF-8');
