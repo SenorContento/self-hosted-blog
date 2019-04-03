@@ -32,7 +32,7 @@ function setTimer(time) {
     if (distance < 0) {
       clearInterval(x);
       document.getElementById("time-remaining").innerHTML = "Now Unbanned!!!";
-      window.location.reload(true); // True reloads from Server, False reloads from cache if available. https://stackoverflow.com/a/3715123/6828099
+      //window.location.reload(true); // True reloads from Server, False reloads from cache if available. https://stackoverflow.com/a/3715123/6828099
     }
   }, 1000);
 }
