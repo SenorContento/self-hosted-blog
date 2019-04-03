@@ -110,7 +110,7 @@
         <div data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
             <label for="program_about" class="about">About Program: </label><br>
-            <textarea type="text" class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea><br>
+            <textarea class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea><br>
           </div>
         </div>
 
