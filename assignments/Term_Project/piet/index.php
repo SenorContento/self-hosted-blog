@@ -134,7 +134,9 @@
     public function getValue($value) {
       $return_me = '';
 
-      if(isset($_REQUEST[$value]) && $_REQUEST[$value] !== '') {
+      //print("Trim: '" . trim($_REQUEST[$value]) . "'<br>");
+
+      if(isset($_REQUEST[$value]) && trim($_REQUEST[$value]) !== '') {
         $return_me = $_REQUEST[$value];
       } else {
         //$return_me = "Not Set";
