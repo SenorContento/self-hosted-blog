@@ -1,12 +1,12 @@
 /* Data Tip */
 
-[data-tip]:after {
+/*[data-tip]:after {
   /* http://jsfiddle.net/BumU5/3/ */
-  content: attr(data-tip) '\A';
+  /*content: attr(data-tip) '\A';
   white-space: pre-wrap;
 
   /*display: none;*/
-  position: absolute;
+  /*position: absolute;
   z-index: 0;
 
   visibility: none;
@@ -14,7 +14,7 @@
 
   /*transition:visibility 0s, opacity 0.4s ease-out;*/
 
-  color: white;
+/*  color: white;
 }
 
 [data-tip]:hover:before,
@@ -28,7 +28,7 @@
   visibility: visible;
   opacity: 1;
   bottom:-35px;*/
-}
+/*}*/
 
 /* End Data Tip */
 
