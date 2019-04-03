@@ -140,15 +140,12 @@ select:-webkit-autofill:focus {
   display: inline-block;
 }
 
-.div-name-input .name {
-  float: left;
-}
-
 .about-textarea {
   display: inline-block;
 }
 
 /* https://stackoverflow.com/a/1839450/6828099 */
+/* Helps Inputs */
 .about-textarea * {
   vertical-align: top;
   margin-left: 0px;
@@ -159,9 +156,37 @@ select:-webkit-autofill:focus {
   float: left;
 }
 
+@media only screen and (max-width: 1028px) {
+  .div-name-input .name {
+    float: left;
+    padding-left: 8px;
+  }
+
+  /* Helps Align Labels Above Input */
+  .div-name-input * {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
 @media only screen and (max-width: 500px) {
   .upload-break {
     display: block;
+  }
+}
+
+@media only screen and (min-width: 1029px) {
+  .div-name-input .name::after {
+    /*background-color: red;*/
+    /*white-space: pre-wrap;*/
+
+    content:"";
+    padding-right: 6px;
+  }
+
+  #program_name {
+    padding-right: 0px;
+    margin-right: 0px;
   }
 }
 
@@ -172,6 +197,14 @@ pre {
 
 .sizing-tag-hidden {
   font-size: 0px;
+}
+
+.minified {
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 /* End Form CSS */

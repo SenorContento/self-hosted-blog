@@ -100,21 +100,20 @@
       <pre class="sizing-tag-hidden" id="sizing-tag">Hello</pre>
 
       <form method="post" enctype="multipart/form-data">
-        <div data-tip="Limited to 20 Characters!!!">
-          <div class="div-name-input">
+        <div class="minified" data-tip="Limited to 20 Characters!!!">
+          <div class="div-name-input minified">
             <label for="program_name" class="name">Program Name: </label>
             <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required>
           </div>
-        </div><br>
+        </div>
 
-        <div data-tip="Limited to 365 Characters!!!">
-          <div class="about-textarea">
+        <div class="minified" data-tip="Limited to 365 Characters!!!">
+          <div class="about-textarea minified">
             <label for="program_about" class="about">About Program: </label><br>
             <textarea class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea><br>
           </div>
         </div>
 
-        <br>
         <div class="file-input">
           <label for="piet-file-input" class="upload">Select image to upload: </label>
           <span class="upload-break">
