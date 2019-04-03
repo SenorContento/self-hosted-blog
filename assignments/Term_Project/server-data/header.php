@@ -52,7 +52,7 @@
     }
 
     public function printMobileStyling() {
-      print("\n\n\t\t" . '<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      print("\n\n\t\t" . '<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">');
       print("\n\t\t" . '<meta name="theme-color" content="green">');
     }
 
