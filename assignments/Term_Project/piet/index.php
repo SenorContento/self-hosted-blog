@@ -100,19 +100,19 @@
       <pre class="sizing-tag-hidden" id="sizing-tag">Hello</pre>
 
       <form method="post" enctype="multipart/form-data">
-        <span data-tip="Limited to 20 Characters!!!">
+        <div data-tip="Limited to 20 Characters!!!">
           <div class="div-name-input">
             <label for="program_name" class="name">Program Name: </label>
             <input class="name-input" id="program_name" name="program_name" type="text" maxlength="20" required>
           </div>
-        </span><br>
+        </div><br>
 
-        <span data-tip="Limited to 365 Characters!!!">
+        <div data-tip="Limited to 365 Characters!!!">
           <div class="about-textarea">
             <label for="program_about" class="about">About Program: </label><br>
             <textarea type="text" class="textarea" id="program_about" name="program_about" maxlength="365" required></textarea><br>
           </div>
-        </span>
+        </div>
 
         <br>
         <div class="file-input">
