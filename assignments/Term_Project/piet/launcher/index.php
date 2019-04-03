@@ -39,9 +39,9 @@
 
       $websocketurl = isset($_REQUEST["piet-url"]) ? $_REQUEST["piet-url"] : "";
       if(isset($websocketurl) && trim($websocketurl) !== '') {
-        print('<input id="piet_url" name="piet_url" type="text" placeholder="Websocket URL..." value="' . $websocketurl . '" autocomplete="off"></input>');
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="' . $websocketurl . '" autocomplete="off"></input>');
       } else {
-        print('<input id="piet_url" name="piet_url" type="text" placeholder="Websocket URL..." value="5c92cd6054ce1" autocomplete="off"></input>');
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="5c92cd6054ce1" autocomplete="off"></input>');
       }
 
       $arguments = isset($_REQUEST["piet-arguments"]) ? $_REQUEST["piet-arguments"] : "";
