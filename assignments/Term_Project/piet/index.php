@@ -90,8 +90,8 @@
     }
 
     public function printVirusScanResults() {
-      //print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"><br></span>");
-      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"></span>");
+      print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline hidden-newline-mobile\"><br></span>");
+      //print("<div class=\"results-container\"><div id=\"scanresults\" class=\"warning hidden\">Scanning for Viruses!!!<div class=\"loader\"></div></div></div><span id=\"scanresults-newline\" class=\"hidden-newline\"></span>");
     }
 
     public function printUploadForm() {

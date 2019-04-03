@@ -225,6 +225,13 @@ pre {
   display: none;
 }
 
+@media only screen and (max-width: 500px) {
+  /* Only Keep Newline Hidden On Mobile Screens */
+  .hidden-newline-mobile br {
+    display: none;
+  }
+}
+
 /* End Virus Scan Message */
 
 /* Submit Button Input */
