@@ -1,2 +1,4 @@
 * An Idea For The Search Engine: https://stackoverflow.com/a/9024759/6828099 - JQuery asuggest
  - Combine ASuggest With AJAX Search
+* Another Idea For The Search Engine: https://www.w3schools.com/howto/howto_js_autocomplete.asp
+ - Javascript Only

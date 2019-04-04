@@ -25,6 +25,11 @@ body {
   background-color: rgba(0, 0, 0, 1); /* So, basically black or #000000 (black maybe different depending on the system) */
   text-align: center;
   /*padding-bottom: 8px;*/
+
+  /* This Helps Me Easily Set Text Not Styled Correctly Inside Body Tag */
+  color: red;
+  /*text-decoration: underline;*/
+  /*font-weight: bold italic;*/
 }
 
 /* For Error Pages */
