@@ -1,3 +1,18 @@
+@charset "UTF-8";
+
+/* Selected Text */
+/* https://css-tricks.com/overriding-the-default-text-selection-color-with-css/ */
+
+::selection {
+  background: rgba(0, 255, 255, 0.25); /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: rgba(0, 255, 255, 0.25); /* Gecko Browsers */
+}
+
+/* End Selected Text */
+
 /* Data Tip */
 
 /*[data-tip]:after {
