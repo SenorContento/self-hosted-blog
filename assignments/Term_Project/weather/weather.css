@@ -1,19 +1,143 @@
-.image {
-  width: 1000px;
+/* Tabbed Content */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: green;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+@media all and (max-width: 1024px) {
+  /* Vertical Tabs - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_vertical_tabs */
+
+  * {box-sizing: border-box}
+  /* body {font-family: "Lato", sans-serif;} */
+
+  /* Style the tab */
+  .tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: green;
+    width: 30%;
+    height: 300px;
+  }
+
+  /* Style the buttons inside the tab */
+  .tab button {
+    display: block;
+    background-color: inherit;
+    color: white;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 300px;
+  }
+}
+
+/* End Tabbed Content */
+
+.camera {
+  width: 90%;
+  height: auto;
+  margin: 8px;
+}
+
+/* https://medium.com/@dylanon/throwing-shade-how-to-shade-images-in-html-css-9d37b17b9d10 */
+.shade {
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .temperature {
-  color: blue;
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
+.button {
+  border: 1px solid green;
+  padding: 6px 12px;
+  margin: 4px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+  text-decoration: none;
+
+  background-color: rgba(0, 255, 0, 0.75);
 }
 
 .wunderground {
-  color: yellow;
+  /* Intentionally Left Blank */
 }
 
 .twitter {
-  color: green;
+  /* Intentionally Left Blank */
 }
 
 .facebook {
-  color: red;
+  /* Intentionally Left Blank */
 }

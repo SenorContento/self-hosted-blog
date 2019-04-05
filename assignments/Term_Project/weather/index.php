@@ -4,7 +4,7 @@
   }
 
   function customPageFooter() {
-    //print("\n\t\t" . '<script src="shell.js"></script>');
+    print("\n\t\t" . '<script src="tabs.js"></script>');
   }
 
   function customMetadata() {
@@ -32,6 +32,8 @@
   $data = $weather->parseJSON($json);
   //$weather->debugJSON($json);
 
+  $mainPage->printTabbedContent();
+
   $mainPage->printTemperature($weather, "dahlonega", 0);
   $mainPage->printImage($weather, "dahlonega", 0);
   $mainPage->printExternalLinks($weather, "dahlonega", 0);
@@ -39,6 +41,21 @@
   $loadPage->loadFooter();
 
   class mainPage {
+    public function printTabbedContent() {
+      // https://www.w3schools.com/howto/howto_js_tabs.asp
+      print('
+        <div class="tab">
+          <button class="tablinks" onclick="openTab(event, \'temperature\')" id="defaultOpen">Temperature</button>
+          <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
+          <button class="tablinks" onclick="openTab(event, \'externallinks\')">Tokyo</button>
+        </div>
+
+        <div id="Paris" class="tabcontent">
+          <h3>Paris</h3>
+          <p>Paris is the capital of France.</p>
+        </div>');
+    }
+
     public function printTemperature($weather, $handle, $station) {
       $property = $weather->getRecordProperty($handle, $station);
       $name = $weather->getRecordName($handle, $station);
@@ -53,12 +70,15 @@
       $unit = $weather->getTempUnit($handle, $station); // Fahrenheit is misspelled as Farenheight!!!
       $symbol = $weather->getTempSymbol($handle, $station);
 
-      print("<div class='temperature'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
-      print("Temperature Low is $tempmin $symbol at $timemin!!!</div>");
+      print("<div id='temperature' class='tabcontent'>");
+      print("<div class='temperature' name='" . $handle . ":" . $station . "'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
+      print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
     }
 
     public function printImage($weather, $handle, $camera) {
-      print("<image class='image' src='" . $weather->getCameraURL($handle, $camera) . "'></img>");
+      print("<div id='camera' class='tabcontent'>");
+      print("<image name='" . $handle . ":" . $camera . "' class='camera' src='" . $weather->getCameraURL($handle, $camera) . "'><div name='" . $handle . ":" . $camera . "' data-info='For Shading The Image'></div></img>");
+      print("</div>");
     }
 
     public function printExternalLinks($weather, $handle, $station) {
@@ -66,9 +86,12 @@
       $twitter = "https://twitter.com/";
       $facebook = "https://www.facebook.com/";
 
-      print("<a class='wunderground' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Wunderground</a>");
-      print("<a class='twitter' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter</a>");
-      print("<a class='facebook' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'>Facebook</a>");
+      print("<div id='externallinks' class='tabcontent'>");
+      print("<div name='" . $handle . ":" . $station . "' class='links'>");
+      print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Weather Underground Page</a>");
+      print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter Profile</a>");
+      print("<a class='facebook button' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'>Facebook Page</a>");
+      print("</div></div>");
     }
   }
 
