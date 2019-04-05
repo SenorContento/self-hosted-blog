@@ -43,17 +43,11 @@
   class mainPage {
     public function printTabbedContent() {
       // https://www.w3schools.com/howto/howto_js_tabs.asp
-      print('
-        <div class="tab">
-          <button class="tablinks" onclick="openTab(event, \'temperature\')" id="defaultOpen">Temperature</button>
-          <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
-          <button class="tablinks" onclick="openTab(event, \'externallinks\')">Tokyo</button>
-        </div>
-
-        <div id="Paris" class="tabcontent">
-          <h3>Paris</h3>
-          <p>Paris is the capital of France.</p>
-        </div>');
+      print('<div class="tab">
+        <button class="tablinks" onclick="openTab(event, \'temperature\')" id="defaultOpen">Temperature</button>
+        <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
+        <button class="tablinks" onclick="openTab(event, \'externallinks\')">Tokyo</button>
+      </div>');
     }
 
     public function printTemperature($weather, $handle, $station) {
