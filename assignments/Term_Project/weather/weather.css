@@ -70,7 +70,8 @@
     cursor: pointer;
     transition: 0.3s;
     /*font-size: 17px;*/
-    font-size: 5vw;
+    font-size: 4vw;
+    word-break: break-all;
   }
 
   /* Style the tab content */
