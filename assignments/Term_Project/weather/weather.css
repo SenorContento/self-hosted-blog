@@ -1,5 +1,17 @@
 /* Tabbed Content */
 
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #90EE90;
+  color: #000000;
+}
+
 @media all and (min-width: 399px) {
   .tab {
     overflow: hidden;
@@ -19,18 +31,6 @@
     padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
-  }
-
-  /* Change background color of buttons on hover */
-  .tab button:hover {
-    background-color: #90EE90;
-    color: #000000;
-  }
-
-  /* Create an active/current "tab button" class */
-  .tab button.active {
-    background-color: #90EE90;
-    color: #000000;
   }
 
   /* Style the tab content */
@@ -69,7 +69,8 @@
     text-align: left;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 17px;
+    /*font-size: 17px;*/
+    font-size: 5vw;
   }
 
   /* Style the tab content */
