@@ -48,6 +48,15 @@
     // Stations
     // Station (f.e. Dahlonega)
 
+    public function getStationCount() {
+      $count = 0;
+      foreach($this->stations as $station) {
+        $count = $count + 1;
+      }
+
+      return $count;
+    }
+
     public function getStationName($handle, $station_count) {
       return $this->stations_array[$handle]["station"][$station_count]["name"];
     }
