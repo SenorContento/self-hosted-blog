@@ -28,7 +28,11 @@
 
   $json = $mainPage->retrieveJSON();
   $data = $mainPage->parseJSON($json);
-  $mainPage->printData($data);
+  //$mainPage->debugJSON($json);
+
+  $mainPage->printTemperature($data, "dahlonega", 0);
+  //$mainPage->printImage($data, "dahlonega", 0);
+  //$mainPage->printExternalLinks($data, "dahlonega", 0);
 
   $loadPage->loadFooter();
 
@@ -61,8 +65,41 @@
       return $this->stations;
     }
 
-    public function printData($data) {
-      print("<image width='1000px' src='" . $data["dahlonega"]["camera"][0]["url"] . "'></img>");
+    public function printTemperature($data, $handle, $station) {
+      $property = $data[$handle]["record"][$station]["hilo"]["property"];
+      $name = $data[$handle]["record"][$station]["hilo"]["name"];
+      $type = $data[$handle]["record"][$station]["hilo"]["type"];
+
+      $tempmax = $data[$handle]["record"][$station]["hilo"]["temp"]["max"];
+      $tempmin = $data[$handle]["record"][$station]["hilo"]["temp"]["min"];
+
+      $timemax = $data[$handle]["record"][$station]["hilo"]["time"]["max"];
+      $timemin = $data[$handle]["record"][$station]["hilo"]["time"]["min"];
+
+      $unit = $data[$handle]["record"][$station]["hilo"]["unit"]; // Fahrenheit is misspelled as Farenheight!!!
+      $symbol = $data[$handle]["record"][$station]["hilo"]["symbol"];
+
+      print("<b>Temperature High is $tempmax $symbol at $timemax!!!<br>");
+      print("Temperature Low is $tempmin $symbol at $timemin!!!</b>");
+    }
+
+    public function printImage($data, $handle, $camera) {
+      // For The Sake of Consistency (With The Other Functions) I Am Handling One Camera At A Time
+      /*foreach($cameras as $camera) {
+        print("<image width='1000px' src='" . $data[$handle]["camera"][$camera]["url"] . "'></img>");
+      }*/
+
+      print("<image width='1000px' src='" . $data[$handle]["camera"][$camera]["url"] . "'></img>");
+    }
+
+    public function printExternalLinks($data, $handle, $station) {
+      $wunderground = "https://www.wunderground.com/weather/";
+      $twitter = "https://twitter.com/";
+      $facebook = "https://www.facebook.com/";
+
+      print("<a href='" . $wunderground . $data[$handle]["station"][$station]["wunderground"] . "'>Wunderground</a>");
+      print("<a href='" . $twitter . $data[$handle]["station"][$station]["twitter"] . "'>Twitter</a>");
+      print("<a href='" . $facebook . $data[$handle]["station"][$station]["facebook"] . "'>Facebook</a>");
     }
 
     public function parseJSON($json) {
@@ -76,7 +113,7 @@
         // Station
         $stations_array[$handle]["station"][$station_count]["name"] = $station->station->name;
         $stations_array[$handle]["station"][$station_count]["handle"] = $station->station->handle;
-        $stations_array[$handle]["station"][$station_count]["domain"]["name"] =$station->station->domain->name;
+        $stations_array[$handle]["station"][$station_count]["domain"]["name"] = $station->station->domain->name;
         $stations_array[$handle]["station"][$station_count]["domain"]["handle"] = $station->station->domain->handle;
 
         $stations_array[$handle]["station"][$station_count]["wunderground"] = $station->station->wunderground; // https://www.wunderground.com/weather/KGADAHLO40
@@ -203,6 +240,7 @@
 
       $options = array(
       	'http' => array(
+                   'user_agent' => getenv('alex.server.user_agent'),
       	           'method'   => 'POST',
       	           'content'  => json_encode($vars),
       	           'header'   => "Content-Type: application/json\r\n" . "Accept: application/json\r\n"

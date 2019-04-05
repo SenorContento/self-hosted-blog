@@ -96,7 +96,8 @@
 
     public function generateMenu() {
       $menu = '<a href="/" class="button menu-button">Main Page</a>' . '<br>' .
-              '<a href="/test/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' .
+              '<a href="/development/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' .
+              //'<a href="/test/failed_pma/" class="button menu-button">Failed PMA Attacks</a>' . '<br>' . // Modified for SEO
               '<a href="https://www.google.com/" class="button menu-button">Google</a>';
 
       return $menu;
