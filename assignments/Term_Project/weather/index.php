@@ -44,9 +44,9 @@
     public function printTabbedContent() {
       // https://www.w3schools.com/howto/howto_js_tabs.asp
       print('<div class="tab">
-        <button class="tablinks" onclick="openTab(event, \'temperature\')" id="defaultOpen">Temperature</button>
+        <button class="tablinks" onclick="openTab(event, \'weather\')" id="defaultOpen">Weather</button>
         <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
-        <button class="tablinks" onclick="openTab(event, \'externallinks\')">Tokyo</button>
+        <button class="tablinks" onclick="openTab(event, \'externallinks\')">Links</button>
       </div>');
     }
 
@@ -64,7 +64,7 @@
       $unit = $weather->getTempUnit($handle, $station); // Fahrenheit is misspelled as Farenheight!!!
       $symbol = $weather->getTempSymbol($handle, $station);
 
-      print("<div id='temperature' class='tabcontent'>");
+      print("<div id='weather' class='tabcontent'>");
       print("<div class='temperature' name='" . $handle . ":" . $station . "'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
       print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
     }
