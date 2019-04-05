@@ -1,20 +1,17 @@
 <?php
   function customPageHeader() {
-    //print("\n\t\t" . '<link rel="stylesheet" href="shell.css">');
-    //print("\n\t\t" . '<script src="shell.js"></script>');
-    //print("\n\t\t" . '<script src="stylize.js"></script>');
+    print("\n\t\t" . '<link rel="stylesheet" href="weather.css">');
   }
 
   function customPageFooter() {
-    //print("\n\t\t" . '<link rel="stylesheet" href="shell.css">');
     //print("\n\t\t" . '<script src="shell.js"></script>');
-    //print("\n\t\t" . '<script src="stylize.js"></script>');
   }
 
   function customMetadata() {
-    //print("\n\t\t" . '<link rel="stylesheet" href="shell.css">');
-    //print("\n\t\t" . '<script src="shell.js"></script>');
-    //print("\n\t\t" . '<script src="stylize.js"></script>');
+    //print("\n\t\t" . '<!--Custom Metadata-->');
+    print("\n\t\t" . '<meta name="description" content="Live Weather from UNG\'s Weather Equipment!!!">');
+    print("\n\t\t" . '<meta name="keywords" content="UNG,Weather,Station,Live">');
+    //print("\n\t\t" . '<!--End Custom Metadata-->');
   }
 
   // https://stackoverflow.com/a/2397010/6828099
@@ -56,17 +53,12 @@
       $unit = $weather->getTempUnit($handle, $station); // Fahrenheit is misspelled as Farenheight!!!
       $symbol = $weather->getTempSymbol($handle, $station);
 
-      print("<b>Temperature High is $tempmax $symbol at $timemax!!!<br>");
-      print("Temperature Low is $tempmin $symbol at $timemin!!!</b>");
+      print("<div class='temperature'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
+      print("Temperature Low is $tempmin $symbol at $timemin!!!</div>");
     }
 
     public function printImage($weather, $handle, $camera) {
-      // For The Sake of Consistency (With The Other Functions) I Am Handling One Camera At A Time
-      /*foreach($cameras as $camera) {
-        print("<image width='1000px' src='" . $data[$handle]["camera"][$camera]["url"] . "'></img>");
-      }*/
-
-      print("<image width='1000px' src='" . $weather->getCameraURL($handle, $camera) . "'></img>");
+      print("<image class='image' src='" . $weather->getCameraURL($handle, $camera) . "'></img>");
     }
 
     public function printExternalLinks($weather, $handle, $station) {
@@ -74,9 +66,9 @@
       $twitter = "https://twitter.com/";
       $facebook = "https://www.facebook.com/";
 
-      print("<a href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Wunderground</a>");
-      print("<a href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter</a>");
-      print("<a href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'>Facebook</a>");
+      print("<a class='wunderground' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Wunderground</a>");
+      print("<a class='twitter' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter</a>");
+      print("<a class='facebook' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'>Facebook</a>");
     }
   }
 

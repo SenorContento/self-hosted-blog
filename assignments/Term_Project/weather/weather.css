@@ -1,0 +1,19 @@
+.image {
+  width: 1000px;
+}
+
+.temperature {
+  color: blue;
+}
+
+.wunderground {
+  color: yellow;
+}
+
+.twitter {
+  color: green;
+}
+
+.facebook {
+  color: red;
+}
