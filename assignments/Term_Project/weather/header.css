@@ -51,13 +51,13 @@
 
   /* Change background color of buttons on hover */
   .header button:hover {
-    background-color: #90EE90;
-    color: #000000;
+    background-color: rgba(50,50,50,1);
+    color: #ffffff;
   }
 
   /* Create an active/current "tab button" class */
   .header button.active {
-    background-color: #90EE90;
-    color: #000000;
+    background-color: rgba(50,50,50,1);
+    color: #ffffff;
   }
 }
