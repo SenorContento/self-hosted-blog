@@ -60,10 +60,29 @@ button::-moz-focus-inner {
   /* Style the tab */
   .tab {
     float: left;
-    /*border: 1px solid #ccc;*/
+    display: inline-block;
+    /*position: absolute;*/
+
     background-color: green;
-    width: 30%;
+    z-index: 0;
+    width: 85%; /* 30% */
+    /* display: none; /* For Testing */
     min-height: 100%;
+  }
+
+  .tab-shade {
+    float: left;
+
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0,0,0,0.5);;
+    z-index: -1;
+
+    /* display: none; /* For Testing */
+    position: absolute;
   }
 
   /* Style the buttons inside the tab */
@@ -85,10 +104,15 @@ button::-moz-focus-inner {
 
   /* Style the tab content */
   .tabcontent {
+    z-index: -2;
+    display: inline-block;
+    position: absolute;
+    margin-left: 0%; /* 30% */
+
     float: left;
     padding: 0px 12px;
     height: 100%;
-    width: 70%;
+    width: 100%; /* 70% */
     height: 300px;
   }
 }

@@ -47,7 +47,7 @@
         <button class="tablinks" onclick="openTab(event, \'weather\')" id="defaultOpen">Weather</button>
         <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
         <button class="tablinks" onclick="openTab(event, \'externallinks\')">Links</button>
-      </div>');
+      </div><div class="tab-shade"></div>');
     }
 
     public function printTemperature($weather, $handle, $station) {
