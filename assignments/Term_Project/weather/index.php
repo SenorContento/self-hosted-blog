@@ -43,11 +43,11 @@
   class mainPage {
     public function printTabbedContent() {
       // https://www.w3schools.com/howto/howto_js_tabs.asp
-      print('<div id="tab" class="tab">
-        <button class="tablinks" onclick="openTab(event, \'weather\')">Weather</button>
-        <button class="tablinks" onclick="openTab(event, \'camera\')">Camera</button>
-        <button class="tablinks" onclick="openTab(event, \'externallinks\')" id="defaultOpen">Links</button>
-      </div><div id="tab-shade" class="tab-shade" onclick="closeDrawer()"></div>');
+      print('<div id="tab" class="tab tab-hidden">
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'weather\')" id="defaultOpen">Weather</button>
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'camera\')">Camera</button>
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'externallinks\')">Links</button>
+      </div><div id="tab-shade" class="tab-shade shade-hidden" onclick="closeDrawer()"></div>');
     }
 
     public function printTemperature($weather, $handle, $station) {
@@ -64,13 +64,13 @@
       $unit = $weather->getTempUnit($handle, $station); // Fahrenheit is misspelled as Farenheight!!!
       $symbol = $weather->getTempSymbol($handle, $station);
 
-      print("<div id='weather' class='tabcontent'>");
+      print("<div id='weather' class='tabcontent tabcontent-visible'>");
       print("<div class='temperature' name='" . $handle . ":" . $station . "'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
       print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
     }
 
     public function printImage($weather, $handle, $camera) {
-      print("<div id='camera' class='tabcontent'>");
+      print("<div id='camera' class='tabcontent tabcontent-visible'>");
       print("<image name='" . $handle . ":" . $camera . "' class='camera' src='" . $weather->getCameraURL($handle, $camera) . "'><div name='" . $handle . ":" . $camera . "' data-info='For Shading The Image'></div></img>");
       print("</div>");
     }
@@ -80,7 +80,7 @@
       $twitter = "https://twitter.com/";
       $facebook = "https://www.facebook.com/";
 
-      print("<div id='externallinks' class='tabcontent'>");
+      print("<div id='externallinks' class='tabcontent tabcontent-visible'>");
       print("<div name='" . $handle . ":" . $station . "' class='links'>");
       print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Weather Underground Page</a>");
       print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter Profile</a>");
@@ -91,7 +91,7 @@
 
   class loadPage {
     public function loadHeader() {
-      $PageTitle="Piet Search Engine!!!";
+      $PageTitle="Live Weather UNG, Dahlonega!!!";
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
       include_once($root . "/server-data/header.php");
     }

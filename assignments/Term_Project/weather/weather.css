@@ -83,6 +83,11 @@ button::-moz-focus-inner {
     width: 0px;
   }
 
+  /* Helps Delay Making Font Grow Again */
+  button.tab-visible {
+    transition: font-size 0s ease-in 0.5s !important;
+  }
+
   button.tab-hidden {
     /*display: none !important;*/
     padding-left: 0px !important;
@@ -134,7 +139,7 @@ button::-moz-focus-inner {
     visibility: visible;
     transition: width 0.5s, padding 0.5s ease;
     /*transition: text-indent 0.1s ease-in 0.25s;*/
-    transition: font-size 0s ease-in 0s;
+    /*transition: font-size 0s ease-in 0s;*/
   }
 
   /* Style the tab content */
