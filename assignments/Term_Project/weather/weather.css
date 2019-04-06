@@ -1,3 +1,12 @@
+/* Remove Firefox Selection Border */
+/* https://stackoverflow.com/a/199319/6828099 */
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* End Remove Firefox Selection Border */
+
 /* Tabbed Content */
 
 /* Change background color of buttons on hover */
@@ -31,12 +40,6 @@
     padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
-  }
-
-  .tab button:focus {
-    outline: none;
-    color: transparent;
-    text-shadow: 0 0 0 #000;
   }
 
   /* Style the tab content */
