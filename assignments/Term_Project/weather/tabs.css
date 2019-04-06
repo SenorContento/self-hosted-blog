@@ -142,13 +142,17 @@
     position: absolute;
     margin-left: 0%; /* 30% */
 
+    margin-top: 4px;
+
     float: left;
     padding: 0px 12px;
     height: 100%;
     width: 100%; /* 70% */
     height: 300px;
+  }
 
-    transition: all 0.7s ease;
+  .tabcontent-delay-z-index {
+    transition: z-index 0s ease 0.7s;
   }
 
   .tabcontent-visible {

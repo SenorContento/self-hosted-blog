@@ -51,9 +51,9 @@
     public function printTabbedContent() {
       // https://www.w3schools.com/howto/howto_js_tabs.asp
       print('<div id="tab" class="tab tab-hidden">
-        <button class="tablinks tab-hidden" onclick="openTab(event, \'weather\')" id="defaultOpen">Weather</button>
-        <button class="tablinks tab-hidden" onclick="openTab(event, \'camera\')">Camera</button>
-        <button class="tablinks tab-hidden" onclick="openTab(event, \'externallinks\')">Links</button>
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'weather\'); setTimeout(closeDrawer, 100)" id="defaultOpen">Weather</button>
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'camera\'); setTimeout(closeDrawer, 100)">Camera</button>
+        <button class="tablinks tab-hidden" onclick="openTab(event, \'externallinks\'); setTimeout(closeDrawer, 100)">Links</button>
       </div><div id="tab-shade" class="tab-shade shade-hidden" onclick="closeDrawer()"></div>');
     }
 

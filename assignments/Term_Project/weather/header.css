@@ -13,17 +13,18 @@
     background-color: rgba(25,25,25,1);
     /*z-index: 1;*/
 
-    margin-bottom: 4px;
+    /*margin-bottom: 4px;*/
 
     display: block;
     position: relative;
-    padding-bottom: 48px;
+    padding-bottom: 48px; /* 48px */
   }
 
   .header button {
     /*display: block;*/
+    display: inline-block;
+    height: 48px;
 
-    height: 100%;
     background-color: inherit;
     color: white;
     float: left;

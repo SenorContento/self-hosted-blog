@@ -37,6 +37,7 @@ function closeDrawer() {
 
   for(var x = 0; x < tabcontents.length; x++) {
     tabcontents[x].classList.add("tabcontent-visible");
+    tabcontents[x].classList.add("tabcontent-delay-z-index");
   }
 
   menubutton.classList.remove("nav-open-hidden");
@@ -65,6 +66,7 @@ function openDrawer() {
 
   for(var x = 0; x < tabcontents.length; x++) {
     tabcontents[x].classList.remove("tabcontent-visible");
+    tabcontents[x].classList.remove("tabcontent-delay-z-index");
   }
 
   menubutton.classList.add("nav-open-hidden");
