@@ -9,6 +9,10 @@ button::-moz-focus-inner {
 
 /* Tabbed Content */
 
+.tab button {
+  margin: 0px;
+}
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #90EE90;
