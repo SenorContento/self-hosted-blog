@@ -1,0 +1,53 @@
+@media all and (min-width: 401px) {
+  .header-hidden {
+    display: none !important;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .nav-open-hidden {
+    display: none !important;
+  }
+
+  .header {
+    background-color: rgba(25,25,25,1);
+    /*z-index: 1;*/
+
+    margin-bottom: 4px;
+
+    display: block;
+    position: relative;
+    padding-bottom: 48px;
+  }
+
+  .header button {
+    /*display: block;*/
+
+    height: 100%;
+    background-color: inherit;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+
+  .header button {
+    margin: 0px;
+  }
+
+  /* Change background color of buttons on hover */
+  .header button:hover {
+    background-color: #90EE90;
+    color: #000000;
+  }
+
+  /* Create an active/current "tab button" class */
+  .header button.active {
+    background-color: #90EE90;
+    color: #000000;
+  }
+}

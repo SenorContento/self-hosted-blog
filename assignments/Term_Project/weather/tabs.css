@@ -1,0 +1,157 @@
+.tab button {
+  margin: 0px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color: #90EE90;
+  color: #000000;
+}
+
+@media all and (min-width: 399px) {
+  .tab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
+    background-color: green;
+    /*height: 300px;*/
+  }
+
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    /*border: 1px solid #ccc;*/
+    border-top: none;
+  }
+}
+
+@media all and (max-width: 400px) {
+  /* Vertical Tabs - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_vertical_tabs */
+
+  * {box-sizing: border-box}
+  /* body {font-family: "Lato", sans-serif;} */
+
+  /* Style the tab */
+  .tab {
+    float: left;
+    display: inline-block;
+    visibility: visible;
+    /*position: absolute;*/
+
+    background-color: green;
+    z-index: 0;
+    width: 85%; /* 30% */
+    /* display: none; /* For Testing */
+    min-height: 100%;
+    transition: width 0.5s ease;
+  }
+
+  .shade-hidden {
+    /*display: none;*/
+    position: relative !important;
+    opacity: 0 !important;
+    width: 0% !important;
+  }
+
+  .tab-hidden {
+    width: 0px;
+  }
+
+  /* Helps Delay Making Font Grow Again */
+  button.tab-visible {
+    transition: font-size 0s ease-in 0.5s !important;
+  }
+
+  button.tab-hidden {
+    /*display: none !important;*/
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+    /*text-indent: -65px;*/
+    font-size: 0px !important;
+    /* width: 0px !important; */
+    /*word-break: normal !important;*/
+  }
+
+  .tab-shade {
+    /*float: left;*/
+    /*width: 100%;*/
+    /*top: 0;
+    left: 0;*/
+
+    float: right;
+    width: 15%;
+    height: 100%;
+    top: 0;
+    right: 0;
+
+    background-color: rgba(0,0,0,0.5);;
+    /*z-index: -1;*/
+
+    /* display: none; /* For Testing */
+    position: absolute;
+    transition: opacity 1s ease 0.5s;
+    /*transition: width 5s ease 0s;*/
+  }
+
+  /* Style the buttons inside the tab */
+  .tab button {
+    display: block;
+    background-color: inherit;
+    color: white;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    /*font-size: 17px;*/
+    font-size: 5vw;
+    word-break: break-all;
+
+    visibility: visible;
+    transition: width 0.5s, padding 0.5s ease;
+    /*transition: text-indent 0.1s ease-in 0.25s;*/
+    /*transition: font-size 0s ease-in 0s;*/
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+    z-index: -2;
+    display: inline-block;
+    position: absolute;
+    margin-left: 0%; /* 30% */
+
+    float: left;
+    padding: 0px 12px;
+    height: 100%;
+    width: 100%; /* 70% */
+    height: 300px;
+
+    transition: all 0.7s ease;
+  }
+
+  .tabcontent-visible {
+    z-index: 0 !important;
+  }
+}

@@ -32,6 +32,7 @@
   $data = $weather->parseJSON($json);
   //$weather->debugJSON($json);
 
+  $mainPage->printHeader();
   $mainPage->printTabbedContent();
 
   $mainPage->printTemperature($weather, "dahlonega", 0);
@@ -41,6 +42,12 @@
   $loadPage->loadFooter();
 
   class mainPage {
+    public function printHeader() {
+      print('<div class="header header-hidden">
+        <button id="menu" class="header-hidden" onclick="openDrawer()">Menu</button>
+      </div>');
+    }
+
     public function printTabbedContent() {
       // https://www.w3schools.com/howto/howto_js_tabs.asp
       print('<div id="tab" class="tab tab-hidden">

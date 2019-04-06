@@ -20,6 +20,7 @@ function closeDrawer() {
   var buttons = document.getElementsByClassName("tablinks");
   var shade = document.getElementById("tab-shade");
   var tabcontents = document.getElementsByClassName("tabcontent");
+  var menubutton = document.getElementById("menu");
 
   drawer.classList.add("tab-hidden");
   /*for(var x = 0; x < drawer.length; x++) {
@@ -37,6 +38,8 @@ function closeDrawer() {
   for(var x = 0; x < tabcontents.length; x++) {
     tabcontents[x].classList.add("tabcontent-visible");
   }
+
+  menubutton.classList.remove("nav-open-hidden");
 }
 
 function openDrawer() {
@@ -45,6 +48,7 @@ function openDrawer() {
   var buttons = document.getElementsByClassName("tablinks");
   var shade = document.getElementById("tab-shade");
   var tabcontents = document.getElementsByClassName("tabcontent");
+  var menubutton = document.getElementById("menu");
 
   drawer.classList.remove("tab-hidden");
   /*for(var x = 0; x < drawer.length; x++) {
@@ -62,4 +66,6 @@ function openDrawer() {
   for(var x = 0; x < tabcontents.length; x++) {
     tabcontents[x].classList.remove("tabcontent-visible");
   }
+
+  menubutton.classList.add("nav-open-hidden");
 }
