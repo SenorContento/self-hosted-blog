@@ -44,7 +44,7 @@
   class mainPage {
     public function printHeader() {
       print('<div class="header header-hidden">
-        <button id="menu" class="header-hidden" onclick="openDrawer()">Menu</button>
+        <button id="menu" class="header-hidden fas fa-bars" onclick="openDrawer()"></button>
       </div>');
     }
 
@@ -89,9 +89,9 @@
 
       print("<div id='externallinks' class='tabcontent tabcontent-visible'>");
       print("<div name='" . $handle . ":" . $station . "' class='links'>");
-      print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'>Weather Underground Page</a>");
-      print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'>Twitter Profile</a>");
-      print("<a class='facebook button' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'>Facebook Page</a>");
+      print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'><span class='fas fa-cloud'></span> Weather Underground Page</a>");
+      print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'><span class='fab fa-twitter-square'></span> Twitter Profile</a>");
+      print("<a class='facebook button' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'><span class='fab fa-facebook-square'></span> Facebook Page</a>");
       print("</div></div>");
     }
   }

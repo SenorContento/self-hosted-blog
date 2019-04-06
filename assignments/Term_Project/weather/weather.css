@@ -1,6 +1,7 @@
 /* Import CSS */
 @import "tabs.css";
 @import "header.css";
+@import url("/fonts/Icons/font-awesome/css/all.min.css");
 /* End Import CSS */
 
 /* Remove Firefox Selection Border */
