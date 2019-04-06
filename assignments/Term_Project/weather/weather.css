@@ -61,6 +61,7 @@ button::-moz-focus-inner {
   .tab {
     float: left;
     display: inline-block;
+    visibility: visible;
     /*position: absolute;*/
 
     background-color: green;
@@ -68,22 +69,50 @@ button::-moz-focus-inner {
     width: 85%; /* 30% */
     /* display: none; /* For Testing */
     min-height: 100%;
-    /*transition-timing-function: ease;*/
+    transition: width 0.5s ease;
+  }
+
+  .shade-hidden {
+    /*display: none;*/
+    position: relative !important;
+    opacity: 0 !important;
+    width: 0% !important;
+  }
+
+  .tab-hidden {
+    width: 0px;
+  }
+
+  button.tab-hidden {
+    /*display: none !important;*/
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+    /*text-indent: -65px;*/
+    font-size: 0px !important;
+    /* width: 0px !important; */
+    /*word-break: normal !important;*/
   }
 
   .tab-shade {
-    float: left;
+    /*float: left;*/
+    /*width: 100%;*/
+    /*top: 0;
+    left: 0;*/
 
-    width: 100%;
+    float: right;
+    width: 15%;
     height: 100%;
     top: 0;
-    left: 0;
+    right: 0;
 
     background-color: rgba(0,0,0,0.5);;
-    z-index: -1;
+    /*z-index: -1;*/
 
     /* display: none; /* For Testing */
     position: absolute;
+    transition: opacity 1s ease 0.5s;
+    /*transition: width 5s ease 0s;*/
   }
 
   /* Style the buttons inside the tab */
@@ -101,6 +130,11 @@ button::-moz-focus-inner {
     /*font-size: 17px;*/
     font-size: 5vw;
     word-break: break-all;
+
+    visibility: visible;
+    transition: width 0.5s, padding 0.5s ease;
+    /*transition: text-indent 0.1s ease-in 0.25s;*/
+    transition: font-size 0s ease-in 0s;
   }
 
   /* Style the tab content */
@@ -115,6 +149,12 @@ button::-moz-focus-inner {
     height: 100%;
     width: 100%; /* 70% */
     height: 300px;
+
+    transition: all 0.7s ease;
+  }
+
+  .tabcontent-visible {
+    z-index: 0 !important;
   }
 }
 
