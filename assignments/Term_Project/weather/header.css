@@ -5,6 +5,15 @@
 }
 
 @media all and (max-width: 400px) {
+  /* Override Main CSS Body and HTML Tags */
+
+  html, body {
+    /*min-height: 96.25%;*/
+    /*height: 96.25%;*/
+  }
+
+  /* End Override Main CSS Body and HTML Tags */
+
   .nav-open-hidden {
     display: none !important;
   }
