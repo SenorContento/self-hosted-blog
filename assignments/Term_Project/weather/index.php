@@ -79,7 +79,7 @@
     public function printImage($weather, $handle, $camera) {
       print("<div id='camera' class='tabcontent tabcontent-visible'>");
       print("<div class='div-camera'>");
-      print("<image name='" . $handle . ":" . $camera . "' class='camera' src='" . $weather->getCameraURL($handle, $camera) . "'><div name='" . $handle . ":" . $camera . "' data-info='For Shading The Image'></div></img>");
+      print("<image name='" . $handle . ":" . $camera . "' class='camera shade' src='" . $weather->getCameraURL($handle, $camera) . "'></img>");
       print("</div></div>");
     }
 
