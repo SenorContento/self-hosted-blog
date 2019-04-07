@@ -15,10 +15,11 @@
   $loadHeader->printCustomMetadata();
   $loadHeader->printMobileStyling();
 
+  $loadHeader->printIcons();
+
   $loadHeader->printStylesheets();
   $loadHeader->printScripts();
 
-  $loadHeader->printIcons();
   //$loadHeader->printServiceWorker();
 
   $loadHeader->printCustomPageHeader();

@@ -58,28 +58,28 @@
     }
 
     public function printTemperature($weather, $handle, $station) {
-      $property = $weather->getRecordProperty($handle, $station);
-      $name = $weather->getRecordName($handle, $station);
-      $type = $weather->getRecordType($handle, $station);
+      $property = htmlspecialchars($weather->getRecordProperty($handle, $station), ENT_QUOTES, 'UTF-8');
+      $name = htmlspecialchars($weather->getRecordName($handle, $station), ENT_QUOTES, 'UTF-8');
+      $type = htmlspecialchars($weather->getRecordType($handle, $station), ENT_QUOTES, 'UTF-8');
 
-      $tempmax = $weather->getTempMax($handle, $station);
-      $tempmin = $weather->getTempMin($handle, $station);
+      $tempmax = htmlspecialchars($weather->getTempMax($handle, $station), ENT_QUOTES, 'UTF-8');
+      $tempmin = htmlspecialchars($weather->getTempMin($handle, $station), ENT_QUOTES, 'UTF-8');
 
-      $timemax = $weather->getTempMaxTime($handle, $station);
-      $timemin = $weather->getTempMinTime($handle, $station);
+      $timemax = htmlspecialchars($weather->getTempMaxTime($handle, $station), ENT_QUOTES, 'UTF-8');
+      $timemin = htmlspecialchars($weather->getTempMinTime($handle, $station), ENT_QUOTES, 'UTF-8');
 
-      $unit = $weather->getTempUnit($handle, $station); // Fahrenheit is misspelled as Farenheight!!!
-      $symbol = $weather->getTempSymbol($handle, $station);
+      $unit = htmlspecialchars($weather->getTempUnit($handle, $station), ENT_QUOTES, 'UTF-8'); // Fahrenheit is misspelled as Farenheight!!!
+      $symbol = preg_replace("/&amp;deg;/", "&deg;", htmlspecialchars($weather->getTempSymbol($handle, $station), ENT_QUOTES, 'UTF-8')); // I only want to convert &amp;deg; back to character &deg; // https://www.php.net/manual/en/function.preg-replace.php
 
       print("<div id='weather' class='tabcontent tabcontent-visible'>");
-      print("<div class='temperature' name='" . $handle . ":" . $station . "'><div class='center'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
+      print("<div class='temperature' name='" . htmlspecialchars($handle . ":" . $station, ENT_QUOTES, 'UTF-8') . "'><div class='center'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
       print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div></div>");
     }
 
     public function printImage($weather, $handle, $camera) {
       print("<div id='camera' class='tabcontent tabcontent-visible'>");
       print("<div class='div-camera'>");
-      print("<image name='" . $handle . ":" . $camera . "' class='camera shade' src='" . $weather->getCameraURL($handle, $camera) . "'></img>");
+      print("<image name='" . htmlspecialchars($handle . ":" . $camera, ENT_QUOTES, 'UTF-8') . "' class='camera shade' src='" . htmlspecialchars($weather->getCameraURL($handle, $camera), ENT_QUOTES, 'UTF-8') . "'></img>");
       print("</div></div>");
     }
 
@@ -90,11 +90,11 @@
       $weatherstem = "https://lumpkin.weatherstem.com/dahlonega";
 
       print("<div id='externallinks' class='tabcontent tabcontent-visible'>");
-      print("<div name='" . $handle . ":" . $station . "' class='links'>");
-      print("<a class='weatherstem button' href='" . $weatherstem . "'><span class='fas fa-thermometer-three-quarters'></span> WeatherStem Page</a>");
-      print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'><span class='fas fa-cloud'></span> Weather Underground Page</a>");
-      print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'><span class='fab fa-twitter-square'></span> Twitter Profile</a>");
-      print("<a class='facebook button' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'><span class='fab fa-facebook-square'></span> Facebook Page</a>");
+      print("<div name='" . htmlspecialchars($handle . ":" . $station, ENT_QUOTES, 'UTF-8') . "' class='links'>");
+      print("<a class='weatherstem button' href='" . htmlspecialchars($weatherstem, ENT_QUOTES, 'UTF-8') . "'><span class='fas fa-thermometer-three-quarters'></span> WeatherStem Page</a>");
+      print("<a class='wunderground button' href='" . htmlspecialchars($wunderground . $weather->getStationWunderground($handle, $station), ENT_QUOTES, 'UTF-8') . "'><span class='fas fa-cloud'></span> Weather Underground Page</a>");
+      print("<a class='twitter button' href='" . htmlspecialchars($twitter . $weather->getStationTwitter($handle, $station), ENT_QUOTES, 'UTF-8') . "'><span class='fab fa-twitter-square'></span> Twitter Profile</a>");
+      print("<a class='facebook button' href='" . htmlspecialchars($facebook . $weather->getStationFacebook($handle, $station), ENT_QUOTES, 'UTF-8') . "'><span class='fab fa-facebook-square'></span> Facebook Page</a>");
       print("</div></div>");
     }
   }
