@@ -104,11 +104,13 @@
     top: 0;
     right: 0;
 
-    background-color: rgba(0,0,0,0.5);;
+    background-color: rgba(0,0,0,0.5);
     /*z-index: -1;*/
 
     /* display: none; /* For Testing */
     position: absolute;
+
+    /* TODO: There's a bug here, where shading occurs before the timeout on repeated use */
     transition: opacity 1s ease 0.5s;
     /*transition: width 5s ease 0s;*/
   }
@@ -124,13 +126,16 @@
     outline: none;
     text-align: left;
     cursor: pointer;
-    transition: 0.3s;
     /*font-size: 17px;*/
     font-size: 5vw;
     word-break: break-all;
 
     visibility: visible;
-    transition: width 0.5s, padding 0.5s ease;
+
+    /* Occasionally on Chrome Mobile, these transitions are visible while loading the page */
+    /*transition: 0.3s;*/
+    /*transition: width 0.5s, padding 0.5s ease;*/
+
     /*transition: text-indent 0.1s ease-in 0.25s;*/
     /*transition: font-size 0s ease-in 0s;*/
   }
