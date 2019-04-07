@@ -5,6 +5,10 @@
 
   function customPageFooter() {
     print("\n\t\t" . '<script src="tabs.js"></script>');
+
+    print("\n\t\t" . '<link rel="stylesheet" href="maps.css">');
+    print("\n\t\t" . '<script src="/js/polymaps/polymaps.min.js"></script>');
+    print("\n\t\t" . '<script src="maps.js"></script>');
   }
 
   function customMetadata() {
@@ -35,7 +39,7 @@
   $mainPage->printHeader();
   $mainPage->printTabbedContent();
 
-  $mainPage->printTemperature($weather, "dahlonega", 0);
+  $mainPage->printWeather($weather, "dahlonega", 0);
   $mainPage->printImage($weather, "dahlonega", 0);
   $mainPage->printExternalLinks($weather, "dahlonega", 0);
 
@@ -57,7 +61,7 @@
       </div><div id="tab-shade" class="tab-shade shade-hidden" onclick="closeDrawer()"></div>');
     }
 
-    public function printTemperature($weather, $handle, $station) {
+    public function printWeather($weather, $handle, $station) {
       $property = htmlspecialchars($weather->getRecordProperty($handle, $station), ENT_QUOTES, 'UTF-8');
       $name = htmlspecialchars($weather->getRecordName($handle, $station), ENT_QUOTES, 'UTF-8');
       $type = htmlspecialchars($weather->getRecordType($handle, $station), ENT_QUOTES, 'UTF-8');
@@ -71,9 +75,15 @@
       $unit = htmlspecialchars($weather->getTempUnit($handle, $station), ENT_QUOTES, 'UTF-8'); // Fahrenheit is misspelled as Farenheight!!!
       $symbol = preg_replace("/&amp;deg;/", "&deg;", htmlspecialchars($weather->getTempSymbol($handle, $station), ENT_QUOTES, 'UTF-8')); // I only want to convert &amp;deg; back to character &deg; // https://www.php.net/manual/en/function.preg-replace.php
 
+      // Temperature
       print("<div id='weather' class='tabcontent tabcontent-visible'>");
       print("<div class='temperature' name='" . htmlspecialchars($handle . ":" . $station, ENT_QUOTES, 'UTF-8') . "'><div class='center'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
-      print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div></div>");
+      print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
+
+      // Map
+      print("<svg id='ung-map'></svg>");
+
+      print("</div>");
     }
 
     public function printImage($weather, $handle, $camera) {
