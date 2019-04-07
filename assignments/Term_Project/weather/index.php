@@ -72,14 +72,15 @@
       $symbol = $weather->getTempSymbol($handle, $station);
 
       print("<div id='weather' class='tabcontent tabcontent-visible'>");
-      print("<div class='temperature' name='" . $handle . ":" . $station . "'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
-      print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
+      print("<div class='temperature' name='" . $handle . ":" . $station . "'><div class='center'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
+      print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div></div>");
     }
 
     public function printImage($weather, $handle, $camera) {
       print("<div id='camera' class='tabcontent tabcontent-visible'>");
+      print("<div class='div-camera'>");
       print("<image name='" . $handle . ":" . $camera . "' class='camera' src='" . $weather->getCameraURL($handle, $camera) . "'><div name='" . $handle . ":" . $camera . "' data-info='For Shading The Image'></div></img>");
-      print("</div>");
+      print("</div></div>");
     }
 
     public function printExternalLinks($weather, $handle, $station) {

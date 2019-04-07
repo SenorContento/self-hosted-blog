@@ -13,10 +13,22 @@ button::-moz-focus-inner {
 
 /* End Remove Firefox Selection Border */
 
-.camera {
-  width: 90%;
-  height: auto;
+.div-camera {
   margin: 8px;
+  /*margin-top: 8px;*/
+  /*margin-bottom: 8px;*/
+}
+
+.camera {
+  width: 80%;
+  height: auto;
+}
+
+@media all and (max-width: 400px) {
+  .camera {
+    width: 100%;
+    /*height: auto;*/
+  }
 }
 
 /* https://medium.com/@dylanon/throwing-shade-how-to-shade-images-in-html-css-9d37b17b9d10 */
@@ -29,17 +41,26 @@ button::-moz-focus-inner {
   left: 0;
 }
 
+.temperature .center {
+  text-align: left;
+  display: inline-block;
+}
+
 .temperature {
   color: black;
   font-family: "FiraCode";
   font-weight: bold;
 
-  display: inline-block;
+  text-align: center;
+
+  /*display: inline-block;*/
   padding: 8px;
   margin: 8px;
 
-  background-color: rgba(0, 255, 0, 0.75);
+  /*margin-left: -5px;*/
+  /*width: 100%;*/
 
+  background-color: rgba(0, 255, 0, 0.75);
   border: green solid 1px;
 }
 

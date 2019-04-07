@@ -38,7 +38,7 @@
   /* Style the tab content */
   .tabcontent {
     display: none;
-    padding: 6px 12px;
+    /*padding: 6px 12px;*/
     /*border: 1px solid #ccc;*/
     border-top: none;
   }
@@ -87,6 +87,8 @@
     padding-right: 0px !important;
 
     /*text-indent: -65px;*/
+
+    /* TODO: I would like to make the button text slide out of view instead of just disappearing */
     font-size: 0px !important;
     /* width: 0px !important; */
     /*word-break: normal !important;*/
@@ -150,7 +152,7 @@
     margin-top: 4px;
 
     float: left;
-    padding: 0px 12px;
+    /*padding: 0px 12px;*/
     /*height: 100%;*/
     width: 100%; /* 70% */
     height: 300px; /* Should I Keep This? */
