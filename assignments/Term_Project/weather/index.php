@@ -87,9 +87,11 @@
       $wunderground = "https://www.wunderground.com/weather/";
       $twitter = "https://twitter.com/";
       $facebook = "https://www.facebook.com/";
+      $weatherstem = "https://lumpkin.weatherstem.com/dahlonega";
 
       print("<div id='externallinks' class='tabcontent tabcontent-visible'>");
       print("<div name='" . $handle . ":" . $station . "' class='links'>");
+      print("<a class='weatherstem button' href='" . $weatherstem . "'><span class='fas fa-thermometer-three-quarters'></span> WeatherStem Page</a>");
       print("<a class='wunderground button' href='" . $wunderground . $weather->getStationWunderground($handle, $station) . "'><span class='fas fa-cloud'></span> Weather Underground Page</a>");
       print("<a class='twitter button' href='" . $twitter . $weather->getStationTwitter($handle, $station) . "'><span class='fab fa-twitter-square'></span> Twitter Profile</a>");
       print("<a class='facebook button' href='" . $facebook . $weather->getStationFacebook($handle, $station) . "'><span class='fab fa-facebook-square'></span> Facebook Page</a>");
