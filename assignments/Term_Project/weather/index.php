@@ -80,8 +80,11 @@
       print("<div class='temperature' name='" . htmlspecialchars($handle . ":" . $station, ENT_QUOTES, 'UTF-8') . "'><div class='center'>Temperature High is $tempmax $symbol at $timemax!!!<br>");
       print("Temperature Low is $tempmin $symbol at $timemin!!!</div></div>");
 
+      $latitude = htmlspecialchars($weather->getStationLatitude($handle, $station), ENT_QUOTES, 'UTF-8');
+      $longitude = htmlspecialchars($weather->getStationLongitude($handle, $station), ENT_QUOTES, 'UTF-8');
+
       // Map
-      print("<svg id='ung-map'></svg>");
+      print("<div class='map'><svg class='ung-map' id='ung-map'><p class='coordinates'>Original: $latitude, $longitude</p></svg></div>");
 
       print("</div>");
     }
