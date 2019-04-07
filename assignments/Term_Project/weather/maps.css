@@ -14,6 +14,13 @@
   filter: hue-rotate(90deg);
 }
 
+@media all and (max-width: 400px) {
+  #ung-map {
+    /* TODO: How Do I Make This Responsive? */
+    height: 400px;
+  }
+}
+
 .map {
   /*height: 100%;*/
   /*position: absolute;*/
@@ -30,11 +37,11 @@
   color: white;
   font-size: 15px; /* 1vw; */
   margin: 0;
-  transform: translate(5%,0);
+  transform: translate(-5%,0);
   text-align: center;
   position: absolute;
   top: 0%;
-  left: 0%;
+  right: 0%;
 }
 
 .grid {

@@ -84,7 +84,7 @@
       $longitude = htmlspecialchars($weather->getStationLongitude($handle, $station), ENT_QUOTES, 'UTF-8');
 
       // Map
-      print("<div class='map'><svg class='ung-map' id='ung-map'><p class='coordinates'>Original: $latitude, $longitude</p></svg></div>");
+      print("<div class='map'><svg class='ung-map' id='ung-map'><p class='coordinates'>$latitude, $longitude</p></svg></div>");
 
       print("</div>");
     }
