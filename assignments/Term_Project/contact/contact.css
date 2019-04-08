@@ -48,7 +48,8 @@
 /* End Data Tip */
 
 .contact-message {
-  margin-top: 0px;
+  /* This prevents scrolling because of height 100% */
+  /*margin-top: 0px;*/
 }
 
 /* Form CSS */
