@@ -56,7 +56,7 @@
 
           <!-- I don\'t have a site antispam filter set up, so I am not adding support for this yet!!!-->
           <!--<div class="minified" data-tip="Limited to 254 Characters!!!">-->
-          <!-- RFC 2821 - http://www.rfc-editor.org/errata/eid1690-->
+          <!-- RFC 2821 - http://www.rfc-editor.org/errata/eid1690 -->
             <!--<div class="div-name-input minified">
               <label for="email" class="email">Send Me A Copy (Optional): </label>
               <input class="email-input" id="email" name="email" type="email" placeholder="example@example.com" maxlength="254">
