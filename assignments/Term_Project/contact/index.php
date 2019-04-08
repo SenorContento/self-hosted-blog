@@ -18,17 +18,77 @@
     print("\n\t\t" . '<!--End Custom Metadata-->');
   }
 
+  define('INCLUDED', 1);
+  require_once 'mail.php';
+
   $loadPage = new loadPage();
   $mainPage = new contactMe();
+  $mail = new contactMail();
 
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
+  $mainPage->readData($mail);
   $mainPage->printForm();
   $loadPage->loadFooter();
 
   class contactMe {
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
+    }
+
+    public function readData($mail) {
+      // name - Name
+      // message - Message
+      // email - Email Address
+      // attachment - Attachment
+
+      try {
+        $namevalidated = empty($_REQUEST["name"]) ? false : true;
+        $messagevalidated = empty($_REQUEST["message"]) ? false : true;
+
+        if($namevalidated && $messagevalidated) {
+          $validated = true;
+        } else {
+          $validated = false;
+
+          if(!$namevalidated) {
+            throw new Exception("name");
+          } else if(!$messagevalidated) {
+            throw new Exception("message");
+          } else {
+            throw new Exception("unknown");
+          }
+        }
+      } catch(Exception $e) {
+        // $e->getMessage()
+        print("<div class='error'>Sorry, but some the form field, " . $e->getMessage() . ", is missing!!!</div>");
+      }
+
+      if($validated) {
+        $name_limit = 20;
+        $message_limit = 365;
+        $email_limit = 254;
+
+        $name = htmlspecialchars(substr($_REQUEST['name'], 0, $name_limit), ENT_QUOTES, 'UTF-8');
+        $message = htmlspecialchars(substr($_REQUEST['message'], 0, $message_limit), ENT_QUOTES, 'UTF-8');
+        //$email = htmlspecialchars(substr($this->getValue('email'), 0, $email_limit), ENT_QUOTES, 'UTF-8');
+
+        $body = "Name: $name" . "<br>";
+        $body .= "Message: $name";
+
+        $to = getenv('alex.server.mail.contact.to');
+        $from = getenv('alex.server.mail.from');
+        if(isset($_FILES["attachment"]["size"]) && $_FILES["attachment"]["size"] > 0) {
+          //print("Attachment!!!");
+          //var_dump($_FILES["attachment"]);
+          $subject = "Term Project - Contact Me Form - Attachment";
+          $mail->sendMailAttachment($to, $from, $subject, $body, $_FILES["attachment"]);
+        } else {
+          //print("No Attachment!!!");
+          $subject = "Term Project - Contact Me Form";
+          $mail->sendMail($to, $from, $subject, $body);
+        }
+      }
     }
 
     public function printForm() {
