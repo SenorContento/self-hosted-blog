@@ -54,7 +54,7 @@
 
   class loadPage {
     public function loadHeader() {
-      $PageTitle="Template PHP Page!!!";
+      $PageTitle="Debug Headers!!!";
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
       include_once($root . "/server-data/header.php");
     }
