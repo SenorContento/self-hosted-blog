@@ -1,0 +1,8 @@
+div.center {
+  text-align: center;
+}
+
+p.headers {
+  display: inline-block;
+  text-align: left;
+}
