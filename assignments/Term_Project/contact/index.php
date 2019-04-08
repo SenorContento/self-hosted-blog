@@ -61,7 +61,7 @@
           }
         } catch(Exception $e) {
           // $e->getMessage()
-          print("<div class='error'>Sorry, but some the form field, " . $e->getMessage() . ", is missing!!!</div>");
+          print("<div class='error'>Sorry, but the form field, " . $e->getMessage() . ", is missing!!!</div>");
         }
 
         if($validated) {
