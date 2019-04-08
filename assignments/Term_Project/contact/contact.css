@@ -1,0 +1,396 @@
+@charset "UTF-8";
+
+/* Selected Text */
+/* https://css-tricks.com/overriding-the-default-text-selection-color-with-css/ */
+
+::selection {
+  background: rgba(0, 255, 255, 0.25); /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: rgba(0, 255, 255, 0.25); /* Gecko Browsers */
+}
+
+/* End Selected Text */
+
+/* Data Tip */
+
+/*[data-tip]:after {
+  /* http://jsfiddle.net/BumU5/3/ */
+  /*content: attr(data-tip) '\A';
+  white-space: pre-wrap;
+
+  /*display: none;*/
+  /*position: absolute;
+  z-index: 0;
+
+  visibility: none;
+  opacity: 0;
+
+  /*transition:visibility 0s, opacity 0.4s ease-out;*/
+
+/*  color: white;
+}
+
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+  /* Work In Progress Tooltip */
+  /*display: inline;*/
+
+  /*position: static;
+  z-index: 9999;
+
+  visibility: visible;
+  opacity: 1;
+  bottom:-35px;*/
+/*}*/
+
+/* End Data Tip */
+
+.contact-message {
+  margin-top: 0px;
+}
+
+/* Form CSS */
+
+form * {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(0, 255, 0, 0.75);
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+}
+
+/* TODO: There Are Some Bugs With Positioning Labels And Limiting Textbox Widths */
+
+label.name {
+  /* Intentionally Left Blank */
+}
+
+label.email {
+  /* Intentionally Left Blank */
+}
+
+.form-div {
+  text-align: center;
+}
+
+.form-div form {
+  text-align: left;
+  display: inline-block;
+  margin: 8px;
+}
+
+.email-input {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
+  max-width: 735px;
+
+  background-color: #000000;
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.email-input:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.name-input {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
+  max-width: 935px;
+
+  background-color: #000000;
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.name-input:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.textarea {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
+  overflow: auto;
+  resize: none;
+  max-height: 200px;
+  max-width: 1000px;
+
+  height: 186px;
+  width: 315px;
+
+  /*min-height: 186px;*/
+  /*min-width: 315px;*/
+
+  /*min-height: 50px;*/
+  /*min-width: 60px;*/
+
+  background-color: #000000;
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.textarea:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.div-name-input {
+  display: inline-block;
+}
+
+.about-textarea {
+  display: inline-block;
+}
+
+/* https://stackoverflow.com/a/1839450/6828099 */
+/* Helps Inputs */
+.about-textarea * {
+  vertical-align: top;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.about-textarea .about {
+  float: left;
+}
+
+@media only screen and (max-width: 1028px) {
+  .div-name-input .name {
+    float: left;
+    padding-left: 8px;
+  }
+
+  /* Helps Align Labels Above Input */
+  .div-name-input * {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .upload-break {
+    display: block;
+  }
+
+  .success, .warning, .error {
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .success, .warning, .error {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+}
+
+@media only screen and (min-width: 1029px) {
+  .div-name-input .name::after {
+    /*background-color: red;*/
+    /*white-space: pre-wrap;*/
+
+    content:"";
+    padding-right: 6px;
+  }
+
+  #program_name {
+    padding-right: 0px;
+    margin-right: 0px;
+  }
+}
+
+pre {
+  margin: 8px;
+  /*border: 1px solid #b5e853;*/
+}
+
+.sizing-tag-hidden {
+  height: 0px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  font-size: 0px;
+}
+
+.minified {
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* End Form CSS */
+
+/* Virus Scan Message */
+
+.hidden {
+  display: none;
+}
+
+/* https://stackoverflow.com/a/7596709/6828099 */
+.hidden-newline br {
+  display: none;
+}
+
+@media only screen and (max-width: 500px) {
+  /* Only Keep Newline Hidden On Mobile Screens */
+  .hidden-newline-mobile br {
+    display: none;
+  }
+}
+
+/* End Virus Scan Message */
+
+/* Submit Button Input */
+
+.submit-button {
+  border: 1px solid green;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+/* End Submit Button Input */
+
+/* File Upload Input */
+
+/* https://stackoverflow.com/a/25825731 */
+.file-button {
+  border: 1px solid green;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+.select-file-message {
+  /* Intentionally Left Blank */
+}
+
+#piet-filename {
+  /* Intentionally Left Blank */
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input.upload-box {
+  color: green;
+  /*background-color: blue;*/
+  border: green solid 1px;
+}
+
+input.upload-box:hover {
+  /*color: green;*/
+  /*background-color: blue;*/
+  /*border: green solid 1px;*/
+}
+
+label.upload, label.name, label.about, label.email {
+  font-family: "FiraCode";
+  color: rgba(0, 255, 0, 0.75);
+}
+
+/* End File Upload Input */
+
+/* MySQL Messages */
+/* Not Relevant Because Message Is Turned Off */
+
+p.mysql-success {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
+/* End MySQL Messages */
+
+/* Custom Message Links */
+
+.success-link {
+  color: black;
+}
+
+.warning-link {
+  color: black;
+}
+
+.error-link {
+  color: black;
+}
+
+/* End Custom Message Links */
