@@ -35,6 +35,21 @@
       print("<fieldset><legend>Submit Data</legend>");
 
       print('<form method="POST">
+      <label>Submit Safe Form Data:</label><br>');
+
+      $query = isset($_REQUEST["query"]) ? $_REQUEST["query"] : "1";
+      print('<label>SQL Query: </label><input class="sqlquery" id="retrieve-row" name="query" value="' . htmlspecialchars($query, ENT_QUOTES, 'UTF-8') . '" type="text"><br>');
+
+      print('<br>
+      <button type="submit">Submit Form</button> <button name="reset" value="true" type="submit">Reset Table</button>');
+
+      print("</form></fieldset>");
+    }
+
+    /*public function printForm() {
+      print("<fieldset><legend>Submit Data</legend>");
+
+      print('<form method="POST">
       <label>Submit Unsafe Form Data:</label><br>');
 
       $inject = isset($_REQUEST["inject"]) ? filter_var($_REQUEST["inject"], FILTER_VALIDATE_BOOLEAN) : false;
@@ -50,14 +65,28 @@
       <button type="submit">Submit Form</button> <button name="reset" value="true" type="submit">Reset Table</button>');
 
       print("</form></fieldset>");
-    }
+    }*/
 
     public function getValues() {
       global $sqlCommands;
       $reset = isset($_REQUEST["reset"]) ? filter_var($_REQUEST["reset"], FILTER_VALIDATE_BOOLEAN) : false;
       $inject = isset($_REQUEST["inject"]) ? filter_var($_REQUEST["inject"], FILTER_VALIDATE_BOOLEAN) : false;
 
+      $query = isset($_REQUEST["query"]) ? $_REQUEST["query"] : "1";
+
+      // 1
+      // 1 OR 1=1; INSERT INTO Assignment12 (statement) VALUES ("I am an Injected SQL Row!!!") --
+
       if($reset) {
+        $sqlCommands->resetTable();
+        $sqlCommands->insertData("Example Data");
+        $sqlCommands->readDataUnsafe("1");
+      } else {
+        //print("Query!!!");
+        $sqlCommands->readDataUnsafe($query);
+      }
+
+      /*if($reset) {
         $sqlCommands->resetTable();
         $sqlCommands->insertData("Example Data");
         $sqlCommands->readDataUnsafe(false);
@@ -65,7 +94,7 @@
         $sqlCommands->readDataUnsafe(true);
       } else {
         $sqlCommands->readDataUnsafe(false);
-      }
+      }*/
     }
   }
 
@@ -117,7 +146,7 @@
         return $conn;
       }
       catch(PDOException $e) {
-        return $e->getMessage();
+        return htmlspecialchars(htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
       }
     }
 
@@ -148,8 +177,8 @@
           $conn->exec($sql);
         }
       } catch(PDOException $e) {
-          //echo $sql . "<br>" . $e->getMessage();
-          echo "<p>Create Table Failed: " . $e->getMessage() . "</p>";
+          //echo $sql . "<br>" . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
+          echo "<p>Create Table Failed: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
       }
     }
 
@@ -177,8 +206,8 @@
           $conn->exec($sql);
         }
       } catch(PDOException $e) {
-          //echo $sql . "<br>" . $e->getMessage();
-          echo "<p>Drop Table Failed: " . $e->getMessage() . "</p>";
+          //echo $sql . "<br>" . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
+          echo "<p>Drop Table Failed: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
       }
     }
 
@@ -197,7 +226,7 @@
           'statement' => $statementstring,
         ]);
       } catch(PDOException $e) {
-          echo "<p>Insert Data into Table Failed: " . $e->getMessage() . "</p>";
+          echo "<p>Insert Data into Table Failed: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
       }
     }
 
@@ -216,11 +245,11 @@
           </tr>");
         }
       } catch(PDOException $e) {
-          echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+          echo "<p>Read Data from Table Failed: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
       }
     }
 
-    public function readDataUnsafe($isinject) {
+    public function readDataUnsafe($unsafe) {
       try {
         $conn = $this->connectMySQL();
 
@@ -232,12 +261,14 @@
         // so even though I am letting SQL injection happen on this server, it is
         // going to be controlled. The only reason I don't just simulate the injection
         // is because my grade depends on actually having an injection.
-        if($isinject) {
+        /*if($isinject) {
           $unsafe = "1 OR 1=1; INSERT INTO Assignment12 (statement) VALUES (\"I am an Injected SQL Row!!!\") --";
         } else {
           $unsafe = "1";
-        }
+        }*/
         //$sql = "INSERT INTO Assignment12 (statement) VALUES (\"Test\")";
+
+        //print("Query: \"$unsafe\"");
         $sql = "SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1";
         $injectme = $conn->prepare($sql);
         $injectme->execute(array($unsafe));
@@ -247,11 +278,11 @@
         //print("Results: ");
         //var_dump($result);
 
-        print("The Form Data: \"<span style='color: red'>" . $unsafe . "</span>\"");
+        print("The Form Data: \"<span style='color: red'>" . htmlspecialchars($unsafe, ENT_QUOTES, 'UTF-8') . "</span>\"");
         print(" was injected as <br>");
 
         print("SQL Query: ");
-        print("\"<span style='color: red'>" . "SELECT * FROM Assignment12 WHERE id = " . $unsafe . " LIMIT 1" . "</span>\"");
+        print("\"<span style='color: red'>" . "SELECT * FROM Assignment12 WHERE id = " . htmlspecialchars($unsafe, ENT_QUOTES, 'UTF-8') . " LIMIT 1" . "</span>\"");
         print("</p>");
 
         print("<p id=\"injection-info\">");
@@ -281,7 +312,7 @@
         }
         print("</tbody></table>");
       } catch(PDOException $e) {
-        echo "<p>Read Data from Table Failed: " . $e->getMessage() . "</p>";
+        echo "<p>Read Data from Table Failed: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</p>";
       }
     }
   }
