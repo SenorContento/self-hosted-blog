@@ -30,7 +30,8 @@ class contactMail {
     $messagehead .= "Content-Transfer-Encoding: base64" . "\r\n" . "\r\n";
 
 
-    $bgcolor = "cyan";
+    $bgcolor = "black";
+    $textcolor = "white";
     // Header
     $head = "<!DOCTYPE HTML>";
     $head .= "<html>";
@@ -38,15 +39,19 @@ class contactMail {
     $head .= '<table width="100%" border="0" cellpadding="0" cellspacing="0">';
     $head .= '<tr>';
     $head .= '<td width="650" valign="top" align="center" bgcolor="' . $bgcolor . '">';
-    $head .= '<p style="display: inline-block;text-align: left;">';
+    $head .= '<p style="display: inline-block;text-align: left;color: ' . $textcolor . '">';
 
     $content = $body;
 
     // Footer
     $foot = '</p>';
-    $foot = '</td>';
+    $foot .= '</td>';
     $foot .= '</tr>';
     $foot .= '</table>';
+    $foot .= '<!--This Fake Image Helps Apple Mail Force Custom Color Scheme-->';
+    // These "Images" will still trigger a display image warning, but now it doesn't make the email look ugly.
+    //$foot .= '<img src="https://#/" style="border: none !important;color: ' . $bgcolor . '" alt="This Fake Image Exists to Enforce Color Scheme!!!"/>';
+    $foot .= '<img src="https://#/" style="display:none; border: none !important;color: ' . $bgcolor . '" alt=""';
     $foot .= "</body>";
     $foot .= "</html>";
 
