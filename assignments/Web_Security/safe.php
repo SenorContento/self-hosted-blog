@@ -38,7 +38,7 @@
       <label>Submit Safe Form Data:</label><br>');
 
       $query = isset($_REQUEST["query"]) ? $_REQUEST["query"] : "1";
-      print('<label>SQL Query: </label><input class="sqlquery" id="retrieve-row" name="query" value="' . htmlspecialchars($query, ENT_QUOTES, 'UTF-8') . '" type="text"><br>');
+      print('<label>Retrieve Row: </label><input class="sqlquery" id="retrieve-row" name="query" value="' . htmlspecialchars($query, ENT_QUOTES, 'UTF-8') . '" type="text"><br>');
 
       print('<br>
       <button type="submit">Submit Form</button> <button name="reset" value="true" type="submit">Reset Table</button>');

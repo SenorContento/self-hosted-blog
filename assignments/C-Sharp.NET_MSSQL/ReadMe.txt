@@ -19,7 +19,3 @@ Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db
 
 Grade: Not Available Yet
 Reason: None Provided
-
-On Hold Until I Have My Teacher Regrade The Assignment.
-The grading days were supposed to be Mondays and Tuesdays, but he
-graded them yesterday (Sunday, April 7). So my server was down for maintenance.
