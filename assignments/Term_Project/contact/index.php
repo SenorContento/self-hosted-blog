@@ -74,7 +74,7 @@
           //$email = htmlspecialchars(substr($this->getValue('email'), 0, $email_limit), ENT_QUOTES, 'UTF-8');
 
           $body = "Name: $name" . "<br>";
-          $body .= "Message: $name";
+          $body .= "Message: $message";
 
           $to = getenv('alex.server.mail.contact.to');
           $from = getenv('alex.server.mail.from');
