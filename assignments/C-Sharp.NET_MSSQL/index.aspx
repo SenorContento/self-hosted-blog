@@ -95,7 +95,7 @@
     valid.Text = String.Format("Validated!!!");
   }
 
-  bool active = true; // I will flip this to false when I delete the database!!!
+  bool active = false; // I will flip this to false when I delete the database!!!
 
   if(!active) {
     awswarning.Text = "This assignment works as is, but because of the proprietary nature of SQL Server (by Microsoft), I have to use AWS to use the MSSQL database. Given this, I will eventually have to pay to use AWS' databases (as I am on a free trial), so I deleted the database now that the assignment has been graded!";
