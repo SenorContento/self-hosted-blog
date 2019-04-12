@@ -27,12 +27,11 @@
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
   $mainPage->checkUpload("https://keyserver.senorcontento.com");
-  $mainPage->checkSearch("https://keyserver.senorcontento.com");
 
   $mainPage->printUploadForm();
   $mainPage->printSearchForm();
 
-  $mainPage->searchKeyserver("https://keyserver.senorcontento.com", "senorcontento.com");
+  $mainPage->checkSearch("https://keyserver.senorcontento.com");
   $loadPage->loadFooter();
 
   class mainPage {
@@ -86,6 +85,7 @@
 
     public function checkSearch($keyserver) {
       // Search Data Here!!!
+      //$this->searchKeyserver("https://keyserver.senorcontento.com", "senorcontento.com");
     }
 
     public function printUploadForm() {
@@ -119,11 +119,11 @@
         <legend>Search PGP Keys</legend>
         <form method="post" enctype="multipart/form-data">
           <div class="file-input">
-            <label for="pgp-file-input" class="upload">Select (ASCII-Armored) OpenPGP Key: </label>
-            <span class="upload-break">
-              <label class="file-button"><span id="pgp-filename" class="select-file-message">No Key Selected</span><input type="file" name="pgp-key" class="upload-box" id="pgp-file-input"></label>
-              <input type="submit" class="submit-button" value="Upload Key" name="submit">
-            </span>
+            <div class="div-key-input minified">
+              <label for="key_value" class="name">Search OpenPGP Keys: </label><span class="hidden-newline hidden-newline-mobile"><br></span>
+              <input class="key-input" id="key_value" name="key_value" type="text" required>
+              <input type="submit" class="submit-button" value="Search Keys" name="submit">
+            </div>
           </div>
         </form>
       </fieldset>
@@ -168,9 +168,9 @@
 
         //print("KeyID: $keyid");
 
-        print("<tr><td>");
+        print("<tr><td data-column-name='Download Key (Binary)'>");
         print("<a class='key-download' href='$keyserver/pks/lookup?op=get&options=mr&search=$keyid'>$keyid</a>");
-        print("</td><td>");
+        print("</td><td data-column-name='Key Info'>");
         print("<span class='key-info'>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
         print("</td></tr>");
       }

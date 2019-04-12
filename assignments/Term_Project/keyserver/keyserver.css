@@ -1,4 +1,101 @@
 @charset "UTF-8";
+
+.hidden-newline-mobile br {
+  display: none;
+}
+
+/* Fix Table For Small Screens - https://codepen.io/AllThingsSmitty/pen/MyqmdM */
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+
+  table td::before {
+    /*content: attr(data-label);*/
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-right: 100px;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  table td::before { content: attr(data-column-name)"\A"; }
+
+  .hidden-newline-mobile br {
+    display: block;
+  }
+}
+
+.key-input {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
+  max-width: 850px;
+
+  background-color: #000000;
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.key-input:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+/* https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(0, 255, 0, 0.75);
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+}
+
 /* Submit Button Input */
 
 .submit-button {

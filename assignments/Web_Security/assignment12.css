@@ -73,7 +73,7 @@ select:-webkit-autofill:focus {
   }
 }
 
-/* Tablet */
+/* Table */
 @media all and (min-width: 400px) and (max-width: 1024px) {
   #injection-status, #injection-info {
     padding-left: 50px;
