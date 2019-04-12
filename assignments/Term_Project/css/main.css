@@ -52,6 +52,18 @@ a.source-code-link {
   padding-bottom: 8px;
 }
 
+/* Anchor Tag */
+
+a {
+  color: #63c0f5;
+}
+
+a:visited {
+  color: #A200D9;
+}
+
+/* End Anchor Tag */
+
 .success {
   color: black;
   font-family: "FiraCode";

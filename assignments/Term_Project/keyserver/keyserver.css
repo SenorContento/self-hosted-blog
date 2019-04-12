@@ -1,0 +1,158 @@
+@charset "UTF-8";
+/* Submit Button Input */
+
+.submit-button {
+  border: 1px solid green;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+/* End Submit Button Input */
+
+/* File Upload Input */
+
+/* https://stackoverflow.com/a/25825731 */
+.file-button {
+  border: 1px solid green;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+.select-file-message {
+  /* Intentionally Left Blank */
+}
+
+#piet-filename {
+  /* Intentionally Left Blank */
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input.upload-box {
+  color: green;
+  /*background-color: blue;*/
+  border: green solid 1px;
+}
+
+input.upload-box:hover {
+  /*color: green;*/
+  /*background-color: blue;*/
+  /*border: green solid 1px;*/
+}
+
+label.upload, label.name, label.about {
+  font-family: "FiraCode";
+  color: rgba(0, 255, 0, 0.75);
+}
+
+/* End File Upload Input */
+
+/* MySQL Messages */
+/* Not Relevant Because Message Is Turned Off */
+
+p.mysql-success {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
+/* End MySQL Messages */
+
+/* Custom Message Links */
+
+.success-link {
+  color: black;
+}
+
+.warning-link {
+  color: black;
+}
+
+.error-link {
+  color: black;
+}
+
+/* End Custom Message Links */
+
+/* Table Modifiers */
+/* I intentionally left the <table> tag in front of the other table-related tags */
+/* Normal usage will always require that the related tags be a child of <table> */
+
+table {
+  /* font-family: sans-serif; */
+  font-family: 'OpenSans - Lighter';
+  font-weight: lighter;
+  font-style: normal;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+table td, table th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  color: #90EE90;
+}
+
+/* Table Header */
+
+table th {
+  background-color: green;
+  color: #ffffff;
+}
+
+/* Table Data */
+
+table td {
+  color: #90EE90;
+}
+
+/* Table Row */
+
+table tr:nth-child(odd) {
+  color: #90EE90;
+  background-color: black;
+}
+
+table tr:nth-child(even) {
+  color: #90EE90;
+  background-color: #202020;
+}
+
+/* Table Footer */
+
+tfoot td {
+  /*color: #fffffff;*/
+  font-weight: bold;
+}
+
+/* End Table */
