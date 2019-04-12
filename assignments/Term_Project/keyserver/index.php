@@ -51,7 +51,7 @@
           return -5;
         }
 
-        $file_contents = file_get_contents($uploaded_file);
+        $file_contents = @file_get_contents($uploaded_file);
 
         $url = $keyserver . "/pks/add";
         $data = array('keytext' => $file_contents);
@@ -85,7 +85,7 @@
 
     public function checkSearch($keyserver) {
       // Search Data Here!!!
-      //$this->searchKeyserver("https://keyserver.senorcontento.com", "senorcontento.com");
+      $this->searchKeyserver("https://keyserver.senorcontento.com", "senorcontento.com");
     }
 
     public function printUploadForm() {
@@ -136,7 +136,12 @@
       // https://stackoverflow.com/a/371563/6828099
       // https://www.php.net/manual/en/domelement.getattribute.php
 
-      $page = file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on");
+      $page = @file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on");
+
+      if(empty($page)) {
+        print("<div class=\"error\">Cannot Connect To Keyserver!!!</div><br>");
+        return -9;
+      }
 
       $html = new DOMDocument();
       $html->loadHTML($page);

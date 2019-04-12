@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+#container fieldset {
+  margin: 8px;
+}
+
 .hidden-newline-mobile br {
   display: none;
 }
