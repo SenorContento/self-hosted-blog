@@ -55,7 +55,9 @@
     border-bottom: 0;
   }
 
-  table td::before { content: attr(data-column-name)"\A"; }
+  table td::before {
+    content: attr(data-column-name);
+  }
 
   .hidden-newline-mobile br {
     display: block;

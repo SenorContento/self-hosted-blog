@@ -85,7 +85,11 @@
 
     public function checkSearch($keyserver) {
       // Search Data Here!!!
-      $this->searchKeyserver("https://keyserver.senorcontento.com", "senorcontento.com");
+
+      $key = isset($_REQUEST["key_value"]) ? $_REQUEST["key_value"] : NULL;
+      if(!empty($key)) {
+        $this->searchKeyserver($keyserver, $key);
+      }
     }
 
     public function printUploadForm() {
@@ -120,7 +124,7 @@
         <form method="post" enctype="multipart/form-data">
           <div class="file-input">
             <div class="div-key-input minified">
-              <label for="key_value" class="name">Search OpenPGP Keys: </label><span class="hidden-newline hidden-newline-mobile"><br></span>
+              <label for="key_value" class="name">Search OpenPGP Keys: </label><span class="hidden-newline-mobile"><br></span>
               <input class="key-input" id="key_value" name="key_value" type="text" required>
               <input type="submit" class="submit-button" value="Search Keys" name="submit">
             </div>
@@ -162,11 +166,13 @@
 
       $isFirst = true;
       foreach ($keys as $key) {
-        if ($isFirst) {
+        // Hides Information Header
+        if($isFirst) {
           $isFirst = false;
           continue;
         }
 
+        // [0] is raw binary of requested key(s). [1] is information about key signatures.
         $keyurl = explode("=",$key->getElementsByTagName('a')[0]->getAttribute("href"));
         $keyid = $keyurl[sizeof($keyurl)-1];
         //var_dump($keyid);
@@ -176,7 +182,7 @@
         print("<tr><td data-column-name='Download Key (Binary)'>");
         print("<a class='key-download' href='$keyserver/pks/lookup?op=get&options=mr&search=$keyid'>$keyid</a>");
         print("</td><td data-column-name='Key Info'>");
-        print("<span class='key-info'>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
+        print("<span class='key-info'><span class='hidden-newline-mobile'><br></span>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
         print("</td></tr>");
       }
 
