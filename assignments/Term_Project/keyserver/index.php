@@ -21,6 +21,10 @@
     print("\n\t\t" . '<!--End Custom Metadata-->');
   }
 
+  // https://stackoverflow.com/a/2397010/6828099
+  define('INCLUDED', 1);
+  //require_once 'mysql.php';
+
   $loadPage = new loadPage();
   $mainPage = new mainPage();
 
@@ -154,7 +158,7 @@
       //print("X: $keys");
 
       // Start Table
-      print('
+      print('<div class="table-div">
           <table>
             <thead>
               <tr>
@@ -182,14 +186,14 @@
         print("<tr><td data-column-name='Download Key (Binary)'>");
         print("<a class='key-download' href='$keyserver/pks/lookup?op=get&options=mr&search=$keyid'>$keyid</a>");
         print("</td><td data-column-name='Key Info'>");
-        print("<span class='key-info'><span class='hidden-newline-mobile'><br></span>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
+        print("<span class='key-info'><span class='hidden-newline-mobile'><br><br></span>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
         print("</td></tr>");
       }
 
       // End Table
       print('
       </tbody>
-    </table>');
+    </table></div>');
 
       /*$x = $html->documentElement;
       foreach ($x->childNodes AS $item) {

@@ -8,11 +8,39 @@
   display: none;
 }
 
+fieldset {
+  border-color: blue;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+legend {
+  font-family: "FiraCode";
+  color: rgba(0, 255, 0, 0.75); /* #b5e853 */
+  text-align: left;
+  text-decoration: none;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/*
+legend::before {
+  content: "<-"
+}
+
+legend::after {
+  content: "->"
+}
+*/
+
 /* Fix Table For Small Screens - https://codepen.io/AllThingsSmitty/pen/MyqmdM */
 
 @media screen and (max-width: 600px) {
   table {
     border: 0;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    margin-top: 8px !important;
   }
 
   table caption {
@@ -56,6 +84,9 @@
   }
 
   table td::before {
+    color: rgba(0, 255, 0, 0.75);
+    font-weight: bold;
+    font-family: "FiraCode";
     content: attr(data-column-name);
   }
 
@@ -209,6 +240,19 @@ p.mysql-success {
 /* Table Modifiers */
 /* I intentionally left the <table> tag in front of the other table-related tags */
 /* Normal usage will always require that the related tags be a child of <table> */
+
+@media screen and (min-width: 601px) {
+  .table-div {
+    max-width: 100%;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  table {
+    width: 100%;
+  }
+}
 
 table {
   /* font-family: sans-serif; */
