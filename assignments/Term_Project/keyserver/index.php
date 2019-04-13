@@ -1,4 +1,22 @@
 <?php
+  // https://stackoverflow.com/a/3406181/6828099
+  // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
+  set_error_handler(
+    function ($severity, $message, $file, $line) {
+      // This if statement executes if the statement has an @ symbol in front of it.
+      // http://php.net/manual/en/function.set-error-handler.php
+      if (0 === error_reporting()) {
+        //print("Help! Help! I'm Being Suppressed!!! Monty Python - https://www.youtube.com/watch?v=ZtYU87QNjPw");
+        return false;
+      }
+
+      //print("$message, $severity, $file, $line");
+      //if($message !== "openssl_encrypt(): Using an empty Initialization Vector (iv) is potentially insecure and not recommended")
+
+      throw new ErrorException($message, $severity, $severity, $file, $line);
+    }
+  );
+
   function customPageHeader() {
     print("\n\t\t" . '<link rel="stylesheet" href="keyserver.css">');
     //print("\n\t\t" . '<link rel="stylesheet" href="template.css">');
@@ -185,10 +203,27 @@
       // https://stackoverflow.com/a/371563/6828099
       // https://www.php.net/manual/en/domelement.getattribute.php
 
-      $page = @file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on&op=vindex&hash=on");
+      try {
+        $page = file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on&op=vindex&hash=on");
+      } catch(ErrorException $e) {
+        //print("Error: " . $e->getMessage());
+        $error = explode(":", $e->getMessage());
+        //print("Message: '" . $error[3] . "'");
+        //print("Found: '" . (int) strpos($error[3], '404 Not found') . "'");
 
-      if(empty($page)) {
-        print("<div class=\"error\">Cannot Connect To Keyserver!!!</div><br>");
+        // https://stackoverflow.com/a/4366748/6828099
+        if(strpos($error[3], '404 Not found') !== false) {
+          // file_get_contents(https://keyserver.senorcontento.com/pks/lookup?search=google&fingerprint=on&op=vindex&hash=on): failed to open stream: HTTP request failed! HTTP/1.1 404 Not found
+          print("<div class=\"error\">Key Not Found!!!</div><br>");
+        } else {
+          print("<div class=\"error\">Cannot Connect To Keyserver!!!</div><br>");
+        }
+
+        /*if(empty($page)) {
+          print("<div class=\"error\">Cannot Connect To Keyserver!!!</div><br>");
+          return -9;
+        }*/
+
         return -9;
       }
 
@@ -203,7 +238,7 @@
           <table>
             <thead>
               <tr>
-                <th>Download Key (Binary)</th>
+                <th>Download Key (ASCII-Armored)</th>
                 <th>Key Info</th>
               </tr>
             </thead>
@@ -224,7 +259,7 @@
 
         //print("KeyID: $keyid");
 
-        print("<tr><td data-column-name='Download Key (Binary)'>");
+        print("<tr><td data-column-name='Download Key (ASCII-Armored)'>");
         print("<a class='key-download' href='$keyserver/pks/lookup?op=get&options=mr&search=$keyid'>$keyid</a>");
         print("</td><td data-column-name='Key Info'>");
         print("<span class='key-info'><span class='hidden-newline-mobile'><br><br></span>" . nl2br($this->removeFirstLine(htmlspecialchars($key->nodeValue, ENT_QUOTES, 'UTF-8'))) . "</span>");
