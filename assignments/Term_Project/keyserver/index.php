@@ -144,7 +144,7 @@
       // https://stackoverflow.com/a/371563/6828099
       // https://www.php.net/manual/en/domelement.getattribute.php
 
-      $page = @file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on");
+      $page = @file_get_contents($keyserver . "/pks/lookup?search=$query&fingerprint=on&op=vindex&hash=on");
 
       if(empty($page)) {
         print("<div class=\"error\">Cannot Connect To Keyserver!!!</div><br>");
