@@ -43,7 +43,7 @@ Checklist:
 - Mobile: < 400
 > Only has to format properly with screen (around these sizes). Does not need to be exactly on breakpoints.
 
-* (1/2) Have at least two (2) forms on the site (properly validated/collected into a DB)
+* (2/2) Have at least two (2) forms on the site (properly validated/collected into a DB)
 > Piet Launcher
 > Contact Form? - May not do contact form as it needs to be searchable.
 > GPG Key Server - https://keyserver.mattrude.com/guides/building-server/

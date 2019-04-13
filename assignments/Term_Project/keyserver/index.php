@@ -16,21 +16,32 @@
   function customMetadata() {
     print("\n\t\t" . '<!--Custom Metadata-->');
     print("\n\t\t" . '<meta name="description" content="PGP Keyserver!!!">');
-    print("\n\t\t" . '<meta name="keywords" content="GPG,Keyserver">');
+    print("\n\t\t" . '<meta name="keywords" content="GPG,PGP,Keyserver">');
     //print("\n\t\t" . '<meta name="robots" content="noindex, nofollow">');
     print("\n\t\t" . '<!--End Custom Metadata-->');
   }
 
   // https://stackoverflow.com/a/2397010/6828099
   define('INCLUDED', 1);
-  //require_once 'mysql.php';
+  require_once 'mysql.php';
 
+  $sqlCommands = new sqlCommands();
   $loadPage = new loadPage();
   $mainPage = new mainPage();
 
+  $mainPage->setVars();
+  $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
+                          getenv('alex.server.phpmyadmin.username'),
+                          getenv('alex.server.phpmyadmin.password'),
+                          getenv('alex.server.phpmyadmin.database'));
+
+  $sqlCommands->testConnection();
+  $sqlCommands->connectMySQL();
+  $sqlCommands->createTable();
+
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
-  $mainPage->checkUpload("https://keyserver.senorcontento.com");
+  $mainPage->checkUpload("https://keyserver.senorcontento.com", $sqlCommands);
 
   $mainPage->printUploadForm();
   $mainPage->printSearchForm();
@@ -39,12 +50,30 @@
   $loadPage->loadFooter();
 
   class mainPage {
+    public $exec_gpg_path;
+    public $exec_head_path;
+    public $exec_tail_path;
+
+    public function setVars() {
+      if(getenv('alex.server.type') === "production") {
+        # The below variables are for the production server
+        $this->exec_gpg_path = "/usr/bin/gpg";
+        $this->exec_head_path = "/usr/bin/head";
+        $this->exec_tail_path = "/usr/bin/tail";
+      } else if(getenv('alex.server.type') === "development") {
+        # The below variables are for testing on localhost
+        $this->exec_gpg_path = "/usr/local/bin/gpg";
+        $this->exec_head_path = "/usr/bin/head";
+        $this->exec_tail_path = "/usr/bin/tail";
+      }
+    }
+
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
       //print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>'); // For Term Project
     }
 
-    public function checkUpload($keyserver) {
+    public function checkUpload($keyserver, $sqlCommands) {
       // https://stackoverflow.com/a/6609181/6828099
       if(isset($_FILES["pgp-key"])) {
         $uploaded_file_name = htmlspecialchars($_FILES["pgp-key"]["name"], ENT_QUOTES, 'UTF-8');
@@ -80,7 +109,19 @@
 
           $message = explode("<br>", $line)[1];
 
+          date_default_timezone_set("UTC"); // Set Time To UTC Format
+          $dateadded = time(); // Get Current Server Time
+          $checksum = hash_file("sha256", $uploaded_file);
+
+          $command = $this->exec_gpg_path . " --quiet \"" . $uploaded_file . "\" | " . $this->exec_head_path . " -n2 | " . $this->exec_tail_path . " -n1";
+          exec($command, $results, $returncode);
+          $fingerprint = trim($results[0]);
+          $keyid = substr($fingerprint,-16);
+
+          //print("Results: '$results'");
           print("<div class=\"success\">$message</div><br>");
+          // Hashes - https://bitbucket.org/jpclizbe/sks-keyserver/src/496fa83faa6fb4ce31b8ba08baaca58e33c559fd/dbserver.ml?fileviewer=file-view-default
+          $sqlCommands->insertData($keyid, $fingerprint, "Hash Not Supported Yet!!!", $_SERVER["REMOTE_ADDR"], $checksum, $dateadded);
         } else {
           print("<div class=\"error\">Error Uploading Key (Incorrect Format?)!!!</div><br>");
         }
