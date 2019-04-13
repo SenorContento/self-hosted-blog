@@ -36,6 +36,10 @@ legend::after {
 /* Fix Table For Small Screens - https://codepen.io/AllThingsSmitty/pen/MyqmdM */
 
 @media screen and (max-width: 600px) {
+  .table-div {
+    margin-top: 16px !important;
+  }
+
   table {
     border: 0;
     margin-left: 8px !important;
@@ -246,7 +250,7 @@ p.mysql-success {
     max-width: 100%;
     margin-left: 8px !important;
     margin-right: 8px !important;
-    margin-top: 8px !important;
+    margin-top: 16px !important;
   }
 
   table {
