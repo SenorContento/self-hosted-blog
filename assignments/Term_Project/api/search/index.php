@@ -9,27 +9,38 @@
 
   // https://stackoverflow.com/a/2397010/6828099
   define('INCLUDED', 1);
-  //require_once 'mysql.php';
+  require_once 'mysql-pgp.php';
+  require_once 'mysql-piet.php';
 
-  $mainPage = new AntivirusCheck();
-  $sqlCommands = new sqlCommands();
+  $mainPage = new SearchEngine();
+  $sqlPGP = new sqlCommandsPGP();
+  $sqlPiet = new sqlCommandsPiet();
 
-  $sqlCommands->setLogin(getenv('alex.server.phpmyadmin.host'),
+  $sqlPGP->setLogin(getenv('alex.server.phpmyadmin.host'),
+                          getenv('alex.server.phpmyadmin.username'),
+                          getenv('alex.server.phpmyadmin.password'),
+                          getenv('alex.server.phpmyadmin.database'));
+
+  $sqlPGP->testConnection();
+  $sqlPGP->connectMySQL();
+
+  $sqlPiet->setLogin(getenv('alex.server.phpmyadmin.host'),
                           getenv('alex.server.phpmyadmin.username'),
                           getenv('alex.server.phpmyadmin.password'),
                           getenv('alex.server.piet.database'));
 
-  $sqlCommands->testConnection();
-  $sqlCommands->connectMySQL();
-  //$sqlCommands->createTable();
+  $sqlPiet->testConnection();
+  $sqlPiet->connectMySQL();
+
 
   $mainPage->printAPI();
 
-  class AntivirusCheck {
+  class SearchEngine {
     public function printAPI() {
       try {
         if(!empty($_REQUEST)) {
           $programid = isset($_REQUEST["programid"]) ? $_REQUEST["programid"] : NULL;
+          $keyid = isset($_REQUEST["keyid"]) ? $_REQUEST["keyid"] : NULL;
 
           if(isset($programid)) {
             header("Content-Type: application/json");
@@ -37,14 +48,34 @@
             //$generator = isset($_REQUEST["generator"]) ? $_REQUEST["generator"] : "pseudo";
             //print($manager->formatForSQL($this->grabData($bytes, $generator))); // To specify a custom generator
 
-            global $sqlCommands;
-            $antivirus_response = $sqlCommands->readData($programid);
+            global $sqlPiet;
+            $piet_response = $sqlPiet->readData($programid);
             // htmlspecialchars($results['failed'], ENT_QUOTES, 'UTF-8')
 
-            if($antivirus_response['programid'] == NULL) {
-              $jsonArray = ["error" => "Program Doesn't Exist!!! Try Again In A Minute!!!"];
+            if(sizeof($piet_response) === 0) {
+              $jsonArray = ["error" => "Program Doesn't Exist!!!"];
             } else {
-              $jsonArray = $antivirus_response;
+              $jsonArray = $piet_response;
+            }
+
+            $json = json_encode($jsonArray);
+            print($json);
+
+            die();
+          } else if(isset($keyid)) {
+            header("Content-Type: application/json");
+
+            //$generator = isset($_REQUEST["generator"]) ? $_REQUEST["generator"] : "pseudo";
+            //print($manager->formatForSQL($this->grabData($bytes, $generator))); // To specify a custom generator
+
+            global $sqlPGP;
+            $key_response = $sqlPGP->readData($keyid);
+            // htmlspecialchars($results['failed'], ENT_QUOTES, 'UTF-8')
+
+            if(sizeof($key_response) === 0) {
+              $jsonArray = ["error" => "PGP Key Doesn't Exist!!!"];
+            } else {
+              $jsonArray = $key_response;
             }
 
             $json = json_encode($jsonArray);
