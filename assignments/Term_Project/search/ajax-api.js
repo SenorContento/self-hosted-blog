@@ -55,10 +55,19 @@ function processData(data, index) {
 
     $('#search-results').append(results);
   } else {
+    if(data["allowed"] !== "1") {
+      // Filters Out Banned Programs
+      // May add Filter To Show Banned Programs in Search
+      // TODO: I should move filter to server side...
+      return -2;
+    }
+
     //https://term.senorcontento.com/piet/launcher/?piet-url=5c92c662a53ef
     websocket = "/piet/launcher/?piet-url="
     results = '<div class="search-center">';
     results += '<div class="search-item">';
+
+    //results += '<span class="search-row"><label>Allowed: </label><span>' + data["allowed"] + '</span></span><br>';
 
     results += '<span class="search-row"><label>Row ID: </label><span>' + data["id"] + '</span></span><br>';
     results += '<span class="search-key"><label>Program ID: </label><a href="' + websocket + data["programid"]  + '"><span>' + data["programid"] + '</span></a></span><br>';

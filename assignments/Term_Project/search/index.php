@@ -46,9 +46,9 @@
 
             <div id="search-parameters" class="search-parameters">
               <div class="radio">
-                <span class="radio-option"><label for="radio-key-id">GPG Key ID </label><input id="radio-key-id" class="radio-search" name="parameter" value="keyid" type="radio" checked="checked"></span>
+                <span class="radio-option"><input id="radio-key-id" class="radio-search" name="parameter" value="keyid" type="radio" checked="checked"><span class="custom-radio"></span><label for="radio-key-id">GPG Key ID </label></span>
                 <!--<span id="radio-newline" class="hidden-newline-mobile"><br></span>-->
-                <span class="radio-option"><label for="radio-program-id">Piet Program ID </label><input id="radio-program-id" class="radio-search" name="parameter" value="programid" type="radio"></span>
+                <span class="radio-option"><input id="radio-program-id" class="radio-search" name="parameter" value="programid" type="radio"><span class="custom-radio"></span><label for="radio-program-id">Piet Program ID </label></span>
               </div>
 
               <span id="submit-newline" class="hidden-newline-mobile"><br></span>
