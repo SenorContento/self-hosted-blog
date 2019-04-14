@@ -18,7 +18,14 @@ $(document).ready(function() {
       // https://stackoverflow.com/a/1675233/6828099
       if(typeof json["error"] !== typeof undefined) {
         //alert(json["error"]);
-        $('#search-results').html("<div class='error'>" + json["error"] + "</div>");
+        //$('#search-results').html("<div class='error'>" + json["error"] + "</div>");
+
+        results = '<div class="search-center">';
+        results += '<div class="search-item">';
+        results += json["error"];
+        results += '</div></div>';
+
+        $('#search-results').html(results);
         return -1;
       }
 
@@ -35,15 +42,30 @@ function processData(data, index) {
   // Piet - id, programid, dateadded, programname, programabout, filename, checksum, allowed, banreason
 
   if(typeof data["keyid"] !== typeof undefined) {
-    $('#search-results').append('<div class="search-items">Key ID: ' + data["keyid"] + '<br>');
-    //$('#search-results').append('</div>');
+    results = '<div class="search-center">';
+    results += '<div class="search-item">';
 
-    $('#search-results').append('</div>');
+    results += '<span class="search-row"><label>Row ID: </label><span>' + data["id"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Key ID: </label><span>' + data["keyid"] + '</span></span><br>';
+    results += '<span class="search-fingerprint"><label>Key Fingerprint: </label><span>' + data["fingerprint"] + '</span></span><br>';
+    results += '<span class="search-date"><label>Date Added: </label><span>' + data["dateadded"] + '</span></span><br>';
+
+    results += '</div></div>';
+
+    $('#search-results').append(results);
   } else {
-    $('#search-results').append('<div class="search-items">Program ID: ' + data["programid"] + '<br>');
-    //$('#search-results').append('</div>');
+    results = '<div class="search-center">';
+    results += '<div class="search-item">';
 
-    $('#search-results').append('</div>');
+    results += '<span class="search-row"><label>Row ID: </label><span>' + data["id"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Program ID: </label><span>' + data["programid"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Program Name: </label><span>' + data["programname"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Program About: </label><span>' + data["programabout"] + '</span></span><br>';
+    results += '<span class="search-date"><label>Date Added: </label><span>' + data["dateadded"] + '</span></span><br>';
+
+    results += '</div></div>';
+
+    $('#search-results').append(results);
   }
 }
 

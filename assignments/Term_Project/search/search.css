@@ -1,11 +1,51 @@
 @charset "UTF-8";
 
+/* Search Form */
+
+#search-results:empty {
+  display: none;
+}
+
+#search-results {
+  /*background-color: #ccc;*/
+  border: 1px solid blue;
+  border-radius: 4px;
+
+  margin: 8px;
+  padding: 8px;
+}
+
+.search-center {
+  display: block;
+  text-align: center;
+
+  background-color: rgba(5, 5, 5, 0.5);
+  border: 1px solid green;
+
+  margin: 8px;
+
+  border-radius: 4px;
+}
+
+.search-item {
+  /*color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+  margin: 8px;
+
+  display: inline-block;
+  text-align: left;
+}
+
+/* End Search Form */
+
 fieldset {
   margin-left: 8px;
   margin-right: 8px;
 
   margin-top: 8px;
   margin-bottom: 8px;
+
+  border: 1px solid blue;
+  border-radius: 4px;
 }
 
 legend {
