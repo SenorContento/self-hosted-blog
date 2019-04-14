@@ -48,7 +48,7 @@ Checklist:
 > Contact Form? - May not do contact form as it needs to be searchable.
 > GPG Key Server - https://keyserver.mattrude.com/guides/building-server/
 
-* (0/1) Have a page to search for results from the form entries that uses AJAX to either auto-complete search text fields or query the data for display
+* (1/1) Have a page to search for results from the form entries that uses AJAX to either auto-complete search text fields or query the data for display
 > Still need to build a basic search engine.
 
 * (Done) Implement two (2) different API implementations included in your site
