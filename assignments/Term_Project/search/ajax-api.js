@@ -42,11 +42,12 @@ function processData(data, index) {
   // Piet - id, programid, dateadded, programname, programabout, filename, checksum, allowed, banreason
 
   if(typeof data["keyid"] !== typeof undefined) {
+    keyurl = "https://keyserver.senorcontento.com/pks/lookup?op=get&options=mr&search=0x";
     results = '<div class="search-center">';
     results += '<div class="search-item">';
 
     results += '<span class="search-row"><label>Row ID: </label><span>' + data["id"] + '</span></span><br>';
-    results += '<span class="search-key"><label>Key ID: </label><span>' + data["keyid"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Key ID: </label><a href="' + keyurl + data["keyid"]  + '"><span>' + data["keyid"] + '</span></a></span><br>';
     results += '<span class="search-fingerprint"><label>Key Fingerprint: </label><span>' + data["fingerprint"] + '</span></span><br>';
     results += '<span class="search-date"><label>Date Added: </label><span>' + data["dateadded"] + '</span></span><br>';
 
@@ -54,11 +55,13 @@ function processData(data, index) {
 
     $('#search-results').append(results);
   } else {
+    //https://term.senorcontento.com/piet/launcher/?piet-url=5c92c662a53ef
+    websocket = "/piet/launcher/?piet-url="
     results = '<div class="search-center">';
     results += '<div class="search-item">';
 
     results += '<span class="search-row"><label>Row ID: </label><span>' + data["id"] + '</span></span><br>';
-    results += '<span class="search-key"><label>Program ID: </label><span>' + data["programid"] + '</span></span><br>';
+    results += '<span class="search-key"><label>Program ID: </label><a href="' + websocket + data["programid"]  + '"><span>' + data["programid"] + '</span></a></span><br>';
     results += '<span class="search-key"><label>Program Name: </label><span>' + data["programname"] + '</span></span><br>';
     results += '<span class="search-key"><label>Program About: </label><span>' + data["programabout"] + '</span></span><br>';
     results += '<span class="search-date"><label>Date Added: </label><span>' + data["dateadded"] + '</span></span><br>';
