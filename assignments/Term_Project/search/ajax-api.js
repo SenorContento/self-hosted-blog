@@ -2,381 +2,66 @@
 
 $(document).ready(function() {
   //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-  $("select").css("max-width", $("#highlight").width() + "px");
+  //$("select").css("max-width", $("#highlight").width() + "px");
+  resizeCommand();
 });
-
-// https://stackoverflow.com/a/15009561
-// https://stackoverflow.com/a/10198447
-$(document).ready(function() {
-  $('#build-api-request').click(function(e) {
-    //var json = $("#option-request-type").serializeArray();
-    //alert("JSON: " + JSON.stringify(json));
-    //delete(json);
-    var json = {};
-
-    if(!$('#bytes').is('[disabled]')) {
-      json["bytes"] = parseInt($('#bytes').val()); // int
-      //alert(json["bytes"]);
-    }
-
-    if(!$('#rowID').is('[disabled]')) {
-      json["id"] = parseInt($('#rowID').val()); // int
-      //alert(json["id"]);
-    }
-
-    $("#option-request-type option").each(function() {
-      if(!$(this).is('[disabled]') && $(this).val() !== "bytes") {
-        //alert($(this).val());
-        json[$(this).val()] = true; // bool
-        //alert(json[$(this).val()]);
-      }
-    });
-
-    $("#option-generator-type option").each(function() {
-      if(!$(this).is('[disabled]') && !$("#option-generator-type").is('[disabled]') && $(this).is(':selected')) {
-        //alert($(this).val());
-        json["generator"] = $(this).val(); // string
-        //alert(json[$(this).val()]);
-      }
-    });
-
-    $("#option-format-type option").each(function() {
-      if(!$(this).is('[disabled]') && !$("#option-format-type").is('[disabled]') && $(this).is(':selected')) {
-        //alert($(this).val());
-        json["format"] = $(this).val(); // string
-        //alert(json[$(this).val()]);
-      }
-    });
-
-    // {"id":"1","retrieve":true,"generator":"pseudorandom","format":"csv","download":"base64"}
-    $("#option-download-type option").each(function() {
-      if(!$(this).is('[disabled]') && !$("#option-download-type").is('[disabled]') && $(this).is(':selected')) {
-        //alert($(this).val());
-        json["download"] = $(this).val(); // string
-        //alert(json[$(this).val()]);
-      }
-    });
-
-    $("#option-count option").each(function() {
-      if(!$(this).is('[disabled]') && !$("#option-count").is('[disabled]') && $(this).is(':selected')) {
-        //alert($(this).val());
-        json["count"] = ($(this).val() === 'true'); // string
-        //alert(json[$(this).val()]);
-      }
-    });
-
-    //alert("JSON: " + JSON.stringify(json));
-    $("#data").val(JSON.stringify(json));
-    json = {};
-  });
-});
-
-function populateForm(option) {
-  var hotbits_url = "/api/hotbits"; // $("#url").val(hotbits_url);
-  var cryptography_url = "/api/cryptography"; // $("#url").val(cryptography_url);
-  // This is to read the user controls and populate the form based on the controls
-
-  /* API Methods (POST) - Hotbits and Cryptography
-   *
-   * 1 - bytes(int) and generator(string)
-   * 2 - retrieve(bool) and id(int) and [Cryptography Only] download(string)
-   * 3 - analyze(bool) and id(int) and [Hotbits Only] format(csv)
-   * 4 - analyze(bool) and id(int) and count(bool) and [Hotbits Only] format(csv)
-   */
-
-   /* Responses - Hotbits
-    *
-    * 1 - (JSON) New Data Straight from Hotbits (Do Both Random and Pseudorandom)
-    * 2 - (JSON) Old Data Already In MySQL Database (Do Both Random and Pseudorandom)
-    * 3 - (JSON) Analyze Data From MySQL Database - format (CSV)
-    * 4 - (JSON) Analyze Data From MySQL Database (and Provide Byte Counts) - format (CSV or JSON)
-    */
-
-    /* Responses - Cryptography
-     *
-     * 1 - (JSON) New Data - Encrypt and Decrypt Test File
-     * 2 - (JSON) Old Data - Encrypt and Decrypt Test File - download (base64 and zip)
-     * 3 - (HTML) Analyze Data From MySQL Database
-     * 4 - (HTML) Analyze Data From MySQL Database (and Provide Byte Counts)
-     */
-
-  //option-user-controls, url, and data
-
-  /* user-controls - option-user-controls
-  <option value="grab-new-data">(JSON) Retrieve New Data (Bytes and Generator)</option>
-  <option value="retrieve-existing-data">(JSON) Retrieve Existing Data (ID)</option>
-  <option value="analyze-count-html">(HTML) Analyze Existing Data With Byte Count (ID)</option>
-  <option value="encryption-new-data">(ZIP Archive) New Encrypt/Decrypt Test File (Bytes and Generator)</option>
-  <option value="encryption-existing-data">(ZIP Archive) Existing Encrypt/Decrypt Test File (ID)</option>
-  <option value="free-form">Free Form (Anything Goes)</option>
-  */
-
-  // grab-new-data, retrieve-existing-data, analyze-count-html, encryption-new-data, encryption-existing-data
-  //alert("Option: " + option);
-
-  //IDEA: It's not necessary to do these if statements
-  if(option !== "free-form") {
-    $("#option-download-type option[value='zip']").prop('disabled', 'disabled');
-    $("#option-download-type option[value='base64']").prop('selected', 'true');
-  }
-
-  if(option !== "analyze-count-html" && option !== "free-form") {
-    $("#option-format-type").prop('disabled', 'disabled');
-    $("#option-count").prop('disabled', 'disabled');
-  }
-
-  if(option !== "encryption-new-data" && option !== "encryption-existing-data" && option !== "free-form") {
-    $("#option-download-type").prop('disabled', 'disabled');
-  }
-
-  if(option === "grab-new-data") {
-    $("#url").val(hotbits_url);
-    //alert("1");
-    // https://stackoverflow.com/a/1888946 - Use Prop on New JQuery
-    $("#option-request-type option").each(function() {
-      if($(this).text() === "Bytes") {
-        //this.removeAttribute("disabled");
-        $(this).removeAttr("disabled");
-        $(this).prop('selected', 'selected');
-      }
-      if($(this).text() === "Retrieve" || $(this).text() === "Analyze") {
-        $(this).prop('disabled', 'disabled'); //disabled="true"
-      }
-    });
-
-    $("#bytes").removeAttr("disabled");
-    $("#rowID").prop('disabled', 'disabled');
-    $("#option-generator-type").removeAttr("disabled");
-  } else if(option === "retrieve-existing-data") {
-    $("#url").val(hotbits_url);
-    //alert("2");
-    $("#option-request-type option").each(function() {
-      if($(this).text() === "Retrieve") {
-        $(this).removeAttr("disabled");
-        $(this).prop('selected', 'selected');
-      }
-      if($(this).text() === "Bytes" || $(this).text() === "Analyze") {
-        $(this).prop('disabled', 'disabled'); //disabled="true"
-      }
-    });
-
-    $("#rowID").removeAttr("disabled");
-    $("#bytes").prop('disabled', 'disabled');
-    $("#option-generator-type").prop('disabled', 'disabled');
-  } else if(option === "analyze-count-html") {
-    $("#url").val(hotbits_url);
-    //alert("3");
-    $("#option-format-type").removeAttr("disabled");
-    $("#option-count").removeAttr("disabled");
-
-    $("#option-format-type option").each(function() {
-      if($(this).text() === "HTML") {
-        $(this).prop('selected', 'selected');
-      }
-    });
-
-    $("#option-count option").each(function() {
-      if($(this).val() === "true") {
-        $(this).prop('selected', 'selected');
-      }
-    });
-
-    $("#option-request-type option").each(function() {
-      if($(this).text() === "Analyze") {
-        $(this).removeAttr("disabled");
-        $(this).prop('selected', 'selected');
-      }
-      if($(this).text() === "Bytes" || $(this).text() === "Retrieve") {
-        $(this).prop('disabled', 'disabled'); //disabled="true"
-      }
-    });
-
-    $("#rowID").removeAttr("disabled");
-    $("#bytes").prop('disabled', 'disabled');
-    $("#option-generator-type").prop('disabled', 'disabled');
-  } else if(option === "encryption-new-data") {
-    $("#url").val(cryptography_url);
-    //alert("4");
-    $("#option-download-type").removeAttr("disabled");
-
-    $("#option-request-type option").each(function() {
-      if($(this).text() === "Bytes") {
-        //this.removeAttribute("disabled");
-        $(this).removeAttr("disabled");
-        $(this).prop('selected', 'selected');
-      }
-      if($(this).text() === "Retrieve" || $(this).text() === "Analyze") {
-        $(this).prop('disabled', 'disabled'); //disabled="true"
-      }
-    });
-
-    $("#bytes").removeAttr("disabled");
-    $("#rowID").prop('disabled', 'disabled');
-    $("#option-generator-type").removeAttr("disabled");
-  } else if(option === "encryption-existing-data") {
-    $("#url").val(cryptography_url);
-    //alert("5");
-    $("#option-download-type").removeAttr("disabled");
-
-    $("#option-request-type option").each(function() {
-      if($(this).text() === "Retrieve") {
-        $(this).removeAttr("disabled");
-        $(this).prop('selected', 'selected');
-      }
-      if($(this).text() === "Bytes" || $(this).text() === "Analyze") {
-        $(this).prop('disabled', 'disabled'); //disabled="true"
-      }
-    });
-
-    $("#rowID").removeAttr("disabled");
-    $("#bytes").prop('disabled', 'disabled');
-    $("#option-generator-type").prop('disabled', 'disabled');
-  } else if(option === "free-form") {
-    //alert("6");
-    //$("#option-download-type option[value='zip']").prop('disabled', 'disabled');
-    $("#option-request-type option").each(function() {
-        $(this).removeAttr("disabled");
-    });
-    $("#rowID").removeAttr("disabled");
-    $("#bytes").removeAttr("disabled");
-    $("#option-count").removeAttr("disabled");
-    $("#option-format-type").removeAttr("disabled");
-    $("#option-download-type").removeAttr("disabled");
-    $("#option-download-type option[value='zip']").removeAttr("disabled");
-    $("#option-generator-type").removeAttr("disabled");
-  }
-}
-
-/*
-<label for="option-request-type">Request Type: </label>
-<select id="option-request-type" name="request-type">
-  <option value="bytes">Bytes</option>
-  <option value="retrieve">Retrieve</option>
-  <option value="analyze">Analyze</option>
-</select>
-
-<br>
-
-<label for="option-generator-type">Generator: </label>
-<select id="option-generator-type" name="request-type">
-  <option value="random">Random</option>
-  <option value="pseudorandom">Pseudorandom</option>
-</select>
-
-<label for="bytes">Bytes (2048 Max): </label><input type="text" id="bytes" value="2048">
-<label for="rowID">Row ID: </label><input type="text" id="rowID" value="1">
-
-<br>
-
-<label for="option-format-type">Format (Hotbits Only): </label>
-<select id="option-format-type" name="request-type">
-  <option value="random">Random</option>
-  <option value="pseudorandom">Pseudorandom</option>
-</select>
-
-<label for="option-download-type">Download (Cryptography Only): </label>
-<select id="option-download-type" name="request-type">
-  <option value="base64">Base64</option>
-  <option value="zip">Zip (Choose Base64) - I Only Work With Direct Download</option>
-</select>
-*/
-
-$(document).ready(function() {
-  $("#option-user-controls").change(function() {
-    populateForm($(this).val());
-    // grab-new-data, retrieve-existing-data, analyze-count-html, encryption-new-data, encryption-existing-data
-  });
-});
-
-function table(json) {
-  $(document).ready(function() {
-    //$('.index-table').remove();
-    //$('.item-table').remove();
-    $('.ajax-table-tr').remove();
-    jQuery.each(json, function(index, item) {
-        if(item instanceof Object) {
-          recurseTable(index, item);
-        } else {
-          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + index + "</td>" +
-          "<td class=\"item-table\" style=\"text-align: left\">" + item + "</td></tr>");
-        }
-    });
-  });
-}
 
 $(document).ready(function() {
   $('#submit').click(function(e) {
-    // https://stackoverflow.com/a/17387382/6828099
-    window.URL.revokeObjectURL(this.href); // This removes the blob from memory
-    this.removeAttribute("href"); // this.href sets link to have href attribute. This resets it.
-
     var rawData = lookup();
     if(rawData[1] === "json") {
-      $("#response-table").show();
-      raw(syntaxHighlight(prettyPrintArray(rawData[0])));
-      table($.parseJSON(rawData[0]));
+      $('#search-results').empty();
+      //alert(rawData[0]);
+      //$('#search-results').html("<div class='warning'>" + rawData[0] + "</div>");
+      json = JSON.parse(rawData[0]);
 
-      /*var blob = new Blob([rawData[0]], {type: 'application/json'});
-      var url = window.URL.createObjectURL(blob);
-
-      this.href = url;
-      this.target = '_blank';
-      this.download = 'response.json';*/
-    } else if(rawData[1] === "html") {
-      $("#response-table").hide();
-      raw(rawData[0]);
-
-      /*var blob = new Blob([rawData[0]], {type: 'text/html'});
-      var url = window.URL.createObjectURL(blob);
-
-      this.href = url;
-      this.target = '_blank';
-      this.download = 'manpage.html';*/
-    } else if(rawData[1] === "csv") {
-      $("#response-table").hide();
-      raw(rawData[0]);
-
-      /*var blob = new Blob([rawData[0]], {type: 'text/csv'});
-      var url = window.URL.createObjectURL(blob);
-
-      this.href = url;
-      this.target = '_blank';
-      this.download = 'analyze.csv';*/
-    } else if(rawData[1] === "zip") {
-      //raw(rawData[0]);
-
-      //alert("Bytes: " + rawData[0].length);
-      //alert(typeof(rawData[0])); // object
-
-      // AJAX cannot download binary data (without corrupting it), so I have to encode it to base64 on the server first
-      var decoded = atob(rawData[0]); // https://stackoverflow.com/a/2820329/6828099
-
-      array = new Uint8Array(decoded.length);
-      for (var i = 0; i < decoded.length; i++){
-        array[i] = decoded.charCodeAt(i);
+      // https://stackoverflow.com/a/1675233/6828099
+      if(typeof json["error"] !== typeof undefined) {
+        //alert(json["error"]);
+        $('#search-results').html("<div class='error'>" + json["error"] + "</div>");
+        return -1;
       }
 
-      var blob = new Blob([array], {type: 'application/zip'});
-      var url = window.URL.createObjectURL(blob);
-
-      //alert("AJAX URL: " + url);
-
-      // HREF:  TARGET:  DOWNLOAD:
-      //alert("HREF: " + this.href + " TARGET: " + this.target + " DOWNLOAD: " + this.download);
-
-      this.href = url;
-      this.target = '_blank';
-      this.download = 'cryptography.zip';
-      //window.URL.revokeObjectURL(url);
+      json.forEach(processData);
     } else {
-      $("#response-table").hide();
-      raw(rawData[0]);
+      alert("Unknown Format: \n" + rawData[0]);
     }
-
-    rawData = undefined;
-    delete(rawData);
   });
 });
+
+// https://www.w3schools.com/jsref/jsref_foreach.asp
+function processData(data, index) {
+  // PGP - id, keyid, dateadded, fingerprint
+  // Piet - id, programid, dateadded, programname, programabout, filename, checksum, allowed, banreason
+
+  if(typeof data["keyid"] !== typeof undefined) {
+    $('#search-results').append('<div class="search-items">Key ID: ' + data["keyid"] + '<br>');
+    //$('#search-results').append('</div>');
+
+    $('#search-results').append('</div>');
+  } else {
+    $('#search-results').append('<div class="search-items">Program ID: ' + data["programid"] + '<br>');
+    //$('#search-results').append('</div>');
+
+    $('#search-results').append('</div>');
+  }
+}
+
+function resizeCommand() {
+  //document.getElementById("command").style.width = "816" + "px";
+  //alert("Received Width: " + document.getElementById("received").offsetWidth);
+  //document.getElementById("command").style.width = (document.getElementById("received").offsetWidth-7) + "px";
+
+  var arrayLength = document.querySelectorAll('[type="text"]').length;
+  for (var i = 0; i < arrayLength; i++) {
+    //document.getElementsByTagName("input")[i].style.width = (document.getElementById("received").offsetWidth-7) + "px";
+    document.querySelectorAll('[type="text"]')[i].style.width = (document.getElementById("sizing-tag").offsetWidth-50) + "px";
+    //alert((document.getElementById("search-parameters").offsetWidth-7) + "px");
+  }
+
+  //alert(document.getElementById("sizing-tag-search").offsetWidth);
+  document.getElementById("search-parameters").style.width = (document.getElementById("sizing-tag-search").offsetWidth-20) + "px";
+}
 
 // https://stackoverflow.com/a/641874/6828099
 window.onresize = function(event) {
@@ -384,59 +69,25 @@ window.onresize = function(event) {
     //$("#ajax-output-debug").css("max-width",(window.innerWidth - 70) + "px");
     // The width detection code doesn't always correctly detect the window size,
     // but a table with width: 100% that always works can be used as a replacement.
-    $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-    $("select").css("max-width", $("#highlight").width() + "px");
+    //$("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
+    //$("select").css("max-width", $("#highlight").width() + "px");
+    //alert("Resize!!!");
+    resizeCommand();
   });
 };
 
-function raw(string) {
-  $(document).ready(function() {
-    $("#ajax-output-debug").css("max-width", ($("#ajax-table").width() - 20) + "px");
-    $("#ajax-output-debug").html(string); //.text(json);
-    //$("#ajax-output-debug").css("max-width",(window - 70) + "px");
-  });
-}
-
-// https://stackoverflow.com/a/18452766/6828099
-// https://stackoverflow.com/a/42381024/6828099
-// https://stackoverflow.com/a/54931396/6828099 - My Own Answer
-function prettyPrintArray(json) {
-  if (typeof json === 'string') {
-    json = JSON.parse(json);
-  }
-  output = JSON.stringify(json, function(k,v) {
-    if(v instanceof Array)
-      return JSON.stringify(v);
-    return v;
-  }, 2).replace(/\"\[/g, '[')//.replace(/\\/g, '') // I intentionally removed this so the JSON is still valid in the debugger.
-        .replace(/\]\"/g,']')
-        .replace(/\"\{/g, '{')
-        .replace(/\}\"/g,'}');
-
-  return output;
-}
-
-function recurseTable(key, value) {
-  $(document).ready(function() {
-    if(value instanceof Object) {
-      $.each(value, function(k, v) {
-        if(v instanceof Object) {
-          recurseTable(k, v);
-        } else {
-          $('#ajax-table-body').append("<tr class=\"ajax-table-tr\"><td class=\"index-table\" style=\"text-align: left\">" + key + " <span class=\"arrow\">--></span> " + k + "</td>" +
-          "<td class=\"item-table\" style=\"text-align: left\">" + v + "</td></tr>");
-        }
-      });
-    }
-  });
-}
-
 function lookup() {
-  var url = $("#url").val(); // https://localhost/assignments/AJAX/hotbits.php
-  var json = JSON.parse($("#data").val());
+  var url = "/api/search";
 
-  //var url = "/api/cryptography";
-  //var json = {"download": "base64", "retrieve": true, "id": 99};
+  // https://www.w3schools.com/jsref/prop_radio_checked.asp
+  //document.getElementById("red").checked = true;
+  if(document.getElementById("radio-key-id").checked) {
+    var json = {"keyid": $("#data").val()};//JSON.parse($("#data").val());
+    //var json = {"download": "base64", "retrieve": true, "id": 99};
+  } else {
+    var json = {"programid": $("#data").val()};//JSON.parse($("#data").val());
+    //var json = {"download": "base64", "retrieve": true, "id": 99};
+  }
 
   var method = "POST";
 
@@ -492,27 +143,4 @@ function lookup() {
     }
   });
   return returnvalue;
-}
-
-// https://stackoverflow.com/a/7220510/6828099
-function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-         json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
 }

@@ -1,0 +1,253 @@
+@charset "UTF-8";
+
+fieldset {
+  margin-left: 8px;
+  margin-right: 8px;
+
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+legend {
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+  text-align: left;
+}
+
+/* Form CSS */
+
+#sizing-tag-search {
+  margin: 0;
+  /*background-color: red;*/
+
+  display: inline-block;
+  height: 50px;
+  text-align: center;
+}
+
+.search-parameters {
+  margin: 0;
+  /*background-color: #ccc;*/
+
+  display: inline-block;
+  height: 50px;
+  text-align: center;
+}
+
+.radio {
+  text-align: center;
+  float: left;
+}
+
+.radio-option {
+  word-break: keep-all;
+  display: inline-block;
+}
+
+.search-button {
+  float: right;
+}
+
+/* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
+input[type="radio"] {
+  background: black;
+}
+
+form * {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(0, 255, 0, 0.75);
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset;
+}
+
+/* TODO: There Are Some Bugs With Positioning Labels And Limiting Textbox Widths */
+
+label {
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+}
+
+.form-div {
+  text-align: center;
+}
+
+.form-div form {
+  text-align: left;
+  display: inline-block;
+  margin: 8px;
+}
+
+.search-input {
+  font-family: 'FiraCode';
+  font-size: 14px;
+
+  max-width: 935px;
+
+  background-color: #000000;
+  color: rgba(0, 255, 0, 0.75); /* #b5e853; */
+
+  border: 1px solid blue;
+  margin: 8px;
+  border-radius: 4px;
+
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.search-input:focus {
+  outline: none !important;
+  border:1px solid cyan;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.div-search-input {
+  display: inline-block;
+}
+
+@media only screen and (max-width: 1028px) {
+  .div-search-input .name {
+    float: left;
+    padding-left: 8px;
+  }
+
+  /* Helps Align Labels Above Input */
+  .div-search-input * {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hidden-newline-mobile {
+    display: inline-block;
+  }
+
+  .radio-option {
+    margin: 0;
+    /*text-align: left;*/
+
+    /*display: block;*/
+  }
+
+  .search-button {
+    clear: both;
+    float: none;
+  }
+
+  .upload-break {
+    display: block;
+  }
+
+  .success, .warning, .error {
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .success, .warning, .error {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .hidden-newline-mobile {
+    display: none;
+  }
+}
+
+pre {
+  margin: 8px;
+  /*border: 1px solid #b5e853;*/
+}
+
+.sizing-tag-hidden {
+  height: 0px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  font-size: 0px;
+}
+
+.minified {
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* End Form CSS */
+
+/* Submit Button Input */
+
+.submit-button {
+  border: 1px solid green;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  border-radius: 4px;
+
+  color: black;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  word-break: normal;
+  display: inline-block;
+}
+
+/* End Submit Button Input */
+
+/* MySQL Messages */
+/* Not Relevant Because Message Is Turned Off */
+
+p.mysql-success {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
+/* End MySQL Messages */
+
+/* Custom Message Links */
+
+.success-link {
+  color: black;
+}
+
+.warning-link {
+  color: black;
+}
+
+.error-link {
+  color: black;
+}
+
+/* End Custom Message Links */
