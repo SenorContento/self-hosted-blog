@@ -50,6 +50,7 @@
       $svg = isset($_REQUEST["svg"]) ? $_REQUEST["svg"] : NULL;
 
       if(isset($svg)) {
+        header('X-Robots-Tag: none');
         header('Content-Type: image/svg+xml');
         header('Content-Encoding: gzip');
 
