@@ -7,8 +7,10 @@
   //$mainPage->printSourceCodeLink();
   //$mainPage->printArchiveLink();
   //$mainPage->redirectMe();
-  $mainPage->printWarning();
-  $mainPage->printSourceCodeLink();
+  //$mainPage->printWarning();
+  //$mainPage->printSourceCodeLink();
+
+  $mainPage->printIndex();
   //$mainPage->printDomainURL();
 
   //$mainPage->printTable();
@@ -24,6 +26,22 @@
         header("Location: https://" . $host . "/");
         exit();
       }
+    }
+
+    public function printIndex() {
+      print('<a href="/contact/" class="button">Contact Me</a>');
+      print('<a href="/search/" class="button">Search Engine (MySQL)</a>');
+
+      print("<br>");
+
+      print('<a href="/weather/" class="button">Weather (JS API (Polymaps) and WeatherStem API)</a>');
+      print('<a href="/keyserver/" class="button">Keyserver Upload (MySQL)</a>');
+
+      print("<br>");
+
+      print('<a href="/piet/" class="button">Piet Upload (MySQL)</a>');
+      print('<a href="/piet/launcher/" class="button">Piet Launcher</a>');
+      //print('<br>');
     }
 
     public function printArchiveLink() {

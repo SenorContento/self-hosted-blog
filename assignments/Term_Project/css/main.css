@@ -32,6 +32,30 @@ body {
   /*z-index: -9998;*/
 }
 
+/* Button Input */
+
+.button {
+  border: 1px solid green;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+  color: black !important;
+  font-family: "PT-Serif";
+  font-weight: normal;
+  font-size: 14px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+/* End Button Input */
+
 /* For Error Pages */
 h1 {
   color: rgba(0, 255, 0, 0.75); /* #b5e853; */
