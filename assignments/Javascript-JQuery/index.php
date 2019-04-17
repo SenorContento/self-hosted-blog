@@ -213,6 +213,8 @@
               '<p>' . $title . '</p>' .
               '</div>');
       }
+      // TODO: Play Around With Blur to Crisp Image Loading
+      // https://css-tricks.com/the-blur-up-technique-for-loading-background-images/
 
       /*foreach($slides as $element) {
         print('<img class="mySlides" src="' . $element . '"></img>');
