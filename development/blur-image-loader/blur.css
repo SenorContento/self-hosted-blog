@@ -1,0 +1,19 @@
+.backdrop {
+  background: rgba(0,0,0,.6);
+  backdrop-filter: grayscale(1) contrast(3) blur(1px);
+}
+
+.blur {
+  filter: blur(10px);
+}
+
+.image {
+  max-width: 500px;
+  display: inline-block;
+  margin: none;
+}
+
+.redtree {
+  /* Max: 2448 px x 3264px */
+  width: 100%;
+}
