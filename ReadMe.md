@@ -1,5 +1,3 @@
-Testing Moving Server
-
 [pwa]: https://developers.google.com/web/progressive-web-apps/
 [service-worker]: service-worker.js
 [atom-editor]: https://atom.io/
