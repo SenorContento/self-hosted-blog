@@ -51,14 +51,21 @@
     public function printGreeting() {
       // https://stackoverflow.com/a/1352139/6828099
       // https://stackoverflow.com/a/8552941/6828099
-      $language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+      $language = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : NULL;
 
+      if($language !== Null) {
       //en-US,en;q=0.9,es;q=0.8
-      $preferred = $this->parsePreferredLanguages($language);
-      $first = array_key_first($preferred);
+        $preferred = $this->parsePreferredLanguages($language);
+        $first = array_key_first($preferred);
 
-      print("<p>Language Header \"$language\"</p>");
-      print("<p>Preferred Language \"$first\"</p>");
+        print("<p>Language Header \"$language\"</p>");
+        print("<p>Preferred Language \"$first\"</p>");
+      } else {
+        $first = Null;
+
+        print("<p>No Language Header!!!</p>");
+        print("<p>No Preferred Language!!!</p>");
+      }
 
       if($first === "en-US" || $first === "en") {
         // English
