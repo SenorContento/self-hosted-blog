@@ -30,6 +30,9 @@ html, body {
   /*padding-left: 0;
   padding-right: 0;
   padding-top: 0;*/
+
+  /* This Helps Me Easily Set Text Not Styled Correctly Inside Body Tag */
+  color: red;
 }
 
 header {
