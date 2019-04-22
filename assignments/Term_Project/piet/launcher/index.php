@@ -41,7 +41,7 @@
       if(isset($websocketurl) && trim($websocketurl) !== '') {
         print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="' . $websocketurl . '" autocomplete="off">');
       } else {
-        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="5c92cd6054ce1" autocomplete="off">');
+        print('<input id="piet_url" name="piet_url" type="text" placeholder="Program ID..." value="5cbe099942391" autocomplete="off">');
       }
 
       $arguments = isset($_REQUEST["piet-arguments"]) ? $_REQUEST["piet-arguments"] : "";
