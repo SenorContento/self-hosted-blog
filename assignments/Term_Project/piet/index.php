@@ -294,8 +294,8 @@
         $dateadded = time(); // Get Current Server Time
 
         // To Debug Upload Problems on New Server
-        ini_set('display_errors',1);
-        error_reporting(E_ALL);
+        //ini_set('display_errors',1);
+        //error_reporting(E_ALL);
 
         if(move_uploaded_file($uploaded_file, $target_file)) {
           $piet_url = $explodedRandomID;

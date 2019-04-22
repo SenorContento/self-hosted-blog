@@ -1,6 +1,6 @@
 <?php
-  ini_set('display_errors',1);
-  error_reporting(E_ALL);
+  //ini_set('display_errors',1);
+  //error_reporting(E_ALL);
 
   // https://stackoverflow.com/a/3406181/6828099
   // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
@@ -136,8 +136,8 @@
 
           $command = $this->exec_gpg_path . " --quiet \"" . $uploaded_file . "\" | " . $this->exec_head_path . " -n2 | " . $this->exec_tail_path . " -n1";
           exec($command, $results, $returncode);
-          print("Command: '$command' Results: ");
-          var_dump($results);
+          //print("Command: '$command' Results: ");
+          //var_dump($results);
           $fingerprint = trim($results[0]);
           $keyid = substr($fingerprint,-16);
 
