@@ -136,6 +136,7 @@
 
           $command = $this->exec_gpg_path . " --quiet \"" . $uploaded_file . "\" | " . $this->exec_head_path . " -n2 | " . $this->exec_tail_path . " -n1";
           exec($command, $results, $returncode);
+          print("Results: ''$results'!!!");
           $fingerprint = trim($results[0]);
           $keyid = substr($fingerprint,-16);
 
