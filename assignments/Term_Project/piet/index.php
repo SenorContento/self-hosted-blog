@@ -71,7 +71,7 @@
         # The below variables are for the production server
         $this->piet_upload_path = "/var/web/term-uploads/";
         #$this->exec_maldet_path = "/usr/local/sbin/maldet";
-        $this->exec_virusscan_path = "/home/alex/programs/VirusScan.sh";
+        $this->exec_virusscan_path = "/home/admin/automated/VirusScan.sh";
         $this->exec_echo_path = "/bin/echo";
         #$this->antivirus_log_path = "/var/log/web/antivirus/";
       } else if(getenv('alex.server.type') === "development") {
