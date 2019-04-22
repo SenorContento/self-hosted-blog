@@ -1,4 +1,7 @@
 <?php
+  ini_set('display_errors',1);
+  error_reporting(E_ALL);
+
   // https://stackoverflow.com/a/3406181/6828099
   // This is used to convert all warnings, errors, etc... into exceptions that I can handle.
   set_error_handler(
