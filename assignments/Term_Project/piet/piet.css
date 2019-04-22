@@ -369,15 +369,15 @@ p.mysql-success {
 /* Custom Message Links */
 
 .success-link {
-  color: black;
+  color: black !important;
 }
 
 .warning-link {
-  color: black;
+  color: black !important;
 }
 
 .error-link {
-  color: black;
+  color: black !important;
 }
 
 /* End Custom Message Links */
