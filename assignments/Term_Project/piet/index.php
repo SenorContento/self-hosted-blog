@@ -293,6 +293,10 @@
         date_default_timezone_set("UTC"); // Set Time To UTC Format
         $dateadded = time(); // Get Current Server Time
 
+        // To Debug Upload Problems on New Server
+        ini_set('display_errors',1);
+        error_reporting(E_ALL);
+
         if(move_uploaded_file($uploaded_file, $target_file)) {
           $piet_url = $explodedRandomID;
           $piet_launcher = $this->piet_launcher . "?piet-url=" . $piet_url;
