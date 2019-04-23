@@ -35,14 +35,14 @@
   class mainPage {
     function setVars() {
       //$this->torapi = "https://" . $_SERVER['SERVER_NAME'] . "/api/tor/index.php"; // This doesn't work on Tor Hidden Service because the Hidden Service is the Domain
-      $this->torapi = "https://127.0.0.1/api/tor/index.php";
-
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         //$this->exec_ent_path = "/home/web/programs/ent";
+        $this->torapi = "https://" . getenv('alex.server.host') . "/api/tor/index.php";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         //$this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
+        $this->torapi = "https://web.senorcontento.com/api/tor/index.php";
       }
     }
 
