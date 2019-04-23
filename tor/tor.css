@@ -26,3 +26,91 @@
   text-align: left;
   display: inline-block;
 }
+
+/* Tor CSS */
+/* https://stackoverflow.com/a/1777450/6828099 */
+/* https://www.w3.org/TR/selectors-3/#attribute-selectors */
+
+/* Surrounds IP Info */
+div.ip-div {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(0, 255, 0, 0.75);
+
+  border: green solid 1px;
+}
+
+/* IP Info Text */
+span.ip-span {
+  /* Intentionally Left Blank */
+}
+
+/* IP Address */
+span.ip-address {
+  /* Intentionally Left Blank */
+}
+
+/* Surrounds Node and Service Info */
+div.tor {
+  color: black;
+  font-family: "FiraCode";
+  font-weight: bold;
+
+  display: inline-block;
+  padding: 8px;
+  margin: 8px;
+
+  background-color: rgba(255, 0, 0, 0.75);
+
+  border: red solid 1px;
+
+  text-align: left;
+}
+
+div.ip-div[ipaddress="127.0.0.1"], div.ip-div[ipaddress="::1"] {
+  border: red solid 1px;
+  background-color: rgba(255, 0, 0, 0.75);
+}
+
+div.tor[node="true"] {
+  border: green solid 1px;
+  background-color: rgba(0, 255, 0, 0.75);
+}
+
+div.tor[node="false"][service="true"], div.tor[node="false"][service="secure"] {
+  border: yellow solid 1px;
+  background-color: rgba(255, 255, 0, 0.75);
+}
+
+div.tor[service="debug"] {
+  border: blue solid 1px;
+  background-color: rgba(0, 0, 255, 0.75);
+}
+
+/* Exit Node Info */
+span.tor-exit-node {
+  /* Intentionally Left Blank */
+}
+
+/* Exit Node Variable */
+span.node-span {
+  /* Intentionally Left Blank */
+}
+
+/* Hidden Service Info */
+span.hidden-service {
+  /* Intentionally Left Blank */
+}
+
+/* Hidden Service Variable */
+span.service-span {
+  /* Intentionally Left Blank */
+}
+
+/* End Tor CSS */

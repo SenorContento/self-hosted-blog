@@ -66,11 +66,11 @@
 
       $exitnode = $this->exitNode($ip);
 
-      print("<div class='ip-div'><span class='ip-span'>Your IP Address Appears To Be: <span class='ip-address'>$ip</span></span></div><br>");
+      print("<div class='ip-div' ipaddress='$ip'><span class='ip-span' ipaddress='$ip'>Your IP Address Appears To Be: <span class='ip-address' ipaddress='$ip'>$ip</span></span></div><br>");
 
-      print("<div class='tor'>");
-      print("<span class='tor-exit-node'>Coming From Tor Exit Node: $exitnode</span><br>");
-      print("<span class='hidden-service'>Accessing Via Hidden Service: $hiddenservice</span>");
+      print("<div class='tor' node='$exitnode' service='$hiddenservice'>");
+      print("<span class='tor-exit-node' node='$exitnode'>Coming From Tor Exit Node: <span class='node-span' node='$exitnode'>$exitnode</span></span><br>");
+      print("<span class='hidden-service' service='$hiddenservice'>Accessing Via Hidden Service: <span class='service-span' service='$hiddenservice'>$hiddenservice</span></span>");
       print("</div>");
     }
 
