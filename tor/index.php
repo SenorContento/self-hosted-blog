@@ -1,7 +1,8 @@
 <?php
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
+  # https://stackoverflow.com/a/21429652/6828099
+  //ini_set('display_errors', 1);
+  //ini_set('display_startup_errors', 1);
+  //error_reporting(E_ALL);
 
   function customPageHeader() {
     //print("\n\t\t" . '<link rel="stylesheet" href="template.css">');
