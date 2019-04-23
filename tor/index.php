@@ -23,7 +23,7 @@
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
   $mainPage->setVars();
-  //$mainPage->checkTor();
+  $mainPage->checkTor();
   $mainPage->printTutorial();
   $loadPage->loadFooter();
 
@@ -51,7 +51,7 @@
       $ip = $_SERVER['REMOTE_ADDR'];
       $hiddenservice = isset($_SERVER['tor']) ? $_SERVER['tor'] : 'false';
 
-      $exitnode = $this->exitNode($ip);
+      //$exitnode = $this->exitNode($ip);
 
       print("<span class='tor-exit-node'>Coming From Tor Exit Node: $exitnode</span><br>");
       print("<span class='hidden-service'>Accessing Via Hidden Service: $hiddenservice</span>");
