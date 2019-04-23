@@ -38,13 +38,13 @@
       // Custom Cert - https://tor.stackexchange.com/a/13460/14086
       print("<div class='center'><p class='left'>These are the Hidden Services that are Hosted on Tor!!!<br>In order to access the encrypted site, you will want to add my Root CA to your Tor Browser Bundle!!!</p></div>");
 
-      print("<h3>Adding Root CA's</h3>");
+      print("<h3>Adding Root CA's - Tor Browser Bundle</h3>");
       print("<ol>
             <li>Download this <a href='CubeTechLLC.pem'>certificate</a>.</li>
-            <li>In your Tor Browser, go to <a href='about:config'>about:config</a>.</li>
+            <li>In your Tor Browser, go to <a href='about:config'>about:config</a>. *</li>
             <li>Then search for security.nocertdb and double click it to turn it off.</li>
             <li>Restart Tor Browser Bundle Completely.</li>
-            <li>Then go to <a href='about:preferences'>about:preferences</a> and search for View Certificates.</li>
+            <li>Then go to <a href='about:preferences'>about:preferences</a> and search for View Certificates. *</li>
             <li>Click on the Authorities Tab.</li>
             <li>Click Import and then Click on the Downloaded Certificate.</li>
             <li>Click 'Trust this CA to identify websites.' and then Click OK.</li>
@@ -53,6 +53,23 @@
             </ol>");
 
       print("<br>");
+
+      print("<h3>Adding Root CA's - Orbot</h3>");
+      print("<ol>
+            <li>In your Tor Browser, go to <a href='about:config'>about:config</a>. *</li>
+            <li>Then search for security.nocertdb and double click it to turn it off.</li>
+            <li>Restart Orbot Completely (Force Close).</li>
+            <li>Download this <a href='CubeTechLLC.pem'>certificate</a>.</li>
+            <li>Click 'Trust this CA to identify websites.' and then Click OK.</li>
+            <li>Restart Orbot Again!!!</li>
+            <li>You are Finished!!!</li>
+            </ol>");
+
+      print("<br>");
+
+      print("<div class='center'><p class='left'>* Your browser most likely will not just let you click the link, so you will have to type it in manually in a new tab.
+             </p></div>");
+
       print("<div class='center'><p class='left'>If you are having trouble getting the certificate to work, refer to this <a href='https://tor.stackexchange.com/a/13460/14086'>StackExchange Answer</a>!!!
              <br>If you want to verify the certificate you downloaded hasn't been tampered with,<br> download the <a href='CubeTechLLC.pem.gpg'>GPG signature</a> signed with key <a href='http://pool.sks-keyservers.net/pks/lookup?search=0xC9007161B19BC1513B78F7EF4E1204E51D9AC3EB&op=vindex'>C9007161B19BC1513B78F7EF4E1204E51D9AC3EB</a>!!!
              </p></div>");
