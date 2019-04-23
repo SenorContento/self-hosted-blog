@@ -1,4 +1,8 @@
 <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+
   function customPageHeader() {
     //print("\n\t\t" . '<link rel="stylesheet" href="template.css">');
     //print("\n\t\t" . '<script src="template.js"></script>');
@@ -62,12 +66,12 @@
 
       // https://stackoverflow.com/a/6609181/6828099
       $options = array(
-        /*'ssl' => array(
+        'ssl' => array(
           // I cannot specify a self-signed cert to PHP, so I have to disable verification - https://serverfault.com/a/815795/379269
           'verify_peer' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN), // Set to false to disable checking certificate
           'verify_peer_name' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN)
           //'cafile' => '/usr/local/etc/nginx/certs/localhost'
-        ),*/
+        ),
         'http' => array(
           'header'  => "Content-Type: application/x-www-form-urlencoded\r\n" . "Accept: application/json\r\n",
           'user_agent'  => getenv('alex.server.user_agent'),
