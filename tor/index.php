@@ -22,12 +22,23 @@
 
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
+  $mainPage->setVars();
   $mainPage->checkTor();
   $mainPage->printTutorial();
   $loadPage->loadFooter();
 
   class mainPage {
-    public $torapi = "https://127.0.0.1/api/tor/index.php";
+    function setVars() {
+      $this->torapi = "https://" . $_SERVER['SERVER_NAME'] . "/api/tor/index.php";
+
+      if(getenv('alex.server.type') === "production") {
+        # The below variables are for the production server
+        //$this->exec_ent_path = "/home/web/programs/ent";
+      } else if(getenv('alex.server.type') === "development") {
+        # The below variables are for testing on localhost
+        //$this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
+      }
+    }
 
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
