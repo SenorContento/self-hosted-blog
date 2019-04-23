@@ -22,13 +22,78 @@
 
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
+  $mainPage->checkTor();
   $mainPage->printTutorial();
   $loadPage->loadFooter();
 
   class mainPage {
+    public $torapi = "https://127.0.0.1/api/tor/index.php";
+
     public function printSourceCodeLink() {
       print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>');
       //print('<a class="source-code-link" href="' . getenv('alex.github.project') . '/tree/' . getenv('alex.github.branch') . "/assignments/Term_Project" . $_SERVER['SCRIPT_NAME'] . '">View Source Code</a><br>'); // For Term Project
+    }
+
+    public function checkTor() {
+      // https://check.torproject.org/exit-addresses
+      // https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=1.1.1.1
+      $ip = $_SERVER['REMOTE_ADDR'];
+      $hiddenservice = isset($_SERVER['tor']) ? $_SERVER['tor'] : 'false';
+
+      $exitnode = $this->exitNode($ip);
+
+      print("<span class='tor-exit-node'>Coming From Tor Exit Node: $exitnode</span><br>");
+      print("<span class='hidden-service'>Accessing Via Hidden Service: $hiddenservice</span>");
+    }
+
+    public function exitNode($ip) {
+      $data = array('ip' => "$ip");
+
+      // https://stackoverflow.com/a/6609181/6828099
+      $options = array(
+        'ssl' => array(
+          // I cannot specify a self-signed cert to PHP, so I have to disable verification - https://serverfault.com/a/815795/379269
+          'verify_peer' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN), // Set to false to disable checking certificate
+          'verify_peer_name' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN)
+          //'cafile' => '/usr/local/etc/nginx/certs/localhost'
+        ),
+        'http' => array(
+          'header'  => "Content-Type: application/x-www-form-urlencoded\r\n" . "Accept: application/json\r\n",
+          'user_agent'  => getenv('alex.server.user_agent'),
+          'method'  => 'POST',
+          'content' => http_build_query($data)
+        )
+      );
+
+      //var_dump($data);
+      //var_dump(http_build_query($data));
+
+      $context = stream_context_create($options);
+      $result = file_get_contents($this->torapi, false, $context); // http://php.net/manual/en/function.file-get-contents.php - string $filename, bool $use_include_path = FALSE, resource $context, ...
+      //$result = false;
+      //var_dump($result);
+
+      if ($result === FALSE) {
+        throw new Exception("Result Returned FALSE!!!");
+      }
+
+      if($this->isJson($result)) {
+        $json = json_decode($result, true);
+
+        if(isset($json["exitnode"])) {
+          return $json["exitnode"];
+        }
+
+        return "Exit Node Not Found!!!";
+      }
+
+      return "Not JSON!!!";
+    }
+
+    // https://stackoverflow.com/a/6041773/6828099
+    private function isJson($string) {
+      json_decode($string);
+      return (json_last_error() == JSON_ERROR_NONE);
     }
 
     public function printTutorial() {
