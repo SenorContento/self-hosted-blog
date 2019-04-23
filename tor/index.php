@@ -34,7 +34,8 @@
 
   class mainPage {
     function setVars() {
-      $this->torapi = "https://" . $_SERVER['SERVER_NAME'] . "/api/tor/index.php";
+      //$this->torapi = "https://" . $_SERVER['SERVER_NAME'] . "/api/tor/index.php"; // This doesn't work on Tor Hidden Service because the Hidden Service is the Domain
+      $this->torapi = "https://127.0.0.1/api/tor/index.php";
 
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
