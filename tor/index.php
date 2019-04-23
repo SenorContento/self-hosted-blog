@@ -44,6 +44,13 @@
         //$this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
         $this->torapi = "https://web.senorcontento.com/api/tor/index.php";
       }
+
+      // A debugging server is going to have some kind of authentication
+      // The correct way to fix this is to provide authentication details,
+      // but I am unlikely to need to change the tor API, so this is the simpler solution.
+      if(strpos(getenv('alex.server.name'), "debug") !== false) {
+        $this->torapi = "https://web.senorcontento.com/api/tor/index.php";
+      }
     }
 
     public function printSourceCodeLink() {
