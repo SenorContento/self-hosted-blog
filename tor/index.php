@@ -66,8 +66,12 @@
 
       $exitnode = $this->exitNode($ip);
 
+      print("<div class='ip-div'><span class='ip-span'>Your IP Address Appears To Be: <span class='ip-address'>$ip</span></span></div><br>");
+
+      print("<div class='tor'>");
       print("<span class='tor-exit-node'>Coming From Tor Exit Node: $exitnode</span><br>");
       print("<span class='hidden-service'>Accessing Via Hidden Service: $hiddenservice</span>");
+      print("</div>");
     }
 
     public function exitNode($ip) {
