@@ -51,7 +51,7 @@
       $ip = $_SERVER['REMOTE_ADDR'];
       $hiddenservice = isset($_SERVER['tor']) ? $_SERVER['tor'] : 'false';
 
-      //$exitnode = $this->exitNode($ip);
+      $exitnode = $this->exitNode($ip);
 
       print("<span class='tor-exit-node'>Coming From Tor Exit Node: $exitnode</span><br>");
       print("<span class='hidden-service'>Accessing Via Hidden Service: $hiddenservice</span>");
@@ -62,12 +62,12 @@
 
       // https://stackoverflow.com/a/6609181/6828099
       $options = array(
-        'ssl' => array(
+        /*'ssl' => array(
           // I cannot specify a self-signed cert to PHP, so I have to disable verification - https://serverfault.com/a/815795/379269
           'verify_peer' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN), // Set to false to disable checking certificate
           'verify_peer_name' => filter_var(getenv("alex.server.host.verifycert"), FILTER_VALIDATE_BOOLEAN)
           //'cafile' => '/usr/local/etc/nginx/certs/localhost'
-        ),
+        ),*/
         'http' => array(
           'header'  => "Content-Type: application/x-www-form-urlencoded\r\n" . "Accept: application/json\r\n",
           'user_agent'  => getenv('alex.server.user_agent'),
