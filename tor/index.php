@@ -1,8 +1,8 @@
 <?php
   # https://stackoverflow.com/a/21429652/6828099
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
-  error_reporting(E_ALL);
+  //ini_set('display_errors', 1);
+  //ini_set('display_startup_errors', 1);
+  //error_reporting(E_ALL);
 
   function customPageHeader() {
     //print("\n\t\t" . '<link rel="stylesheet" href="template.css">');
@@ -38,7 +38,7 @@
       if(getenv('alex.server.type') === "production") {
         # The below variables are for the production server
         //$this->exec_ent_path = "/home/web/programs/ent";
-        $this->torapi = "https://" . getenv('alex.server.host') . "/api/tor/index.php";
+        $this->torapi = getenv('alex.server.host') . "/api/tor/index.php";
       } else if(getenv('alex.server.type') === "development") {
         # The below variables are for testing on localhost
         //$this->exec_ent_path = "/Users/senor/Documents/.Programs/ent";
