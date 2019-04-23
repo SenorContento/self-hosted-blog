@@ -23,7 +23,7 @@
   $loadPage->loadHeader();
   //$mainPage->printSourceCodeLink();
   $mainPage->setVars();
-  $mainPage->checkTor();
+  //$mainPage->checkTor();
   $mainPage->printTutorial();
   $loadPage->loadFooter();
 
