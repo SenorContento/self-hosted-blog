@@ -325,7 +325,7 @@
 
   class loadPage {
     public function loadHeader() {
-      $PageTitle="Assignment 13 - Term Project";
+      $PageTitle="Piet Uploader!!!";
       $root = isset($_SERVER['PWD']) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
       include_once($root . "/server-data/header.php");
     }
