@@ -54,14 +54,14 @@
 
       print("<br>");
 
-      print("<h3>Adding Root CA's - Orbot</h3>");
+      print("<h3>Adding Root CA's - Orfox</h3>");
       print("<ol>
             <li>In your Tor Browser, go to <a href='about:config'>about:config</a>. *</li>
             <li>Then search for security.nocertdb and double click it to turn it off.</li>
-            <li>Restart Orbot Completely (Force Close).</li>
+            <li>Restart Orfox Completely (Force Close).</li>
             <li>Download this <a href='CubeTechLLC.pem'>certificate</a>.</li>
             <li>Click 'Trust this CA to identify websites.' and then Click OK.</li>
-            <li>Restart Orbot Again!!!</li>
+            <li>Restart Orfox Again!!!</li>
             <li>You are Finished!!!</li>
             </ol>");
 
