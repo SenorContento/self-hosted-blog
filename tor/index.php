@@ -164,7 +164,7 @@
              </p></div>");
 
       print("<div class='center'><p class='left'>If you are having trouble getting the certificate to work, refer to this <a href='https://tor.stackexchange.com/a/13460/14086'>StackExchange Answer</a>!!!
-             <br>If you want to verify the certificate you downloaded hasn't been tampered with,<br> download the <a href='CubeTechLLC.pem.gpg'>GPG signature</a> signed with key <a href='http://pool.sks-keyservers.net/pks/lookup?search=0xC9007161B19BC1513B78F7EF4E1204E51D9AC3EB&op=vindex'>C9007161B19BC1513B78F7EF4E1204E51D9AC3EB</a>!!!
+             If you want to verify the certificate you downloaded hasn't been tampered with, download the <a href='CubeTechLLC.pem.gpg'>GPG signature</a> signed with key <a id='key' href='http://pool.sks-keyservers.net/pks/lookup?search=0xC9007161B19BC1513B78F7EF4E1204E51D9AC3EB&op=vindex'>C9007161B19BC1513B78F7EF4E1204E51D9AC3EB</a>!!!
              </p></div>");
 
       print("<br>");

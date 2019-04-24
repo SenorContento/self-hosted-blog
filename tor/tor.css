@@ -27,6 +27,31 @@
   display: inline-block;
 }
 
+p {
+  word-break: normal;
+
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+@media all and (min-width: 1025px) {
+  p {
+    margin-left: 310px;
+    margin-right: 310px;
+  }
+}
+
+@media all and (min-width: 650px) and (max-width: 1024px) {
+  p {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+}
+
+#key {
+  word-break: break-all;
+}
+
 /* Tor CSS */
 /* https://stackoverflow.com/a/1777450/6828099 */
 /* https://www.w3.org/TR/selectors-3/#attribute-selectors */
