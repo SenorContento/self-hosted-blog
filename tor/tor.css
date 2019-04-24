@@ -49,9 +49,19 @@ p {
   p {
     margin-left: 50px;
     margin-right: 50px;
+  }
 
+  .break {
     word-break: break-all;
   }
+}
+
+ol {
+  cursor: text;
+}
+
+.blocked-linked {
+  cursor: text;
 }
 
 #key {

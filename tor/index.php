@@ -129,15 +129,15 @@
       // term.senorcontento.com - http://3whx4oukqxh7yf22.onion
 
       // Custom Cert - https://tor.stackexchange.com/a/13460/14086
-      print("<div class='center'><p class='left'>These are the Hidden Services that are Hosted on Tor!!!<br>In order to access the encrypted site, you will want to add my Root CA to your Tor Browser Bundle!!!</p></div>");
+      print("<div class='center'><p class='break left'>These are the Hidden Services that are Hosted on Tor!!! In order to access the encrypted site, you will want to add my Root CA to your Tor Browser Bundle!!!</p></div>");
 
       print("<h3>Adding Root CA's - Tor Browser Bundle</h3>");
       print("<ol>
             <li>Download this <a href='CubeTechLLC.pem'>certificate</a>.</li>
-            <li>In your Tor Browser, go to <a href='about:config'>about:config</a>. *</li>
+            <li>In your Tor Browser, go to <a class='blocked-linked' href='about:config' onclick='return false;'>about:config</a>. *</li>
             <li>Then search for security.nocertdb and double click it to turn it off.</li>
             <li>Restart Tor Browser Bundle Completely.</li>
-            <li>Then go to <a href='about:preferences'>about:preferences</a> and search for View Certificates. *</li>
+            <li>Then go to <a class='blocked-linked' href='about:preferences' onclick='return false;'>about:preferences</a> and search for View Certificates. *</li>
             <li>Click on the Authorities Tab.</li>
             <li>Click Import and then Click on the Downloaded Certificate.</li>
             <li>Click 'Trust this CA to identify websites.' and then Click OK.</li>
@@ -149,7 +149,7 @@
 
       print("<h3>Adding Root CA's - Orfox</h3>");
       print("<ol>
-            <li>In your Tor Browser, go to <a href='about:config'>about:config</a>. *</li>
+            <li>In your Tor Browser, go to <a class='blocked-linked' href='about:config' onclick='return false;'>about:config</a>. *</li>
             <li>Then search for security.nocertdb and double click it to turn it off.</li>
             <li>Restart Orfox Completely (Force Close).</li>
             <li>Download this <a href='CubeTechLLC.pem'>certificate</a>.</li>
@@ -160,10 +160,9 @@
 
       print("<br>");
 
-      print("<div class='center'><p class='left'>* Your browser most likely will not just let you click the link, so you will have to type it in manually in a new tab.
-             </p></div>");
+      print("<div class='center'><p class='break left'>* Your browser will not just let you click the link to visit the pages, so you will have to type it in manually in a new tab.</p></div>");
 
-      print("<div class='center'><p class='left'>If you are having trouble getting the certificate to work, refer to this <a href='https://tor.stackexchange.com/a/13460/14086'>StackExchange Answer</a>!!!
+      print("<div class='center'><p class='break left'>If you are having trouble getting the certificate to work, refer to this <a href='https://tor.stackexchange.com/a/13460/14086'>StackExchange Answer</a>!!!
              If you want to verify the certificate you downloaded hasn't been tampered with, download the <a href='CubeTechLLC.pem.gpg'>GPG signature</a> signed with key <a id='key' href='http://pool.sks-keyservers.net/pks/lookup?search=0xC9007161B19BC1513B78F7EF4E1204E51D9AC3EB&op=vindex'>C9007161B19BC1513B78F7EF4E1204E51D9AC3EB</a>!!!
              </p></div>");
 
