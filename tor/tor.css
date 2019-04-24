@@ -29,9 +29,6 @@
 
 p {
   word-break: normal;
-
-  margin-left: 50px;
-  margin-right: 50px;
 }
 
 @media all and (min-width: 1025px) {
@@ -45,6 +42,15 @@ p {
   p {
     margin-left: 100px;
     margin-right: 100px;
+  }
+}
+
+@media all and (max-width: 645px) {
+  p {
+    margin-left: 50px;
+    margin-right: 50px;
+
+    word-break: break-all;
   }
 }
 
