@@ -52,7 +52,7 @@
               </div>
 
               <span id="submit-newline" class="hidden-newline-mobile"><br></span>
-              <a id="submit" class="submit-button search-button">Submit API Request</a>
+              <a id="submit" class="submit-button search-button">Search</a>
             </div>
           </form>
         </div>
