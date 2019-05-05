@@ -30,7 +30,7 @@ Submit: https://ung.view.usg.edu/d2l/lms/dropbox/user/folder_submit_files.d2l?db
 
 ------------------------------------------------------------------------------------
 
-Grade: Not Available Yet
+Grade: 30 / 30
 Reason: None Provided
 
 ------------------------------------------------------------------------------------
